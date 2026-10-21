@@ -68,7 +68,9 @@ export default function Perfil() {
     {sinSesion && <p><Link href="/ingresar">Ingresar a mi cuenta</Link></p>}
     {!cargando && !sinSesion && !usuario && <button className="button outline" onClick={cargar}>Reintentar</button>}
     {usuario && <><p>{usuario.email}</p><p>Roles: {usuario.roles.join(', ')}</p>
+      <p><Link href="/proveedor">Mi perfil de proveedor</Link></p>
       {usuario.roles.includes('admin') && <p><Link href="/admin/usuarios">Administrar usuarios</Link></p>}
+      {usuario.roles.includes('admin') && <p><Link href="/admin/proveedores">Revisar proveedores</Link></p>}
       <form onSubmit={guardar} className={styles.form}>
         <label>Nombre<input name="nombre" autoComplete="name" value={nombre} onChange={event => setNombre(event.target.value)} required minLength={2} maxLength={100}/></label>
         <button className="button primary" disabled={pendiente}>{pendiente ? 'Procesando…' : 'Guardar perfil'}</button>

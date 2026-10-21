@@ -12,7 +12,8 @@
     "typecheck": "tsc --noEmit",
     "test": "playwright test --project=descubrimiento",
     "test:usuarios": "playwright test --config playwright.usuarios.config.ts",
-    "test:acceso": "playwright test --config playwright.acceso.config.ts"
+    "test:acceso": "playwright test --config playwright.acceso.config.ts",
+    "test:proveedores": "playwright test --config playwright.proveedores.config.ts"
   },
   "dependencies": {
     "next": "16.4.1",

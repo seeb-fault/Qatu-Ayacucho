@@ -10,7 +10,7 @@ async function migrate() {
     await client.query('BEGIN');
     await client.query("SELECT pg_advisory_xact_lock(488002)");
     await client.query('CREATE TABLE IF NOT EXISTS migraciones (nombre text PRIMARY KEY, aplicada_en timestamptz NOT NULL DEFAULT now())');
-    for (const nombre of ['usuarios/001-usuarios', 'usuarios/002-administracion']) {
+    for (const nombre of ['usuarios/001-usuarios', 'usuarios/002-administracion', 'proveedores/001-perfiles', 'proveedores/002-verificaciones']) {
       const result = await client.query('SELECT nombre FROM migraciones WHERE nombre = $1', [nombre]);
       if (!result.rowCount) {
         await client.query(await readFile(resolve('migrations', `${nombre}.sql`), 'utf8'));
@@ -18,7 +18,7 @@ async function migrate() {
       }
     }
     await client.query('COMMIT');
-    console.log('Migraciones de usuarios al día.');
+    console.log('Migraciones de Qatu al día.');
   } catch (error) {
     await client.query('ROLLBACK');
     throw error;

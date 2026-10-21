@@ -1,3 +1,5 @@
+import { ErrorAplicacion } from '../../../shared/dominio/error-aplicacion';
+
 export type Rol = 'cliente' | 'proveedor' | 'admin';
 export type EstadoUsuario = 'activo' | 'inactivo';
 
@@ -68,11 +70,7 @@ export function paginaValida(value: unknown): number {
   return Number(value);
 }
 
-export class ErrorUsuario extends Error {
-  constructor(public readonly code: string, public readonly status: number, mensaje: string) {
-    super(mensaje);
-  }
-}
+export class ErrorUsuario extends ErrorAplicacion {}
 
 export function entrada(value: unknown, campos: string[]): Record<string, unknown> {
   if (!value || typeof value !== 'object' || Array.isArray(value) || Object.keys(value).some(campo => !campos.includes(campo))) {
