@@ -52,6 +52,10 @@ export class Usuarios {
     return (await this.identidad(token)).usuario;
   }
 
+  async cuentaActiva(usuarioId: string) {
+    return (await this.repo.porId(usuarioId))?.estado === 'activo';
+  }
+
   async editar(token: string, value: unknown) {
     const { usuario } = await this.identidad(token);
     const datos = entrada(value, ['nombre']);

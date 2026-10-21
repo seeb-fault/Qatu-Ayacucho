@@ -6,4 +6,8 @@ export class IdentidadUsuarios {
   resolver(token: string) {
     return this.usuarios.perfil(token);
   }
+
+  cuentaActiva(usuarioId: string) {
+    return this.usuarios.cuentaActiva(usuarioId);
+  }
 }
