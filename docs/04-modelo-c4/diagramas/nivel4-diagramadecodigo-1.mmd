@@ -1,0 +1,68 @@
+classDiagram
+    class ReservasController {
+        +aceptar(id)
+        +iniciarPago(id)
+    }
+    class AceptarReservaCasoUso {
+        +ejecutar(comando)
+    }
+    class IniciarPagoCasoUso {
+        +ejecutar(comando)
+    }
+    class ConfirmarPagoCasoUso {
+        +ejecutar(eventoVerificado)
+    }
+    class Reserva {
+        -estado
+        +aceptar(vencimiento)
+        +confirmar(referencia)
+        +iniciar()
+        +finalizar()
+    }
+    class RangoFechas {
+        +inicio
+        +fin
+        +solapa(otro) bool
+    }
+    class IntentoPago {
+        +operacionId
+        +montoCentimos
+        +estado
+        +registrarResultado(resultado)
+    }
+    class UnidadTrabajoReservas {
+        <<interface>>
+        +ejecutar(operacion)
+    }
+    class RepositorioReservas {
+        <<interface>>
+        +buscarParaActualizar(id)
+        +guardar(reserva)
+    }
+    class ProcesadorPagos {
+        <<interface>>
+        +iniciar(solicitud)
+        +consultar(referencia)
+    }
+    class PostgresUnidadTrabajo
+    class PostgresReservasRepository
+    class CulqiPagoAdapter
+    class PagosWebhookController {
+        +recibir(payload)
+    }
+    ReservasController --> AceptarReservaCasoUso
+    ReservasController --> IniciarPagoCasoUso
+    AceptarReservaCasoUso --> UnidadTrabajoReservas
+    AceptarReservaCasoUso --> RepositorioReservas
+    IniciarPagoCasoUso --> ProcesadorPagos
+    IniciarPagoCasoUso --> UnidadTrabajoReservas
+    ConfirmarPagoCasoUso --> UnidadTrabajoReservas
+    ConfirmarPagoCasoUso --> RepositorioReservas
+    PagosWebhookController --> ConfirmarPagoCasoUso
+    Reserva *-- RangoFechas
+    IniciarPagoCasoUso ..> IntentoPago
+    AceptarReservaCasoUso ..> Reserva
+    ConfirmarPagoCasoUso ..> Reserva
+    PostgresUnidadTrabajo ..|> UnidadTrabajoReservas
+    PostgresReservasRepository ..|> RepositorioReservas
+    CulqiPagoAdapter ..|> ProcesadorPagos

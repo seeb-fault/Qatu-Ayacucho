@@ -1,0 +1,11 @@
+stateDiagram-v2
+    [*] --> PENDIENTE
+    PENDIENTE --> ACEPTADA: aceptar y bloquear
+    PENDIENTE --> RECHAZADA: proveedor rechaza
+    PENDIENTE --> CANCELADA: cliente cancela
+    ACEPTADA --> CONFIRMADA: pago verificado antes del vencimiento
+    ACEPTADA --> VENCIDA: vence plazo sin confirmación
+    ACEPTADA --> CANCELADA: política de cancelación
+    CONFIRMADA --> EN_CURSO: entrega o inicio del servicio
+    CONFIRMADA --> CANCELADA: cancelación con ajuste financiero
+    EN_CURSO --> FINALIZADA: devolución o cierre del servicio

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "2f64f06c-ee22-459c-8b9f-b489dc513452",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\fuentes\\nivel3-componentes.archify.json",
+  "output": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\html\\nivel3-componentes.html",
+  "specification": {
+    "sha256": "7d1c4a2208d7c79c320a391b311bf129a9f99dcfd014472db3a99ec9bb27280d",
+    "bytes": 3030
+  },
+  "artifact": {
+    "sha256": "1a19cc5c41e7903487aa7ad4c9c33c33fbf794cfa26012b3261024f3567c61b2",
+    "bytes": 819337
+  }
+}

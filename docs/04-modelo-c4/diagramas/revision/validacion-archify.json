@@ -1,0 +1,176 @@
+{
+  "herramienta": "Archify 3.1.0",
+  "origen": "https://github.com/tt-a1i/archify",
+  "fecha": "2026-10-15",
+  "estadoProyecto": "Diseño propuesto; no backend implementado",
+  "diagramas": [
+    {
+      "id": "despliegue-vps",
+      "tipo": "architecture",
+      "revision": "r3",
+      "estado": "pass",
+      "comprobaciones": {
+        "validate": "pass",
+        "deliver": "pass",
+        "check": "pass",
+        "browser-check": "pass"
+      },
+      "fuenteCoincide": true,
+      "htmlCoincide": true
+    },
+    {
+      "id": "nivel1-contexto",
+      "tipo": "architecture",
+      "revision": "r1",
+      "estado": "pass",
+      "comprobaciones": {
+        "validate": "pass",
+        "deliver": "pass",
+        "check": "pass",
+        "browser-check": "pass"
+      },
+      "fuenteCoincide": true,
+      "htmlCoincide": true
+    },
+    {
+      "id": "nivel2-contenedores",
+      "tipo": "architecture",
+      "revision": "r2",
+      "estado": "pass",
+      "comprobaciones": {
+        "validate": "pass",
+        "deliver": "pass",
+        "check": "pass",
+        "browser-check": "pass"
+      },
+      "fuenteCoincide": true,
+      "htmlCoincide": true
+    },
+    {
+      "id": "nivel3-componentes",
+      "tipo": "architecture",
+      "revision": "r4",
+      "estado": "pass",
+      "comprobaciones": {
+        "validate": "pass",
+        "deliver": "pass",
+        "check": "pass",
+        "browser-check": "pass"
+      },
+      "fuenteCoincide": true,
+      "htmlCoincide": true
+    },
+    {
+      "id": "nivel3-entrada-http",
+      "tipo": "architecture",
+      "revision": "r4",
+      "estado": "pass",
+      "comprobaciones": {
+        "validate": "pass",
+        "deliver": "pass",
+        "check": "pass",
+        "browser-check": "pass"
+      },
+      "fuenteCoincide": true,
+      "htmlCoincide": true
+    },
+    {
+      "id": "nivel3-infraestructura",
+      "tipo": "architecture",
+      "revision": "r4",
+      "estado": "pass",
+      "comprobaciones": {
+        "validate": "pass",
+        "deliver": "pass",
+        "check": "pass",
+        "browser-check": "pass"
+      },
+      "fuenteCoincide": true,
+      "htmlCoincide": true
+    },
+    {
+      "id": "nivel4-clases-aceptacion",
+      "tipo": "class",
+      "revision": "r3",
+      "estado": "pass",
+      "comprobaciones": {
+        "validate": "pass",
+        "deliver": "pass",
+        "check": "pass",
+        "browser-check": "pass"
+      },
+      "fuenteCoincide": true,
+      "htmlCoincide": true
+    },
+    {
+      "id": "nivel4-clases-busqueda",
+      "tipo": "class",
+      "revision": "r1",
+      "estado": "pass",
+      "comprobaciones": {
+        "validate": "pass",
+        "deliver": "pass",
+        "check": "pass",
+        "browser-check": "pass"
+      },
+      "fuenteCoincide": true,
+      "htmlCoincide": true
+    },
+    {
+      "id": "nivel4-clases-confirmacion",
+      "tipo": "class",
+      "revision": "r3",
+      "estado": "pass",
+      "comprobaciones": {
+        "validate": "pass",
+        "deliver": "pass",
+        "check": "pass",
+        "browser-check": "pass"
+      },
+      "fuenteCoincide": true,
+      "htmlCoincide": true
+    },
+    {
+      "id": "nivel4-clases-inicio-pago",
+      "tipo": "class",
+      "revision": "r3",
+      "estado": "pass",
+      "comprobaciones": {
+        "validate": "pass",
+        "deliver": "pass",
+        "check": "pass",
+        "browser-check": "pass"
+      },
+      "fuenteCoincide": true,
+      "htmlCoincide": true
+    },
+    {
+      "id": "nivel4-secuencia-busqueda",
+      "tipo": "sequence",
+      "revision": "r1",
+      "estado": "pass",
+      "comprobaciones": {
+        "validate": "pass",
+        "deliver": "pass",
+        "check": "pass",
+        "browser-check": "pass"
+      },
+      "fuenteCoincide": true,
+      "htmlCoincide": true
+    },
+    {
+      "id": "nivel4-secuencia-pagos",
+      "tipo": "sequence",
+      "revision": "r1",
+      "estado": "pass",
+      "comprobaciones": {
+        "validate": "pass",
+        "deliver": "pass",
+        "check": "pass",
+        "browser-check": "pass"
+      },
+      "fuenteCoincide": true,
+      "htmlCoincide": true
+    }
+  ]
+}

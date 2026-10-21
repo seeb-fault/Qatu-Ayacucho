@@ -1,0 +1,586 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Qatu Web (Next.js 14) - Clean Architecture",
+    "output": "estructura-cliente-web-nextjs.html",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1320,
+      700
+    ],
+    "legend": {
+      "mode": "auto",
+      "entries": {
+        "external": {
+          "label": "Actor / sistema externo"
+        },
+        "frontend": {
+          "label": "Presentación"
+        },
+        "backend": {
+          "label": "Aplicación (casos de uso)"
+        },
+        "security": {
+          "label": "Dominio · modelos"
+        },
+        "database": {
+          "label": "Dominio · contratos"
+        },
+        "messagebus": {
+          "label": "Infraestructura"
+        },
+        "cloud": {
+          "label": "Raíz de composición"
+        }
+      }
+    }
+  },
+  "components": [
+    {
+      "id": "usuario",
+      "type": "external",
+      "label": "Usuario",
+      "sublabel": "Cliente",
+      "pos": [
+        20,
+        190
+      ],
+      "size": [
+        100,
+        52
+      ]
+    },
+    {
+      "id": "buscar-page",
+      "type": "frontend",
+      "label": "BuscarPage",
+      "sublabel": "herramientas y servicios",
+      "pos": [
+        170,
+        190
+      ],
+      "size": [
+        180,
+        52
+      ]
+    },
+    {
+      "id": "alquiler-form",
+      "type": "frontend",
+      "label": "SolicitudAlquilerForm",
+      "sublabel": "elige fechas de alquiler",
+      "pos": [
+        170,
+        260
+      ],
+      "size": [
+        180,
+        52
+      ]
+    },
+    {
+      "id": "use-reserva",
+      "type": "frontend",
+      "label": "useReserva",
+      "sublabel": "hook de estado · sin reglas",
+      "pos": [
+        170,
+        330
+      ],
+      "size": [
+        180,
+        52
+      ]
+    },
+    {
+      "id": "servicio-form",
+      "type": "frontend",
+      "label": "ContratarServicioForm",
+      "sublabel": "describe el trabajo y la fecha",
+      "pos": [
+        170,
+        400
+      ],
+      "size": [
+        180,
+        52
+      ]
+    },
+    {
+      "id": "mis-reservas",
+      "type": "frontend",
+      "label": "MisReservasPage",
+      "sublabel": "alquileres y servicios",
+      "pos": [
+        170,
+        470
+      ],
+      "size": [
+        180,
+        52
+      ]
+    },
+    {
+      "id": "uc-buscar",
+      "type": "backend",
+      "label": "BuscarOfertasCasoUso",
+      "sublabel": "herramientas y servicios",
+      "pos": [
+        410,
+        40
+      ],
+      "size": [
+        180,
+        52
+      ]
+    },
+    {
+      "id": "uc-alquiler",
+      "type": "backend",
+      "label": "SolicitarAlquilerCasoUso",
+      "sublabel": "fechas · disponibilidad",
+      "pos": [
+        640,
+        40
+      ],
+      "size": [
+        180,
+        52
+      ]
+    },
+    {
+      "id": "uc-servicio",
+      "type": "backend",
+      "label": "ContratarServicioCasoUso",
+      "sublabel": "oficio · fecha de visita",
+      "pos": [
+        840,
+        40
+      ],
+      "size": [
+        180,
+        52
+      ]
+    },
+    {
+      "id": "uc-pagar",
+      "type": "backend",
+      "label": "PagarReservaCasoUso",
+      "sublabel": "anticipo o garantía",
+      "pos": [
+        1040,
+        40
+      ],
+      "size": [
+        180,
+        52
+      ]
+    },
+    {
+      "id": "herramienta",
+      "type": "security",
+      "label": "Herramienta",
+      "sublabel": "tarifa por día · garantía",
+      "pos": [
+        410,
+        190
+      ],
+      "size": [
+        180,
+        52
+      ]
+    },
+    {
+      "id": "servicio-oficio",
+      "type": "security",
+      "label": "ServicioOficio",
+      "sublabel": "oficio · tarifa por visita",
+      "pos": [
+        410,
+        260
+      ],
+      "size": [
+        180,
+        52
+      ]
+    },
+    {
+      "id": "reserva",
+      "type": "security",
+      "label": "Reserva",
+      "sublabel": "alquiler | servicio · estados",
+      "pos": [
+        410,
+        330
+      ],
+      "size": [
+        180,
+        52
+      ]
+    },
+    {
+      "id": "rango-fechas",
+      "type": "security",
+      "label": "RangoFechas",
+      "sublabel": "días · seSolapaCon()",
+      "pos": [
+        410,
+        400
+      ],
+      "size": [
+        180,
+        52
+      ]
+    },
+    {
+      "id": "tarifas",
+      "type": "security",
+      "label": "tarifas.ts",
+      "sublabel": "total de alquiler y servicio",
+      "pos": [
+        410,
+        470
+      ],
+      "size": [
+        180,
+        52
+      ]
+    },
+    {
+      "id": "repo-catalogo",
+      "type": "database",
+      "label": "RepositorioCatalogo",
+      "sublabel": "«interface»",
+      "pos": [
+        640,
+        190
+      ],
+      "size": [
+        180,
+        52
+      ]
+    },
+    {
+      "id": "repo-reservas",
+      "type": "database",
+      "label": "RepositorioReservas",
+      "sublabel": "«interface»",
+      "pos": [
+        640,
+        260
+      ],
+      "size": [
+        180,
+        52
+      ]
+    },
+    {
+      "id": "proc-pagos",
+      "type": "database",
+      "label": "ProcesadorPagos",
+      "sublabel": "«interface»",
+      "pos": [
+        640,
+        330
+      ],
+      "size": [
+        180,
+        52
+      ]
+    },
+    {
+      "id": "serv-mapas",
+      "type": "database",
+      "label": "ServicioMapas",
+      "sublabel": "«interface»",
+      "pos": [
+        640,
+        400
+      ],
+      "size": [
+        180,
+        52
+      ]
+    },
+    {
+      "id": "ad-catalogo",
+      "type": "messagebus",
+      "label": "RepositorioCatalogo",
+      "sublabel": "Memoria · Http",
+      "pos": [
+        910,
+        190
+      ],
+      "size": [
+        180,
+        52
+      ]
+    },
+    {
+      "id": "ad-reservas",
+      "type": "messagebus",
+      "label": "RepositorioReservas",
+      "sublabel": "Memoria · Http",
+      "pos": [
+        910,
+        260
+      ],
+      "size": [
+        180,
+        52
+      ]
+    },
+    {
+      "id": "ad-pagos",
+      "type": "messagebus",
+      "label": "ProcesadorPagos",
+      "sublabel": "Simulado · Culqi",
+      "pos": [
+        910,
+        330
+      ],
+      "size": [
+        180,
+        52
+      ]
+    },
+    {
+      "id": "ad-mapas",
+      "type": "messagebus",
+      "label": "ServicioMapas",
+      "sublabel": "OpenStreetMap · Google",
+      "pos": [
+        910,
+        400
+      ],
+      "size": [
+        180,
+        52
+      ]
+    },
+    {
+      "id": "dependencias",
+      "type": "messagebus",
+      "label": "dependencias.ts",
+      "sublabel": "Context de React por contrato",
+      "pos": [
+        910,
+        570
+      ],
+      "size": [
+        180,
+        52
+      ]
+    },
+    {
+      "id": "api",
+      "type": "external",
+      "label": "Qatu API REST",
+      "sublabel": "Backend NestJS",
+      "tag": "monolito modular",
+      "pos": [
+        1170,
+        236
+      ],
+      "size": [
+        130,
+        64
+      ]
+    },
+    {
+      "id": "mapas",
+      "type": "external",
+      "label": "Servicio de mapas",
+      "sublabel": "OpenStreetMap",
+      "pos": [
+        1170,
+        400
+      ],
+      "size": [
+        130,
+        64
+      ]
+    },
+    {
+      "id": "contenedor",
+      "type": "cloud",
+      "label": "contenedor.ts",
+      "sublabel": "useMemo + React Context",
+      "tag": "raíz de composición",
+      "pos": [
+        640,
+        570
+      ],
+      "size": [
+        180,
+        52
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "PRESENTACIÓN · src/presentacion/",
+      "wraps": [
+        "buscar-page",
+        "alquiler-form",
+        "use-reserva",
+        "servicio-form",
+        "mis-reservas"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "APLICACIÓN · casos de uso",
+      "wraps": [
+        "uc-buscar",
+        "uc-alquiler",
+        "uc-servicio",
+        "uc-pagar"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "DOMINIO · núcleo TypeScript puro",
+      "wraps": [
+        "herramienta",
+        "servicio-oficio",
+        "reserva",
+        "rango-fechas",
+        "tarifas",
+        "repo-catalogo",
+        "repo-reservas",
+        "proc-pagos",
+        "serv-mapas"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "INFRAESTRUCTURA · adaptadores",
+      "wraps": [
+        "ad-catalogo",
+        "ad-reservas",
+        "ad-pagos",
+        "ad-mapas",
+        "dependencias"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "navega",
+      "from": "usuario",
+      "to": "buscar-page",
+      "label": "navegador",
+      "variant": "emphasis"
+    },
+    {
+      "id": "invoca",
+      "from": "buscar-page",
+      "to": "uc-buscar",
+      "label": "invoca",
+      "fromSide": "top",
+      "toSide": "left"
+    },
+    {
+      "id": "estado-reserva-modelo",
+      "from": "use-reserva",
+      "to": "reserva",
+      "label": "import",
+      "variant": "dashed"
+    },
+    {
+      "id": "uc-dominio",
+      "from": "uc-buscar",
+      "to": "herramienta",
+      "label": "import",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "uc-contratos",
+      "from": "uc-alquiler",
+      "to": "repo-catalogo",
+      "label": "import",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "impl-catalogo",
+      "from": "ad-catalogo",
+      "to": "repo-catalogo",
+      "label": "implementa",
+      "variant": "dashed"
+    },
+    {
+      "id": "impl-reservas",
+      "from": "ad-reservas",
+      "to": "repo-reservas",
+      "label": "implementa",
+      "variant": "dashed"
+    },
+    {
+      "id": "impl-pagos",
+      "from": "ad-pagos",
+      "to": "proc-pagos",
+      "label": "implementa",
+      "variant": "dashed"
+    },
+    {
+      "id": "impl-mapas",
+      "from": "ad-mapas",
+      "to": "serv-mapas",
+      "label": "implementa",
+      "variant": "dashed"
+    },
+    {
+      "id": "http-catalogo",
+      "from": "ad-catalogo",
+      "to": "api",
+      "label": "HTTP/JSON"
+    },
+    {
+      "id": "http-reservas",
+      "from": "ad-reservas",
+      "to": "api"
+    },
+    {
+      "id": "http-pagos",
+      "from": "ad-pagos",
+      "to": "api"
+    },
+    {
+      "id": "http-mapas",
+      "from": "ad-mapas",
+      "to": "mapas"
+    },
+    {
+      "id": "registra",
+      "from": "contenedor",
+      "to": "dependencias",
+      "label": "registra",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "slate",
+      "title": "Leyenda",
+      "items": [
+        "Continua: llamada en ejecución · Punteada: import hacia el centro",
+        "implementa: el adaptador cumple el contrato del dominio"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Regla de dependencia",
+      "items": [
+        "El dominio no importa nada de las capas externas",
+        "Cambiar de tecnología = cambiar contenedor.ts, no el dominio"
+      ]
+    }
+  ]
+}

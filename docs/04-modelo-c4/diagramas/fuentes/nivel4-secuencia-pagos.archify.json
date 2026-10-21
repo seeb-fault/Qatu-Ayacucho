@@ -1,0 +1,267 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "Qatu · Nivel 4 · Aceptación y pago seguro",
+    "output": "docs/04-modelo-c4/diagramas/html/nivel4-secuencia-pagos.html",
+    "locale": "es",
+    "quality_profile": "showcase"
+  },
+  "participants": [
+    {
+      "id": "prov",
+      "type": "external",
+      "label": "Proveedor",
+      "sublabel": "Acepta solicitud"
+    },
+    {
+      "id": "cli",
+      "type": "external",
+      "label": "Cliente",
+      "sublabel": "Token y operación"
+    },
+    {
+      "id": "api",
+      "type": "backend",
+      "label": "API Qatu",
+      "sublabel": "HTTP / webhook"
+    },
+    {
+      "id": "res",
+      "type": "backend",
+      "label": "Reservas",
+      "sublabel": "Casos de uso"
+    },
+    {
+      "id": "db",
+      "type": "database",
+      "label": "PostgreSQL",
+      "sublabel": "Estado + inbox/outbox"
+    },
+    {
+      "id": "pay",
+      "type": "backend",
+      "label": "Adaptador",
+      "sublabel": "Culqi"
+    },
+    {
+      "id": "culqi",
+      "type": "external",
+      "label": "Culqi",
+      "sublabel": "Pasarela"
+    }
+  ],
+  "messages": [
+    {
+      "from": "prov",
+      "to": "api",
+      "label": "Aceptar solicitud propia",
+      "y": 175,
+      "variant": "default"
+    },
+    {
+      "from": "api",
+      "to": "res",
+      "label": "AceptarReservaCasoUso",
+      "y": 241,
+      "variant": "default"
+    },
+    {
+      "from": "res",
+      "to": "db",
+      "label": "TX: reserva + bloqueo + outbox",
+      "y": 307,
+      "variant": "default"
+    },
+    {
+      "from": "db",
+      "to": "res",
+      "label": "Si ocupado: exclusión; si libre: commit ACEPTADA",
+      "y": 373,
+      "variant": "return"
+    },
+    {
+      "from": "res",
+      "to": "api",
+      "label": "Ocupado: 409; libre: vencimiento de pago",
+      "y": 439,
+      "variant": "default"
+    },
+    {
+      "from": "cli",
+      "to": "api",
+      "label": "Solo si aceptada: token + clave de operación",
+      "y": 505,
+      "variant": "default"
+    },
+    {
+      "from": "api",
+      "to": "res",
+      "label": "IniciarPagoCasoUso",
+      "y": 571,
+      "variant": "default"
+    },
+    {
+      "from": "res",
+      "to": "db",
+      "label": "Guardar intento + importe autoritativo; COMMIT",
+      "y": 637,
+      "variant": "default"
+    },
+    {
+      "from": "res",
+      "to": "pay",
+      "label": "Iniciar intento persistido",
+      "y": 703,
+      "variant": "default"
+    },
+    {
+      "from": "pay",
+      "to": "culqi",
+      "label": "Solicitar cobro sin TX SQL abierta",
+      "y": 769,
+      "variant": "default"
+    },
+    {
+      "from": "culqi",
+      "to": "pay",
+      "label": "Si verificable: referencia y estado",
+      "y": 835,
+      "variant": "return"
+    },
+    {
+      "from": "pay",
+      "to": "res",
+      "label": "Resultado normalizado o timeout / pendiente",
+      "y": 901,
+      "variant": "return"
+    },
+    {
+      "from": "res",
+      "to": "db",
+      "label": "Verificado: confirmar; incierto: conciliar",
+      "y": 967,
+      "variant": "default"
+    },
+    {
+      "from": "res",
+      "to": "api",
+      "label": "Incierto: 202 y consulta de estado",
+      "y": 1033,
+      "variant": "default"
+    },
+    {
+      "from": "culqi",
+      "to": "api",
+      "label": "Webhook del pago",
+      "y": 1099,
+      "variant": "return"
+    },
+    {
+      "from": "api",
+      "to": "pay",
+      "label": "Verificar evento",
+      "y": 1165,
+      "variant": "default"
+    },
+    {
+      "from": "pay",
+      "to": "culqi",
+      "label": "Si hace falta: consulta privada",
+      "y": 1231,
+      "variant": "default"
+    },
+    {
+      "from": "culqi",
+      "to": "pay",
+      "label": "Estado + monto + moneda + referencia",
+      "y": 1297,
+      "variant": "return"
+    },
+    {
+      "from": "pay",
+      "to": "api",
+      "label": "Evento verificado",
+      "y": 1363,
+      "variant": "return"
+    },
+    {
+      "from": "api",
+      "to": "res",
+      "label": "ConfirmarPagoCasoUso idempotente",
+      "y": 1429,
+      "variant": "default"
+    },
+    {
+      "from": "res",
+      "to": "db",
+      "label": "TX: inbox único + intento + reserva + outbox",
+      "y": 1495,
+      "variant": "default"
+    },
+    {
+      "from": "db",
+      "to": "res",
+      "label": "Duplicado: sin efecto; válido y vigente: CONFIRMADA",
+      "y": 1561,
+      "variant": "return"
+    },
+    {
+      "from": "db",
+      "to": "res",
+      "label": "Vencido / importe inválido: registrar y conciliar",
+      "y": 1627,
+      "variant": "return"
+    },
+    {
+      "from": "res",
+      "to": "api",
+      "label": "Resultado persistido",
+      "y": 1693,
+      "variant": "default"
+    },
+    {
+      "from": "api",
+      "to": "culqi",
+      "label": "Acuse solo después de persistir",
+      "y": 1759,
+      "variant": "default"
+    }
+  ],
+  "segments": [
+    {
+      "from": 155,
+      "to": 480,
+      "label": "1 · Aceptación atómica · alternativas excluyentes"
+    },
+    {
+      "from": 500,
+      "to": 1080,
+      "label": "2 · Cobro · intento persistido antes de la llamada"
+    },
+    {
+      "from": 1090,
+      "to": 1810,
+      "label": "3 · Notificación · verificación y deduplicación"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Condiciones",
+      "items": [
+        "Los mensajes «si» describen alternativas; no se ejecutan todas las ramas.",
+        "Respuesta aprobada y webhook usan la misma confirmación idempotente.",
+        "Un pago tardío no reactiva ni vuelve a bloquear fechas: requiere ajuste/reembolso."
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Después del commit",
+      "items": [
+        "Outbox se publica con reintentos y registro de entrega fuera del cobro.",
+        "Timeout no autoriza un segundo cobro ciego; se concilia el intento existente."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\fuentes\\nivel2-contenedores.archify.json",
+    "sha256": "b3332ecebed5feae274977159dd32b4c25763dbd7f86410511670dbeb7e2ba64",
+    "bytes": 4344
+  },
+  "artifact": {
+    "path": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\html\\nivel2-contenedores.html",
+    "sha256": "db86b6ec3d64bc70e0fc61e788b593eff104c7db4b5a71c3092b378b18aa0208",
+    "bytes": 830066
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\revision\\nivel2-contenedores\\r1\\nivel2-contenedores.finalize.json",
+    "summaryReceipt": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\revision\\nivel2-contenedores\\r1\\nivel2-contenedores.finalize-summary.json",
+    "browserCheckReceipt": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\revision\\nivel2-contenedores\\r1\\nivel2-contenedores.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.1.0",
+    "availableVersion": "3.1.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-15T19:11:36.423Z",
+    "source": "network",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 11232,
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "resolvedCrossovers": 3,
+      "routesOverSuggestedBends": 2
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [
+        {
+          "left": {
+            "from": "api",
+            "to": "culqi",
+            "label": "Cobro / consulta",
+            "collectionIndex": 4,
+            "artifactIndex": 5
+          },
+          "right": {
+            "from": "api",
+            "to": "msg",
+            "label": "HTTPS",
+            "collectionIndex": 7,
+            "artifactIndex": 8
+          },
+          "point": [
+            624,
+            548
+          ],
+          "sharedNode": "api"
+        },
+        {
+          "left": {
+            "from": "culqi",
+            "to": "api",
+            "label": "Webhook verificado",
+            "collectionIndex": 5,
+            "artifactIndex": 6
+          },
+          "right": {
+            "from": "api",
+            "to": "msg",
+            "label": "HTTPS",
+            "collectionIndex": 7,
+            "artifactIndex": 8
+          },
+          "point": [
+            584,
+            548
+          ],
+          "sharedNode": "api"
+        },
+        {
+          "left": {
+            "from": "api",
+            "to": "ia",
+            "label": "HTTPS",
+            "collectionIndex": 6,
+            "artifactIndex": 7
+          },
+          "right": {
+            "from": "api",
+            "to": "msg",
+            "label": "HTTPS",
+            "collectionIndex": 7,
+            "artifactIndex": 8
+          },
+          "point": [
+            785,
+            548
+          ],
+          "sharedNode": "api"
+        }
+      ],
+      "detours": [
+        {
+          "relationship": {
+            "from": "browser",
+            "to": "culqi",
+            "label": "Tokeniza · HTTPS",
+            "collectionIndex": 3,
+            "artifactIndex": 4
+          },
+          "bends": 3,
+          "stretch": 1.056
+        },
+        {
+          "relationship": {
+            "from": "api",
+            "to": "culqi",
+            "label": "Cobro / consulta",
+            "collectionIndex": 4,
+            "artifactIndex": 5
+          },
+          "bends": 3,
+          "stretch": 1
+        }
+      ],
+      "truncated": false
+    },
+    "hints": [
+      "api has 5 relationships facing its right side, which fits 4 ports: make that side at least 88px, or move some of those neighbours so they face another side of api.",
+      "api → culqi and api → msg cross next to api: move node culqi or msg so the two reach api from different sides (for example one level with it, one directly above or below it).",
+      "culqi → api and api → msg cross next to api: move node culqi or msg so the two reach api from different sides (for example one level with it, one directly above or below it).",
+      "api → ia and api → msg cross next to api: move node ia or msg so the two reach api from different sides (for example one level with it, one directly above or below it).",
+      "browser → culqi needs 3 bends: move node browser or culqi so they share a row or column with matching centers, or sit diagonally with a clear corner.",
+      "api → culqi needs 3 bends: move node api or culqi so they share a row or column with matching centers, or sit diagonally with a clear corner."
+    ],
+    "repair": "Trace these relationships at the desktop viewport. For Architecture, use references/architecture-layout-repair.md: reflow a blocked main path or tangled connected scene, and repair an isolated defect locally only when the surrounding composition is accepted. Preserve all semantic content and user-fixed geometry. Rerun finalize once after the edit."
+  }
+}

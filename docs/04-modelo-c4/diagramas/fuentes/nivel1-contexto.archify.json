@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Qatu · Nivel 1 · Contexto del sistema",
+    "output": "docs/04-modelo-c4/diagramas/html/nivel1-contexto.html",
+    "locale": "es",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "cliente",
+      "type": "external",
+      "label": "Cliente / visitante",
+      "sublabel": "Busca, reserva y reseña",
+      "pos": [
+        40,
+        80
+      ],
+      "size": [
+        190,
+        76
+      ]
+    },
+    {
+      "id": "proveedor",
+      "type": "external",
+      "label": "Proveedor",
+      "sublabel": "Publica y entrega",
+      "pos": [
+        40,
+        300
+      ],
+      "size": [
+        190,
+        76
+      ]
+    },
+    {
+      "id": "admin",
+      "type": "external",
+      "label": "Administrador",
+      "sublabel": "Verifica y modera",
+      "pos": [
+        40,
+        520
+      ],
+      "size": [
+        190,
+        76
+      ]
+    },
+    {
+      "id": "qatu",
+      "type": "backend",
+      "label": "QATU",
+      "sublabel": "Alquiler y oficios · Ayacucho",
+      "pos": [
+        450,
+        300
+      ],
+      "size": [
+        230,
+        76
+      ]
+    },
+    {
+      "id": "culqi",
+      "type": "external",
+      "label": "Culqi",
+      "sublabel": "Procesamiento de pagos",
+      "pos": [
+        950,
+        40
+      ],
+      "size": [
+        190,
+        76
+      ]
+    },
+    {
+      "id": "ia",
+      "type": "external",
+      "label": "Proveedor de IA",
+      "sublabel": "Interpretación de texto",
+      "pos": [
+        950,
+        240
+      ],
+      "size": [
+        190,
+        76
+      ]
+    },
+    {
+      "id": "mensajes",
+      "type": "external",
+      "label": "Mensajería",
+      "sublabel": "Avisos transaccionales",
+      "pos": [
+        950,
+        440
+      ],
+      "size": [
+        190,
+        76
+      ]
+    },
+    {
+      "id": "mapas",
+      "type": "external",
+      "label": "Mapas",
+      "sublabel": "Ubicación geográfica",
+      "pos": [
+        950,
+        640
+      ],
+      "size": [
+        190,
+        76
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "cliente",
+      "to": "qatu",
+      "label": "Solicita y paga"
+    },
+    {
+      "from": "proveedor",
+      "to": "qatu",
+      "label": "Gestiona ofertas"
+    },
+    {
+      "from": "admin",
+      "to": "qatu",
+      "label": "Supervisa"
+    },
+    {
+      "from": "qatu",
+      "to": "culqi",
+      "label": "Cobra / consulta"
+    },
+    {
+      "from": "culqi",
+      "to": "qatu",
+      "label": "Notifica pago",
+      "variant": "dashed"
+    },
+    {
+      "from": "qatu",
+      "to": "ia",
+      "label": "Interpreta texto"
+    },
+    {
+      "from": "qatu",
+      "to": "mensajes",
+      "label": "Envía avisos"
+    },
+    {
+      "from": "qatu",
+      "to": "mapas",
+      "label": "Ubica ofertas"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Alcance",
+      "items": [
+        "Herramientas en alquiler y servicios locales.",
+        "Personas y sistemas externos; sin detalles de infraestructura."
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Límites",
+      "items": [
+        "La IA propone filtros; Qatu valida y consulta datos reales.",
+        "Qatu no custodia garantías ni incorpora ERP o courier."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,262 @@
+{
+  "slug": "enfoque-arquitectonico-qatu",
+  "title": "[Enfoque arquitectónico] Qatu — Clean Architecture",
+  "subtitle": "Organización interna por módulo · Flechas continuas = dependencias de código",
+  "width": 1700,
+  "height": 1370,
+  "nodes": [
+    {
+      "id": "presentation",
+      "x": 120,
+      "y": 250,
+      "w": 400,
+      "h": 165,
+      "title": "PRESENTACIÓN",
+      "lines": [
+        "Controladores, DTO y guards",
+        "ReservasController",
+        "BusquedaController"
+      ],
+      "kind": "component"
+    },
+    {
+      "id": "application",
+      "x": 650,
+      "y": 250,
+      "w": 400,
+      "h": 165,
+      "title": "APLICACIÓN",
+      "lines": [
+        "Casos de uso y coordinación",
+        "AceptarReserva · ConfirmarPago",
+        "BuscarEnLenguajeNatural"
+      ],
+      "kind": "component"
+    },
+    {
+      "id": "composition",
+      "x": 1180,
+      "y": 250,
+      "w": 400,
+      "h": 165,
+      "title": "COMPOSICIÓN",
+      "lines": [
+        "NestJS module.ts y tokens",
+        "Selecciona e inyecta adapters",
+        "Conecta todas las capas"
+      ],
+      "kind": "container"
+    },
+    {
+      "id": "domain",
+      "x": 580,
+      "y": 575,
+      "w": 540,
+      "h": 255,
+      "title": "DOMINIO Y PUERTOS",
+      "lines": [
+        "Reserva · RangoFechas · Dinero",
+        "IntentoPago · CriteriosBusqueda",
+        "RepositorioReservas · ProcesadorPagos",
+        "InterpreteIntencion · Reloj",
+        "Reglas sin ORM, framework ni SDK"
+      ],
+      "kind": "domain"
+    },
+    {
+      "id": "repos",
+      "x": 120,
+      "y": 1000,
+      "w": 400,
+      "h": 120,
+      "title": "INFRAESTRUCTURA: datos",
+      "lines": [
+        "PostgresReservasRepository",
+        "Transacciones y exclusión de fechas"
+      ],
+      "kind": "support"
+    },
+    {
+      "id": "payment",
+      "x": 650,
+      "y": 1000,
+      "w": 400,
+      "h": 120,
+      "title": "INFRAESTRUCTURA: pagos",
+      "lines": [
+        "CulqiPagoAdapter",
+        "Verificación y conciliación"
+      ],
+      "kind": "support"
+    },
+    {
+      "id": "model",
+      "x": 1180,
+      "y": 1000,
+      "w": 400,
+      "h": 120,
+      "title": "INFRAESTRUCTURA: IA",
+      "lines": [
+        "ModeloLenguajeAdapter",
+        "Timeout, cuota y validación"
+      ],
+      "kind": "support"
+    }
+  ],
+  "edges": [
+    {
+      "points": [
+        [
+          520,
+          332
+        ],
+        [
+          650,
+          332
+        ]
+      ],
+      "label": "Invoca caso de uso",
+      "lx": 585,
+      "ly": 315,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          850,
+          415
+        ],
+        [
+          850,
+          575
+        ]
+      ],
+      "label": "Depende de entidades y contratos",
+      "lx": 850,
+      "ly": 500,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          320,
+          1000
+        ],
+        [
+          320,
+          880
+        ],
+        [
+          690,
+          880
+        ],
+        [
+          690,
+          830
+        ]
+      ],
+      "label": "Implementa repositorio",
+      "lx": 480,
+      "ly": 865,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          850,
+          1000
+        ],
+        [
+          850,
+          830
+        ]
+      ],
+      "label": "Implementa puerto de pagos",
+      "lx": 850,
+      "ly": 920,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          1380,
+          1000
+        ],
+        [
+          1380,
+          880
+        ],
+        [
+          1010,
+          880
+        ],
+        [
+          1010,
+          830
+        ]
+      ],
+      "label": "Implementa puerto de intención",
+      "lx": 1220,
+      "ly": 865,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          1180,
+          332
+        ],
+        [
+          1050,
+          332
+        ]
+      ],
+      "label": "Inyecta",
+      "lx": 1115,
+      "ly": 315,
+      "style": "dashed"
+    },
+    {
+      "points": [
+        [
+          1380,
+          415
+        ],
+        [
+          1560,
+          415
+        ],
+        [
+          1560,
+          950
+        ],
+        [
+          1380,
+          950
+        ],
+        [
+          1380,
+          1000
+        ]
+      ],
+      "label": "Configura adapters",
+      "lx": 1480,
+      "ly": 740,
+      "style": "dashed"
+    }
+  ],
+  "boundaries": [
+    {
+      "x": 60,
+      "y": 130,
+      "w": 1580,
+      "h": 1050,
+      "title": "API Qatu · Patrón aplicado dentro de cada módulo del monolito"
+    }
+  ],
+  "notes": [
+    "El dominio no importa NestJS, PostgreSQL, Culqi ni la API del modelo de IA.",
+    "Las flechas de imports apuntan al núcleo; en ejecución los casos de uso llaman a los adapters por puertos.",
+    "Frontend Next.js presenta datos y valida formularios; el backend decide tarifas, disponibilidad y pagos."
+  ]
+}

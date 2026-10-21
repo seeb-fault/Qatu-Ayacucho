@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "diagram_type": "class",
+  "meta": {
+    "title": "Qatu · Nivel 4 · Búsqueda inteligente",
+    "output": "docs/04-modelo-c4/diagramas/html/nivel4-clases-busqueda.html",
+    "locale": "es",
+    "quality_profile": "showcase"
+  },
+  "layout": {
+    "mode": "grid",
+    "typeW": 290,
+    "typeMaxW": 350,
+    "gapX": 90,
+    "gapY": 140
+  },
+  "types": [
+    {
+      "id": "BusquedaController",
+      "label": "BusquedaController",
+      "row": 0,
+      "col": 1,
+      "kind": "class",
+      "methods": [],
+      "attributes": []
+    },
+    {
+      "id": "BuscarEnLenguajeNaturalCasoUso",
+      "label": "BuscarEnLenguajeNaturalCasoUso",
+      "row": 1,
+      "col": 1,
+      "kind": "class",
+      "methods": [
+        {
+          "name": "ejecutar",
+          "parameters": "texto, contexto",
+          "visibility": "public"
+        }
+      ],
+      "attributes": []
+    },
+    {
+      "id": "InterpreteIntencion",
+      "label": "InterpreteIntencion",
+      "row": 2,
+      "col": 0,
+      "kind": "interface",
+      "methods": [
+        {
+          "name": "interpretar",
+          "parameters": "texto, contexto",
+          "visibility": "public"
+        }
+      ],
+      "attributes": []
+    },
+    {
+      "id": "ValidadorCriterios",
+      "label": "ValidadorCriterios",
+      "row": 2,
+      "col": 1,
+      "kind": "class",
+      "methods": [
+        {
+          "name": "validar",
+          "parameters": "respuesta",
+          "visibility": "public"
+        }
+      ],
+      "attributes": []
+    },
+    {
+      "id": "ConsultaCatalogo",
+      "label": "ConsultaCatalogo",
+      "row": 2,
+      "col": 2,
+      "kind": "interface",
+      "methods": [
+        {
+          "name": "buscar",
+          "parameters": "criterios",
+          "visibility": "public"
+        }
+      ],
+      "attributes": []
+    },
+    {
+      "id": "ModeloLenguajeAdapter",
+      "label": "ModeloLenguajeAdapter",
+      "row": 3,
+      "col": 0,
+      "kind": "class",
+      "methods": [],
+      "attributes": []
+    },
+    {
+      "id": "ConsultaDisponibilidad",
+      "label": "ConsultaDisponibilidad",
+      "row": 3,
+      "col": 2,
+      "kind": "interface",
+      "methods": [
+        {
+          "name": "consultar",
+          "parameters": "ids, rango",
+          "visibility": "public"
+        }
+      ],
+      "attributes": []
+    }
+  ],
+  "relationships": [
+    {
+      "from": "BusquedaController",
+      "to": "BuscarEnLenguajeNaturalCasoUso",
+      "kind": "association"
+    },
+    {
+      "from": "BuscarEnLenguajeNaturalCasoUso",
+      "to": "InterpreteIntencion",
+      "kind": "association"
+    },
+    {
+      "from": "BuscarEnLenguajeNaturalCasoUso",
+      "to": "ValidadorCriterios",
+      "kind": "association"
+    },
+    {
+      "from": "BuscarEnLenguajeNaturalCasoUso",
+      "to": "ConsultaCatalogo",
+      "kind": "association"
+    },
+    {
+      "from": "BuscarEnLenguajeNaturalCasoUso",
+      "to": "ConsultaDisponibilidad",
+      "kind": "association"
+    },
+    {
+      "from": "ModeloLenguajeAdapter",
+      "to": "InterpreteIntencion",
+      "kind": "realization"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Aislamiento",
+      "items": [
+        "IA intercambiable mediante InterpreteIntencion.",
+        "Catálogo y Reservas exponen consultas; Búsqueda no modifica sus tablas.",
+        "El resultado del modelo es entrada no confiable y siempre se valida."
+      ]
+    }
+  ]
+}

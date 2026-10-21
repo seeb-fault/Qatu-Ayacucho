@@ -1,0 +1,617 @@
+{
+  "slug": "estilo-arquitectonico-qatu",
+  "title": "[Estilo arquitectónico] Qatu — cliente-servidor y monolito modular",
+  "subtitle": "Capas = organización lógica · Monolito = una unidad de despliegue backend",
+  "width": 1700,
+  "height": 1500,
+  "nodes": [
+    {
+      "id": "browser",
+      "x": 600,
+      "y": 145,
+      "w": 420,
+      "h": 100,
+      "title": "Cliente web / navegador",
+      "lines": [
+        "Next.js · React · TypeScript",
+        "Interfaz móvil: cliente, proveedor y admin"
+      ],
+      "kind": "container"
+    },
+    {
+      "id": "presentation",
+      "x": 120,
+      "y": 415,
+      "w": 1160,
+      "h": 95,
+      "title": "1. Presentación",
+      "lines": [
+        "Controladores HTTP · JWT · roles y propiedad · validación de DTO"
+      ],
+      "kind": "component"
+    },
+    {
+      "id": "m0",
+      "x": 120,
+      "y": 630,
+      "w": 175,
+      "h": 120,
+      "title": "Usuarios",
+      "lines": [
+        "[Módulo]",
+        "Dominio +",
+        "casos de uso"
+      ],
+      "kind": "component"
+    },
+    {
+      "id": "m1",
+      "x": 315,
+      "y": 630,
+      "w": 175,
+      "h": 120,
+      "title": "Proveedores",
+      "lines": [
+        "[Módulo]",
+        "Dominio +",
+        "casos de uso"
+      ],
+      "kind": "component"
+    },
+    {
+      "id": "m2",
+      "x": 510,
+      "y": 630,
+      "w": 175,
+      "h": 120,
+      "title": "Catálogo",
+      "lines": [
+        "[Módulo]",
+        "Dominio +",
+        "casos de uso"
+      ],
+      "kind": "component"
+    },
+    {
+      "id": "m3",
+      "x": 705,
+      "y": 630,
+      "w": 175,
+      "h": 120,
+      "title": "Reservas",
+      "lines": [
+        "[Módulo]",
+        "Dominio +",
+        "casos de uso"
+      ],
+      "kind": "component"
+    },
+    {
+      "id": "m4",
+      "x": 900,
+      "y": 630,
+      "w": 175,
+      "h": 120,
+      "title": "Confianza",
+      "lines": [
+        "[Módulo]",
+        "Dominio +",
+        "casos de uso"
+      ],
+      "kind": "component"
+    },
+    {
+      "id": "m5",
+      "x": 1095,
+      "y": 630,
+      "w": 175,
+      "h": 120,
+      "title": "Búsqueda IA",
+      "lines": [
+        "[Módulo]",
+        "Dominio +",
+        "casos de uso"
+      ],
+      "kind": "component"
+    },
+    {
+      "id": "infra",
+      "x": 120,
+      "y": 875,
+      "w": 1160,
+      "h": 100,
+      "title": "3. Infraestructura",
+      "lines": [
+        "Repositorios por módulo · adaptadores de pagos, IA, mapas y archivos"
+      ],
+      "kind": "component"
+    },
+    {
+      "id": "support",
+      "x": 120,
+      "y": 1050,
+      "w": 1160,
+      "h": 80,
+      "title": "Soporte transversal",
+      "lines": [
+        "Composición · logs · inbox/outbox · reintentos · health checks"
+      ],
+      "kind": "support"
+    },
+    {
+      "id": "database",
+      "x": 120,
+      "y": 1240,
+      "w": 360,
+      "h": 100,
+      "title": "PostgreSQL + PostGIS",
+      "lines": [
+        "Datos persistentes y restricciones",
+        "Transacciones por módulo"
+      ],
+      "kind": "container"
+    },
+    {
+      "id": "files",
+      "x": 530,
+      "y": 1240,
+      "w": 360,
+      "h": 100,
+      "title": "Archivos privados",
+      "lines": [
+        "Fotos y evidencias persistentes",
+        "Copias fuera del VPS"
+      ],
+      "kind": "container"
+    },
+    {
+      "id": "cache",
+      "x": 940,
+      "y": 1240,
+      "w": 340,
+      "h": 100,
+      "title": "Redis — opcional",
+      "lines": [
+        "Caché pública",
+        "Sin autoridad de disponibilidad"
+      ],
+      "kind": "container"
+    },
+    {
+      "id": "pay",
+      "x": 1400,
+      "y": 415,
+      "w": 260,
+      "h": 100,
+      "title": "Culqi / Yape",
+      "lines": [
+        "Pago mediante adapter",
+        "Confirmación verificada"
+      ],
+      "kind": "external"
+    },
+    {
+      "id": "ai",
+      "x": 1400,
+      "y": 630,
+      "w": 260,
+      "h": 100,
+      "title": "Proveedor de IA",
+      "lines": [
+        "Intención de búsqueda",
+        "Respaldo convencional"
+      ],
+      "kind": "external"
+    },
+    {
+      "id": "other",
+      "x": 1400,
+      "y": 875,
+      "w": 260,
+      "h": 150,
+      "title": "Mapas y mensajería",
+      "lines": [
+        "Servicios externos",
+        "Geografía y avisos",
+        "Adapter / outbox"
+      ],
+      "kind": "external"
+    }
+  ],
+  "edges": [
+    {
+      "points": [
+        [
+          810,
+          245
+        ],
+        [
+          810,
+          415
+        ]
+      ],
+      "label": "HTTPS / JSON · /api/v1",
+      "lx": 810,
+      "ly": 290,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          700,
+          510
+        ],
+        [
+          700,
+          565
+        ],
+        [
+          207,
+          565
+        ],
+        [
+          207,
+          630
+        ]
+      ],
+      "label": "2. Negocio: módulos y casos de uso",
+      "lx": 700,
+      "ly": 595,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          402,
+          565
+        ],
+        [
+          402,
+          630
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          597,
+          565
+        ],
+        [
+          597,
+          630
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          792,
+          565
+        ],
+        [
+          792,
+          630
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          987,
+          565
+        ],
+        [
+          987,
+          630
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          1182,
+          565
+        ],
+        [
+          1182,
+          630
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          207,
+          750
+        ],
+        [
+          207,
+          815
+        ],
+        [
+          700,
+          815
+        ],
+        [
+          700,
+          875
+        ]
+      ],
+      "label": "Acceso mediante puertos",
+      "lx": 700,
+      "ly": 840,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          402,
+          750
+        ],
+        [
+          402,
+          815
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          597,
+          750
+        ],
+        [
+          597,
+          815
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          792,
+          750
+        ],
+        [
+          792,
+          815
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          987,
+          750
+        ],
+        [
+          987,
+          815
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          1182,
+          750
+        ],
+        [
+          1182,
+          815
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          1280,
+          905
+        ],
+        [
+          1350,
+          905
+        ],
+        [
+          1350,
+          465
+        ],
+        [
+          1400,
+          465
+        ]
+      ],
+      "label": "Pagos [HTTPS]",
+      "lx": 1350,
+      "ly": 560,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          1280,
+          930
+        ],
+        [
+          1375,
+          930
+        ],
+        [
+          1375,
+          680
+        ],
+        [
+          1400,
+          680
+        ]
+      ],
+      "label": "IA [HTTPS]",
+      "lx": 1375,
+      "ly": 800,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          1280,
+          955
+        ],
+        [
+          1400,
+          955
+        ]
+      ],
+      "label": "Adapters",
+      "lx": 1340,
+      "ly": 940,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          700,
+          1130
+        ],
+        [
+          700,
+          1190
+        ],
+        [
+          300,
+          1190
+        ],
+        [
+          300,
+          1240
+        ]
+      ],
+      "label": "SQL por módulo",
+      "lx": 450,
+      "ly": 1176,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          700,
+          1190
+        ],
+        [
+          710,
+          1240
+        ]
+      ],
+      "label": "I/O autorizado",
+      "lx": 710,
+      "ly": 1225,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          700,
+          1190
+        ],
+        [
+          1110,
+          1190
+        ],
+        [
+          1110,
+          1240
+        ]
+      ],
+      "label": "Opcional",
+      "lx": 1080,
+      "ly": 1176,
+      "style": "dashed"
+    },
+    {
+      "points": [
+        [
+          207,
+          565
+        ],
+        [
+          1182,
+          565
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          207,
+          815
+        ],
+        [
+          1182,
+          815
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "style": "solid"
+    }
+  ],
+  "boundaries": [
+    {
+      "x": 80,
+      "y": 345,
+      "w": 1240,
+      "h": 820,
+      "title": "API Qatu · NestJS · Seis módulos desplegados juntos"
+    }
+  ],
+  "notes": [
+    "Las flechas de esta vista son llamadas en ejecución; las reglas de imports se detallan en Clean Architecture.",
+    "Los seis módulos comparten proceso y recursos. Modularidad no equivale a aislamiento de fallos.",
+    "Despliegue inicial: web + API + PostgreSQL en un VPS con Docker Compose; no requiere microservicios."
+  ]
+}

@@ -1,0 +1,646 @@
+{
+  "date": "2026-10-15",
+  "date_timezone": "America/Lima",
+  "target": "Hygglo UK",
+  "records": [
+    {
+      "name": "01-inicio-escritorio",
+      "evidence_id": "ev_924b3abcc8679107a9d2648e09bd398ef232340cd7b2db929637fd8cadad459f",
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "start_url": "https://hygglo.com/uk",
+      "final_url": "https://hygglo.com/uk",
+      "viewport": {
+        "device_scale_factor": 1,
+        "height": 1100,
+        "width": 1440
+      },
+      "browser": {
+        "cleanup": "terminated-owned-process",
+        "mode": "launch",
+        "process_ownership": "provider-owned",
+        "product": "Chromium",
+        "version": "155.0.8059.41"
+      },
+      "actions": [
+        {
+          "action": "wait_for",
+          "locator": {
+            "kind": "css",
+            "selector": "body"
+          },
+          "state": "visible",
+          "step_id": "esperar_inicio",
+          "timeout_ms": 20000
+        },
+        {
+          "action": "wait_for_timeout",
+          "duration_ms": 2500,
+          "step_id": "estabilizar_inicio"
+        }
+      ],
+      "steps": [
+        {
+          "step_id": "scenario_start",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "step_id": "esperar_inicio",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "step_id": "estabilizar_inicio",
+          "status": "completed",
+          "error": null
+        }
+      ],
+      "screenshot": {
+        "path": "../../capturas/01-inicio-escritorio.png",
+        "bytes": 1336795,
+        "sha256": "774ce744f7337a1a619a961d1769f295e98b769f3f141ab51591f70ac8e81730"
+      },
+      "dom_sha256": "a1a8c91cdf6d022a5b9c882f89ddd819b278b048be7fd6e5085c2bc3e7506e6d",
+      "completeness": {
+        "equality_eligible": true,
+        "missing_sections": [],
+        "status": "complete",
+        "truncated_sections": []
+      },
+      "limitations": [
+        "Artifact identity is unavailable for this observation.",
+        "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+        "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+        "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+        "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+        "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+        "Storage values are hashed only after declared-secret redaction.",
+        "Browser host platform and architecture were not observed."
+      ]
+    },
+    {
+      "name": "02-busqueda-ubicacion",
+      "evidence_id": "ev_205a36c55cdece377d040a22ffeeeb46f258d6e9d543d44152d39d285bed65dc",
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "start_url": "https://hygglo.com/uk",
+      "final_url": "https://hygglo.com/uk/search/drill",
+      "viewport": {
+        "device_scale_factor": 1,
+        "height": 1100,
+        "width": 1440
+      },
+      "browser": {
+        "cleanup": "terminated-owned-process",
+        "mode": "launch",
+        "process_ownership": "provider-owned",
+        "product": "Chromium",
+        "version": "155.0.8059.41"
+      },
+      "actions": [
+        {
+          "action": "wait_for",
+          "locator": {
+            "kind": "role",
+            "name": "Search",
+            "role": "textbox"
+          },
+          "state": "visible",
+          "step_id": "esperar_busqueda",
+          "timeout_ms": 20000
+        },
+        {
+          "action": "fill",
+          "locator": {
+            "kind": "role",
+            "name": "Search",
+            "role": "textbox"
+          },
+          "step_id": "buscar_taladro",
+          "timeout_ms": 10000,
+          "value": {
+            "source": "literal",
+            "value": "drill"
+          }
+        },
+        {
+          "action": "press",
+          "key": "Enter",
+          "locator": {
+            "kind": "role",
+            "name": "Search",
+            "role": "textbox"
+          },
+          "step_id": "enviar_busqueda",
+          "timeout_ms": 10000
+        },
+        {
+          "action": "wait_for_timeout",
+          "duration_ms": 3000,
+          "step_id": "cargar_resultados"
+        }
+      ],
+      "steps": [
+        {
+          "step_id": "scenario_start",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "step_id": "esperar_busqueda",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "step_id": "buscar_taladro",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "step_id": "enviar_busqueda",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "step_id": "cargar_resultados",
+          "status": "completed",
+          "error": null
+        }
+      ],
+      "screenshot": {
+        "path": "../../capturas/02-busqueda-ubicacion.png",
+        "bytes": 80941,
+        "sha256": "1e6b0562a1da87055731ccad60c31c94e673f54f517350214e76f3fdc31eefd5"
+      },
+      "dom_sha256": "21587896762958144278a92f0e9194e27dd747a8a246afef11cd93136e61849c",
+      "completeness": {
+        "equality_eligible": true,
+        "missing_sections": [],
+        "status": "complete",
+        "truncated_sections": []
+      },
+      "limitations": [
+        "Artifact identity is unavailable for this observation.",
+        "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+        "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+        "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+        "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+        "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+        "Storage values are hashed only after declared-secret redaction.",
+        "Browser host platform and architecture were not observed."
+      ]
+    },
+    {
+      "name": "03-detalle-herramienta",
+      "evidence_id": "ev_aca8eaf9e4dccf65ad98edb2a5d7f2d329ec6eecd073d76cdd15722d77cea6e9",
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "start_url": "https://hygglo.com/uk/i/12a-step-ladder-garden-painting-and-decorating-diy",
+      "final_url": "https://hygglo.com/uk/i/12a-step-ladder-garden-painting-and-decorating-diy",
+      "viewport": {
+        "device_scale_factor": 1,
+        "height": 1100,
+        "width": 1440
+      },
+      "browser": {
+        "cleanup": "terminated-owned-process",
+        "mode": "launch",
+        "process_ownership": "provider-owned",
+        "product": "Chromium",
+        "version": "155.0.8059.41"
+      },
+      "actions": [
+        {
+          "action": "wait_for",
+          "locator": {
+            "kind": "css",
+            "selector": "body"
+          },
+          "state": "visible",
+          "step_id": "esperar_pagina",
+          "timeout_ms": 20000
+        },
+        {
+          "action": "wait_for_timeout",
+          "duration_ms": 3000,
+          "step_id": "estabilizar_pagina"
+        }
+      ],
+      "steps": [
+        {
+          "step_id": "scenario_start",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "step_id": "esperar_pagina",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "step_id": "estabilizar_pagina",
+          "status": "completed",
+          "error": null
+        }
+      ],
+      "screenshot": {
+        "path": "../../capturas/03-detalle-herramienta.png",
+        "bytes": 435911,
+        "sha256": "cc038cf17b2d06bc8347bedb45178bdb7ce216252b3f95221d144232398a4542"
+      },
+      "dom_sha256": "c249a1c21866d769383244cb27de84c7c791d89e6d9e18aeb3a7d864bf06b2e3",
+      "completeness": {
+        "equality_eligible": true,
+        "missing_sections": [],
+        "status": "complete",
+        "truncated_sections": []
+      },
+      "limitations": [
+        "Artifact identity is unavailable for this observation.",
+        "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+        "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+        "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+        "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+        "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+        "Storage values are hashed only after declared-secret redaction.",
+        "Browser host platform and architecture were not observed."
+      ]
+    },
+    {
+      "name": "04-calendario-cotizacion",
+      "evidence_id": "ev_9c7ebb2194c2621b855daa26b16181bec7c4e3763b411580f0cc4a2039c2e4e9",
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "start_url": "https://hygglo.com/uk/i/12a-step-ladder-garden-painting-and-decorating-diy",
+      "final_url": "https://hygglo.com/uk/i/12a-step-ladder-garden-painting-and-decorating-diy",
+      "viewport": {
+        "device_scale_factor": 1,
+        "height": 1100,
+        "width": 1440
+      },
+      "browser": {
+        "cleanup": "terminated-owned-process",
+        "mode": "launch",
+        "process_ownership": "provider-owned",
+        "product": "Chromium",
+        "version": "155.0.8059.41"
+      },
+      "actions": [
+        {
+          "action": "wait_for",
+          "locator": {
+            "kind": "role",
+            "name": "17",
+            "role": "button"
+          },
+          "state": "visible",
+          "step_id": "esperar_calendario",
+          "timeout_ms": 20000
+        },
+        {
+          "action": "click",
+          "button": "left",
+          "click_count": 1,
+          "locator": {
+            "kind": "role",
+            "name": "17",
+            "role": "button"
+          },
+          "step_id": "seleccionar_inicio",
+          "timeout_ms": 10000
+        },
+        {
+          "action": "click",
+          "button": "left",
+          "click_count": 1,
+          "locator": {
+            "kind": "role",
+            "name": "20",
+            "role": "button"
+          },
+          "step_id": "seleccionar_fin",
+          "timeout_ms": 10000
+        },
+        {
+          "action": "wait_for_timeout",
+          "duration_ms": 1000,
+          "step_id": "actualizar_cotizacion"
+        }
+      ],
+      "steps": [
+        {
+          "step_id": "scenario_start",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "step_id": "esperar_calendario",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "step_id": "seleccionar_inicio",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "step_id": "seleccionar_fin",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "step_id": "actualizar_cotizacion",
+          "status": "completed",
+          "error": null
+        }
+      ],
+      "screenshot": {
+        "path": "../../capturas/04-calendario-cotizacion.png",
+        "bytes": 439268,
+        "sha256": "81fed1ea8945bb3e79c302f21b05316529f51d7df55de0f37fc930d37ca77c70"
+      },
+      "dom_sha256": "4b484bfaba6582262ce3b197a59b08d0f2bed22911f64c4749a1496fb0ad85fe",
+      "completeness": {
+        "equality_eligible": true,
+        "missing_sections": [],
+        "status": "complete",
+        "truncated_sections": []
+      },
+      "limitations": [
+        "Artifact identity is unavailable for this observation.",
+        "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+        "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+        "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+        "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+        "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+        "Storage values are hashed only after declared-secret redaction.",
+        "Browser host platform and architecture were not observed."
+      ]
+    },
+    {
+      "name": "05-inicio-movil-inicial",
+      "evidence_id": "ev_b2580d86dc600665d128a0484b15b78cc6399f63066bf3cd81b7594e07f7219e",
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "start_url": "https://hygglo.com/uk",
+      "final_url": "https://hygglo.com/uk",
+      "viewport": {
+        "device_scale_factor": 1,
+        "height": 844,
+        "width": 390
+      },
+      "browser": {
+        "cleanup": "terminated-owned-process",
+        "mode": "launch",
+        "process_ownership": "provider-owned",
+        "product": "Chromium",
+        "version": "155.0.8059.41"
+      },
+      "actions": [
+        {
+          "action": "wait_for",
+          "locator": {
+            "kind": "css",
+            "selector": "body"
+          },
+          "state": "visible",
+          "step_id": "esperar_pagina",
+          "timeout_ms": 20000
+        },
+        {
+          "action": "wait_for_timeout",
+          "duration_ms": 3000,
+          "step_id": "estabilizar_pagina"
+        }
+      ],
+      "steps": [
+        {
+          "step_id": "scenario_start",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "step_id": "esperar_pagina",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "step_id": "estabilizar_pagina",
+          "status": "completed",
+          "error": null
+        }
+      ],
+      "screenshot": {
+        "path": "../../capturas/05-inicio-movil-inicial.png",
+        "bytes": 152615,
+        "sha256": "0fa4303aa44e6801cff6d02338bd67b33244d62d6f516738a4f7dfb7c90ab150"
+      },
+      "dom_sha256": "4fbb8d5cb0126e75af5017721a12c5d8ffae6dd25a36c43b001a6182062c2319",
+      "completeness": {
+        "equality_eligible": true,
+        "missing_sections": [],
+        "status": "complete",
+        "truncated_sections": []
+      },
+      "limitations": [
+        "Artifact identity is unavailable for this observation.",
+        "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+        "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+        "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+        "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+        "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+        "Storage values are hashed only after declared-secret redaction.",
+        "Browser host platform and architecture were not observed."
+      ]
+    },
+    {
+      "name": "06-resultados-busqueda",
+      "evidence_id": "ev_a18652f3cd4532688eb15c87d082f0006c46e058221068dde5a43e4f3e86ccb6",
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "start_url": "https://hygglo.com/uk/search/drill",
+      "final_url": "https://hygglo.com/uk/search/drill",
+      "viewport": {
+        "device_scale_factor": 1,
+        "height": 1100,
+        "width": 1440
+      },
+      "browser": {
+        "cleanup": "terminated-owned-process",
+        "mode": "launch",
+        "process_ownership": "provider-owned",
+        "product": "Chromium",
+        "version": "155.0.8059.41"
+      },
+      "actions": [
+        {
+          "action": "wait_for",
+          "locator": {
+            "kind": "role",
+            "name": "Close",
+            "role": "button"
+          },
+          "state": "visible",
+          "step_id": "esperar_ubicacion",
+          "timeout_ms": 15000
+        },
+        {
+          "action": "click",
+          "button": "left",
+          "click_count": 1,
+          "locator": {
+            "kind": "role",
+            "name": "Close",
+            "role": "button"
+          },
+          "step_id": "cerrar_ubicacion",
+          "timeout_ms": 10000
+        },
+        {
+          "action": "wait_for_timeout",
+          "duration_ms": 4000,
+          "step_id": "cargar_catalogo"
+        }
+      ],
+      "steps": [
+        {
+          "step_id": "scenario_start",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "step_id": "esperar_ubicacion",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "step_id": "cerrar_ubicacion",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "step_id": "cargar_catalogo",
+          "status": "completed",
+          "error": null
+        }
+      ],
+      "screenshot": {
+        "path": "../../capturas/06-resultados-busqueda.png",
+        "bytes": 977133,
+        "sha256": "2ba0d2b41a3c7b6d67f16825a2c25c62f083a63973b604a069376e0f503c3481"
+      },
+      "dom_sha256": "7cb5628a27b64e8755e64f14e748a8244100bc5ac6e60b5e08e0a7336ae30537",
+      "completeness": {
+        "equality_eligible": true,
+        "missing_sections": [],
+        "status": "complete",
+        "truncated_sections": []
+      },
+      "limitations": [
+        "Artifact identity is unavailable for this observation.",
+        "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+        "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+        "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+        "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+        "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+        "Storage values are hashed only after declared-secret redaction.",
+        "Browser host platform and architecture were not observed."
+      ]
+    },
+    {
+      "name": "07-inicio-movil",
+      "evidence_id": "ev_fbbe544dd042d0165419d777404ef1b1abbc50b3a623da93a3a7e848cd06129f",
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "start_url": "https://hygglo.com/uk",
+      "final_url": "https://hygglo.com/uk",
+      "viewport": {
+        "device_scale_factor": 1,
+        "height": 844,
+        "width": 390
+      },
+      "browser": {
+        "cleanup": "terminated-owned-process",
+        "mode": "launch",
+        "process_ownership": "provider-owned",
+        "product": "Chromium",
+        "version": "155.0.8059.41"
+      },
+      "actions": [
+        {
+          "action": "wait_for",
+          "locator": {
+            "kind": "role",
+            "name": "Continue to website",
+            "role": "button"
+          },
+          "state": "visible",
+          "step_id": "esperar_opcion_web",
+          "timeout_ms": 15000
+        },
+        {
+          "action": "click",
+          "button": "left",
+          "click_count": 1,
+          "locator": {
+            "kind": "role",
+            "name": "Continue to website",
+            "role": "button"
+          },
+          "step_id": "continuar_web",
+          "timeout_ms": 10000
+        },
+        {
+          "action": "wait_for_timeout",
+          "duration_ms": 2000,
+          "step_id": "estabilizar_movil"
+        }
+      ],
+      "steps": [
+        {
+          "step_id": "scenario_start",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "step_id": "esperar_opcion_web",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "step_id": "continuar_web",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "step_id": "estabilizar_movil",
+          "status": "completed",
+          "error": null
+        }
+      ],
+      "screenshot": {
+        "path": "../../capturas/07-inicio-movil.png",
+        "bytes": 247592,
+        "sha256": "769647f2163b0544ead94bd98d2d8f4475a321002e8bce40c914192b410ad714"
+      },
+      "dom_sha256": "b2c9c54f863e5ad58e7f86766ff66f9eda3d637435cdb270fdcb5d76453dd826",
+      "completeness": {
+        "equality_eligible": true,
+        "missing_sections": [],
+        "status": "complete",
+        "truncated_sections": []
+      },
+      "limitations": [
+        "Artifact identity is unavailable for this observation.",
+        "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+        "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+        "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+        "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+        "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+        "Storage values are hashed only after declared-secret redaction.",
+        "Browser host platform and architecture were not observed."
+      ]
+    }
+  ]
+}

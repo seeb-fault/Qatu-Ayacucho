@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Qatu · Nivel 3 · Entrada HTTP y seis módulos",
+    "output": "docs/04-modelo-c4/diagramas/html/nivel3-entrada-http.html",
+    "locale": "es",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "web",
+      "type": "frontend",
+      "label": "Web Next.js",
+      "sublabel": "HTTPS / JSON",
+      "pos": [
+        420,
+        40
+      ],
+      "size": [
+        240,
+        76
+      ]
+    },
+    {
+      "id": "http",
+      "type": "security",
+      "label": "Entrada HTTP",
+      "sublabel": "Controladores, guards, DTO",
+      "pos": [
+        420,
+        260
+      ],
+      "size": [
+        240,
+        76
+      ]
+    },
+    {
+      "id": "busqueda",
+      "type": "backend",
+      "label": "Búsqueda",
+      "sublabel": "Intención + consultas",
+      "pos": [
+        40,
+        560
+      ],
+      "size": [
+        240,
+        76
+      ]
+    },
+    {
+      "id": "resenas",
+      "type": "backend",
+      "label": "Reputación",
+      "sublabel": "Reseñas e incidencias",
+      "pos": [
+        420,
+        560
+      ],
+      "size": [
+        240,
+        76
+      ]
+    },
+    {
+      "id": "reservas",
+      "type": "backend",
+      "label": "Reservas",
+      "sublabel": "Calendario y pagos",
+      "pos": [
+        800,
+        560
+      ],
+      "size": [
+        240,
+        76
+      ]
+    },
+    {
+      "id": "catalogo",
+      "type": "backend",
+      "label": "Catálogo",
+      "sublabel": "Ofertas, recursos y precios",
+      "pos": [
+        40,
+        820
+      ],
+      "size": [
+        240,
+        76
+      ]
+    },
+    {
+      "id": "proveedores",
+      "type": "backend",
+      "label": "Proveedores",
+      "sublabel": "Perfil y verificación",
+      "pos": [
+        420,
+        820
+      ],
+      "size": [
+        240,
+        76
+      ]
+    },
+    {
+      "id": "usuarios",
+      "type": "backend",
+      "label": "Usuarios",
+      "sublabel": "Identidad y permisos",
+      "pos": [
+        800,
+        820
+      ],
+      "size": [
+        240,
+        76
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Contenedor API Qatu · monolito modular",
+      "wraps": [
+        "http",
+        "busqueda",
+        "resenas",
+        "reservas",
+        "catalogo",
+        "proveedores",
+        "usuarios"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "web",
+      "to": "http",
+      "label": "HTTPS / JSON"
+    },
+    {
+      "from": "http",
+      "to": "busqueda"
+    },
+    {
+      "from": "http",
+      "to": "resenas"
+    },
+    {
+      "from": "http",
+      "to": "reservas"
+    },
+    {
+      "from": "http",
+      "to": "catalogo"
+    },
+    {
+      "from": "http",
+      "to": "proveedores"
+    },
+    {
+      "from": "http",
+      "to": "usuarios"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Límite de despliegue",
+      "items": [
+        "Los seis módulos se ejecutan en el mismo proceso NestJS.",
+        "Los permisos de administrador no crean un séptimo módulo."
+      ]
+    }
+  ]
+}

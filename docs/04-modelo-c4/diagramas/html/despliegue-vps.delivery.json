@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "c24404c3-beae-4700-aef6-f8e350d3ee25",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\fuentes\\despliegue-vps.archify.json",
+  "output": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\html\\despliegue-vps.html",
+  "specification": {
+    "sha256": "323bc79eaa15c0e208f6e5411cf899606269f6ce34044d79b751dd6d4a6a3567",
+    "bytes": 4121
+  },
+  "artifact": {
+    "sha256": "f40108774ab172b75538b70da8710ae50fa5ec869c09385dc8f268b78eae34fe",
+    "bytes": 828711
+  }
+}

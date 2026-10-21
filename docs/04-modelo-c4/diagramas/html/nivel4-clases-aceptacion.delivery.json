@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "aa0c9a24-e801-4b76-aa7f-ee44ffbc1058",
+  "status": "current",
+  "command": "deliver",
+  "type": "class",
+  "input": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\fuentes\\nivel4-clases-aceptacion.archify.json",
+  "output": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\html\\nivel4-clases-aceptacion.html",
+  "specification": {
+    "sha256": "65097ea00959ca6307017d0589eae0c2234f5c63e1d2e75ac393d2a08b8f1bbe",
+    "bytes": 4633
+  },
+  "artifact": {
+    "sha256": "ce254c3ffe5c1f1434bda488c9de48b166083b22deec60cf77b3a202aa5bd5d9",
+    "bytes": 826143
+  }
+}

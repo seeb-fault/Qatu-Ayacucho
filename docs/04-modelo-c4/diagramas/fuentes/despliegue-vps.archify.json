@@ -1,0 +1,231 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Qatu · Despliegue propuesto · VPS",
+    "output": "docs/04-modelo-c4/diagramas/html/despliegue-vps.html",
+    "locale": "es",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "browser",
+      "type": "external",
+      "label": "Navegador",
+      "sublabel": "HTTPS público :443",
+      "pos": [
+        40,
+        40
+      ],
+      "size": [
+        190,
+        76
+      ]
+    },
+    {
+      "id": "proxy",
+      "type": "security",
+      "label": "Nginx / Caddy",
+      "sublabel": "TLS y proxy inverso",
+      "pos": [
+        380,
+        240
+      ],
+      "size": [
+        230,
+        76
+      ]
+    },
+    {
+      "id": "web",
+      "type": "frontend",
+      "label": "Web Next.js",
+      "sublabel": "Contenedor de interfaz",
+      "pos": [
+        40,
+        530
+      ],
+      "size": [
+        230,
+        76
+      ]
+    },
+    {
+      "id": "api",
+      "type": "backend",
+      "label": "API NestJS",
+      "sublabel": "6 módulos + outbox",
+      "pos": [
+        380,
+        530
+      ],
+      "size": [
+        230,
+        76
+      ]
+    },
+    {
+      "id": "db",
+      "type": "database",
+      "label": "PostgreSQL / PostGIS",
+      "sublabel": "Volumen persistente",
+      "pos": [
+        40,
+        850
+      ],
+      "size": [
+        230,
+        76
+      ]
+    },
+    {
+      "id": "files",
+      "type": "database",
+      "label": "Archivos privados",
+      "sublabel": "Volumen persistente",
+      "pos": [
+        380,
+        850
+      ],
+      "size": [
+        230,
+        76
+      ]
+    },
+    {
+      "id": "redis",
+      "type": "database",
+      "label": "Redis opcional",
+      "sublabel": "Red privada",
+      "pos": [
+        750,
+        850
+      ],
+      "size": [
+        230,
+        76
+      ]
+    },
+    {
+      "id": "ext",
+      "type": "external",
+      "label": "Culqi · IA · Mapas",
+      "sublabel": "Mensajería · HTTPS",
+      "pos": [
+        1010,
+        430
+      ],
+      "size": [
+        190,
+        76
+      ]
+    },
+    {
+      "id": "backup",
+      "type": "cloud",
+      "label": "Copias externas",
+      "sublabel": "Cifradas · fuera del VPS",
+      "pos": [
+        380,
+        1170
+      ],
+      "size": [
+        260,
+        76
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "VPS Linux · Docker Compose · red privada",
+      "wraps": [
+        "proxy",
+        "web",
+        "api",
+        "db",
+        "files",
+        "redis"
+      ],
+      "pad": 22
+    }
+  ],
+  "connections": [
+    {
+      "from": "browser",
+      "to": "proxy",
+      "label": "HTTPS"
+    },
+    {
+      "from": "proxy",
+      "to": "web",
+      "label": "HTTP"
+    },
+    {
+      "from": "proxy",
+      "to": "api",
+      "label": "HTTP"
+    },
+    {
+      "from": "web",
+      "to": "api",
+      "label": "SSR privado"
+    },
+    {
+      "from": "api",
+      "to": "db",
+      "label": "SQL"
+    },
+    {
+      "from": "api",
+      "to": "files",
+      "label": "I/O"
+    },
+    {
+      "from": "api",
+      "to": "redis",
+      "label": "Caché",
+      "variant": "dashed"
+    },
+    {
+      "from": "api",
+      "to": "ext",
+      "label": "HTTPS"
+    },
+    {
+      "from": "ext",
+      "to": "proxy",
+      "label": "Webhook Culqi",
+      "variant": "dashed"
+    },
+    {
+      "from": "db",
+      "to": "backup",
+      "label": "Backup cifrado"
+    },
+    {
+      "from": "files",
+      "to": "backup",
+      "label": "Backup cifrado"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Operación",
+      "items": [
+        "Una sola máquina: existe un punto único de fallo.",
+        "DB, archivos y Redis no se exponen directamente a Internet.",
+        "Secretos fuera de Git; readiness depende de DB, no del proveedor IA."
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Recuperación propuesta",
+      "items": [
+        "Objetivos por validar: RPO 24 h y RTO 4 h.",
+        "Respaldar y ensayar restauración; imágenes y migraciones reversibles."
+      ]
+    }
+  ]
+}
