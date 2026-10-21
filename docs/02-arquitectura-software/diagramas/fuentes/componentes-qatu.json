@@ -1,0 +1,872 @@
+{
+  "width": 1900,
+  "height": 1800,
+  "title": "[Diagrama de componentes] Qatu — API Backend",
+  "subtitle": "Modelo C4 · Nivel 3 · Monolito modular · Alquiler de herramientas y servicios de oficios",
+  "nodes": [
+    {
+      "id": "cliente",
+      "x": 260,
+      "y": 145,
+      "w": 260,
+      "h": 105,
+      "title": "Cliente / visitante",
+      "lines": [
+        "[Persona]",
+        "Busca, reserva, paga y reseña"
+      ],
+      "kind": "person"
+    },
+    {
+      "id": "proveedor",
+      "x": 690,
+      "y": 145,
+      "w": 260,
+      "h": 105,
+      "title": "Proveedor",
+      "lines": [
+        "[Persona]",
+        "Publica herramientas y oficios"
+      ],
+      "kind": "person"
+    },
+    {
+      "id": "admin",
+      "x": 1120,
+      "y": 145,
+      "w": 260,
+      "h": 105,
+      "title": "Administrador",
+      "lines": [
+        "[Persona]",
+        "Verifica y gestiona incidencias"
+      ],
+      "kind": "person"
+    },
+    {
+      "id": "web",
+      "x": 660,
+      "y": 300,
+      "w": 320,
+      "h": 100,
+      "title": "Aplicación web",
+      "lines": [
+        "[Contenedor: Next.js · React]",
+        "Interfaz móvil y paneles por rol"
+      ],
+      "kind": "container"
+    },
+    {
+      "id": "rest",
+      "x": 620,
+      "y": 480,
+      "w": 400,
+      "h": 110,
+      "title": "API REST",
+      "lines": [
+        "[Componente: controladores y guards NestJS]",
+        "/api/v1 · JWT · permisos · validación"
+      ],
+      "kind": "component"
+    },
+    {
+      "id": "usuarios",
+      "x": 140,
+      "y": 740,
+      "w": 320,
+      "h": 130,
+      "title": "Usuarios y acceso",
+      "lines": [
+        "[Módulo: usuarios]",
+        "Registro, perfiles, roles y propiedad"
+      ],
+      "kind": "component"
+    },
+    {
+      "id": "proveedores",
+      "x": 560,
+      "y": 740,
+      "w": 320,
+      "h": 130,
+      "title": "Proveedores",
+      "lines": [
+        "[Módulo: proveedores]",
+        "Perfil, verificación y zona de atención"
+      ],
+      "kind": "component"
+    },
+    {
+      "id": "catalogo",
+      "x": 980,
+      "y": 740,
+      "w": 320,
+      "h": 130,
+      "title": "Catálogo",
+      "lines": [
+        "[Módulo: catalogo]",
+        "Herramientas, oficios, recursos y tarifas"
+      ],
+      "kind": "component"
+    },
+    {
+      "id": "confianza",
+      "x": 140,
+      "y": 1000,
+      "w": 320,
+      "h": 140,
+      "title": "Reputación y confianza",
+      "lines": [
+        "[Módulo: resenas]",
+        "Reseñas, evidencias e incidencias",
+        "Garantía documental; sin custodia"
+      ],
+      "kind": "component"
+    },
+    {
+      "id": "reservas",
+      "x": 560,
+      "y": 1000,
+      "w": 320,
+      "h": 140,
+      "title": "Reservas y contratación",
+      "lines": [
+        "[Módulo: reservas]",
+        "Calendario, cotización y estados",
+        "Bloqueos por recurso y fechas"
+      ],
+      "kind": "component"
+    },
+    {
+      "id": "busqueda",
+      "x": 980,
+      "y": 1000,
+      "w": 320,
+      "h": 140,
+      "title": "Búsqueda inteligente",
+      "lines": [
+        "[Módulo: busqueda]",
+        "Lenguaje natural → filtros validados",
+        "Ofertas reales y respaldo convencional"
+      ],
+      "kind": "component"
+    },
+    {
+      "id": "outbox",
+      "x": 140,
+      "y": 1260,
+      "w": 320,
+      "h": 100,
+      "title": "Notificaciones / outbox",
+      "lines": [
+        "[Soporte técnico dentro de la API]",
+        "Eventos durables y reintentos"
+      ],
+      "kind": "support"
+    },
+    {
+      "id": "pagos",
+      "x": 560,
+      "y": 1260,
+      "w": 320,
+      "h": 100,
+      "title": "Componente de pagos",
+      "lines": [
+        "[Parte interna del módulo Reservas]",
+        "Intentos, verificación y conciliación"
+      ],
+      "kind": "support"
+    },
+    {
+      "id": "mapadapter",
+      "x": 980,
+      "y": 1180,
+      "w": 320,
+      "h": 100,
+      "title": "Adaptador de mapas",
+      "lines": [
+        "[Infraestructura compartida]",
+        "Puertos para geolocalización"
+      ],
+      "kind": "support"
+    },
+    {
+      "id": "redis",
+      "x": 1510,
+      "y": 460,
+      "w": 320,
+      "h": 100,
+      "title": "Caché opcional",
+      "lines": [
+        "[Contenedor: Redis]",
+        "Consultas públicas; activar tras medir"
+      ],
+      "kind": "container"
+    },
+    {
+      "id": "mapas",
+      "x": 1510,
+      "y": 710,
+      "w": 320,
+      "h": 100,
+      "title": "Servicio de mapas",
+      "lines": [
+        "[Sistema externo]",
+        "Ubicación y cercanía"
+      ],
+      "kind": "external"
+    },
+    {
+      "id": "ia",
+      "x": 1510,
+      "y": 960,
+      "w": 320,
+      "h": 120,
+      "title": "Proveedor de IA",
+      "lines": [
+        "[Sistema externo]",
+        "Interpreta intención de búsqueda",
+        "No ejecuta reservas ni pagos"
+      ],
+      "kind": "external"
+    },
+    {
+      "id": "culqi",
+      "x": 1510,
+      "y": 1210,
+      "w": 320,
+      "h": 120,
+      "title": "Pasarela de pago: Culqi",
+      "lines": [
+        "[Sistema externo]",
+        "Yape como medio habilitado",
+        "Cobro y consulta de estado"
+      ],
+      "kind": "external"
+    },
+    {
+      "id": "mensajes",
+      "x": 1510,
+      "y": 1380,
+      "w": 320,
+      "h": 100,
+      "title": "Servicio de mensajería",
+      "lines": [
+        "[Sistema externo]",
+        "Entrega avisos de las reservas"
+      ],
+      "kind": "external"
+    },
+    {
+      "id": "archivos",
+      "x": 1510,
+      "y": 1530,
+      "w": 320,
+      "h": 100,
+      "title": "Fotos y evidencias",
+      "lines": [
+        "[Almacén persistente privado]",
+        "Acceso por permisos y copias externas"
+      ],
+      "kind": "container"
+    },
+    {
+      "id": "db",
+      "x": 620,
+      "y": 1490,
+      "w": 400,
+      "h": 110,
+      "title": "Base de datos",
+      "lines": [
+        "[Contenedor: PostgreSQL + PostGIS]",
+        "Datos propios por módulo · inbox / outbox"
+      ],
+      "kind": "container"
+    }
+  ],
+  "edges": [
+    {
+      "points": [
+        [
+          390,
+          250
+        ],
+        [
+          390,
+          280
+        ],
+        [
+          820,
+          280
+        ],
+        [
+          820,
+          300
+        ]
+      ],
+      "label": "Usa",
+      "lx": 560,
+      "ly": 269,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          820,
+          250
+        ],
+        [
+          820,
+          300
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          1250,
+          250
+        ],
+        [
+          1250,
+          280
+        ],
+        [
+          820,
+          280
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          820,
+          400
+        ],
+        [
+          820,
+          480
+        ]
+      ],
+      "label": "Llama a la API [HTTPS / JSON]",
+      "lx": 820,
+      "ly": 449,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          820,
+          590
+        ],
+        [
+          820,
+          660
+        ],
+        [
+          300,
+          660
+        ],
+        [
+          300,
+          740
+        ]
+      ],
+      "label": "Invoca casos de uso por módulo",
+      "lx": 820,
+      "ly": 635,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          720,
+          660
+        ],
+        [
+          720,
+          740
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          1140,
+          660
+        ],
+        [
+          1140,
+          740
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          300,
+          660
+        ],
+        [
+          100,
+          660
+        ],
+        [
+          100,
+          950
+        ],
+        [
+          300,
+          950
+        ],
+        [
+          300,
+          1000
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          720,
+          660
+        ],
+        [
+          920,
+          660
+        ],
+        [
+          920,
+          950
+        ],
+        [
+          720,
+          950
+        ],
+        [
+          720,
+          1000
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          1140,
+          660
+        ],
+        [
+          1340,
+          660
+        ],
+        [
+          1340,
+          930
+        ],
+        [
+          1140,
+          930
+        ],
+        [
+          1140,
+          1000
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          560,
+          805
+        ],
+        [
+          460,
+          805
+        ]
+      ],
+      "label": "Valida cuenta",
+      "lx": 510,
+      "ly": 790,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          980,
+          805
+        ],
+        [
+          880,
+          805
+        ]
+      ],
+      "label": "Valida proveedor",
+      "lx": 930,
+      "ly": 790,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          880,
+          1070
+        ],
+        [
+          940,
+          1070
+        ],
+        [
+          940,
+          905
+        ],
+        [
+          1140,
+          905
+        ],
+        [
+          1140,
+          870
+        ]
+      ],
+      "label": "Consulta oferta y tarifa",
+      "lx": 1090,
+      "ly": 895,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          980,
+          1085
+        ],
+        [
+          880,
+          1085
+        ]
+      ],
+      "label": "Disponibilidad",
+      "lx": 930,
+      "ly": 1125,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          1140,
+          1000
+        ],
+        [
+          1140,
+          870
+        ]
+      ],
+      "label": "Consulta catálogo",
+      "lx": 1220,
+      "ly": 980,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          460,
+          1070
+        ],
+        [
+          560,
+          1070
+        ]
+      ],
+      "label": "Reserva finalizada",
+      "lx": 510,
+      "ly": 985,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          300,
+          1000
+        ],
+        [
+          300,
+          870
+        ]
+      ],
+      "label": "Valida identidad",
+      "lx": 300,
+      "ly": 935,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          720,
+          1140
+        ],
+        [
+          720,
+          1260
+        ]
+      ],
+      "label": "Solicita pago",
+      "lx": 720,
+      "ly": 1205,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          650,
+          1140
+        ],
+        [
+          650,
+          1200
+        ],
+        [
+          300,
+          1200
+        ],
+        [
+          300,
+          1260
+        ]
+      ],
+      "label": "Evento guardado tras commit",
+      "lx": 410,
+      "ly": 1185,
+      "style": "dashed"
+    },
+    {
+      "points": [
+        [
+          1300,
+          1070
+        ],
+        [
+          1430,
+          1070
+        ],
+        [
+          1430,
+          1020
+        ],
+        [
+          1510,
+          1020
+        ]
+      ],
+      "label": "Interpreta texto [HTTPS]",
+      "lx": 1420,
+      "ly": 1110,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          880,
+          1310
+        ],
+        [
+          1460,
+          1310
+        ],
+        [
+          1460,
+          1270
+        ],
+        [
+          1510,
+          1270
+        ]
+      ],
+      "label": "Cobra / verifica [HTTPS]",
+      "lx": 1180,
+      "ly": 1295,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          1510,
+          1300
+        ],
+        [
+          1480,
+          1300
+        ],
+        [
+          1480,
+          1385
+        ],
+        [
+          720,
+          1385
+        ],
+        [
+          720,
+          1360
+        ]
+      ],
+      "label": "Notifica resultado; backend verifica",
+      "lx": 1150,
+      "ly": 1400,
+      "style": "dashed"
+    },
+    {
+      "points": [
+        [
+          460,
+          1335
+        ],
+        [
+          500,
+          1335
+        ],
+        [
+          500,
+          1450
+        ],
+        [
+          1460,
+          1450
+        ],
+        [
+          1460,
+          1430
+        ],
+        [
+          1510,
+          1430
+        ]
+      ],
+      "label": "Envía avisos [HTTPS]",
+      "lx": 1080,
+      "ly": 1437,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          1300,
+          1230
+        ],
+        [
+          1400,
+          1230
+        ],
+        [
+          1400,
+          760
+        ],
+        [
+          1510,
+          760
+        ]
+      ],
+      "label": "Geografía [HTTPS]",
+      "lx": 1430,
+      "ly": 840,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          1300,
+          780
+        ],
+        [
+          1380,
+          780
+        ],
+        [
+          1380,
+          510
+        ],
+        [
+          1510,
+          510
+        ]
+      ],
+      "label": "Caché de catálogo",
+      "lx": 1390,
+      "ly": 565,
+      "style": "dashed"
+    },
+    {
+      "points": [
+        [
+          300,
+          1140
+        ],
+        [
+          120,
+          1140
+        ],
+        [
+          120,
+          1638
+        ],
+        [
+          1470,
+          1638
+        ],
+        [
+          1470,
+          1580
+        ],
+        [
+          1510,
+          1580
+        ]
+      ],
+      "label": "Guarda fotos y evidencias mediante adaptador autorizado",
+      "lx": 570,
+      "ly": 1624,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          820,
+          1420
+        ],
+        [
+          820,
+          1490
+        ]
+      ],
+      "label": "Repositorios por módulo [SQL]",
+      "lx": 820,
+      "ly": 1462,
+      "style": "solid"
+    }
+  ]
+}

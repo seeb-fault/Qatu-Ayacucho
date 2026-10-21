@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1450" viewBox="0 0 1700 1450"><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#667588"/></marker></defs><rect width="100%" height="100%" fill="white"/>
+<text x="28" y="42" font-family="Arial,sans-serif" font-size="28" fill="#172b43" font-weight="bold" text-anchor="start">[Arquitectura inicial] Qatu — vista general</text>
+<text x="28" y="77" font-family="Arial,sans-serif" font-size="18" fill="#64748b" font-weight="normal" text-anchor="start">Cliente-servidor · Presentación, negocio y persistencia · Seis módulos en un backend</text>
+<rect x="80" y="285" width="1240" height="360" fill="none" stroke="#8390a2" stroke-width="1.5" stroke-dasharray="8 6"/>
+<text x="98" y="313" font-family="Arial,sans-serif" font-size="19" fill="#3d526e" font-weight="bold" text-anchor="start">PRESENTACIÓN · Interacción y entrada HTTP</text>
+<rect x="80" y="705" width="1240" height="390" fill="none" stroke="#8390a2" stroke-width="1.5" stroke-dasharray="8 6"/>
+<text x="98" y="733" font-family="Arial,sans-serif" font-size="19" fill="#3d526e" font-weight="bold" text-anchor="start">NEGOCIO · Monolito modular NestJS</text>
+<polyline points="400,250 400,270 800,270 800,335" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
+<polyline points="800,250 800,335" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
+<polyline points="1200,250 1200,270 800,270" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
+<polyline points="800,440 800,525" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
+<polyline points="800,620 800,705" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
+<polyline points="700,1095 700,1150 300,1150 300,1200" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
+<polyline points="700,1150 710,1200" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
+<polyline points="700,1150 1110,1150 1110,1200" fill="none" stroke="#667588" stroke-width="1.8" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
+<polyline points="1320,740 1400,740" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
+<polyline points="1320,900 1400,900" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
+<polyline points="1320,1060 1400,1060" fill="none" stroke="#667588" stroke-width="1.8" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
+<polyline points="1320,1080 1360,1080 1360,1220 1400,1220" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
+<circle cx="400" cy="130" r="24" fill="#274777"/>
+<rect x="280" y="155" width="240" height="95" rx="8" fill="#274777" stroke="#8196b1"/>
+<text x="400" y="187.5" font-family="Arial,sans-serif" font-size="19.600725952813068" fill="white" font-weight="bold" text-anchor="middle">Cliente / visitante</text>
+<text x="400" y="215.5" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">[Persona]</text>
+<text x="400" y="238.5" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Busca, reserva y paga</text>
+<circle cx="800" cy="130" r="24" fill="#274777"/>
+<rect x="680" y="155" width="240" height="95" rx="8" fill="#274777" stroke="#8196b1"/>
+<text x="800" y="187.5" font-family="Arial,sans-serif" font-size="22" fill="white" font-weight="bold" text-anchor="middle">Proveedor</text>
+<text x="800" y="215.5" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">[Persona]</text>
+<text x="800" y="238.5" font-family="Arial,sans-serif" font-size="13.793103448275861" fill="white" font-weight="normal" text-anchor="middle">Publica y atiende solicitudes</text>
+<circle cx="1200" cy="130" r="24" fill="#274777"/>
+<rect x="1080" y="155" width="240" height="95" rx="8" fill="#274777" stroke="#8196b1"/>
+<text x="1200" y="187.5" font-family="Arial,sans-serif" font-size="22" fill="white" font-weight="bold" text-anchor="middle">Administrador</text>
+<text x="1200" y="215.5" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">[Persona]</text>
+<text x="1200" y="238.5" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Verifica y modera</text>
+<rect x="600" y="335" width="400" height="105" rx="8" fill="#3f67ad" stroke="#8196b1"/>
+<text x="800" y="372.5" font-family="Arial,sans-serif" font-size="22" fill="white" font-weight="bold" text-anchor="middle">Aplicación web</text>
+<text x="800" y="400.5" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Next.js · React · TypeScript</text>
+<text x="800" y="423.5" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Interfaz móvil y paneles por rol</text>
+<rect x="600" y="525" width="400" height="95" rx="8" fill="#a8c7eb" stroke="#8196b1"/>
+<text x="800" y="557.5" font-family="Arial,sans-serif" font-size="22" fill="#142d48" font-weight="bold" text-anchor="middle">API REST /api/v1</text>
+<text x="800" y="585.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">NestJS: controladores y guards</text>
+<text x="800" y="608.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">Valida entrada, identidad y permisos</text>
+<rect x="120" y="770" width="340" height="105" rx="8" fill="#a8c7eb" stroke="#8196b1"/>
+<text x="290" y="807.5" font-family="Arial,sans-serif" font-size="22" fill="#142d48" font-weight="bold" text-anchor="middle">Usuarios y acceso</text>
+<text x="290" y="835.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">[Módulo de negocio]</text>
+<text x="290" y="858.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">Identidad, perfiles y roles</text>
+<rect x="520" y="770" width="340" height="105" rx="8" fill="#a8c7eb" stroke="#8196b1"/>
+<text x="690" y="807.5" font-family="Arial,sans-serif" font-size="22" fill="#142d48" font-weight="bold" text-anchor="middle">Proveedores</text>
+<text x="690" y="835.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">[Módulo de negocio]</text>
+<text x="690" y="858.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">Verificación y zona de atención</text>
+<rect x="920" y="770" width="340" height="105" rx="8" fill="#a8c7eb" stroke="#8196b1"/>
+<text x="1090" y="807.5" font-family="Arial,sans-serif" font-size="22" fill="#142d48" font-weight="bold" text-anchor="middle">Catálogo</text>
+<text x="1090" y="835.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">[Módulo de negocio]</text>
+<text x="1090" y="858.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">Publicaciones, recursos y tarifas</text>
+<rect x="120" y="960" width="340" height="105" rx="8" fill="#a8c7eb" stroke="#8196b1"/>
+<text x="290" y="997.5" font-family="Arial,sans-serif" font-size="22" fill="#142d48" font-weight="bold" text-anchor="middle">Reservas y contratación</text>
+<text x="290" y="1025.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">[Módulo de negocio]</text>
+<text x="290" y="1048.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">Calendario, estados y pagos</text>
+<rect x="520" y="960" width="340" height="105" rx="8" fill="#a8c7eb" stroke="#8196b1"/>
+<text x="690" y="997.5" font-family="Arial,sans-serif" font-size="22" fill="#142d48" font-weight="bold" text-anchor="middle">Reputación y confianza</text>
+<text x="690" y="1025.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">[Módulo de negocio]</text>
+<text x="690" y="1048.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">Reseñas, evidencias e incidencias</text>
+<rect x="920" y="960" width="340" height="105" rx="8" fill="#a8c7eb" stroke="#8196b1"/>
+<text x="1090" y="997.5" font-family="Arial,sans-serif" font-size="22" fill="#142d48" font-weight="bold" text-anchor="middle">Búsqueda inteligente</text>
+<text x="1090" y="1025.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">[Módulo de negocio]</text>
+<text x="1090" y="1048.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">Texto natural y filtros validados</text>
+<rect x="120" y="1200" width="360" height="100" rx="8" fill="#3f67ad" stroke="#8196b1"/>
+<text x="300" y="1235" font-family="Arial,sans-serif" font-size="22" fill="white" font-weight="bold" text-anchor="middle">PostgreSQL + PostGIS</text>
+<text x="300" y="1263" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Datos propios por módulo</text>
+<text x="300" y="1286" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Reservas, pagos y eventos</text>
+<rect x="530" y="1200" width="360" height="100" rx="8" fill="#3f67ad" stroke="#8196b1"/>
+<text x="710" y="1235" font-family="Arial,sans-serif" font-size="22" fill="white" font-weight="bold" text-anchor="middle">Fotos y evidencias</text>
+<text x="710" y="1263" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Almacén persistente privado</text>
+<text x="710" y="1286" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Permisos por participante</text>
+<rect x="940" y="1200" width="340" height="100" rx="8" fill="#3f67ad" stroke="#8196b1"/>
+<text x="1110" y="1235" font-family="Arial,sans-serif" font-size="22" fill="white" font-weight="bold" text-anchor="middle">Redis — opcional</text>
+<text x="1110" y="1263" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Caché de consultas públicas</text>
+<text x="1110" y="1286" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Se incorpora después de medir</text>
+<rect x="1400" y="690" width="260" height="100" rx="8" fill="#8b9098" stroke="#8196b1"/>
+<text x="1530" y="725" font-family="Arial,sans-serif" font-size="22" fill="white" font-weight="bold" text-anchor="middle">Culqi / Yape</text>
+<text x="1530" y="753" font-family="Arial,sans-serif" font-size="15.047021943573666" fill="white" font-weight="normal" text-anchor="middle">[Pasarela / medio habilitado]</text>
+<text x="1530" y="776" font-family="Arial,sans-serif" font-size="16.783216783216783" fill="white" font-weight="normal" text-anchor="middle">Pago verificado en backend</text>
+<rect x="1400" y="850" width="260" height="100" rx="8" fill="#8b9098" stroke="#8196b1"/>
+<text x="1530" y="885" font-family="Arial,sans-serif" font-size="22" fill="white" font-weight="bold" text-anchor="middle">Proveedor de IA</text>
+<text x="1530" y="913" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">[Sistema externo]</text>
+<text x="1530" y="936" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Interpreta intención</text>
+<rect x="1400" y="1010" width="260" height="100" rx="8" fill="#8b9098" stroke="#8196b1"/>
+<text x="1530" y="1045" font-family="Arial,sans-serif" font-size="22" fill="white" font-weight="bold" text-anchor="middle">Mensajería</text>
+<text x="1530" y="1073" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">[Sistema externo]</text>
+<text x="1530" y="1096" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Avisos y reintentos</text>
+<rect x="1400" y="1170" width="260" height="100" rx="8" fill="#8b9098" stroke="#8196b1"/>
+<text x="1530" y="1205" font-family="Arial,sans-serif" font-size="22" fill="white" font-weight="bold" text-anchor="middle">Mapas</text>
+<text x="1530" y="1233" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">[Sistema externo]</text>
+<text x="1530" y="1256" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Ubicación y cercanía</text>
+<rect x="588.4" y="244" width="43.2" height="24" fill="white"/>
+<text x="610" y="261" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">Usa</text>
+<rect x="740.6" y="468" width="118.80000000000001" height="24" fill="white"/>
+<text x="800" y="485" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">HTTPS / JSON</text>
+<rect x="711.2" y="653" width="177.6" height="24" fill="white"/>
+<text x="800" y="670" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">Invoca casos de uso</text>
+<rect x="395.4" y="1118" width="169.20000000000002" height="24" fill="white"/>
+<text x="480" y="1135" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">Repositorios [SQL]</text>
+<rect x="667.4" y="1163" width="85.2" height="24" fill="white"/>
+<text x="710" y="1180" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">Archivos</text>
+<rect x="1012.2" y="1118" width="135.60000000000002" height="24" fill="white"/>
+<text x="1080" y="1135" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">Caché opcional</text>
+<rect x="1330" y="708" width="60" height="24" fill="white"/>
+<text x="1360" y="725" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">Pagos</text>
+<rect x="1313.2" y="868" width="93.60000000000001" height="24" fill="white"/>
+<text x="1360" y="885" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">Intención</text>
+<rect x="1325.8" y="1028" width="68.4" height="24" fill="white"/>
+<text x="1360" y="1045" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">Avisos</text>
+<rect x="1313.2" y="1133" width="93.60000000000001" height="24" fill="white"/>
+<text x="1360" y="1150" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">Geografía</text>
+<rect x="28" y="1320" width="1644" height="110" fill="white" stroke="#abb6c4"/>
+<text x="48" y="1345" font-family="Arial,sans-serif" font-size="18" fill="#25334a" font-weight="bold" text-anchor="start">Lectura del diagrama y límites</text>
+<text x="48" y="1371" font-family="Arial,sans-serif" font-size="16" fill="#536378" font-weight="normal" text-anchor="start">La vista resume responsabilidades; no representa la dirección de imports de Clean Architecture.</text>
+<text x="48" y="1394" font-family="Arial,sans-serif" font-size="16" fill="#536378" font-weight="normal" text-anchor="start">Pagos pertenece a Reservas. IA solo interpreta búsquedas; el backend consulta información real.</text>
+<text x="48" y="1417" font-family="Arial,sans-serif" font-size="16" fill="#536378" font-weight="normal" text-anchor="start">Un módulo opera sus propias tablas. Garantía documental sin custodia propia en el MVP.</text>
+</svg>
