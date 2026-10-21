@@ -1,0 +1,397 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Arquitectura inicial - Qatu",
+    "output": "arquitectura-inicial.html",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1260,
+      940
+    ]
+  },
+  "components": [
+    {
+      "id": "cliente",
+      "type": "external",
+      "label": "Cliente",
+      "pos": [
+        150,
+        70
+      ],
+      "size": [
+        140,
+        64
+      ]
+    },
+    {
+      "id": "proveedor",
+      "type": "external",
+      "label": "Proveedor",
+      "pos": [
+        350,
+        70
+      ],
+      "size": [
+        140,
+        64
+      ]
+    },
+    {
+      "id": "admin",
+      "type": "external",
+      "label": "Administrador",
+      "pos": [
+        550,
+        70
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "webapp",
+      "type": "frontend",
+      "label": "Aplicación Web",
+      "sublabel": "mobile-first",
+      "pos": [
+        210,
+        240
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "apirest",
+      "type": "backend",
+      "label": "API REST",
+      "pos": [
+        500,
+        240
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "usuarios",
+      "type": "backend",
+      "label": "Usuarios",
+      "pos": [
+        80,
+        420
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "proveedores",
+      "type": "backend",
+      "label": "Proveedores",
+      "sublabel": "arrendadores · maestros",
+      "pos": [
+        280,
+        420
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "catalogo",
+      "type": "backend",
+      "label": "Catálogo",
+      "sublabel": "herramientas · servicios",
+      "pos": [
+        480,
+        420
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "reservas",
+      "type": "backend",
+      "label": "Reservas",
+      "sublabel": "alquiler · contratación",
+      "pos": [
+        680,
+        420
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "resenas",
+      "type": "backend",
+      "label": "Reseñas",
+      "pos": [
+        880,
+        420
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "bd",
+      "type": "database",
+      "label": "Base de datos",
+      "sublabel": "relacional",
+      "pos": [
+        245,
+        600
+      ],
+      "size": [
+        200,
+        70
+      ]
+    },
+    {
+      "id": "mapas",
+      "type": "external",
+      "label": "Servicio de mapas",
+      "pos": [
+        540,
+        780
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "pago",
+      "type": "external",
+      "label": "Pasarela de pago",
+      "pos": [
+        780,
+        780
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "mensajeria",
+      "type": "external",
+      "label": "Servicio de mensajería",
+      "pos": [
+        1020,
+        780
+      ],
+      "size": [
+        170,
+        64
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "PRESENTACIÓN",
+      "wraps": [
+        "webapp",
+        "apirest"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "LÓGICA DE NEGOCIO",
+      "wraps": [
+        "usuarios",
+        "proveedores",
+        "catalogo",
+        "reservas",
+        "resenas"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "DATOS",
+      "wraps": [
+        "bd"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "SISTEMAS EXTERNOS",
+      "wraps": [
+        "mapas",
+        "pago",
+        "mensajeria"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "cliente-webapp",
+      "from": "cliente",
+      "to": "webapp",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "proveedor-webapp",
+      "from": "proveedor",
+      "to": "webapp",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "admin-webapp",
+      "from": "admin",
+      "to": "webapp",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "webapp-apirest",
+      "from": "webapp",
+      "to": "apirest",
+      "label": "HTTP",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "api-usuarios",
+      "from": "apirest",
+      "to": "usuarios",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "api-proveedores",
+      "from": "apirest",
+      "to": "proveedores",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "api-catalogo",
+      "from": "apirest",
+      "to": "catalogo",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "api-reservas",
+      "from": "apirest",
+      "to": "reservas",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "api-resenas",
+      "from": "apirest",
+      "to": "resenas",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "usuarios-bd",
+      "from": "usuarios",
+      "to": "bd",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "proveedores-bd",
+      "from": "proveedores",
+      "to": "bd",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "catalogo-bd",
+      "from": "catalogo",
+      "to": "bd",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "reservas-bd",
+      "from": "reservas",
+      "to": "bd",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "resenas-bd",
+      "from": "resenas",
+      "to": "bd",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "catalogo-mapas",
+      "from": "catalogo",
+      "to": "mapas",
+      "label": "ubicación",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelSegment": 2
+    },
+    {
+      "id": "reservas-pago",
+      "from": "reservas",
+      "to": "pago",
+      "label": "cobro",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelSegment": 2
+    },
+    {
+      "id": "reservas-mensajeria",
+      "from": "reservas",
+      "to": "mensajeria",
+      "label": "notificación",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelSegment": 2
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Presentación",
+      "items": [
+        "Aplicación Web (mobile-first) y API REST habilitan la interacción de clientes, proveedores y administradores"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Lógica de negocio",
+      "items": [
+        "Usuarios, Proveedores, Catálogo, Reservas y Reseñas implementan las funcionalidades principales",
+        "Reservas gestiona el alquiler de herramientas por fechas y la contratación de servicios de oficio",
+        "Reservas evita alquilar una herramienta dos veces en las mismas fechas"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Datos e integraciones",
+      "items": [
+        "La base de datos relacional centraliza la información del sistema",
+        "Reservas se integra con la pasarela de pago y el servicio de mensajería",
+        "Catálogo usa el servicio de mapas para ubicar ofertas cercanas"
+      ]
+    }
+  ]
+}
