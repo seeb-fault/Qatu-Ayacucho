@@ -1,6 +1,6 @@
 # Especificaciones Qatu
 
-Las entregas 001 (descubrimiento), 002 (usuarios) y 003 (proveedores) se incorporarán sucesivamente en sus ramas, con documentación, backend cuando corresponda, frontend y pruebas separados en commits específicos. Su presencia en la arquitectura no significa que ya estén implementadas aquí.
+La entrega [001 — Descubrimiento de ofertas](001-descubrimiento-ofertas/spec.md) incorpora el prototipo web con datos sintéticos. Las entregas 002 (usuarios) y 003 (proveedores) se incorporarán sucesivamente en sus propias ramas. Su presencia en la arquitectura no significa que ya estén implementadas aquí.
 
 ## Evolución pendiente
 
