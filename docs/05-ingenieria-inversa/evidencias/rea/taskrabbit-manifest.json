@@ -1,0 +1,419 @@
+{
+  "date": "2026-10-15",
+  "target": "Taskrabbit US",
+  "bundle": "taskrabbit-2026-10-15.bundle.json",
+  "bundle_records": 12,
+  "taskrabbit_records": 5,
+  "scenarios": [
+    {
+      "reference": "T01",
+      "evidence_id": "ev_5df75c5cc807f7dfc9d32fe39274d65b1d52e30c1dee25d0361142650eb22496",
+      "screenshot": "../../capturas/08-taskrabbit-inicio.png",
+      "sha256": "d993b9c361f88f085ceff57c365d1c87ba92912d600e1eb757ecd3c7978adc11",
+      "bytes": 472128,
+      "parameters": {
+        "actions": [
+          {
+            "action": "wait_for_timeout",
+            "duration_ms": 3000,
+            "step_id": "wait"
+          }
+        ],
+        "browser": {
+          "executable_path": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+          "headless": true,
+          "mode": "launch"
+        },
+        "capture": {
+          "after_each_step": [],
+          "at_end": [
+            "url",
+            "dom",
+            "accessibility",
+            "screenshot"
+          ],
+          "events": [],
+          "network": {
+            "header_values": false,
+            "request_body": false,
+            "response_body": false
+          }
+        },
+        "environment": {
+          "color_scheme": "light",
+          "locale": "en-US",
+          "reduced_motion": "reduce",
+          "service_workers": "block",
+          "timezone": "America/New_York",
+          "viewport": {
+            "device_scale_factor": 1,
+            "height": 1100,
+            "width": 1440
+          }
+        },
+        "scenario_sha256": "87ca057c94151e57ac61b14e8fe37bc24c279d72e0a801d2ef33effa5d71290a",
+        "secrets": [],
+        "start_url": {
+          "query": [],
+          "url": "https://www.taskrabbit.com/"
+        },
+        "storage": {
+          "cookies": [],
+          "local_storage": [],
+          "session_storage": []
+        }
+      },
+      "browser": {
+        "cleanup": "terminated-owned-process",
+        "mode": "launch",
+        "process_ownership": "provider-owned",
+        "product": "Chromium",
+        "version": "155.0.8059.41"
+      },
+      "completeness": {
+        "equality_eligible": true,
+        "missing_sections": [],
+        "status": "complete",
+        "truncated_sections": []
+      },
+      "limitations": [
+        "Artifact identity is unavailable for this observation.",
+        "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+        "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+        "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+        "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+        "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+        "Storage values are hashed only after declared-secret redaction.",
+        "Browser host platform and architecture were not observed."
+      ]
+    },
+    {
+      "reference": "T02",
+      "evidence_id": "ev_2f80fbda24de5c0fda38b7df51ad41f877366fc954af5ca02118cc56848061a1",
+      "screenshot": "../../capturas/09-taskrabbit-solicitud.png",
+      "sha256": "a2dd46116f477695c2a88527e7df340e214f597f186c41737b6010dc3ed7c292",
+      "bytes": 52623,
+      "parameters": {
+        "actions": [
+          {
+            "action": "wait_for_timeout",
+            "duration_ms": 3000,
+            "step_id": "wait"
+          }
+        ],
+        "browser": {
+          "executable_path": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+          "headless": true,
+          "mode": "launch"
+        },
+        "capture": {
+          "after_each_step": [],
+          "at_end": [
+            "url",
+            "dom",
+            "accessibility",
+            "screenshot"
+          ],
+          "events": [],
+          "network": {
+            "header_values": false,
+            "request_body": false,
+            "response_body": false
+          }
+        },
+        "environment": {
+          "color_scheme": "light",
+          "locale": "en-US",
+          "reduced_motion": "reduce",
+          "service_workers": "block",
+          "timezone": "America/New_York",
+          "viewport": {
+            "device_scale_factor": 1,
+            "height": 1100,
+            "width": 1440
+          }
+        },
+        "scenario_sha256": "a9b4301ca6b0cb22c10d5a9daf12e11aec023030b05c736f0bb6616bb5a28c13",
+        "secrets": [],
+        "start_url": {
+          "query": [],
+          "url": "https://www.taskrabbit.com/book/2055/details"
+        },
+        "storage": {
+          "cookies": [],
+          "local_storage": [],
+          "session_storage": []
+        }
+      },
+      "browser": {
+        "cleanup": "terminated-owned-process",
+        "mode": "launch",
+        "process_ownership": "provider-owned",
+        "product": "Chromium",
+        "version": "155.0.8059.41"
+      },
+      "completeness": {
+        "equality_eligible": true,
+        "missing_sections": [],
+        "status": "complete",
+        "truncated_sections": []
+      },
+      "limitations": [
+        "Artifact identity is unavailable for this observation.",
+        "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+        "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+        "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+        "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+        "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+        "Storage values are hashed only after declared-secret redaction.",
+        "Browser host platform and architecture were not observed."
+      ]
+    },
+    {
+      "reference": "T03",
+      "evidence_id": "ev_8721cb673f53d49369853519158b40a57e177c4d320d82e711a52821b94b3e4c",
+      "screenshot": "../../capturas/10-taskrabbit-categorias.png",
+      "sha256": "fa38cba0c0d7aea012a88e0300745d5f20684d1a70cff8fa6d5d25dd4d3bfdb5",
+      "bytes": 944739,
+      "parameters": {
+        "actions": [
+          {
+            "action": "wait_for_timeout",
+            "duration_ms": 2000,
+            "step_id": "wait"
+          }
+        ],
+        "browser": {
+          "executable_path": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+          "headless": true,
+          "mode": "launch"
+        },
+        "capture": {
+          "after_each_step": [],
+          "at_end": [
+            "url",
+            "dom",
+            "accessibility",
+            "screenshot"
+          ],
+          "events": [],
+          "network": {
+            "header_values": false,
+            "request_body": false,
+            "response_body": false
+          }
+        },
+        "environment": {
+          "color_scheme": "light",
+          "locale": "en-US",
+          "reduced_motion": "reduce",
+          "service_workers": "block",
+          "timezone": "America/New_York",
+          "viewport": {
+            "device_scale_factor": 1,
+            "height": 1100,
+            "width": 1440
+          }
+        },
+        "scenario_sha256": "4aeb4436091880a7f8be043293a7399819d6e5beccc7da28a9238b0bc4bdfec5",
+        "secrets": [],
+        "start_url": {
+          "query": [],
+          "url": "https://www.taskrabbit.com/services"
+        },
+        "storage": {
+          "cookies": [],
+          "local_storage": [],
+          "session_storage": []
+        }
+      },
+      "browser": {
+        "cleanup": "terminated-owned-process",
+        "mode": "launch",
+        "process_ownership": "provider-owned",
+        "product": "Chromium",
+        "version": "155.0.8059.41"
+      },
+      "completeness": {
+        "equality_eligible": true,
+        "missing_sections": [],
+        "status": "complete",
+        "truncated_sections": []
+      },
+      "limitations": [
+        "Artifact identity is unavailable for this observation.",
+        "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+        "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+        "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+        "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+        "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+        "Storage values are hashed only after declared-secret redaction.",
+        "Browser host platform and architecture were not observed."
+      ]
+    },
+    {
+      "reference": "T04",
+      "evidence_id": "ev_d57d4895907b7085544f865c966650752ac843e5c398826afd94c93296ed7ac2",
+      "screenshot": "../../capturas/11-taskrabbit-oficio-movil.png",
+      "sha256": "e21389c12e14258048b56ed9bf1ce2adb3fc82d54acac160e93f727d26a5e7e4",
+      "bytes": 179534,
+      "parameters": {
+        "actions": [
+          {
+            "action": "wait_for_timeout",
+            "duration_ms": 2000,
+            "step_id": "wait"
+          }
+        ],
+        "browser": {
+          "executable_path": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+          "headless": true,
+          "mode": "launch"
+        },
+        "capture": {
+          "after_each_step": [],
+          "at_end": [
+            "url",
+            "dom",
+            "accessibility",
+            "screenshot"
+          ],
+          "events": [],
+          "network": {
+            "header_values": false,
+            "request_body": false,
+            "response_body": false
+          }
+        },
+        "environment": {
+          "color_scheme": "light",
+          "locale": "en-US",
+          "reduced_motion": "reduce",
+          "service_workers": "block",
+          "timezone": "America/New_York",
+          "viewport": {
+            "device_scale_factor": 1,
+            "height": 844,
+            "width": 390
+          }
+        },
+        "scenario_sha256": "59b8e410539e3261e684a9289b1d64bd9389081c014baf33019f34eab54e0601",
+        "secrets": [],
+        "start_url": {
+          "query": [],
+          "url": "https://www.taskrabbit.com/services/handyman/plumbing"
+        },
+        "storage": {
+          "cookies": [],
+          "local_storage": [],
+          "session_storage": []
+        }
+      },
+      "browser": {
+        "cleanup": "terminated-owned-process",
+        "mode": "launch",
+        "process_ownership": "provider-owned",
+        "product": "Chromium",
+        "version": "155.0.8059.41"
+      },
+      "completeness": {
+        "equality_eligible": true,
+        "missing_sections": [],
+        "status": "complete",
+        "truncated_sections": []
+      },
+      "limitations": [
+        "Artifact identity is unavailable for this observation.",
+        "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+        "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+        "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+        "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+        "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+        "Storage values are hashed only after declared-secret redaction.",
+        "Browser host platform and architecture were not observed."
+      ]
+    },
+    {
+      "reference": "T05",
+      "evidence_id": "ev_86ef36f6f60a1a83c56f6af8843cb820921d99c7aa4326d204e1ce6adc519776",
+      "screenshot": "../../capturas/12-taskrabbit-profesionales.png",
+      "sha256": "b406d7a50e02b4bb905de5882bc7cde1b587936f10adf678708c5f7e0c6570da",
+      "bytes": 444820,
+      "parameters": {
+        "actions": [
+          {
+            "action": "wait_for_timeout",
+            "duration_ms": 2000,
+            "step_id": "wait"
+          }
+        ],
+        "browser": {
+          "executable_path": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+          "headless": true,
+          "mode": "launch"
+        },
+        "capture": {
+          "after_each_step": [],
+          "at_end": [
+            "url",
+            "dom",
+            "accessibility",
+            "screenshot"
+          ],
+          "events": [],
+          "network": {
+            "header_values": false,
+            "request_body": false,
+            "response_body": false
+          }
+        },
+        "environment": {
+          "color_scheme": "light",
+          "locale": "en-US",
+          "reduced_motion": "reduce",
+          "service_workers": "block",
+          "timezone": "America/New_York",
+          "viewport": {
+            "device_scale_factor": 1,
+            "height": 1100,
+            "width": 1440
+          }
+        },
+        "scenario_sha256": "006e413ad1dbb4b289343579f87d164348a100614eaff018bdbb8861e8ff2391",
+        "secrets": [],
+        "start_url": {
+          "query": [],
+          "url": "https://www.taskrabbit.com/locations/new-york-city/plumbing"
+        },
+        "storage": {
+          "cookies": [],
+          "local_storage": [],
+          "session_storage": []
+        }
+      },
+      "browser": {
+        "cleanup": "terminated-owned-process",
+        "mode": "launch",
+        "process_ownership": "provider-owned",
+        "product": "Chromium",
+        "version": "155.0.8059.41"
+      },
+      "completeness": {
+        "equality_eligible": true,
+        "missing_sections": [],
+        "status": "complete",
+        "truncated_sections": []
+      },
+      "limitations": [
+        "Artifact identity is unavailable for this observation.",
+        "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+        "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+        "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+        "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+        "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+        "Storage values are hashed only after declared-secret redaction.",
+        "Browser host platform and architecture were not observed."
+      ]
+    }
+  ]
+}
