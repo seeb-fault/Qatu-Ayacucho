@@ -10,7 +10,9 @@
     "build": "next build",
     "start": "next start --hostname 127.0.0.1",
     "typecheck": "tsc --noEmit",
-    "test": "playwright test --project=descubrimiento"
+    "test": "playwright test --project=descubrimiento",
+    "test:usuarios": "playwright test --config playwright.usuarios.config.ts",
+    "test:acceso": "playwright test --config playwright.acceso.config.ts"
   },
   "dependencies": {
     "next": "16.4.1",
