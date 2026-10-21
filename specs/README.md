@@ -1,6 +1,6 @@
 # Especificaciones Qatu
 
-La entrega [001 — Descubrimiento de ofertas](001-descubrimiento-ofertas/spec.md) incorpora el prototipo web con datos sintéticos. Las entregas 002 (usuarios) y 003 (proveedores) se incorporarán sucesivamente en sus propias ramas. Su presencia en la arquitectura no significa que ya estén implementadas aquí.
+La entrega [001 — Descubrimiento de ofertas](001-descubrimiento-ofertas/spec.md) incorpora el prototipo web con datos sintéticos. [002 — Usuarios y acceso](002-usuarios-acceso/spec.md) añade cuentas y administración con persistencia real. 003 (proveedores) todavía se incorporará en su propia rama. Las especificaciones futuras no se consideran implementadas por aparecer en la arquitectura.
 
 ## Evolución pendiente
 

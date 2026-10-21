@@ -1,6 +1,6 @@
-# Qatu Web — descubrimiento 001
+# Qatu Web — descubrimiento y cuentas
 
-Reconstrucción de la especificación 001 con Next.js, React y TypeScript. Rutas: inicio (/), resultados (/buscar), detalle (/publicaciones/:id) y guía de estados (/demo). /cuenta muestra un aviso de funcionalidad futura: todavía no hay formularios de cuentas ni backend.
+Implementación local de la especificación 001 y Usuarios 002 US1/US2/US3 con Next.js, React y TypeScript. Rutas: inicio (/), resultados (/buscar), detalle (/publicaciones/:id), guía de estados (/demo), registro (/registro), ingreso (/ingresar), perfil (/cuenta) y administración (/admin/usuarios).
 
 ## Ejecutar
 
@@ -22,23 +22,25 @@ El servidor se limita a loopback para vista previa local. El despliegue VPS se p
 
 ## Verificar
 
+Esta reconstrucción incorpora el diseño moderno de login y registro del snapshot `99cebd0`, sin adelantar Proveedores. Tras compilar, `npm run test:acceso` comprueba diseño adaptable, contraseña visible opcional, errores y redirección al perfil con API simulada. No modifica cuentas reales. `npm run test:usuarios` conserva las pruebas de integración contra PostgreSQL real.
+
 ```powershell
 npm run typecheck
 npm run build
 npm test
 ```
 
-Las pruebas levantan y cierran su propio servidor de producción en http://127.0.0.1:3001. En Windows local se usa Chrome; en CI/Linux, Chromium instalado mediante `npx playwright install --with-deps chromium`. QATU_TEST_PORT y QATU_BROWSER permiten cambiar puerto y ejecutable. Se debe compilar antes de ejecutar las pruebas. Las capturas/trazas locales se guardan en test-results y se excluyen de Git.
+Las pruebas levantan y cierran su propio servidor de producción en http://127.0.0.1:3001 y necesitan Chrome instalado en su ruta habitual de Windows. QATU_TEST_PORT y QATU_BROWSER permiten cambiar puerto y ejecutable. Se debe compilar antes de ejecutarlas. Las capturas/trazas locales se guardan en test-results y se excluyen de Git.
 
 ## Fuente de datos y alcance
 
-24 ofertas sintéticas en src/lib/catalogo.ts; el adapter src/lib/api/publicaciones.ts devuelve fixtures locales. El catálogo todavía no tiene persistencia. Precios, perfiles de proveedores, reseñas y verificaciones del catálogo son ficticios y se identifican en la interfaz. Esta entrega no tiene API de usuarios ni PostgreSQL.
+24 ofertas sintéticas en src/lib/catalogo.ts; el adapter src/lib/api/publicaciones.ts devuelve fixtures locales. El catálogo todavía no tiene persistencia. Precios, perfiles de proveedores, reseñas y verificaciones del catálogo son ficticios y se identifican en la interfaz. Usuarios usa API NestJS y PostgreSQL reales: configurar y arrancar backend siguiendo [su README](../backend/README.md). Next.js reenvía /api/v1 al puerto 3001; QATU_API_URL permite cambiarlo antes de compilar.
 
 La búsqueda convencional combina texto por términos sin tildes con tipo/categoría/distrito/presupuesto. El presupuesto está en soles por unidad publicada; excluye servicios sin precio comparable. Paginación de 20 y orden determinista. Los criterios viajan en la URL y se conservan al volver del detalle.
 
-No hay registro/login, administración, IA, publicación, reservas, pago ni mapa real; las acciones futuras muestran un aviso. Error/reintento, vacío, publicación desactivada e imagen ausente se pueden explorar desde /demo. El error de consulta simulado usa escenario=error; el reintento elimina solo ese parámetro, conservando los filtros.
+Registro/login, edición del nombre propio y logout operan con sesión HttpOnly y revocación en servidor. Administración exige admin activo; permite buscar/paginar cuentas, activar/desactivar con motivo y consultar auditoría. Crear admin por CLI según backend/README.md; el perfil administrativo enlaza /admin/usuarios. Desactivar revoca sesiones y reactivar exige login nuevo. No hay IA, publicación, reservas, pago ni mapa real; esas acciones futuras abren un aviso. Error/reintento, vacío, publicación desactivada e imagen ausente se pueden explorar desde /demo. El error de consulta simulado usa escenario=error; el reintento elimina solo ese parámetro, conservando los filtros.
 
-`npm test` ejecuta las 13 pruebas de descubrimiento sin backend. Los resultados anteriores del snapshot se conservan en el quickstart; los checks de este repositorio son ejecuciones nuevas y deben revisarse en Actions.
+`npm run test:usuarios` inicia API en 3001 y web en 3100, requiere base exclusiva de pruebas ya migrada y DATABASE_URL/JWT_SECRET (entorno o backend/.env). Ejecuta el recorrido con Chrome y persistencia real. `npm test` mantiene las 13 pruebas de descubrimiento sin backend; no ejecutar simultáneamente ambas suites en el puerto 3001. Resultados de este incremento en [quickstart 002](../specs/002-usuarios-acceso/quickstart.md).
 
 ## Archivos principales
 
