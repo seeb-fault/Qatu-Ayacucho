@@ -1,0 +1,1 @@
+import {Cargando} from '@/components/descubrimiento/Estados';export default Cargando;
