@@ -1,0 +1,163 @@
+name: CI Qatu
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CI: 'true'
+  NEXT_TELEMETRY_DISABLED: '1'
+
+jobs:
+  especificaciones:
+    name: Especificaciones y evidencias
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      frontend: ${{ steps.alcance.outputs.frontend }}
+      backend: ${{ steps.alcance.outputs.backend }}
+      proveedores: ${{ steps.alcance.outputs.proveedores }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24'
+      - name: Probar el detector de entregas
+        run: node --test .github/scripts/validar-entrega.test.mjs
+      - name: Comprobar archivos y alcance de la entrega
+        id: alcance
+        run: node .github/scripts/validar-entrega.mjs
+      - name: Validar artefactos de Spec Kit
+        if: steps.alcance.outputs.specs == 'true'
+        shell: pwsh
+        run: ./specs/scripts/validar-specs.ps1
+      - name: Detectar tokens Mapbox sin modificar archivos
+        run: node specs/scripts/sanitizar-evidencias.mjs
+
+  backend:
+    name: Backend e integración PostgreSQL
+    needs: especificaciones
+    if: needs.especificaciones.outputs.backend == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: backend
+    services:
+      postgres:
+        image: postgis/postgis:17-3.5
+        env:
+          POSTGRES_USER: qatu
+          POSTGRES_PASSWORD: qatu_ci
+          POSTGRES_DB: qatu_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U qatu -d qatu_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      NODE_ENV: test
+      DATABASE_URL: postgresql://qatu:qatu_ci@127.0.0.1:5432/qatu_test
+      TEST_DATABASE_URL: postgresql://qatu:qatu_ci@127.0.0.1:5432/qatu_test
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - name: Comprobar migraciones e idempotencia
+        run: |
+          npm run migrate
+          npm run migrate
+      - run: npm test
+
+  frontend:
+    name: Frontend y recorridos de navegador
+    needs: especificaciones
+    if: needs.especificaciones.outputs.frontend == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: frontend
+    services:
+      postgres:
+        image: ${{ needs.especificaciones.outputs.backend == 'true' && 'postgis/postgis:17-3.5' || '' }}
+        env:
+          POSTGRES_USER: qatu
+          POSTGRES_PASSWORD: qatu_ci
+          POSTGRES_DB: qatu_web_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U qatu -d qatu_web_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://qatu:qatu_ci@127.0.0.1:5432/qatu_web_test
+      APP_ORIGIN: http://127.0.0.1:3100
+      QATU_TEST_PORT: '3200'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Instalar backend
+        if: needs.especificaciones.outputs.backend == 'true'
+        run: npm ci
+        working-directory: backend
+      - run: npm ci
+      - name: Generar claves efímeras
+        if: needs.especificaciones.outputs.backend == 'true'
+        run: |
+          node -e "const { randomBytes } = require('node:crypto'); const { appendFileSync } = require('node:fs'); appendFileSync(process.env.GITHUB_ENV, 'JWT_SECRET=' + randomBytes(32).toString('hex') + '\nDOCUMENTOS_KEY=' + randomBytes(32).toString('hex') + '\n');"
+      - name: Migrar base exclusiva de navegador
+        if: needs.especificaciones.outputs.backend == 'true'
+        run: npm run migrate
+        working-directory: backend
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - run: npm run typecheck
+      - name: Probar descubrimiento
+        run: npm test -- --output=test-results/descubrimiento
+      - name: Probar diseño de acceso
+        if: needs.especificaciones.outputs.backend == 'true'
+        run: npm run test:acceso -- --output=test-results/acceso
+      - name: Probar usuarios y administración
+        if: needs.especificaciones.outputs.backend == 'true'
+        run: npm run test:usuarios -- --output=test-results/usuarios
+      - name: Probar verificación documental
+        if: needs.especificaciones.outputs.proveedores == 'true'
+        run: npm run test:proveedores -- --output=test-results/proveedores
+      - name: Guardar evidencias sintéticas
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: evidencias-navegador
+          path: frontend/test-results/
+          if-no-files-found: ignore
+          retention-days: 7
