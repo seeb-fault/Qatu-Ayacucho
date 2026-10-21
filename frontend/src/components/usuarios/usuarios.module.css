@@ -1,0 +1,23 @@
+.panel { width: min(480px, calc(100% - 32px)); margin: 64px auto; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); }
+.panel h1 { font-size: 30px; line-height: 1.3; margin: 10px 0 16px; }
+.panel p { margin: 16px 0; overflow-wrap: anywhere; }
+.panel a { color: var(--forest); text-decoration: underline; text-underline-offset: 3px; }
+.form { display: grid; gap: 16px; margin: 24px 0; }
+.form label { display: grid; gap: 6px; font-weight: 600; }
+.form input { width: 100%; padding: 12px; border: 1px solid var(--line); border-radius: 7px; background: var(--paper); }
+.form small { color: var(--muted); }
+.error { color: #9e3026; }
+.admin { width: min(960px, calc(100% - 32px)); }
+.filtros { grid-template-columns: 2fr 1fr auto; align-items: end; }
+.form select, .form textarea { width: 100%; padding: 12px; border: 1px solid var(--line); border-radius: 7px; background: var(--paper); color: var(--ink); font: inherit; }
+.form textarea { resize: vertical; }
+.cuentas { list-style: none; margin: 24px 0; padding: 0; display: grid; gap: 16px; }
+.cuentas article { padding: 20px; border: 1px solid var(--line); border-radius: 10px; }
+.cuentas h2, .auditoria h2 { font-size: 20px; overflow-wrap: anywhere; }
+.cuentas button { margin: 4px 8px 4px 0; }
+.paginacion { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.auditoria { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--line); }
+.auditoria ol { padding-left: 24px; }
+.auditoria li { margin-bottom: 24px; }
+@media (max-width: 680px) { .filtros { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { .panel { margin: 28px auto; padding: 24px; } }
