@@ -1,0 +1,19 @@
+name: qatu-local
+services:
+  db:
+    image: postgis/postgis:17-3.5
+    environment:
+      POSTGRES_USER: qatu
+      POSTGRES_PASSWORD: qatu_local
+      POSTGRES_DB: qatu
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - qatu-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U qatu -d qatu"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+volumes:
+  qatu-db:
