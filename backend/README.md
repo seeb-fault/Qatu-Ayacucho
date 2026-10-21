@@ -1,6 +1,8 @@
-# API Qatu — Usuarios
+# API Qatu — Usuarios y Proveedores
 
 NestJS 11/TypeScript, PostgreSQL y puertos por módulo. Implementa registro, login, perfil propio, logout y administración auditada (US1/US2/US3, RF12/RF14). El catálogo del frontend conserva fixtures.
+
+Proveedores 003 añade perfil propio, zona manual, consulta pública optativa, documentación cifrada y revisión administrativa con historial. Aplicar todas las migraciones antes de arrancar: el módulo limpia adjuntos de cuentas inactivas al iniciar y cada hora. Configuración y conservación en [PROVEEDORES.md](./PROVEEDORES.md).
 
 ## Desarrollo local
 
