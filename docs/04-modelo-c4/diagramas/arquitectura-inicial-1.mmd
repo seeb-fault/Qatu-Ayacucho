@@ -1,0 +1,26 @@
+flowchart TB
+    ACT[Cliente, Proveedor y Administrador] --> WEB[Web Next.js móvil]
+    WEB -->|HTTPS y JSON| API[API REST /api/v1]
+    subgraph NEG[Seis módulos en API NestJS]
+        U[Usuarios y acceso]
+        P[Proveedores]
+        C[Catálogo]
+        R[Reservas y contratación: pagos y calendario]
+        E[Reputación y confianza: resenas]
+        B[Búsqueda inteligente: busqueda]
+    end
+    API --> U & P & C & R & E & B
+    P -->|Identidad| U
+    C -->|Proveedor verificado| P
+    R -->|Oferta y cotización| C
+    E -->|Reserva finalizada| R
+    B -->|Ofertas reales| C
+    B -->|Disponibilidad| R
+    DB[(PostgreSQL y PostGIS)]
+    F[(Fotos y evidencias privadas)]
+    U & P & C & R & E & B -->|Repositorios propios| DB
+    C & E -->|Adapter de archivos| F
+    R -->|Adapter de pagos| PAY[Culqi: Yape como medio habilitado]
+    B -->|Adapter de intención| IA[Proveedor externo de IA]
+    R -.->|Outbox y reintentos| MSG[Mensajería]
+    C & P -->|Adapter compartido| MAP[Mapas]

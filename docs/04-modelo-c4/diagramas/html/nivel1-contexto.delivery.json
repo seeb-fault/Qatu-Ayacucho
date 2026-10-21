@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "54414dcc-bb25-43cd-924f-531f49f88ad0",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\fuentes\\nivel1-contexto.archify.json",
+  "output": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\html\\nivel1-contexto.html",
+  "specification": {
+    "sha256": "9ec943522111042759e7665a6ddc6a08365b2630b419917b7bf3f6224612a319",
+    "bytes": 3337
+  },
+  "artifact": {
+    "sha256": "b529cc4a43610c5cd7196a7f9e0fea188b9c800b5067e3c71b48ff5ac7e24649",
+    "bytes": 821644
+  }
+}

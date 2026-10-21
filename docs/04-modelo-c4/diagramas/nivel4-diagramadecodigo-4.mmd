@@ -1,0 +1,23 @@
+sequenceDiagram
+    actor Cliente
+    participant B as Búsqueda inteligente
+    participant I as Adaptador IA
+    participant V as Validador
+    participant C as Catálogo
+    participant R as Disponibilidad de Reservas
+    Cliente->>B: Texto y contexto de fecha/zona
+    B->>I: Interpretar con deadline
+    alt Respuesta válida
+        I-->>B: Objeto no confiable
+        B->>V: Validar esquema y resolver IDs reales
+        V-->>B: Filtros válidos o solicitud de precisión
+        B->>C: Consultar filtros por API pública
+        C-->>B: Publicaciones y precios reales
+        opt Fechas completas
+            B->>R: Consultar recursos y rango
+            R-->>B: Disponibilidad actual
+        end
+        B-->>Cliente: Resultados + filtros editables
+    else Timeout, cuota o datos inválidos
+        B-->>Cliente: Modo convencional y filtros manuales
+    end

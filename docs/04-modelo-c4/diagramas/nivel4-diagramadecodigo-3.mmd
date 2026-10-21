@@ -1,0 +1,27 @@
+classDiagram
+    class BusquedaController
+    class BuscarEnLenguajeNaturalCasoUso {
+        +ejecutar(texto, contexto)
+    }
+    class InterpreteIntencion {
+        <<interface>>
+        +interpretar(texto, contexto)
+    }
+    class ConsultaCatalogo {
+        <<interface>>
+        +buscar(criterios)
+    }
+    class ConsultaDisponibilidad {
+        <<interface>>
+        +consultar(ids, rango)
+    }
+    class ValidadorCriterios {
+        +validar(respuesta)
+    }
+    class ModeloLenguajeAdapter
+    BusquedaController --> BuscarEnLenguajeNaturalCasoUso
+    BuscarEnLenguajeNaturalCasoUso --> InterpreteIntencion
+    BuscarEnLenguajeNaturalCasoUso --> ValidadorCriterios
+    BuscarEnLenguajeNaturalCasoUso --> ConsultaCatalogo
+    BuscarEnLenguajeNaturalCasoUso --> ConsultaDisponibilidad
+    ModeloLenguajeAdapter ..|> InterpreteIntencion

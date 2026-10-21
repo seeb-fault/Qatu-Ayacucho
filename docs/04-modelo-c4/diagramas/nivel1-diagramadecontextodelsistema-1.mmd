@@ -1,0 +1,17 @@
+flowchart LR
+    CL["Persona: Cliente o visitante<br/>Busca herramientas y oficios"]
+    PR["Persona: Proveedor<br/>Publica y atiende solicitudes"]
+    AD["Persona: Administrador<br/>Verifica y modera"]
+    Q["Sistema: Qatu<br/>Descubrimiento, reservas, pagos y confianza"]
+    PAY["Sistema externo: Culqi<br/>Procesa pagos; Yape como medio habilitado"]
+    IA["Sistema externo: Proveedor de IA<br/>Interpreta intención de búsqueda"]
+    MSG["Sistema externo: Mensajería<br/>Entrega avisos"]
+    MAP["Sistema externo: Mapas<br/>Ubicaciones y cercanía"]
+    CL -->|Busca, solicita, paga y reseña| Q
+    PR -->|Publica, acepta, entrega y recibe devoluciones| Q
+    AD -->|Gestiona usuarios, publicaciones e incidencias| Q
+    Q -->|Solicita y consulta pagos| PAY
+    PAY -->|Notifica resultados para verificación| Q
+    Q -->|Solicita interpretación de texto limitado| IA
+    Q -->|Envía avisos| MSG
+    Q -->|Consulta información geográfica| MAP

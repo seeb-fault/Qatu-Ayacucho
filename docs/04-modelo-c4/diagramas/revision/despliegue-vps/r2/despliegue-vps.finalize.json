@@ -1,0 +1,321 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "architecture",
+  "quality": "showcase",
+  "startedAt": "2026-10-15T19:14:46.398Z",
+  "specification": {
+    "path": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\fuentes\\despliegue-vps.archify.json",
+    "sha256": "a657c05b82df6201796d31a365e2d33c21787b99a33ab815a52cc0575c433653",
+    "bytes": 4121
+  },
+  "artifact": {
+    "path": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\html\\despliegue-vps.html"
+  },
+  "stages": {
+    "validate": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": null,
+      "command": [
+        "C:\\Users\\USUARIO\\AppData\\Local\\Author Software\\nvm\\installs\\v24.21.0\\node.exe",
+        "C:\\Users\\USUARIO\\AppData\\Local\\Temp\\qatu-archify-sVHw3n\\package\\archify\\bin\\archify.mjs",
+        "deliver",
+        "architecture",
+        "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\fuentes\\despliegue-vps.archify.json",
+        "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\html\\despliegue-vps.html",
+        "--quality",
+        "showcase",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "deliver",
+        "receiptId": "696387aa-9050-478d-8215-f6dab730dade",
+        "stage": "check",
+        "type": "architecture",
+        "input": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\fuentes\\despliegue-vps.archify.json",
+        "output": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\html\\despliegue-vps.html",
+        "error": "Final artifact check failed; the previous artifact was preserved.",
+        "diagnostics": [
+          {
+            "code": "composition/desktop-readability",
+            "severity": "error",
+            "message": "Final artifact failed composition/desktop-readability.",
+            "subject": {
+              "check": "composition"
+            },
+            "evidence": {
+              "owner": {
+                "kind": "edge",
+                "id": null,
+                "from": "browser",
+                "to": "proxy"
+              },
+              "viewportWidth": 1440,
+              "viewportHeight": 900,
+              "availableDiagramWidth": 930,
+              "budgetBasis": "legacy-930",
+              "readerContract": "declared-wide-v1",
+              "requestedTargetPx": 7.5,
+              "requestedTargetMet": false,
+              "budgetLimit": "legacy",
+              "viewBoxWidth": 1260,
+              "scale": 0.7380952380952381,
+              "text": "HTTPS",
+              "detail": "edge",
+              "sourceFontPx": 8,
+              "projectedFontPx": 5.904761904761905,
+              "minimumProjectedFontPx": 6
+            },
+            "supportedFixes": [
+              "Preserve the semantic text and any supplied coordinates, routes, sides, channels, and labels. Compactly reflow automatic spacing and empty corridors so the complete viewBox width is at most 1240px (current 1260px; 8px source text at 930px desktop budget). If supplied geometry fixes that width, use a renderer-supported semantic text-size setting or renderer-level fix instead. Position-only label controls cannot repair its projection."
+            ]
+          }
+        ],
+        "provenance": "absent",
+        "checker": {
+          "ok": false,
+          "file": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\html\\despliegue-vps.html",
+          "artifact": {
+            "sha256": "f7365e89372c7f8886901e31605c0f0aaf1b3d35fbc4dd49a22e4f2ce436f539",
+            "bytes": 828711
+          },
+          "checks": [
+            {
+              "name": "single_svg",
+              "ok": true,
+              "details": [
+                "found 1 <svg> block(s)"
+              ]
+            },
+            {
+              "name": "finite_svg",
+              "ok": true,
+              "details": []
+            },
+            {
+              "name": "orthogonal_arrows",
+              "ok": true,
+              "details": []
+            },
+            {
+              "name": "label_route_clearance",
+              "ok": true,
+              "details": []
+            },
+            {
+              "name": "relationship_crossings",
+              "ok": true,
+              "details": []
+            },
+            {
+              "name": "relationship_corridors",
+              "ok": true,
+              "details": []
+            },
+            {
+              "name": "container_border_runs",
+              "ok": true,
+              "details": []
+            },
+            {
+              "name": "route_rhythm",
+              "ok": true,
+              "details": []
+            },
+            {
+              "name": "legend_clearance",
+              "ok": true,
+              "details": []
+            }
+          ],
+          "composition": {
+            "schemaVersion": 1,
+            "profile": "showcase",
+            "status": "fail",
+            "summary": {
+              "errors": 1,
+              "warnings": 0
+            },
+            "metrics": {
+              "properCrossings": 0,
+              "resolvedCrossovers": 0,
+              "ambiguousCorridors": 0,
+              "arrowheadCollisions": 0,
+              "containerBorderRuns": 0,
+              "labelRouteClearanceIssues": 0,
+              "labelCanvasOverflowIssues": 0,
+              "minLabelRouteClearance": 9,
+              "desktopReadabilityIssues": 1,
+              "viewportHeightIssues": 0,
+              "minProjectedNodeTextPx": 5.904761904761905,
+              "maxBends": 3,
+              "routesOverSuggestedBends": 1,
+              "maxStretch": 1.188,
+              "routesOverSuggestedStretch": 0,
+              "minSegmentPx": 24,
+              "minInteriorSegmentPx": 69,
+              "shortSegmentCount": 0,
+              "shortEndpointSegmentCount": 0,
+              "shortInteriorSegmentCount": 0,
+              "microSegmentCount": 0
+            },
+            "suggestedLimits": {
+              "bendsPerRelationship": 2,
+              "stretch": 1.35,
+              "segmentPx": 16,
+              "microSegmentPx": 8
+            },
+            "routeReview": {
+              "crossings": [],
+              "detours": [
+                {
+                  "relationship": {
+                    "from": "web",
+                    "to": "api",
+                    "label": "SSR privado",
+                    "collectionIndex": 3,
+                    "artifactIndex": 4
+                  },
+                  "bends": 3,
+                  "stretch": 1.188
+                }
+              ]
+            },
+            "leadingSpace": {
+              "measured": true,
+              "emptyTopPx": 40,
+              "emptyTopRatio": 0.03,
+              "occupiedTop": 40,
+              "viewBoxTop": 0,
+              "canvasHeight": 1314,
+              "typicalNodeHeight": 76,
+              "reviewSuggested": false
+            },
+            "desktopReadability": {
+              "budgetBasis": "legacy-930",
+              "readerContract": "declared-wide-v1",
+              "availableDiagramWidth": 930,
+              "actualBudgetPx": 930,
+              "limit": "legacy",
+              "requestedTargetPx": 7.5,
+              "requestedTargetMet": false,
+              "hardFloorPx": 6,
+              "hardFloorMet": false,
+              "minimumOwner": {
+                "kind": "edge",
+                "id": null,
+                "from": "browser",
+                "to": "proxy"
+              },
+              "minimumSourceTextPx": 8,
+              "minimumProjectedTextPx": 5.904761904761905,
+              "semanticTextCount": 30
+            },
+            "issues": [
+              {
+                "severity": "error",
+                "code": "composition/desktop-readability",
+                "owner": {
+                  "kind": "edge",
+                  "id": null,
+                  "from": "browser",
+                  "to": "proxy"
+                },
+                "viewportWidth": 1440,
+                "viewportHeight": 900,
+                "availableDiagramWidth": 930,
+                "budgetBasis": "legacy-930",
+                "readerContract": "declared-wide-v1",
+                "requestedTargetPx": 7.5,
+                "requestedTargetMet": false,
+                "budgetLimit": "legacy",
+                "viewBoxWidth": 1260,
+                "scale": 0.7380952380952381,
+                "text": "HTTPS",
+                "detail": "edge",
+                "sourceFontPx": 8,
+                "projectedFontPx": 5.904761904761905,
+                "minimumProjectedFontPx": 6
+              }
+            ]
+          }
+        },
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      },
+      "execution": "embedded-in-deliver"
+    },
+    "deliver": {
+      "status": "not-run",
+      "execution": "blocked-by-validate"
+    }
+  },
+  "diagnostics": [
+    {
+      "code": "composition/desktop-readability",
+      "severity": "error",
+      "message": "Final artifact failed composition/desktop-readability.",
+      "subject": {
+        "check": "composition"
+      },
+      "evidence": {
+        "owner": {
+          "kind": "edge",
+          "id": null,
+          "from": "browser",
+          "to": "proxy"
+        },
+        "viewportWidth": 1440,
+        "viewportHeight": 900,
+        "availableDiagramWidth": 930,
+        "budgetBasis": "legacy-930",
+        "readerContract": "declared-wide-v1",
+        "requestedTargetPx": 7.5,
+        "requestedTargetMet": false,
+        "budgetLimit": "legacy",
+        "viewBoxWidth": 1260,
+        "scale": 0.7380952380952381,
+        "text": "HTTPS",
+        "detail": "edge",
+        "sourceFontPx": 8,
+        "projectedFontPx": 5.904761904761905,
+        "minimumProjectedFontPx": 6
+      },
+      "supportedFixes": [
+        "Preserve the semantic text and any supplied coordinates, routes, sides, channels, and labels. Compactly reflow automatic spacing and empty corridors so the complete viewBox width is at most 1240px (current 1260px; 8px source text at 930px desktop budget). If supplied geometry fixes that width, use a renderer-supported semantic text-size setting or renderer-level fix instead. Position-only label controls cannot repair its projection."
+      ]
+    }
+  ],
+  "evidence": {
+    "receipt": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\revision\\despliegue-vps\\r2\\despliegue-vps.finalize.json",
+    "summaryReceipt": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\revision\\despliegue-vps\\r2\\despliegue-vps.finalize-summary.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "validate",
+  "finishedAt": "2026-10-15T19:14:48.881Z",
+  "durationMs": 2483,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.1.0",
+    "availableVersion": "3.1.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-15T19:11:36.423Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

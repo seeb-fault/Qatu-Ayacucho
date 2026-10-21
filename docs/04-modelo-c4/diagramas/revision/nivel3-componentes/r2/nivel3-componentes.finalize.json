@@ -1,0 +1,598 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "architecture",
+  "quality": "showcase",
+  "startedAt": "2026-10-15T19:15:03.236Z",
+  "specification": {
+    "path": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\fuentes\\nivel3-componentes.archify.json",
+    "sha256": "3fa6bc37f4bc9ce6b599462eaf39d61ede301399559cafa59d8786f2a9603881",
+    "bytes": 6064
+  },
+  "artifact": {
+    "path": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\html\\nivel3-componentes.html",
+    "sha256": "3537f3953d615f78f34b85fd819529451edafbff1c841c5e21158d1382d2cf33",
+    "bytes": 843247
+  },
+  "stages": {
+    "validate": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": null,
+      "execution": "embedded-in-deliver",
+      "command": [
+        "C:\\Users\\USUARIO\\AppData\\Local\\Author Software\\nvm\\installs\\v24.21.0\\node.exe",
+        "C:\\Users\\USUARIO\\AppData\\Local\\Temp\\qatu-archify-sVHw3n\\package\\archify\\bin\\archify.mjs",
+        "deliver",
+        "architecture",
+        "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\fuentes\\nivel3-componentes.archify.json",
+        "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\html\\nivel3-componentes.html",
+        "--quality",
+        "showcase",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "validate",
+        "specification": {
+          "sha256": "3fa6bc37f4bc9ce6b599462eaf39d61ede301399559cafa59d8786f2a9603881",
+          "bytes": 6064
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        }
+      }
+    },
+    "deliver": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 3436,
+      "command": [
+        "C:\\Users\\USUARIO\\AppData\\Local\\Author Software\\nvm\\installs\\v24.21.0\\node.exe",
+        "C:\\Users\\USUARIO\\AppData\\Local\\Temp\\qatu-archify-sVHw3n\\package\\archify\\bin\\archify.mjs",
+        "deliver",
+        "architecture",
+        "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\fuentes\\nivel3-componentes.archify.json",
+        "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\html\\nivel3-componentes.html",
+        "--quality",
+        "showcase",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "receiptId": "f4d47628-db0e-42a3-88fb-ce7471e211c9",
+        "ok": true,
+        "command": "deliver",
+        "type": "architecture",
+        "input": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\fuentes\\nivel3-componentes.archify.json",
+        "output": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\html\\nivel3-componentes.html",
+        "specification": {
+          "sha256": "3fa6bc37f4bc9ce6b599462eaf39d61ede301399559cafa59d8786f2a9603881",
+          "bytes": 6064
+        },
+        "artifact": {
+          "sha256": "3537f3953d615f78f34b85fd819529451edafbff1c841c5e21158d1382d2cf33",
+          "bytes": 843247
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        },
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      }
+    },
+    "check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 9850,
+      "command": [
+        "C:\\Users\\USUARIO\\AppData\\Local\\Author Software\\nvm\\installs\\v24.21.0\\node.exe",
+        "C:\\Users\\USUARIO\\AppData\\Local\\Temp\\qatu-archify-sVHw3n\\package\\archify\\bin\\archify.mjs",
+        "check",
+        "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\html\\nivel3-componentes.html",
+        "--require-provenance"
+      ],
+      "receipt": {
+        "ok": true,
+        "file": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\html\\nivel3-componentes.html",
+        "artifact": {
+          "sha256": "3537f3953d615f78f34b85fd819529451edafbff1c841c5e21158d1382d2cf33",
+          "bytes": 843247
+        },
+        "checks": [
+          {
+            "name": "single_svg",
+            "ok": true,
+            "details": [
+              "found 1 <svg> block(s)"
+            ]
+          },
+          {
+            "name": "finite_svg",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "orthogonal_arrows",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "label_route_clearance",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_crossings",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_corridors",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "container_border_runs",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "route_rhythm",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "legend_clearance",
+            "ok": true,
+            "details": []
+          }
+        ],
+        "composition": {
+          "schemaVersion": 1,
+          "profile": "showcase",
+          "status": "pass",
+          "summary": {
+            "errors": 0,
+            "warnings": 0
+          },
+          "metrics": {
+            "properCrossings": 0,
+            "resolvedCrossovers": 10,
+            "ambiguousCorridors": 0,
+            "arrowheadCollisions": 0,
+            "containerBorderRuns": 0,
+            "labelRouteClearanceIssues": 0,
+            "labelCanvasOverflowIssues": 0,
+            "minLabelRouteClearance": 5,
+            "desktopReadabilityIssues": 0,
+            "viewportHeightIssues": 0,
+            "minProjectedNodeTextPx": 7.223300970873787,
+            "maxBends": 4,
+            "routesOverSuggestedBends": 2,
+            "maxStretch": 1.082,
+            "routesOverSuggestedStretch": 0,
+            "minSegmentPx": 21,
+            "minInteriorSegmentPx": 21,
+            "shortSegmentCount": 0,
+            "shortEndpointSegmentCount": 0,
+            "shortInteriorSegmentCount": 0,
+            "microSegmentCount": 0
+          },
+          "suggestedLimits": {
+            "bendsPerRelationship": 2,
+            "stretch": 1.35,
+            "segmentPx": 16,
+            "microSegmentPx": 8
+          },
+          "routeReview": {
+            "crossings": [
+              {
+                "left": {
+                  "from": "http",
+                  "to": "resenas",
+                  "label": "",
+                  "collectionIndex": 2,
+                  "artifactIndex": 3
+                },
+                "right": {
+                  "from": "http",
+                  "to": "usuarios",
+                  "label": "",
+                  "collectionIndex": 6,
+                  "artifactIndex": 7
+                },
+                "point": [
+                  356,
+                  250.0400000000064
+                ],
+                "sharedNode": "http"
+              },
+              {
+                "left": {
+                  "from": "http",
+                  "to": "resenas",
+                  "label": "",
+                  "collectionIndex": 2,
+                  "artifactIndex": 3
+                },
+                "right": {
+                  "from": "busqueda",
+                  "to": "catalogo",
+                  "label": "Consulta catálogo",
+                  "collectionIndex": 7,
+                  "artifactIndex": 8
+                },
+                "point": [
+                  348.75384615384075,
+                  256
+                ]
+              },
+              {
+                "left": {
+                  "from": "http",
+                  "to": "resenas",
+                  "label": "",
+                  "collectionIndex": 2,
+                  "artifactIndex": 3
+                },
+                "right": {
+                  "from": "busqueda",
+                  "to": "reservas",
+                  "label": "Disponibilidad",
+                  "collectionIndex": 8,
+                  "artifactIndex": 9
+                },
+                "point": [
+                  348.6,
+                  311
+                ]
+              },
+              {
+                "left": {
+                  "from": "http",
+                  "to": "resenas",
+                  "label": "",
+                  "collectionIndex": 2,
+                  "artifactIndex": 3
+                },
+                "right": {
+                  "from": "resenas",
+                  "to": "reservas",
+                  "label": "Reserva finalizada",
+                  "collectionIndex": 9,
+                  "artifactIndex": 10
+                },
+                "point": [
+                  348.6,
+                  325
+                ],
+                "sharedNode": "resenas"
+              },
+              {
+                "left": {
+                  "from": "http",
+                  "to": "reservas",
+                  "label": "",
+                  "collectionIndex": 3,
+                  "artifactIndex": 4
+                },
+                "right": {
+                  "from": "busqueda",
+                  "to": "catalogo",
+                  "label": "Consulta catálogo",
+                  "collectionIndex": 7,
+                  "artifactIndex": 8
+                },
+                "point": [
+                  493,
+                  256
+                ]
+              },
+              {
+                "left": {
+                  "from": "http",
+                  "to": "usuarios",
+                  "label": "",
+                  "collectionIndex": 6,
+                  "artifactIndex": 7
+                },
+                "right": {
+                  "from": "busqueda",
+                  "to": "catalogo",
+                  "label": "Consulta catálogo",
+                  "collectionIndex": 7,
+                  "artifactIndex": 8
+                },
+                "point": [
+                  356,
+                  256
+                ]
+              },
+              {
+                "left": {
+                  "from": "http",
+                  "to": "usuarios",
+                  "label": "",
+                  "collectionIndex": 6,
+                  "artifactIndex": 7
+                },
+                "right": {
+                  "from": "busqueda",
+                  "to": "reservas",
+                  "label": "Disponibilidad",
+                  "collectionIndex": 8,
+                  "artifactIndex": 9
+                },
+                "point": [
+                  356,
+                  311
+                ]
+              },
+              {
+                "left": {
+                  "from": "http",
+                  "to": "usuarios",
+                  "label": "",
+                  "collectionIndex": 6,
+                  "artifactIndex": 7
+                },
+                "right": {
+                  "from": "resenas",
+                  "to": "reservas",
+                  "label": "Reserva finalizada",
+                  "collectionIndex": 9,
+                  "artifactIndex": 10
+                },
+                "point": [
+                  356,
+                  325
+                ]
+              },
+              {
+                "left": {
+                  "from": "proveedores",
+                  "to": "usuarios",
+                  "label": "Identidad",
+                  "collectionIndex": 14,
+                  "artifactIndex": 15
+                },
+                "right": {
+                  "from": "reservas",
+                  "to": "outbox",
+                  "label": "Evento en transacción",
+                  "collectionIndex": 16,
+                  "artifactIndex": 17
+                },
+                "point": [
+                  644,
+                  796
+                ]
+              },
+              {
+                "left": {
+                  "from": "infra",
+                  "to": "ext",
+                  "label": "HTTPS",
+                  "collectionIndex": 18,
+                  "artifactIndex": 19
+                },
+                "right": {
+                  "from": "outbox",
+                  "to": "db",
+                  "label": "Lee pendientes",
+                  "collectionIndex": 19,
+                  "artifactIndex": 20
+                },
+                "point": [
+                  396,
+                  1181
+                ]
+              }
+            ],
+            "detours": [
+              {
+                "relationship": {
+                  "from": "http",
+                  "to": "resenas",
+                  "label": "",
+                  "collectionIndex": 2,
+                  "artifactIndex": 3
+                },
+                "bends": 4,
+                "stretch": 1
+              },
+              {
+                "relationship": {
+                  "from": "reservas",
+                  "to": "outbox",
+                  "label": "Evento en transacción",
+                  "collectionIndex": 16,
+                  "artifactIndex": 17
+                },
+                "bends": 3,
+                "stretch": 1.047
+              }
+            ]
+          },
+          "leadingSpace": {
+            "measured": true,
+            "emptyTopPx": 40,
+            "emptyTopRatio": 0.028,
+            "occupiedTop": 40,
+            "viewBoxTop": 0,
+            "canvasHeight": 1424,
+            "typicalNodeHeight": 76,
+            "reviewSuggested": false
+          },
+          "desktopReadability": {
+            "budgetBasis": "legacy-930",
+            "readerContract": "declared-wide-v1",
+            "availableDiagramWidth": 930,
+            "actualBudgetPx": 930,
+            "limit": "legacy",
+            "requestedTargetPx": 7.5,
+            "requestedTargetMet": false,
+            "hardFloorPx": 6,
+            "hardFloorMet": true,
+            "minimumOwner": {
+              "kind": "edge",
+              "id": null,
+              "from": "web",
+              "to": "http"
+            },
+            "minimumSourceTextPx": 8,
+            "minimumProjectedTextPx": 7.223300970873787,
+            "semanticTextCount": 42
+          },
+          "issues": []
+        },
+        "provenance": "current",
+        "deliveryReceiptId": "f4d47628-db0e-42a3-88fb-ce7471e211c9"
+      }
+    },
+    "browser-check": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": 29944,
+      "command": [
+        "C:\\Users\\USUARIO\\AppData\\Local\\Author Software\\nvm\\installs\\v24.21.0\\node.exe",
+        "C:\\Users\\USUARIO\\AppData\\Local\\Temp\\qatu-archify-sVHw3n\\package\\archify\\bin\\archify.mjs",
+        "browser-check",
+        "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\html\\nivel3-componentes.html",
+        "--json",
+        "--require-provenance",
+        "--out-dir",
+        "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\revision\\nivel3-componentes\\r2"
+      ],
+      "execution": "in-process",
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "browser-check",
+        "evidenceKind": "automated-browser",
+        "status": "fail",
+        "visualReview": "not-requested",
+        "provenance": "current",
+        "deliveryReceiptId": "f4d47628-db0e-42a3-88fb-ce7471e211c9",
+        "artifact": {
+          "path": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\html\\nivel3-componentes.html",
+          "sha256": "3537f3953d615f78f34b85fd819529451edafbff1c841c5e21158d1382d2cf33",
+          "bytes": 843247
+        },
+        "state": {
+          "detail": "read",
+          "motion": "still"
+        },
+        "chrome": {
+          "status": "available",
+          "executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+        },
+        "diagnostics": [
+          {
+            "code": "viewer/temp-cleanup-incomplete",
+            "severity": "error",
+            "message": "Browser cleanup could not safely finish; inspect the reported retained path.",
+            "subject": {
+              "artifact": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\html\\nivel3-componentes.html"
+            },
+            "evidence": {
+              "reason": "Chrome did not exit; retained temporary profile \"C:\\Users\\USUARIO\\AppData\\Local\\Temp\\archify-visual-check-profile-SxwEyq\".",
+              "retainedDirectory": "C:\\Users\\USUARIO\\AppData\\Local\\Temp\\archify-visual-check-profile-SxwEyq"
+            },
+            "supportedFixes": [
+              "resolve the reported process or filesystem failure; verify directory ownership before manual cleanup"
+            ]
+          }
+        ],
+        "containment": {
+          "status": "fail",
+          "policy": "fit-or-reader-declared-readable-vertical-scroll",
+          "viewports": []
+        },
+        "themeStates": {
+          "status": "fail",
+          "viewports": []
+        },
+        "readability": {
+          "status": "fail",
+          "minimumProjectedNodeTextPx": 6,
+          "viewports": []
+        },
+        "viewerChrome": {
+          "status": "fail",
+          "viewports": []
+        },
+        "captures": {
+          "status": "not-requested",
+          "screenshots": [],
+          "contactSheet": null
+        },
+        "sidecars": {
+          "directory": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\revision\\nivel3-componentes\\r2",
+          "receipt": "nivel3-componentes.browser-check.json",
+          "files": []
+        },
+        "error": "Chrome did not exit; retained temporary profile \"C:\\Users\\USUARIO\\AppData\\Local\\Temp\\archify-visual-check-profile-SxwEyq\"."
+      }
+    }
+  },
+  "diagnostics": [
+    {
+      "code": "viewer/temp-cleanup-incomplete",
+      "severity": "error",
+      "message": "Browser cleanup could not safely finish; inspect the reported retained path.",
+      "subject": {
+        "artifact": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\html\\nivel3-componentes.html"
+      },
+      "evidence": {
+        "reason": "Chrome did not exit; retained temporary profile \"C:\\Users\\USUARIO\\AppData\\Local\\Temp\\archify-visual-check-profile-SxwEyq\".",
+        "retainedDirectory": "C:\\Users\\USUARIO\\AppData\\Local\\Temp\\archify-visual-check-profile-SxwEyq"
+      },
+      "supportedFixes": [
+        "resolve the reported process or filesystem failure; verify directory ownership before manual cleanup"
+      ]
+    }
+  ],
+  "evidence": {
+    "receipt": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\revision\\nivel3-componentes\\r2\\nivel3-componentes.finalize.json",
+    "summaryReceipt": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\revision\\nivel3-componentes\\r2\\nivel3-componentes.finalize-summary.json",
+    "browserCheckReceipt": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\revision\\nivel3-componentes\\r2\\nivel3-componentes.browser-check.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "browser-check",
+  "finishedAt": "2026-10-15T19:16:01.310Z",
+  "durationMs": 58073,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.1.0",
+    "availableVersion": "3.1.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-15T19:11:36.423Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

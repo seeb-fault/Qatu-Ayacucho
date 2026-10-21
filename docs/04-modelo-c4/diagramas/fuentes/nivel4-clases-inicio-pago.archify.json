@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "diagram_type": "class",
+  "meta": {
+    "title": "Qatu · Nivel 4 · Inicio del pago",
+    "output": "docs/04-modelo-c4/diagramas/html/nivel4-clases-inicio-pago.html",
+    "locale": "es",
+    "quality_profile": "showcase"
+  },
+  "layout": {
+    "mode": "grid",
+    "typeW": 290,
+    "typeMaxW": 350,
+    "gapX": 100,
+    "gapY": 130
+  },
+  "types": [
+    {
+      "id": "ReservasController",
+      "label": "ReservasController",
+      "row": 0,
+      "col": 1,
+      "kind": "class",
+      "methods": [
+        {
+          "name": "aceptar",
+          "parameters": "id",
+          "visibility": "public"
+        },
+        {
+          "name": "iniciarPago",
+          "parameters": "id",
+          "visibility": "public"
+        }
+      ],
+      "attributes": []
+    },
+    {
+      "id": "IniciarPagoCasoUso",
+      "label": "IniciarPagoCasoUso",
+      "row": 1,
+      "col": 1,
+      "kind": "class",
+      "methods": [
+        {
+          "name": "ejecutar",
+          "parameters": "comando",
+          "visibility": "public"
+        }
+      ],
+      "attributes": []
+    },
+    {
+      "id": "ProcesadorPagos",
+      "label": "ProcesadorPagos",
+      "row": 2,
+      "col": 0,
+      "kind": "interface",
+      "methods": [
+        {
+          "name": "iniciar",
+          "parameters": "solicitud",
+          "visibility": "public"
+        },
+        {
+          "name": "consultar",
+          "parameters": "referencia",
+          "visibility": "public"
+        }
+      ],
+      "attributes": []
+    },
+    {
+      "id": "UnidadTrabajoReservas",
+      "label": "UnidadTrabajoReservas",
+      "row": 2,
+      "col": 1,
+      "kind": "interface",
+      "methods": [
+        {
+          "name": "ejecutar",
+          "parameters": "operacion",
+          "visibility": "public"
+        }
+      ],
+      "attributes": []
+    },
+    {
+      "id": "IntentoPago",
+      "label": "IntentoPago",
+      "row": 2,
+      "col": 2,
+      "kind": "class",
+      "methods": [
+        {
+          "name": "registrarResultado",
+          "parameters": "resultado",
+          "visibility": "public"
+        }
+      ],
+      "attributes": [
+        {
+          "name": "operacionId",
+          "visibility": "public"
+        },
+        {
+          "name": "montoCentimos",
+          "visibility": "public"
+        },
+        {
+          "name": "estado",
+          "visibility": "public"
+        }
+      ]
+    },
+    {
+      "id": "CulqiPagoAdapter",
+      "label": "CulqiPagoAdapter",
+      "row": 3,
+      "col": 0,
+      "kind": "class",
+      "methods": [],
+      "attributes": []
+    },
+    {
+      "id": "PostgresUnidadTrabajo",
+      "label": "PostgresUnidadTrabajo",
+      "row": 3,
+      "col": 1,
+      "kind": "class",
+      "methods": [],
+      "attributes": []
+    }
+  ],
+  "relationships": [
+    {
+      "from": "ReservasController",
+      "to": "IniciarPagoCasoUso",
+      "kind": "association"
+    },
+    {
+      "from": "IniciarPagoCasoUso",
+      "to": "ProcesadorPagos",
+      "kind": "association"
+    },
+    {
+      "from": "IniciarPagoCasoUso",
+      "to": "UnidadTrabajoReservas",
+      "kind": "association"
+    },
+    {
+      "from": "IniciarPagoCasoUso",
+      "to": "IntentoPago",
+      "kind": "dependency"
+    },
+    {
+      "from": "CulqiPagoAdapter",
+      "to": "ProcesadorPagos",
+      "kind": "realization"
+    },
+    {
+      "from": "PostgresUnidadTrabajo",
+      "to": "UnidadTrabajoReservas",
+      "kind": "realization"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Responsabilidad",
+      "items": [
+        "Vista parcial del mismo módulo Reservas; los tipos compartidos son los mismos.",
+        "Puertos definidos por el negocio; adaptadores implementan interfaces.",
+        "Unidad de trabajo: Reserva, IntentoPago, Inbox y Outbox."
+      ]
+    }
+  ]
+}

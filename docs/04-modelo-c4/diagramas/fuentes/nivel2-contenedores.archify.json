@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Qatu · Nivel 2 · Contenedores",
+    "output": "docs/04-modelo-c4/diagramas/html/nivel2-contenedores.html",
+    "locale": "es",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "browser",
+      "type": "external",
+      "label": "Navegador",
+      "sublabel": "Cliente, proveedor y admin",
+      "pos": [
+        40,
+        60
+      ],
+      "size": [
+        190,
+        76
+      ]
+    },
+    {
+      "id": "web",
+      "type": "frontend",
+      "label": "Web Next.js",
+      "sublabel": "React + TypeScript",
+      "pos": [
+        370,
+        260
+      ],
+      "size": [
+        190,
+        76
+      ]
+    },
+    {
+      "id": "api",
+      "type": "backend",
+      "label": "API NestJS",
+      "sublabel": "Monolito · 6 módulos",
+      "pos": [
+        370,
+        580
+      ],
+      "size": [
+        230,
+        110
+      ]
+    },
+    {
+      "id": "db",
+      "type": "database",
+      "label": "PostgreSQL",
+      "sublabel": "PostGIS · fuente de verdad",
+      "pos": [
+        40,
+        940
+      ],
+      "size": [
+        190,
+        76
+      ]
+    },
+    {
+      "id": "files",
+      "type": "database",
+      "label": "Archivos privados",
+      "sublabel": "Volumen persistente",
+      "pos": [
+        370,
+        940
+      ],
+      "size": [
+        190,
+        76
+      ]
+    },
+    {
+      "id": "redis",
+      "type": "database",
+      "label": "Redis opcional",
+      "sublabel": "Caché de lecturas públicas",
+      "pos": [
+        700,
+        940
+      ],
+      "size": [
+        190,
+        76
+      ]
+    },
+    {
+      "id": "culqi",
+      "type": "external",
+      "label": "Culqi",
+      "sublabel": "Checkout y cobros",
+      "pos": [
+        970,
+        60
+      ],
+      "size": [
+        190,
+        76
+      ]
+    },
+    {
+      "id": "ia",
+      "type": "external",
+      "label": "Proveedor de IA",
+      "sublabel": "Intenciones estructuradas",
+      "pos": [
+        970,
+        310
+      ],
+      "size": [
+        190,
+        76
+      ]
+    },
+    {
+      "id": "msg",
+      "type": "external",
+      "label": "Mensajería",
+      "sublabel": "Notificaciones",
+      "pos": [
+        970,
+        510
+      ],
+      "size": [
+        190,
+        76
+      ]
+    },
+    {
+      "id": "map",
+      "type": "external",
+      "label": "Mapas",
+      "sublabel": "Geolocalización",
+      "pos": [
+        970,
+        710
+      ],
+      "size": [
+        190,
+        76
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Sistema Qatu · contenedores propios",
+      "wraps": [
+        "web",
+        "api",
+        "db",
+        "files",
+        "redis"
+      ],
+      "pad": 22
+    }
+  ],
+  "connections": [
+    {
+      "from": "browser",
+      "to": "web",
+      "label": "HTTPS"
+    },
+    {
+      "from": "browser",
+      "to": "api",
+      "label": "HTTPS / JSON"
+    },
+    {
+      "from": "web",
+      "to": "api",
+      "label": "HTTP / JSON"
+    },
+    {
+      "from": "browser",
+      "to": "culqi",
+      "label": "Tokeniza · HTTPS"
+    },
+    {
+      "from": "api",
+      "to": "culqi",
+      "label": "Cobro / consulta",
+      "fromSide": "top",
+      "toSide": "left"
+    },
+    {
+      "from": "culqi",
+      "to": "api",
+      "label": "Webhook verificado",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "api",
+      "to": "ia",
+      "label": "HTTPS"
+    },
+    {
+      "from": "api",
+      "to": "msg",
+      "label": "HTTPS"
+    },
+    {
+      "from": "api",
+      "to": "map",
+      "label": "HTTPS"
+    },
+    {
+      "from": "api",
+      "to": "db",
+      "label": "SQL"
+    },
+    {
+      "from": "api",
+      "to": "files",
+      "label": "I/O"
+    },
+    {
+      "from": "api",
+      "to": "redis",
+      "label": "Caché",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Seguridad",
+      "items": [
+        "El navegador tokeniza directamente en Culqi; no envía PAN/CVV a Qatu.",
+        "Credenciales privadas solo en backend; DB y Redis sin puertos públicos."
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Consistencia",
+      "items": [
+        "Reservas, disponibilidad y pagos se verifican en PostgreSQL.",
+        "Redis es opcional; no es autoridad de disponibilidad."
+      ]
+    }
+  ]
+}

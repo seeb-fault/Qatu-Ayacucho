@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\fuentes\\nivel3-componentes.archify.json",
+    "sha256": "ee77674de7bde4b26cd6962c95c160bf799511a59ada28f1bbad2ff4d9bb7fc8",
+    "bytes": 6064
+  },
+  "artifact": {
+    "path": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\html\\nivel3-componentes.html"
+  },
+  "gates": {
+    "validate": "fail",
+    "deliver": "not-run",
+    "check": "not-run",
+    "browser-check": "not-run"
+  },
+  "failedStage": "validate",
+  "diagnostics": [
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Connection \"http->reservas\" is too short (14px; minimum 24px) — place its components farther apart.",
+      "subject": {
+        "diagramType": "architecture"
+      }
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 1,
+    "shown": 1,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\revision\\nivel3-componentes\\r1\\nivel3-componentes.finalize.json",
+    "summaryReceipt": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\revision\\nivel3-componentes\\r1\\nivel3-componentes.finalize-summary.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.1.0",
+    "availableVersion": "3.1.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-15T19:11:36.423Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 2465,
+  "nextAction": {
+    "action": "edit-in-place",
+    "candidate": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\fuentes\\nivel3-componentes.archify.json",
+    "constraint": "Preserve unaffected semantics and geometry; apply each diagnostic's supportedFixes, or the fix its message names, and do not replace the whole candidate.",
+    "then": "finalize-once"
+  }
+}

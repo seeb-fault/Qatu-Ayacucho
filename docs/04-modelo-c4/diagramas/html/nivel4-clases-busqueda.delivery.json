@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "6872285b-aec7-40d1-b319-75d72e61954c",
+  "status": "current",
+  "command": "deliver",
+  "type": "class",
+  "input": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\fuentes\\nivel4-clases-busqueda.archify.json",
+  "output": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\html\\nivel4-clases-busqueda.html",
+  "specification": {
+    "sha256": "763327295876e57d07cab2b511d93f5f59a0618890a3869c8ac5c646241d1719",
+    "bytes": 3451
+  },
+  "artifact": {
+    "sha256": "8826a609e33e51156b1886bee9d89c7feb5c5c2acfadbadbe046577330d79524",
+    "bytes": 819176
+  }
+}

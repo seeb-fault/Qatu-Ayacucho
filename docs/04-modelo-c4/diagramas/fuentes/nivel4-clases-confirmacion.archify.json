@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "diagram_type": "class",
+  "meta": {
+    "title": "Qatu · Nivel 4 · Confirmación del pago",
+    "output": "docs/04-modelo-c4/diagramas/html/nivel4-clases-confirmacion.html",
+    "locale": "es",
+    "quality_profile": "showcase"
+  },
+  "layout": {
+    "mode": "grid",
+    "typeW": 290,
+    "typeMaxW": 350,
+    "gapX": 100,
+    "gapY": 130
+  },
+  "types": [
+    {
+      "id": "PagosWebhookController",
+      "label": "PagosWebhookController",
+      "row": 0,
+      "col": 1,
+      "kind": "class",
+      "methods": [
+        {
+          "name": "recibir",
+          "parameters": "payload",
+          "visibility": "public"
+        }
+      ],
+      "attributes": []
+    },
+    {
+      "id": "ConfirmarPagoCasoUso",
+      "label": "ConfirmarPagoCasoUso",
+      "row": 1,
+      "col": 1,
+      "kind": "class",
+      "methods": [
+        {
+          "name": "ejecutar",
+          "parameters": "eventoVerificado",
+          "visibility": "public"
+        }
+      ],
+      "attributes": []
+    },
+    {
+      "id": "RepositorioReservas",
+      "label": "RepositorioReservas",
+      "row": 2,
+      "col": 0,
+      "kind": "interface",
+      "methods": [
+        {
+          "name": "buscarParaActualizar",
+          "parameters": "id",
+          "visibility": "public"
+        },
+        {
+          "name": "guardar",
+          "parameters": "reserva",
+          "visibility": "public"
+        }
+      ],
+      "attributes": []
+    },
+    {
+      "id": "UnidadTrabajoReservas",
+      "label": "UnidadTrabajoReservas",
+      "row": 2,
+      "col": 1,
+      "kind": "interface",
+      "methods": [
+        {
+          "name": "ejecutar",
+          "parameters": "operacion",
+          "visibility": "public"
+        }
+      ],
+      "attributes": []
+    },
+    {
+      "id": "Reserva",
+      "label": "Reserva",
+      "row": 2,
+      "col": 2,
+      "kind": "class",
+      "methods": [
+        {
+          "name": "aceptar",
+          "parameters": "vencimiento",
+          "visibility": "public"
+        },
+        {
+          "name": "confirmar",
+          "parameters": "referencia",
+          "visibility": "public"
+        },
+        {
+          "name": "iniciar",
+          "parameters": "",
+          "visibility": "public"
+        },
+        {
+          "name": "finalizar",
+          "parameters": "",
+          "visibility": "public"
+        }
+      ],
+      "attributes": [
+        {
+          "name": "estado",
+          "visibility": "private"
+        }
+      ]
+    },
+    {
+      "id": "PostgresReservasRepository",
+      "label": "PostgresReservasRepository",
+      "row": 3,
+      "col": 0,
+      "kind": "class",
+      "methods": [],
+      "attributes": []
+    },
+    {
+      "id": "PostgresUnidadTrabajo",
+      "label": "PostgresUnidadTrabajo",
+      "row": 3,
+      "col": 1,
+      "kind": "class",
+      "methods": [],
+      "attributes": []
+    }
+  ],
+  "relationships": [
+    {
+      "from": "PagosWebhookController",
+      "to": "ConfirmarPagoCasoUso",
+      "kind": "association"
+    },
+    {
+      "from": "ConfirmarPagoCasoUso",
+      "to": "RepositorioReservas",
+      "kind": "association"
+    },
+    {
+      "from": "ConfirmarPagoCasoUso",
+      "to": "UnidadTrabajoReservas",
+      "kind": "association"
+    },
+    {
+      "from": "ConfirmarPagoCasoUso",
+      "to": "Reserva",
+      "kind": "dependency"
+    },
+    {
+      "from": "PostgresReservasRepository",
+      "to": "RepositorioReservas",
+      "kind": "realization"
+    },
+    {
+      "from": "PostgresUnidadTrabajo",
+      "to": "UnidadTrabajoReservas",
+      "kind": "realization"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Responsabilidad",
+      "items": [
+        "Vista parcial del mismo módulo Reservas; los tipos compartidos son los mismos.",
+        "Puertos definidos por el negocio; adaptadores implementan interfaces.",
+        "Unidad de trabajo: Reserva, IntentoPago, Inbox y Outbox."
+      ]
+    }
+  ]
+}

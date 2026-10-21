@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Qatu · Nivel 3 · Puertos, adaptadores y outbox",
+    "output": "docs/04-modelo-c4/diagramas/html/nivel3-infraestructura.html",
+    "locale": "es",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "mod",
+      "type": "backend",
+      "label": "Seis módulos",
+      "sublabel": "Cada uno define sus puertos",
+      "pos": [
+        40,
+        40
+      ],
+      "size": [
+        240,
+        76
+      ]
+    },
+    {
+      "id": "infra",
+      "type": "backend",
+      "label": "Adaptadores propios",
+      "sublabel": "Repositorios · archivos · APIs",
+      "pos": [
+        420,
+        40
+      ],
+      "size": [
+        240,
+        76
+      ]
+    },
+    {
+      "id": "outbox",
+      "type": "messagebus",
+      "label": "Publicador outbox",
+      "sublabel": "Interno a API · reintentos",
+      "pos": [
+        40,
+        380
+      ],
+      "size": [
+        240,
+        76
+      ]
+    },
+    {
+      "id": "db",
+      "type": "database",
+      "label": "PostgreSQL",
+      "sublabel": "Tablas propias + inbox/outbox",
+      "pos": [
+        420,
+        380
+      ],
+      "size": [
+        240,
+        76
+      ]
+    },
+    {
+      "id": "files",
+      "type": "database",
+      "label": "Archivos privados",
+      "sublabel": "Fotos y evidencias",
+      "pos": [
+        850,
+        380
+      ],
+      "size": [
+        240,
+        76
+      ]
+    },
+    {
+      "id": "culqi",
+      "type": "external",
+      "label": "Culqi",
+      "sublabel": "Adaptador de Reservas",
+      "pos": [
+        850,
+        40
+      ],
+      "size": [
+        240,
+        76
+      ]
+    },
+    {
+      "id": "ia",
+      "type": "external",
+      "label": "Proveedor IA",
+      "sublabel": "Adaptador de Búsqueda",
+      "pos": [
+        850,
+        660
+      ],
+      "size": [
+        240,
+        76
+      ]
+    },
+    {
+      "id": "map",
+      "type": "external",
+      "label": "Mapas",
+      "sublabel": "Puerto transversal",
+      "pos": [
+        420,
+        660
+      ],
+      "size": [
+        240,
+        76
+      ]
+    },
+    {
+      "id": "msg",
+      "type": "external",
+      "label": "Mensajería",
+      "sublabel": "Avisos tras commit",
+      "pos": [
+        40,
+        660
+      ],
+      "size": [
+        240,
+        76
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "mod",
+      "to": "infra",
+      "label": "Puertos implementados"
+    },
+    {
+      "from": "mod",
+      "to": "outbox",
+      "label": "Reservas: evento TX"
+    },
+    {
+      "from": "infra",
+      "to": "db",
+      "label": "SQL"
+    },
+    {
+      "from": "infra",
+      "to": "files",
+      "label": "I/O autorizado"
+    },
+    {
+      "from": "infra",
+      "to": "culqi",
+      "label": "Pagos · HTTPS"
+    },
+    {
+      "from": "infra",
+      "to": "ia",
+      "label": "Intención · HTTPS"
+    },
+    {
+      "from": "infra",
+      "to": "map",
+      "label": "Geografía · HTTPS"
+    },
+    {
+      "from": "outbox",
+      "to": "db",
+      "label": "Pendientes / entregas"
+    },
+    {
+      "from": "outbox",
+      "to": "msg",
+      "label": "HTTPS"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Propiedad",
+      "items": [
+        "La caja «Seis módulos» agrupa los puertos propios de cada módulo.",
+        "Reservas guarda outbox junto a sus cambios; el publicador actúa después del commit.",
+        "Culqi pertenece a Reservas; IA a Búsqueda; archivos requieren autorización."
+      ]
+    }
+  ]
+}

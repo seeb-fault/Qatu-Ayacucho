@@ -1,0 +1,7 @@
+flowchart LR
+    P[Presentación: controladores] --> A[Aplicación: casos de uso]
+    A --> D[Dominio: entidades y puertos]
+    I[Infraestructura: PostgreSQL, Culqi e IA] --> D
+    C[Composición NestJS] --> P
+    C --> A
+    C --> I

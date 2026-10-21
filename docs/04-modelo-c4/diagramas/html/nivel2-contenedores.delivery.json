@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "3a1809bd-1018-4ecb-829b-634616edba7e",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\fuentes\\nivel2-contenedores.archify.json",
+  "output": "C:\\Users\\USUARIO\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago-\\docs\\04-modelo-c4\\diagramas\\html\\nivel2-contenedores.html",
+  "specification": {
+    "sha256": "a338d56a68390c1c8d069ba562349cc11d9f64bacf68dc89e844fc8daba17e35",
+    "bytes": 4445
+  },
+  "artifact": {
+    "sha256": "8ad5da4d8cdaef2d3fb61f699c42dfcfc5f9aed963a282c3df8f1c1232f345da",
+    "bytes": 830169
+  }
+}

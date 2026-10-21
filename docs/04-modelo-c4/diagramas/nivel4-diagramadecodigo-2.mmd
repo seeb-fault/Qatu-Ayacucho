@@ -1,0 +1,50 @@
+sequenceDiagram
+    actor Proveedor
+    actor Cliente
+    participant API as API Qatu
+    participant R as Casos de uso Reservas
+    participant DB as PostgreSQL
+    participant P as Adaptador Culqi
+    participant C as Culqi
+    Proveedor->>API: Aceptar solicitud propia
+    API->>R: AceptarReservaCasoUso
+    R->>DB: Transacción: reserva + bloqueo + outbox
+    alt Rango ocupado
+        DB-->>R: Restricción de exclusión
+        R-->>API: Conflicto 409
+    else Rango libre
+        DB-->>R: Commit ACEPTADA con vencimiento
+        R-->>API: Reserva aceptada
+        Cliente->>API: Iniciar pago con token y clave de operación
+        API->>R: IniciarPagoCasoUso
+        R->>DB: Guardar intento y monto autoritativo; commit
+        R->>P: iniciar(intento persistido)
+        P->>C: Solicitar cobro sin transacción SQL abierta
+        alt Resultado verificable inmediato
+            C-->>P: Referencia y estado
+            P-->>R: Resultado normalizado
+            R->>DB: Guardar resultado; confirmar si evidencia verificada
+        else Timeout o pendiente
+            P-->>R: DESCONOCIDO o PENDIENTE
+            R->>DB: Guardar estado y tarea de conciliación
+            R-->>API: 202; consultar estado
+        end
+        C->>API: Notificación del pago
+        API->>P: Verificar evento según proveedor
+        opt Requiere consultar recurso externo
+            P->>C: Consultar con credencial privada
+            C-->>P: Estado, monto, moneda y referencia
+        end
+        P-->>API: Evento verificado
+        API->>R: ConfirmarPagoCasoUso
+        R->>DB: Transacción: inbox único + intento + reserva + outbox
+        alt Duplicado
+            DB-->>R: Ya procesado; sin nuevo efecto
+        else Reserva vigente y pago válido
+            DB-->>R: Commit CONFIRMADA
+        else Reserva vencida o importe incorrecto
+            DB-->>R: Registrar recepción sin confirmar; conciliación
+        end
+        R-->>API: Resultado persistido
+        API-->>C: Acuse después de persistir
+    end

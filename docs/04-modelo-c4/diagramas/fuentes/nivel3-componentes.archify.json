@@ -1,0 +1,163 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Qatu · Nivel 3 · Contratos entre módulos",
+    "output": "docs/04-modelo-c4/diagramas/html/nivel3-componentes.html",
+    "locale": "es",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "busqueda",
+      "type": "backend",
+      "label": "Búsqueda",
+      "sublabel": "Intención + consultas",
+      "pos": [
+        40,
+        40
+      ],
+      "size": [
+        190,
+        76
+      ]
+    },
+    {
+      "id": "resenas",
+      "type": "backend",
+      "label": "Reputación",
+      "sublabel": "Reseñas e incidencias",
+      "pos": [
+        800,
+        40
+      ],
+      "size": [
+        190,
+        76
+      ]
+    },
+    {
+      "id": "reservas",
+      "type": "backend",
+      "label": "Reservas",
+      "sublabel": "Calendario y pagos",
+      "pos": [
+        420,
+        260
+      ],
+      "size": [
+        240,
+        76
+      ]
+    },
+    {
+      "id": "catalogo",
+      "type": "backend",
+      "label": "Catálogo",
+      "sublabel": "Ofertas, recursos y precios",
+      "pos": [
+        420,
+        480
+      ],
+      "size": [
+        190,
+        76
+      ]
+    },
+    {
+      "id": "proveedores",
+      "type": "backend",
+      "label": "Proveedores",
+      "sublabel": "Perfil y verificación",
+      "pos": [
+        420,
+        700
+      ],
+      "size": [
+        190,
+        76
+      ]
+    },
+    {
+      "id": "usuarios",
+      "type": "backend",
+      "label": "Usuarios",
+      "sublabel": "Identidad y permisos",
+      "pos": [
+        420,
+        920
+      ],
+      "size": [
+        240,
+        76
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "API NestJS · llamadas internas en proceso",
+      "wraps": [
+        "busqueda",
+        "resenas",
+        "reservas",
+        "catalogo",
+        "proveedores",
+        "usuarios"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "busqueda",
+      "to": "catalogo",
+      "label": "Consulta catálogo"
+    },
+    {
+      "from": "busqueda",
+      "to": "reservas",
+      "label": "Disponibilidad"
+    },
+    {
+      "from": "resenas",
+      "to": "reservas",
+      "label": "Reserva finalizada"
+    },
+    {
+      "from": "resenas",
+      "to": "usuarios",
+      "label": "Identidad"
+    },
+    {
+      "from": "reservas",
+      "to": "catalogo",
+      "label": "Oferta y precio"
+    },
+    {
+      "from": "reservas",
+      "to": "usuarios",
+      "label": "Identidad"
+    },
+    {
+      "from": "catalogo",
+      "to": "proveedores",
+      "label": "Proveedor"
+    },
+    {
+      "from": "proveedores",
+      "to": "usuarios",
+      "label": "Identidad"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Contratos públicos",
+      "items": [
+        "Las flechas indican dependencia de lectura / identidad entre módulos.",
+        "Cada módulo conserva sus tablas; no hay REST interno.",
+        "Reservas no depende de Búsqueda ni de IA."
+      ]
+    }
+  ]
+}

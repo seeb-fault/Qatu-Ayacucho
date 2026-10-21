@@ -1,0 +1,163 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "Qatu · Nivel 4 · Búsqueda en lenguaje natural",
+    "output": "docs/04-modelo-c4/diagramas/html/nivel4-secuencia-busqueda.html",
+    "locale": "es",
+    "quality_profile": "showcase"
+  },
+  "participants": [
+    {
+      "id": "cli",
+      "type": "external",
+      "label": "Cliente",
+      "sublabel": "Texto y contexto"
+    },
+    {
+      "id": "b",
+      "type": "backend",
+      "label": "Búsqueda",
+      "sublabel": "Solo lectura"
+    },
+    {
+      "id": "ia",
+      "type": "external",
+      "label": "Adaptador IA",
+      "sublabel": "Interpretación"
+    },
+    {
+      "id": "v",
+      "type": "security",
+      "label": "Validador",
+      "sublabel": "Esquema e IDs"
+    },
+    {
+      "id": "c",
+      "type": "backend",
+      "label": "Catálogo",
+      "sublabel": "Ofertas reales"
+    },
+    {
+      "id": "r",
+      "type": "backend",
+      "label": "Reservas",
+      "sublabel": "Disponibilidad"
+    }
+  ],
+  "messages": [
+    {
+      "from": "cli",
+      "to": "b",
+      "label": "Texto + fecha / zona",
+      "y": 175,
+      "variant": "default"
+    },
+    {
+      "from": "b",
+      "to": "ia",
+      "label": "Interpretar con deadline",
+      "y": 245,
+      "variant": "default"
+    },
+    {
+      "from": "ia",
+      "to": "b",
+      "label": "Si responde: objeto no confiable",
+      "y": 315,
+      "variant": "return"
+    },
+    {
+      "from": "b",
+      "to": "v",
+      "label": "Validar esquema y resolver IDs reales",
+      "y": 385,
+      "variant": "default"
+    },
+    {
+      "from": "v",
+      "to": "b",
+      "label": "Filtros válidos o pedir precisión",
+      "y": 455,
+      "variant": "return"
+    },
+    {
+      "from": "b",
+      "to": "c",
+      "label": "Solo filtros válidos: API pública",
+      "y": 525,
+      "variant": "default"
+    },
+    {
+      "from": "c",
+      "to": "b",
+      "label": "Publicaciones y precios reales",
+      "y": 595,
+      "variant": "return"
+    },
+    {
+      "from": "b",
+      "to": "r",
+      "label": "Solo con fechas completas: recursos + rango",
+      "y": 665,
+      "variant": "default"
+    },
+    {
+      "from": "r",
+      "to": "b",
+      "label": "Disponibilidad actual",
+      "y": 735,
+      "variant": "return"
+    },
+    {
+      "from": "b",
+      "to": "cli",
+      "label": "Resultados reales + filtros editables",
+      "y": 805,
+      "variant": "return"
+    },
+    {
+      "from": "b",
+      "to": "cli",
+      "label": "Si timeout / cuota / inválido: modo manual",
+      "y": 875,
+      "variant": "return"
+    }
+  ],
+  "segments": [
+    {
+      "from": 155,
+      "to": 350,
+      "label": "1 · Interpretar entrada no confiable"
+    },
+    {
+      "from": 365,
+      "to": 710,
+      "label": "2 · Validar y consultar fuentes reales"
+    },
+    {
+      "from": 730,
+      "to": 925,
+      "label": "3 · Resultados o degradación controlada"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Guardas obligatorias",
+      "items": [
+        "Si el texto es ambiguo se pide precisión antes de consultar.",
+        "Sin fechas no se consulta disponibilidad; la interfaz solicita completarlas.",
+        "La IA no reserva, no cobra y no modifica publicaciones."
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Resiliencia",
+      "items": [
+        "Objetivos: interpretación hasta 3 s y búsqueda total hasta 5 s.",
+        "Ante fallo de IA continúan los filtros convencionales."
+      ]
+    }
+  ]
+}
