@@ -1,66 +1,130 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1370" viewBox="0 0 1700 1370"><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#667588"/></marker></defs><rect width="100%" height="100%" fill="white"/>
-<text x="28" y="42" font-family="Arial,sans-serif" font-size="28" fill="#172b43" font-weight="bold" text-anchor="start">[Enfoque arquitectónico] Qatu — Clean Architecture</text>
-<text x="28" y="77" font-family="Arial,sans-serif" font-size="18" fill="#64748b" font-weight="normal" text-anchor="start">Organización interna por módulo · Flechas continuas = dependencias de código</text>
-<rect x="60" y="130" width="1580" height="1050" fill="none" stroke="#8390a2" stroke-width="1.5" stroke-dasharray="8 6"/>
-<text x="78" y="158" font-family="Arial,sans-serif" font-size="19" fill="#3d526e" font-weight="bold" text-anchor="start">API Qatu · Patrón aplicado dentro de cada módulo del monolito</text>
-<polyline points="520,332 650,332" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="850,415 850,575" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="320,1000 320,880 690,880 690,830" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="850,1000 850,830" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="1380,1000 1380,880 1010,880 1010,830" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="1180,332 1050,332" fill="none" stroke="#667588" stroke-width="1.8" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
-<polyline points="1380,415 1560,415 1560,950 1380,950 1380,1000" fill="none" stroke="#667588" stroke-width="1.8" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
-<rect x="120" y="250" width="400" height="165" rx="8" fill="#a8c7eb" stroke="#8196b1"/>
-<text x="320" y="306" font-family="Arial,sans-serif" font-size="22" fill="#142d48" font-weight="bold" text-anchor="middle">PRESENTACIÓN</text>
-<text x="320" y="334" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">Controladores, DTO y guards</text>
-<text x="320" y="357" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">ReservasController</text>
-<text x="320" y="380" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">BusquedaController</text>
-<rect x="650" y="250" width="400" height="165" rx="8" fill="#a8c7eb" stroke="#8196b1"/>
-<text x="850" y="306" font-family="Arial,sans-serif" font-size="22" fill="#142d48" font-weight="bold" text-anchor="middle">APLICACIÓN</text>
-<text x="850" y="334" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">Casos de uso y coordinación</text>
-<text x="850" y="357" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">AceptarReserva · ConfirmarPago</text>
-<text x="850" y="380" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">BuscarEnLenguajeNatural</text>
-<rect x="1180" y="250" width="400" height="165" rx="8" fill="#3f67ad" stroke="#8196b1"/>
-<text x="1380" y="306" font-family="Arial,sans-serif" font-size="22" fill="white" font-weight="bold" text-anchor="middle">COMPOSICIÓN</text>
-<text x="1380" y="334" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">NestJS module.ts y tokens</text>
-<text x="1380" y="357" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Selecciona e inyecta adapters</text>
-<text x="1380" y="380" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Conecta todas las capas</text>
-<rect x="580" y="575" width="540" height="255" rx="8" fill="#8fb6dc" stroke="#8196b1"/>
-<text x="850" y="653" font-family="Arial,sans-serif" font-size="22" fill="#142d48" font-weight="bold" text-anchor="middle">DOMINIO Y PUERTOS</text>
-<text x="850" y="681" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">Reserva · RangoFechas · Dinero</text>
-<text x="850" y="704" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">IntentoPago · CriteriosBusqueda</text>
-<text x="850" y="727" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">RepositorioReservas · ProcesadorPagos</text>
-<text x="850" y="750" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">InterpreteIntencion · Reloj</text>
-<text x="850" y="773" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">Reglas sin ORM, framework ni SDK</text>
-<rect x="120" y="1000" width="400" height="120" rx="8" fill="#d9e6f5" stroke="#8196b1"/>
-<text x="320" y="1045" font-family="Arial,sans-serif" font-size="22" fill="#142d48" font-weight="bold" text-anchor="middle">INFRAESTRUCTURA: datos</text>
-<text x="320" y="1073" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">PostgresReservasRepository</text>
-<text x="320" y="1096" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">Transacciones y exclusión de fechas</text>
-<rect x="650" y="1000" width="400" height="120" rx="8" fill="#d9e6f5" stroke="#8196b1"/>
-<text x="850" y="1045" font-family="Arial,sans-serif" font-size="22" fill="#142d48" font-weight="bold" text-anchor="middle">INFRAESTRUCTURA: pagos</text>
-<text x="850" y="1073" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">CulqiPagoAdapter</text>
-<text x="850" y="1096" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">Verificación y conciliación</text>
-<rect x="1180" y="1000" width="400" height="120" rx="8" fill="#d9e6f5" stroke="#8196b1"/>
-<text x="1380" y="1045" font-family="Arial,sans-serif" font-size="22" fill="#142d48" font-weight="bold" text-anchor="middle">INFRAESTRUCTURA: IA</text>
-<text x="1380" y="1073" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">ModeloLenguajeAdapter</text>
-<text x="1380" y="1096" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">Timeout, cuota y validación</text>
-<rect x="500.4" y="298" width="169.20000000000002" height="24" fill="white"/>
-<text x="585" y="315" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">Invoca caso de uso</text>
-<rect x="706.6" y="483" width="286.8" height="24" fill="white"/>
-<text x="850" y="500" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">Depende de entidades y contratos</text>
-<rect x="378.6" y="848" width="202.8" height="24" fill="white"/>
-<text x="480" y="865" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">Implementa repositorio</text>
-<rect x="731.8" y="903" width="236.4" height="24" fill="white"/>
-<text x="850" y="920" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">Implementa puerto de pagos</text>
-<rect x="1085" y="848" width="270" height="24" fill="white"/>
-<text x="1220" y="865" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">Implementa puerto de intención</text>
-<rect x="1076.6" y="298" width="76.80000000000001" height="24" fill="white"/>
-<text x="1115" y="315" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">Inyecta</text>
-<rect x="1395.4" y="723" width="169.20000000000002" height="24" fill="white"/>
-<text x="1480" y="740" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">Configura adapters</text>
-<rect x="28" y="1240" width="1644" height="110" fill="white" stroke="#abb6c4"/>
-<text x="48" y="1265" font-family="Arial,sans-serif" font-size="18" fill="#25334a" font-weight="bold" text-anchor="start">Lectura del diagrama y límites</text>
-<text x="48" y="1291" font-family="Arial,sans-serif" font-size="16" fill="#536378" font-weight="normal" text-anchor="start">El dominio no importa NestJS, PostgreSQL, Culqi ni la API del modelo de IA.</text>
-<text x="48" y="1314" font-family="Arial,sans-serif" font-size="16" fill="#536378" font-weight="normal" text-anchor="start">Las flechas de imports apuntan al núcleo; en ejecución los casos de uso llaman a los adapters por puertos.</text>
-<text x="48" y="1337" font-family="Arial,sans-serif" font-size="16" fill="#536378" font-weight="normal" text-anchor="start">Frontend Next.js presenta datos y valida formularios; el backend decide tarifas, disponibilidad y pagos.</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="2160" height="1530" viewBox="0 0 2160 1530" role="img" aria-labelledby="title description">
+<title id="title">Qatu Ayacucho — enfoque Clean Architecture</title><desc id="description">Dependencias internas ilustradas con el módulo Usuarios implementado</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#60736c" stroke="#60736c"/></marker><marker id="blue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#245b91" stroke="#245b91"/></marker><marker id="green" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#155c49" stroke="#155c49"/></marker><marker id="hollow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="white" stroke="#7956a4"/></marker></defs>
+<rect width="100%" height="100%" fill="white"/>
+<g font-family="Arial, Helvetica, sans-serif"><rect id="api" x="40" y="130" width="1750" height="1070" rx="8" fill="#ffffff" stroke="#155c49" stroke-width="1.5" stroke-dasharray="9 6"/>
+<rect id="frameworks" x="70" y="195" width="1690" height="975" rx="8" fill="#f5f7f6" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="presentation" x="100" y="300" width="340" height="610" rx="8" fill="#edf4ff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="application" x="490" y="260" width="810" height="720" rx="8" fill="#eef7eb" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="domain" x="520" y="490" width="750" height="455" rx="8" fill="#fff7df" stroke="#c5a13d" stroke-width="1.5"/>
+<rect id="infrastructure" x="1340" y="300" width="390" height="610" rx="8" fill="#f4eefb" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="actual-scope" x="1830" y="130" width="290" height="340" rx="8" fill="#f5f7f6" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="local-libraries" x="1830" y="790" width="290" height="270" rx="8" fill="#f5f7f6" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="legend" x="40" y="1240" width="650" height="250" rx="8" fill="#f5f7f6" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="rule" x="720" y="1240" width="700" height="250" rx="8" fill="#f5f7f6" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="execution" x="1450" y="1240" width="670" height="250" rx="8" fill="#f5f7f6" stroke="#a7b9b0" stroke-width="1.5"/>
+<polyline id="presentation-application" points="420,470 465,470 465,380 550,380" fill="none" stroke="#245b91" stroke-width="2" marker-end="url(#blue)"/>
+<polyline id="application-domain" points="880,430 880,490" fill="none" stroke="#155c49" stroke-width="2" marker-end="url(#green)"/>
+<polyline id="repo-implementation" points="1370,638 1240,638" fill="none" stroke="#7956a4" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#hollow)"/>
+<polyline id="hash-implementation" points="1370,748 1240,748" fill="none" stroke="#7956a4" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#hollow)"/>
+<polyline id="token-implementation" points="1370,858 1240,858" fill="none" stroke="#7956a4" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#hollow)"/>
+<polyline id="inject-controller" points="270,1020 270,910" fill="none" stroke="#52665f" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arrow)"/>
+<polyline id="inject-application" points="880,1020 880,980" fill="none" stroke="#52665f" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arrow)"/>
+<polyline id="inject-adapters" points="1540,1020 1540,910" fill="none" stroke="#52665f" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arrow)"/>
+<polyline id="sql" points="1700,638 1840,638" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="legend-dependency" points="65,1311 130,1311" fill="none" stroke="#245b91" stroke-width="2" marker-end="url(#blue)"/>
+<polyline id="legend-realization" points="65,1365 130,1365" fill="none" stroke="#7956a4" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#hollow)"/>
+<polyline id="legend-composition" points="65,1419 130,1419" fill="none" stroke="#60736c" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arrow)"/>
+<rect id="controller" x="120" y="400" width="300" height="145" rx="8" fill="#ffffff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="usecases" x="550" y="330" width="690" height="100" rx="8" fill="#ffffff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="user-model" x="550" y="595" width="310" height="95" rx="8" fill="#fffdf5" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="validation" x="550" y="715" width="310" height="125" rx="8" fill="#fffdf5" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="repo-port" x="900" y="595" width="340" height="85" rx="8" fill="#fffdf5" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="hash-port" x="900" y="705" width="340" height="85" rx="8" fill="#fffdf5" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="token-port" x="900" y="815" width="340" height="85" rx="8" fill="#fffdf5" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="postgres-adapter" x="1370" y="595" width="330" height="85" rx="8" fill="#ffffff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="hash-adapter" x="1370" y="705" width="330" height="85" rx="8" fill="#ffffff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="token-adapter" x="1370" y="815" width="330" height="85" rx="8" fill="#ffffff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="composition" x="100" y="1020" width="1630" height="115" rx="8" fill="#e3eee9" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="postgres" x="1840" y="575" width="280" height="130" rx="8" fill="#e3f0e9" stroke="#a7b9b0" stroke-width="1.5"/>
+<text id="heading" x="40" y="52" font-size="36" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="2080">05  QATU AYACUCHO · CLEAN ARCHITECTURE</text>
+<text id="subtitle" x="40" y="91" font-size="23" font-weight="400" fill="#52665f" text-anchor="start" data-max-width="2080">Dependencias de código hacia el núcleo · ejemplo real: backend/src/modules/usuarios</text>
+<text id="api-title" x="60" y="163" font-size="23" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="1710">API NestJS · módulo Usuarios · ejemplo implementado, no código hipotético</text>
+<text id="frameworks-title" x="90" y="228" font-size="23" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="1650">ADAPTADORES Y FRAMEWORKS · HTTP / NestJS / pg / JWT / node:crypto</text>
+<text id="presentation-title" x="120" y="333" font-size="23" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="300">PRESENTACIÓN</text>
+<text id="presentation-path" x="120" y="366" font-size="20" font-weight="400" fill="#245b91" text-anchor="start" data-max-width="300">presentacion/</text>
+<text id="controller-title" x="270" y="431" font-size="24" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="276">UsuariosController</text>
+<text id="controller-line-0" x="270" y="460" font-size="19" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="276">Recibe solicitudes HTTP</text>
+<text id="controller-line-1" x="270" y="487" font-size="19" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="276">Lee y emite cookie de sesión</text>
+<text id="controller-line-2" x="270" y="514" font-size="19" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="276">Invoca casos de uso</text>
+<text id="http" x="120" y="605" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="300">Entrada desde la web Next.js</text>
+<text id="http-2" x="120" y="636" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="300">HTTP / JSON · /api/v1</text>
+<text id="http-3" x="120" y="698" font-size="20" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="300">No ejecuta consultas SQL.</text>
+<text id="http-4" x="120" y="730" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="300">No es dueño de las reglas.</text>
+<text id="application-title" x="510" y="293" font-size="23" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="770">APLICACIÓN · aplicacion/ · coordinación de casos de uso</text>
+<text id="usecases-title" x="895" y="361" font-size="25" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="666">Usuarios</text>
+<text id="usecases-line-0" x="895" y="390" font-size="20" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="666">registrar · login · perfil · editar · salir</text>
+<text id="usecases-line-1" x="895" y="417" font-size="20" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="666">Depende de modelos, validaciones y contratos internos</text>
+<text id="domain-title" x="540" y="523" font-size="23" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="710">DOMINIO · dominio/ · sin NestJS, pg ni SDK externos</text>
+<text id="model-heading" x="550" y="570" font-size="22" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="310">MODELOS Y REGLAS</text>
+<text id="port-heading" x="900" y="570" font-size="22" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="340">CONTRATOS / PUERTOS</text>
+<text id="user-model-title" x="705" y="626" font-size="24" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="286">Usuario</text>
+<text id="user-model-line-0" x="705" y="655" font-size="19" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="286">Identidad · nombre · roles</text>
+<text id="user-model-line-1" x="705" y="679" font-size="19" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="286">Estado de la cuenta</text>
+<text id="validation-title" x="705" y="746" font-size="23" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="286">Validaciones puras</text>
+<text id="validation-line-0" x="705" y="775" font-size="18" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="286">emailValido · passwordValido</text>
+<text id="validation-line-1" x="705" y="800" font-size="18" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="286">nombreValido · estadoValido</text>
+<text id="validation-line-2" x="705" y="825" font-size="18" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="286">ErrorUsuario</text>
+<text id="repo-port-title" x="1070" y="626" font-size="24" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="316">RepositorioUsuarios</text>
+<text id="repo-port-line-0" x="1070" y="655" font-size="20" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="316">Persistencia y sesiones</text>
+<text id="hash-port-title" x="1070" y="736" font-size="24" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="316">HashPasswords</text>
+<text id="hash-port-line-0" x="1070" y="765" font-size="20" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="316">Crear / verificar hash</text>
+<text id="token-port-title" x="1070" y="846" font-size="24" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="316">TokensSesion</text>
+<text id="token-port-line-0" x="1070" y="875" font-size="20" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="316">Emitir / leer token</text>
+<text id="domain-pure" x="550" y="916" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="690">TypeScript · no importa controladores ni implementaciones</text>
+<text id="infrastructure-title" x="1360" y="333" font-size="23" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="350">INFRAESTRUCTURA</text>
+<text id="infra-path" x="1360" y="366" font-size="20" font-weight="400" fill="#7956a4" text-anchor="start" data-max-width="350">infraestructura/</text>
+<text id="infra-role-1" x="1360" y="419" font-size="22" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="350">Implementa los contratos.</text>
+<text id="infra-role-2" x="1360" y="453" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="350">Conoce tecnologías concretas;</text>
+<text id="infra-role-3" x="1360" y="484" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="350">el dominio no la importa.</text>
+<text id="postgres-adapter-title" x="1535" y="626" font-size="24" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="306">PostgresUsuarios</text>
+<text id="postgres-adapter-line-0" x="1535" y="655" font-size="19" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="306">SQL parametrizado · driver pg</text>
+<text id="hash-adapter-title" x="1535" y="736" font-size="24" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="306">ScryptPasswords</text>
+<text id="hash-adapter-line-0" x="1535" y="765" font-size="19" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="306">node:crypto · hash con sal</text>
+<text id="token-adapter-title" x="1535" y="846" font-size="24" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="306">JwtTokens</text>
+<text id="token-adapter-line-0" x="1535" y="875" font-size="19" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="306">JwtService · firma / validación</text>
+<text id="use-contracts" x="905" y="464" font-size="19" font-weight="400" fill="#155c49" text-anchor="start" data-max-width="340">Usa reglas y contratos</text>
+<text id="composition-title" x="915" y="1051" font-size="25" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="1606">RAÍZ DE COMPOSICIÓN · usuarios.module.ts</text>
+<text id="composition-line-0" x="915" y="1080" font-size="22" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="1606">NestJS selecciona e inyecta PostgresUsuarios + ScryptPasswords + JwtTokens en Usuarios.</text>
+<text id="composition-line-1" x="915" y="1107" font-size="22" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="1606">Es el lugar que conoce las implementaciones y conecta las capas.</text>
+<text id="actual-scope-title" x="1850" y="163" font-size="23" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="250">Ejemplo verificable</text>
+<text id="actual-scope-0" x="1850" y="201" font-size="18" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="250">Clases e interfaces reales</text>
+<text id="actual-scope-1" x="1850" y="229" font-size="18" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="250">del módulo Usuarios.</text>
+<text id="actual-scope-2" x="1850" y="257" font-size="18" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="250"></text>
+<text id="actual-scope-3" x="1850" y="285" font-size="18" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="250">Proveedores repite el</text>
+<text id="actual-scope-4" x="1850" y="313" font-size="18" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="250">mismo enfoque con sus</text>
+<text id="actual-scope-5" x="1850" y="341" font-size="18" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="250">propias reglas y puertos.</text>
+<text id="actual-scope-6" x="1850" y="369" font-size="18" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="250"></text>
+<text id="actual-scope-7" x="1850" y="397" font-size="18" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="250">No es el frontend Angular</text>
+<text id="actual-scope-8" x="1850" y="425" font-size="18" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="250">del ejemplo Marketplace.</text>
+<text id="postgres-title" x="1980" y="606" font-size="25" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="256">PostgreSQL</text>
+<text id="postgres-line-0" x="1980" y="635" font-size="19" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="256">Cuentas · roles · sesiones</text>
+<text id="postgres-line-1" x="1980" y="661" font-size="19" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="256">Auditoría y límites</text>
+<text id="postgres-line-2" x="1980" y="687" font-size="19" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="256">Acceso mediante pg</text>
+<text id="sql-text" x="1765" y="621" font-size="19" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="100">SQL</text>
+<text id="local-libraries-title" x="1850" y="823" font-size="23" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="250">Sin APIs externas aquí</text>
+<text id="local-library-0" x="1850" y="862" font-size="18" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="250">scrypt y JWT se ejecutan</text>
+<text id="local-library-1" x="1850" y="891" font-size="18" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="250">localmente en el backend.</text>
+<text id="local-library-2" x="1850" y="920" font-size="18" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="250"></text>
+<text id="local-library-3" x="1850" y="949" font-size="18" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="250">IA y pasarela son futuras</text>
+<text id="local-library-4" x="1850" y="978" font-size="18" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="250">integraciones de otros</text>
+<text id="local-library-5" x="1850" y="1007" font-size="18" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="250">módulos, no de Usuarios.</text>
+<text id="legend-title" x="60" y="1273" font-size="23" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="610">Leyenda · no confundir flechas</text>
+<text id="legend-dependency-text" x="150" y="1318" font-size="21" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="510">Dependencia de código hacia el núcleo.</text>
+<text id="legend-realization-text" x="150" y="1372" font-size="21" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="510">Implementa un contrato (puerto).</text>
+<text id="legend-composition-text" x="150" y="1426" font-size="21" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="510">Configuración / inyección de dependencias.</text>
+<text id="legend-sql-text" x="65" y="1470" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="600">SQL indica I/O, no una dependencia del dominio.</text>
+<text id="rule-title" x="740" y="1273" font-size="23" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="660">Regla de dependencia</text>
+<text id="rule-0" x="740" y="1313" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="660">1. Dominio no conoce HTTP, NestJS ni PostgreSQL.</text>
+<text id="rule-1" x="740" y="1342" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="660">2. Aplicación conoce contratos, no sus adapters.</text>
+<text id="rule-2" x="740" y="1371" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="660">3. Infraestructura depende de esos contratos.</text>
+<text id="rule-3" x="740" y="1400" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="660">4. Composición elige implementaciones concretas.</text>
+<text id="rule-4" x="740" y="1429" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="660"></text>
+<text id="rule-5" x="740" y="1458" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="660">Cambiar persistencia no exige reescribir las reglas.</text>
+<text id="execution-title" x="1470" y="1273" font-size="23" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="630">Ejemplo para explicar: registrar usuario</text>
+<text id="execution-0" x="1470" y="1313" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="630">HTTP → UsuariosController → Usuarios.registrar</text>
+<text id="execution-1" x="1470" y="1342" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="630">→ validaciones / HashPasswords</text>
+<text id="execution-2" x="1470" y="1371" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="630">→ RepositorioUsuarios.crear → PostgreSQL</text>
+<text id="execution-3" x="1470" y="1400" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="630"></text>
+<text id="execution-4" x="1470" y="1429" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="630">La ejecución sale mediante adapters;</text>
+<text id="execution-5" x="1470" y="1458" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="630">los imports siguen apuntando hacia el núcleo.</text></g></svg>
