@@ -1,118 +1,222 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1500" viewBox="0 0 1700 1500"><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#667588"/></marker></defs><rect width="100%" height="100%" fill="white"/>
-<text x="28" y="42" font-family="Arial,sans-serif" font-size="28" fill="#172b43" font-weight="bold" text-anchor="start">[Estilo arquitectónico] Qatu — cliente-servidor y monolito modular</text>
-<text x="28" y="77" font-family="Arial,sans-serif" font-size="18" fill="#64748b" font-weight="normal" text-anchor="start">Capas = organización lógica · Monolito = una unidad de despliegue backend</text>
-<rect x="80" y="345" width="1240" height="820" fill="none" stroke="#8390a2" stroke-width="1.5" stroke-dasharray="8 6"/>
-<text x="98" y="373" font-family="Arial,sans-serif" font-size="19" fill="#3d526e" font-weight="bold" text-anchor="start">API Qatu · NestJS · Seis módulos desplegados juntos</text>
-<polyline points="810,245 810,415" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="700,510 700,565 207,565 207,630" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="402,565 402,630" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="597,565 597,630" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="792,565 792,630" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="987,565 987,630" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="1182,565 1182,630" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="207,750 207,815 700,815 700,875" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="402,750 402,815" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="597,750 597,815" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="792,750 792,815" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="987,750 987,815" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="1182,750 1182,815" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="1280,905 1350,905 1350,465 1400,465" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="1280,930 1375,930 1375,680 1400,680" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="1280,955 1400,955" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="700,1130 700,1190 300,1190 300,1240" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="700,1190 710,1240" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="700,1190 1110,1190 1110,1240" fill="none" stroke="#667588" stroke-width="1.8" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
-<polyline points="207,565 1182,565" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<polyline points="207,815 1182,815" fill="none" stroke="#667588" stroke-width="1.8"  marker-end="url(#arrow)"/>
-<rect x="600" y="145" width="420" height="100" rx="8" fill="#3f67ad" stroke="#8196b1"/>
-<text x="810" y="180" font-family="Arial,sans-serif" font-size="22" fill="white" font-weight="bold" text-anchor="middle">Cliente web / navegador</text>
-<text x="810" y="208" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Next.js · React · TypeScript</text>
-<text x="810" y="231" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Interfaz móvil: cliente, proveedor y admin</text>
-<rect x="120" y="415" width="1160" height="95" rx="8" fill="#a8c7eb" stroke="#8196b1"/>
-<text x="700" y="459" font-family="Arial,sans-serif" font-size="22" fill="#142d48" font-weight="bold" text-anchor="middle">1. Presentación</text>
-<text x="700" y="487" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">Controladores HTTP · JWT · roles y propiedad · validación de DTO</text>
-<rect x="120" y="630" width="175" height="120" rx="8" fill="#a8c7eb" stroke="#8196b1"/>
-<text x="207.5" y="663.5" font-family="Arial,sans-serif" font-size="22" fill="#142d48" font-weight="bold" text-anchor="middle">Usuarios</text>
-<text x="207.5" y="691.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">[Módulo]</text>
-<text x="207.5" y="714.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">Dominio +</text>
-<text x="207.5" y="737.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">casos de uso</text>
-<rect x="315" y="630" width="175" height="120" rx="8" fill="#a8c7eb" stroke="#8196b1"/>
-<text x="402.5" y="663.5" font-family="Arial,sans-serif" font-size="22" fill="#142d48" font-weight="bold" text-anchor="middle">Proveedores</text>
-<text x="402.5" y="691.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">[Módulo]</text>
-<text x="402.5" y="714.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">Dominio +</text>
-<text x="402.5" y="737.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">casos de uso</text>
-<rect x="510" y="630" width="175" height="120" rx="8" fill="#a8c7eb" stroke="#8196b1"/>
-<text x="597.5" y="663.5" font-family="Arial,sans-serif" font-size="22" fill="#142d48" font-weight="bold" text-anchor="middle">Catálogo</text>
-<text x="597.5" y="691.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">[Módulo]</text>
-<text x="597.5" y="714.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">Dominio +</text>
-<text x="597.5" y="737.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">casos de uso</text>
-<rect x="705" y="630" width="175" height="120" rx="8" fill="#a8c7eb" stroke="#8196b1"/>
-<text x="792.5" y="663.5" font-family="Arial,sans-serif" font-size="22" fill="#142d48" font-weight="bold" text-anchor="middle">Reservas</text>
-<text x="792.5" y="691.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">[Módulo]</text>
-<text x="792.5" y="714.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">Dominio +</text>
-<text x="792.5" y="737.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">casos de uso</text>
-<rect x="900" y="630" width="175" height="120" rx="8" fill="#a8c7eb" stroke="#8196b1"/>
-<text x="987.5" y="663.5" font-family="Arial,sans-serif" font-size="22" fill="#142d48" font-weight="bold" text-anchor="middle">Confianza</text>
-<text x="987.5" y="691.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">[Módulo]</text>
-<text x="987.5" y="714.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">Dominio +</text>
-<text x="987.5" y="737.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">casos de uso</text>
-<rect x="1095" y="630" width="175" height="120" rx="8" fill="#a8c7eb" stroke="#8196b1"/>
-<text x="1182.5" y="663.5" font-family="Arial,sans-serif" font-size="22" fill="#142d48" font-weight="bold" text-anchor="middle">Búsqueda IA</text>
-<text x="1182.5" y="691.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">[Módulo]</text>
-<text x="1182.5" y="714.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">Dominio +</text>
-<text x="1182.5" y="737.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">casos de uso</text>
-<rect x="120" y="875" width="1160" height="100" rx="8" fill="#a8c7eb" stroke="#8196b1"/>
-<text x="700" y="921.5" font-family="Arial,sans-serif" font-size="22" fill="#142d48" font-weight="bold" text-anchor="middle">3. Infraestructura</text>
-<text x="700" y="949.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">Repositorios por módulo · adaptadores de pagos, IA, mapas y archivos</text>
-<rect x="120" y="1050" width="1160" height="80" rx="8" fill="#d9e6f5" stroke="#8196b1"/>
-<text x="700" y="1086.5" font-family="Arial,sans-serif" font-size="22" fill="#142d48" font-weight="bold" text-anchor="middle">Soporte transversal</text>
-<text x="700" y="1114.5" font-family="Arial,sans-serif" font-size="17" fill="#142d48" font-weight="normal" text-anchor="middle">Composición · logs · inbox/outbox · reintentos · health checks</text>
-<rect x="120" y="1240" width="360" height="100" rx="8" fill="#3f67ad" stroke="#8196b1"/>
-<text x="300" y="1275" font-family="Arial,sans-serif" font-size="22" fill="white" font-weight="bold" text-anchor="middle">PostgreSQL + PostGIS</text>
-<text x="300" y="1303" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Datos persistentes y restricciones</text>
-<text x="300" y="1326" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Transacciones por módulo</text>
-<rect x="530" y="1240" width="360" height="100" rx="8" fill="#3f67ad" stroke="#8196b1"/>
-<text x="710" y="1275" font-family="Arial,sans-serif" font-size="22" fill="white" font-weight="bold" text-anchor="middle">Archivos privados</text>
-<text x="710" y="1303" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Fotos y evidencias persistentes</text>
-<text x="710" y="1326" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Copias fuera del VPS</text>
-<rect x="940" y="1240" width="340" height="100" rx="8" fill="#3f67ad" stroke="#8196b1"/>
-<text x="1110" y="1275" font-family="Arial,sans-serif" font-size="22" fill="white" font-weight="bold" text-anchor="middle">Redis — opcional</text>
-<text x="1110" y="1303" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Caché pública</text>
-<text x="1110" y="1326" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Sin autoridad de disponibilidad</text>
-<rect x="1400" y="415" width="260" height="100" rx="8" fill="#8b9098" stroke="#8196b1"/>
-<text x="1530" y="450" font-family="Arial,sans-serif" font-size="22" fill="white" font-weight="bold" text-anchor="middle">Culqi / Yape</text>
-<text x="1530" y="478" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Pago mediante adapter</text>
-<text x="1530" y="501" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Confirmación verificada</text>
-<rect x="1400" y="630" width="260" height="100" rx="8" fill="#8b9098" stroke="#8196b1"/>
-<text x="1530" y="665" font-family="Arial,sans-serif" font-size="22" fill="white" font-weight="bold" text-anchor="middle">Proveedor de IA</text>
-<text x="1530" y="693" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Intención de búsqueda</text>
-<text x="1530" y="716" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Respaldo convencional</text>
-<rect x="1400" y="875" width="260" height="150" rx="8" fill="#8b9098" stroke="#8196b1"/>
-<text x="1530" y="923.5" font-family="Arial,sans-serif" font-size="22" fill="white" font-weight="bold" text-anchor="middle">Mapas y mensajería</text>
-<text x="1530" y="951.5" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Servicios externos</text>
-<text x="1530" y="974.5" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Geografía y avisos</text>
-<text x="1530" y="997.5" font-family="Arial,sans-serif" font-size="17" fill="white" font-weight="normal" text-anchor="middle">Adapter / outbox</text>
-<rect x="708.6" y="273" width="202.8" height="24" fill="white"/>
-<text x="810" y="290" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">HTTPS / JSON · /api/v1</text>
-<rect x="548.2" y="578" width="303.6" height="24" fill="white"/>
-<text x="700" y="595" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">2. Negocio: módulos y casos de uso</text>
-<rect x="594.4" y="823" width="211.20000000000002" height="24" fill="white"/>
-<text x="700" y="840" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">Acceso mediante puertos</text>
-<rect x="1286.4" y="543" width="127.2" height="24" fill="white"/>
-<text x="1350" y="560" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">Pagos [HTTPS]</text>
-<rect x="1324" y="783" width="102" height="24" fill="white"/>
-<text x="1375" y="800" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">IA [HTTPS]</text>
-<rect x="1297.4" y="923" width="85.2" height="24" fill="white"/>
-<text x="1340" y="940" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">Adapters</text>
-<rect x="382.2" y="1159" width="135.60000000000002" height="24" fill="white"/>
-<text x="450" y="1176" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">SQL por módulo</text>
-<rect x="642.2" y="1208" width="135.60000000000002" height="24" fill="white"/>
-<text x="710" y="1225" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">I/O autorizado</text>
-<rect x="1037.4" y="1159" width="85.2" height="24" fill="white"/>
-<text x="1080" y="1176" font-family="Arial,sans-serif" font-size="16" fill="#526176" font-weight="normal" text-anchor="middle">Opcional</text>
-<rect x="28" y="1370" width="1644" height="110" fill="white" stroke="#abb6c4"/>
-<text x="48" y="1395" font-family="Arial,sans-serif" font-size="18" fill="#25334a" font-weight="bold" text-anchor="start">Lectura del diagrama y límites</text>
-<text x="48" y="1421" font-family="Arial,sans-serif" font-size="16" fill="#536378" font-weight="normal" text-anchor="start">Las flechas de esta vista son llamadas en ejecución; las reglas de imports se detallan en Clean Architecture.</text>
-<text x="48" y="1444" font-family="Arial,sans-serif" font-size="16" fill="#536378" font-weight="normal" text-anchor="start">Los seis módulos comparten proceso y recursos. Modularidad no equivale a aislamiento de fallos.</text>
-<text x="48" y="1467" font-family="Arial,sans-serif" font-size="16" fill="#536378" font-weight="normal" text-anchor="start">Despliegue inicial: web + API + PostgreSQL en un VPS con Docker Compose; no requiere microservicios.</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="2160" height="1750" viewBox="0 0 2160 1750" role="img" aria-labelledby="title description">
+<title id="title">Qatu Ayacucho — estilo arquitectónico</title><desc id="description">Cliente-servidor + monolito modular en capas</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#60736c" stroke="#60736c"/></marker><marker id="blue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#245b91" stroke="#245b91"/></marker><marker id="green" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#155c49" stroke="#155c49"/></marker><marker id="hollow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="white" stroke="#7956a4"/></marker></defs>
+<rect width="100%" height="100%" fill="white"/>
+<g font-family="Arial, Helvetica, sans-serif"><rect id="api" x="40" y="420" width="1720" height="940" rx="8" fill="#ffffff" stroke="#155c49" stroke-width="1.5" stroke-dasharray="9 6"/>
+<rect id="presentation-band" x="60" y="575" width="1680" height="175" rx="8" fill="#edf4ff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="business-band" x="60" y="750" width="1680" height="285" rx="8" fill="#eef7eb" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="infra-band" x="60" y="1035" width="1680" height="295" rx="8" fill="#f4eefb" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="module-usuarios" x="240" y="590" width="230" height="615" rx="0" fill="none" stroke="#155c49" stroke-width="1.5" stroke-dasharray="9 6"/>
+<rect id="module-proveedores" x="485" y="590" width="230" height="615" rx="0" fill="none" stroke="#155c49" stroke-width="1.5" stroke-dasharray="9 6"/>
+<rect id="module-catalogo" x="730" y="590" width="230" height="615" rx="0" fill="none" stroke="#a7b9b0" stroke-width="1.5" stroke-dasharray="9 6"/>
+<rect id="module-reservas" x="975" y="590" width="230" height="615" rx="0" fill="none" stroke="#a7b9b0" stroke-width="1.5" stroke-dasharray="9 6"/>
+<rect id="module-resenas" x="1220" y="590" width="230" height="615" rx="0" fill="none" stroke="#a7b9b0" stroke-width="1.5" stroke-dasharray="9 6"/>
+<rect id="module-busqueda" x="1465" y="590" width="230" height="615" rx="0" fill="none" stroke="#a7b9b0" stroke-width="1.5" stroke-dasharray="9 6"/>
+<rect id="scope" x="1820" y="420" width="300" height="430" rx="8" fill="#f5f7f6" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="legend" x="40" y="1600" width="1040" height="115" rx="8" fill="#f5f7f6" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="rules" x="1110" y="1600" width="1010" height="115" rx="8" fill="#f5f7f6" stroke="#a7b9b0" stroke-width="1.5"/>
+<polyline id="actor-link-0" points="430,183 430,210" fill="none" stroke="#60736c" stroke-width="2"/>
+<polyline id="actor-link-1" points="730,183 730,210" fill="none" stroke="#60736c" stroke-width="2"/>
+<polyline id="actor-link-2" points="1030,183 1030,210" fill="none" stroke="#60736c" stroke-width="2"/>
+<polyline id="actor-link-3" points="1330,183 1330,210" fill="none" stroke="#60736c" stroke-width="2"/>
+<polyline id="actor-bus" points="430,210 1330,210" fill="none" stroke="#60736c" stroke-width="2"/>
+<polyline id="actors-web" points="880,210 880,245" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="web-api" points="880,355 880,480" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="usuarios-entry" points="465,550 465,655 445,655 445,665" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="usuarios-use" points="355,729 355,800" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="usuarios-rules" points="355,900 355,935" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="usuarios-io" points="355,1020 355,1090" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="usuarios-storage" points="355,1190 355,1235" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="proveedores-entry" points="710,550 710,655 690,655 690,665" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="proveedores-use" points="600,729 600,800" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="proveedores-rules" points="600,900 600,935" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="proveedores-io" points="600,1020 600,1090" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="proveedores-storage" points="600,1190 600,1235" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="catalogo-entry" points="955,550 955,655 935,655 935,665" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="catalogo-use" points="845,729 845,800" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="catalogo-rules" points="845,900 845,935" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="catalogo-io" points="845,1020 845,1090" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="catalogo-storage" points="845,1190 845,1235" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="reservas-entry" points="1200,550 1200,655 1180,655 1180,665" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="reservas-use" points="1090,729 1090,800" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="reservas-rules" points="1090,900 1090,935" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="reservas-io" points="1090,1020 1090,1090" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="reservas-storage" points="1090,1190 1090,1235" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="resenas-entry" points="1445,550 1445,655 1425,655 1425,665" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="resenas-use" points="1335,729 1335,800" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="resenas-rules" points="1335,900 1335,935" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="resenas-io" points="1335,1020 1335,1090" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="resenas-storage" points="1335,1190 1335,1235" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="busqueda-entry" points="1690,550 1690,655 1670,655 1670,665" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="busqueda-use" points="1580,729 1580,800" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="busqueda-rules" points="1580,900 1580,935" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="busqueda-io" points="1580,1020 1580,1090" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="busqueda-storage" points="1580,1190 1580,1235" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline id="payments-call" points="1730,1255 1780,1255 1780,980 1840,980" fill="none" stroke="#60736c" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arrow)"/>
+<polyline id="ai-call" points="1730,1280 1800,1280 1800,1140 1840,1140" fill="none" stroke="#60736c" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arrow)"/>
+<polyline id="maps-call" points="1730,1305 1840,1305" fill="none" stroke="#60736c" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arrow)"/>
+<polyline id="database-call" points="830,1320 830,1450" fill="none" stroke="#60736c" stroke-width="2" marker-end="url(#arrow)"/>
+<rect id="actor-0" x="315" y="125" width="230" height="58" rx="8" fill="#f5f7f6" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="actor-1" x="615" y="125" width="230" height="58" rx="8" fill="#f5f7f6" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="actor-2" x="915" y="125" width="230" height="58" rx="8" fill="#f5f7f6" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="actor-3" x="1215" y="125" width="230" height="58" rx="8" fill="#f5f7f6" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="web" x="540" y="245" width="680" height="110" rx="8" fill="#edf4ff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="cross-cutting" x="240" y="480" width="1490" height="70" rx="8" fill="#e1eee8" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="usuarios-controller" x="250" y="665" width="210" height="64" rx="8" fill="#ffffff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="usuarios-application" x="250" y="800" width="210" height="100" rx="8" fill="#ffffff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="usuarios-domain" x="250" y="935" width="210" height="85" rx="8" fill="#fff7df" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="usuarios-repository" x="250" y="1090" width="210" height="100" rx="8" fill="#ffffff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="proveedores-controller" x="495" y="665" width="210" height="64" rx="8" fill="#ffffff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="proveedores-application" x="495" y="800" width="210" height="100" rx="8" fill="#ffffff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="proveedores-domain" x="495" y="935" width="210" height="85" rx="8" fill="#fff7df" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="proveedores-repository" x="495" y="1090" width="210" height="100" rx="8" fill="#ffffff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="catalogo-controller" x="740" y="665" width="210" height="64" rx="8" fill="#ffffff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="catalogo-application" x="740" y="800" width="210" height="100" rx="8" fill="#ffffff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="catalogo-domain" x="740" y="935" width="210" height="85" rx="8" fill="#fff7df" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="catalogo-repository" x="740" y="1090" width="210" height="100" rx="8" fill="#ffffff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="reservas-controller" x="985" y="665" width="210" height="64" rx="8" fill="#ffffff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="reservas-application" x="985" y="800" width="210" height="100" rx="8" fill="#ffffff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="reservas-domain" x="985" y="935" width="210" height="85" rx="8" fill="#fff7df" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="reservas-repository" x="985" y="1090" width="210" height="100" rx="8" fill="#ffffff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="resenas-controller" x="1230" y="665" width="210" height="64" rx="8" fill="#ffffff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="resenas-application" x="1230" y="800" width="210" height="100" rx="8" fill="#ffffff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="resenas-domain" x="1230" y="935" width="210" height="85" rx="8" fill="#fff7df" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="resenas-repository" x="1230" y="1090" width="210" height="100" rx="8" fill="#ffffff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="busqueda-controller" x="1475" y="665" width="210" height="64" rx="8" fill="#ffffff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="busqueda-application" x="1475" y="800" width="210" height="100" rx="8" fill="#ffffff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="busqueda-domain" x="1475" y="935" width="210" height="85" rx="8" fill="#fff7df" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="busqueda-repository" x="1475" y="1090" width="210" height="100" rx="8" fill="#ffffff" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="module-io" x="240" y="1235" width="1490" height="85" rx="8" fill="#e8e0f4" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="payments" x="1840" y="925" width="280" height="110" rx="8" fill="#f5f7f6" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="ai" x="1840" y="1085" width="280" height="110" rx="8" fill="#f5f7f6" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="maps" x="1840" y="1245" width="280" height="110" rx="8" fill="#f5f7f6" stroke="#a7b9b0" stroke-width="1.5"/>
+<rect id="database" x="420" y="1450" width="820" height="110" rx="8" fill="#e3f0e9" stroke="#a7b9b0" stroke-width="1.5"/>
+<text id="heading" x="40" y="52" font-size="36" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="2080">04  QATU AYACUCHO · ESTILO ARQUITECTÓNICO</text>
+<text id="subtitle" x="40" y="91" font-size="23" font-weight="400" fill="#52665f" text-anchor="start" data-max-width="2080">Estructura global · arquitectura objetivo con estado de implementación explícito</text>
+<text id="actor-0-title" x="430" y="156" font-size="23" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="206">Visitante</text>
+<text id="actor-1-title" x="730" y="156" font-size="23" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="206">Cliente</text>
+<text id="actor-2-title" x="1030" y="156" font-size="23" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="206">Proveedor</text>
+<text id="actor-3-title" x="1330" y="156" font-size="23" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="206">Administrador</text>
+<text id="web-title" x="880" y="276" font-size="23" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="656">Aplicación web · Next.js / React / TypeScript</text>
+<text id="web-line-0" x="880" y="305" font-size="19" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="656">Navegador + servidor Next.js · interfaz y cliente HTTP</text>
+<text id="web-line-1" x="880" y="332" font-size="19" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="656">Descubrimiento actual: datos sintéticos; usuarios y proveedores: API</text>
+<text id="http-label" x="905" y="391" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="770">HTTP / JSON · /api/v1 · HTTPS en producción</text>
+<text id="api-title" x="60" y="453" font-size="23" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="1680">API Qatu · NestJS / TypeScript · un proceso y un despliegue backend</text>
+<text id="cross-cutting-title" x="985" y="511" font-size="22" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="1466">Entrada HTTP y controles transversales</text>
+<text id="cross-cutting-line-0" x="985" y="540" font-size="19" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="1466">Sesión JWT / cookie HttpOnly · autorización · validación · errores</text>
+<text id="layer-presentation-0" x="76" y="620" font-size="16" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="150">1. PRESENTACIÓN</text>
+<text id="layer-presentation-1" x="76" y="649" font-size="16" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="150">HTTP y DTO</text>
+<text id="layer-presentation-2" x="76" y="678" font-size="16" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="150">Controladores</text>
+<text id="layer-business-0" x="76" y="805" font-size="16" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="150">2. NEGOCIO</text>
+<text id="layer-business-1" x="76" y="834" font-size="16" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="150">Aplicación</text>
+<text id="layer-business-2" x="76" y="863" font-size="16" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="150">+ Dominio</text>
+<text id="layer-infra-0" x="76" y="1090" font-size="16" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="150">3. INFRA-</text>
+<text id="layer-infra-1" x="76" y="1119" font-size="16" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="150">ESTRUCTURA</text>
+<text id="layer-infra-2" x="76" y="1148" font-size="16" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="150">Repositorios</text>
+<text id="layer-infra-3" x="76" y="1177" font-size="16" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="150">y adaptadores</text>
+<text id="layer-infra-4" x="76" y="1206" font-size="16" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="150">por puertos</text>
+<text id="usuarios-name" x="355" y="619" font-size="22" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="218">Usuarios</text>
+<text id="usuarios-status" x="355" y="644" font-size="16" font-weight="700" fill="#155c49" text-anchor="middle" data-max-width="218">IMPLEMENTADO</text>
+<text id="usuarios-controller-title" x="355" y="696" font-size="17" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">UsuariosController</text>
+<text id="usuarios-application-title" x="355" y="831" font-size="20" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">Casos de uso</text>
+<text id="usuarios-application-line-0" x="355" y="860" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Registro · login</text>
+<text id="usuarios-application-line-1" x="355" y="887" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Perfil · administración</text>
+<text id="usuarios-domain-title" x="355" y="966" font-size="18" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">Reglas y contratos</text>
+<text id="usuarios-domain-line-0" x="355" y="995" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Cuenta y roles</text>
+<text id="usuarios-domain-line-1" x="355" y="1017" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Sesiones y permisos</text>
+<text id="usuarios-repository-title" x="355" y="1121" font-size="19" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">Persistencia / I/O</text>
+<text id="usuarios-repository-line-0" x="355" y="1150" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">PostgresUsuarios</text>
+<text id="usuarios-repository-line-1" x="355" y="1177" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">scrypt / JWT</text>
+<text id="proveedores-name" x="600" y="619" font-size="22" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="218">Proveedores</text>
+<text id="proveedores-status" x="600" y="644" font-size="16" font-weight="700" fill="#155c49" text-anchor="middle" data-max-width="218">IMPLEMENTADO</text>
+<text id="proveedores-controller-title" x="600" y="696" font-size="17" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">ProveedoresController</text>
+<text id="proveedores-application-title" x="600" y="831" font-size="20" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">Casos de uso</text>
+<text id="proveedores-application-line-0" x="600" y="860" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Perfil y zona</text>
+<text id="proveedores-application-line-1" x="600" y="887" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Verificación documental</text>
+<text id="proveedores-domain-title" x="600" y="966" font-size="18" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">Reglas y contratos</text>
+<text id="proveedores-domain-line-0" x="600" y="995" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Proveedor</text>
+<text id="proveedores-domain-line-1" x="600" y="1017" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Reglas de verificación</text>
+<text id="proveedores-repository-title" x="600" y="1121" font-size="19" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">Persistencia / I/O</text>
+<text id="proveedores-repository-line-0" x="600" y="1150" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">PostgresProveedores</text>
+<text id="proveedores-repository-line-1" x="600" y="1177" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Documentos cifrados</text>
+<text id="catalogo-name" x="845" y="619" font-size="22" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="218">Catálogo</text>
+<text id="catalogo-status" x="845" y="644" font-size="16" font-weight="700" fill="#52665f" text-anchor="middle" data-max-width="218">DISEÑADO · PENDIENTE</text>
+<text id="catalogo-controller-title" x="845" y="696" font-size="18" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">Publicaciones / filtros</text>
+<text id="catalogo-application-title" x="845" y="831" font-size="20" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">Casos de uso</text>
+<text id="catalogo-application-line-0" x="845" y="860" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Publicar y consultar</text>
+<text id="catalogo-application-line-1" x="845" y="887" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Herramientas / oficios</text>
+<text id="catalogo-domain-title" x="845" y="966" font-size="18" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">Reglas y contratos</text>
+<text id="catalogo-domain-line-0" x="845" y="995" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Publicación / recurso</text>
+<text id="catalogo-domain-line-1" x="845" y="1017" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Tarifas y categorías</text>
+<text id="catalogo-repository-title" x="845" y="1121" font-size="19" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">Persistencia / I/O</text>
+<text id="catalogo-repository-line-0" x="845" y="1150" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Repositorio propio</text>
+<text id="catalogo-repository-line-1" x="845" y="1177" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Fotos controladas</text>
+<text id="reservas-name" x="1090" y="619" font-size="22" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="218">Reservas</text>
+<text id="reservas-status" x="1090" y="644" font-size="16" font-weight="700" fill="#52665f" text-anchor="middle" data-max-width="218">DISEÑADO · PENDIENTE</text>
+<text id="reservas-controller-title" x="1090" y="696" font-size="18" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">Solicitudes / pagos</text>
+<text id="reservas-application-title" x="1090" y="831" font-size="20" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">Casos de uso</text>
+<text id="reservas-application-line-0" x="1090" y="860" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Aceptar / cancelar</text>
+<text id="reservas-application-line-1" x="1090" y="887" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Iniciar / confirmar pago</text>
+<text id="reservas-domain-title" x="1090" y="966" font-size="18" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">Reglas y contratos</text>
+<text id="reservas-domain-line-0" x="1090" y="995" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Reserva y bloqueo</text>
+<text id="reservas-domain-line-1" x="1090" y="1017" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Estados e idempotencia</text>
+<text id="reservas-repository-title" x="1090" y="1121" font-size="19" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">Persistencia / I/O</text>
+<text id="reservas-repository-line-0" x="1090" y="1150" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Repositorio propio</text>
+<text id="reservas-repository-line-1" x="1090" y="1177" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Adaptador de pagos</text>
+<text id="resenas-name" x="1335" y="619" font-size="22" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="218">Reseñas y confianza</text>
+<text id="resenas-status" x="1335" y="644" font-size="16" font-weight="700" fill="#52665f" text-anchor="middle" data-max-width="218">DISEÑADO · PENDIENTE</text>
+<text id="resenas-controller-title" x="1335" y="696" font-size="18" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">Reseñas / casos</text>
+<text id="resenas-application-title" x="1335" y="831" font-size="20" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">Casos de uso</text>
+<text id="resenas-application-line-0" x="1335" y="860" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Registrar reseña</text>
+<text id="resenas-application-line-1" x="1335" y="887" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Gestionar evidencias</text>
+<text id="resenas-domain-title" x="1335" y="966" font-size="18" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">Reglas y contratos</text>
+<text id="resenas-domain-line-0" x="1335" y="995" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Confianza y reseñas</text>
+<text id="resenas-domain-line-1" x="1335" y="1017" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Garantía documental</text>
+<text id="resenas-repository-title" x="1335" y="1121" font-size="19" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">Persistencia / I/O</text>
+<text id="resenas-repository-line-0" x="1335" y="1150" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Repositorio propio</text>
+<text id="resenas-repository-line-1" x="1335" y="1177" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Evidencias privadas</text>
+<text id="busqueda-name" x="1580" y="619" font-size="22" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="218">Búsqueda</text>
+<text id="busqueda-status" x="1580" y="644" font-size="16" font-weight="700" fill="#52665f" text-anchor="middle" data-max-width="218">DISEÑADO · PENDIENTE</text>
+<text id="busqueda-controller-title" x="1580" y="696" font-size="18" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">Intención / filtros</text>
+<text id="busqueda-application-title" x="1580" y="831" font-size="20" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">Casos de uso</text>
+<text id="busqueda-application-line-0" x="1580" y="860" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Interpretar consulta</text>
+<text id="busqueda-application-line-1" x="1580" y="887" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Validar filtros / fallback</text>
+<text id="busqueda-domain-title" x="1580" y="966" font-size="18" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">Reglas y contratos</text>
+<text id="busqueda-domain-line-0" x="1580" y="995" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Criterios validados</text>
+<text id="busqueda-domain-line-1" x="1580" y="1017" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Sin escrituras por IA</text>
+<text id="busqueda-repository-title" x="1580" y="1121" font-size="19" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="186">Persistencia / I/O</text>
+<text id="busqueda-repository-line-0" x="1580" y="1150" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Cuotas y métricas</text>
+<text id="busqueda-repository-line-1" x="1580" y="1177" font-size="17" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="186">Adaptador de IA</text>
+<text id="module-io-title" x="985" y="1266" font-size="23" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="1466">Repositorios PostgreSQL y adaptadores por módulo · driver pg / contratos externos</text>
+<text id="module-io-line-0" x="985" y="1295" font-size="20" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="1466">Una misma base de datos; cada módulo es propietario de sus tablas y de sus integraciones.</text>
+<text id="scope-title" x="1840" y="453" font-size="23" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="260">Cómo leer esta vista</text>
+<text id="scope-0" x="1840" y="490" font-size="19" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="260">6 módulos de negocio</text>
+<text id="scope-1" x="1840" y="520" font-size="19" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="260">2 implementados en API</text>
+<text id="scope-2" x="1840" y="550" font-size="19" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="260">4 pendientes de construir</text>
+<text id="scope-3" x="1840" y="580" font-size="19" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="260"></text>
+<text id="scope-4" x="1840" y="610" font-size="19" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="260">Pagos pertenece a Reservas.</text>
+<text id="scope-5" x="1840" y="640" font-size="19" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="260">No son microservicios.</text>
+<text id="scope-6" x="1840" y="670" font-size="19" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="260">Comparten proceso y fallos.</text>
+<text id="scope-7" x="1840" y="700" font-size="19" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="260"></text>
+<text id="scope-8" x="1840" y="730" font-size="19" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="260">Redis no está implementado.</text>
+<text id="scope-9" x="1840" y="760" font-size="19" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="260">Mapas / IA / pagos externos:</text>
+<text id="scope-10" x="1840" y="790" font-size="19" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="260">integraciones pendientes.</text>
+<text id="payments-title" x="1980" y="956" font-size="22" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="256">Pasarela de pagos</text>
+<text id="payments-line-0" x="1980" y="985" font-size="19" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="256">Culqi: candidata</text>
+<text id="payments-line-1" x="1980" y="1012" font-size="19" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="256">HTTPS · módulo Reservas</text>
+<text id="ai-title" x="1980" y="1116" font-size="22" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="256">Proveedor de IA</text>
+<text id="ai-line-0" x="1980" y="1145" font-size="19" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="256">Modelo por seleccionar</text>
+<text id="ai-line-1" x="1980" y="1172" font-size="19" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="256">HTTPS · módulo Búsqueda</text>
+<text id="maps-title" x="1980" y="1276" font-size="21" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="256">Mapas / mensajería</text>
+<text id="maps-line-0" x="1980" y="1305" font-size="19" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="256">Proveedores por definir</text>
+<text id="maps-line-1" x="1980" y="1332" font-size="19" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="256">Zona manual disponible</text>
+<text id="sql-label" x="855" y="1400" font-size="21" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="600">SQL · repositorios propios</text>
+<text id="database-title" x="830" y="1481" font-size="23" font-weight="700" fill="#18352f" text-anchor="middle" data-max-width="796">PostgreSQL 17 + PostGIS 3.5</text>
+<text id="database-line-0" x="830" y="1510" font-size="20" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="796">Docker local · volumen persistente · sin exposición pública en producción</text>
+<text id="database-line-1" x="830" y="1537" font-size="20" font-weight="400" fill="#18352f" text-anchor="middle" data-max-width="796">Actual: cuentas, sesiones, proveedores y documentos cifrados</text>
+<text id="legend-title" x="60" y="1633" font-size="23" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="1000">Leyenda y alcance</text>
+<text id="legend-1" x="60" y="1664" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="1000">Flecha continua: ejecución interna / conexión actual; discontinua: integración futura.</text>
+<text id="legend-2" x="60" y="1694" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="1000">Los estados de cada columna distinguen implementación actual y arquitectura objetivo.</text>
+<text id="rules-title" x="1130" y="1633" font-size="23" font-weight="700" fill="#18352f" text-anchor="start" data-max-width="970">Límite de esta vista</text>
+<text id="rules-1" x="1130" y="1664" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="970">Entre módulos: contratos públicos; nunca repositorios ni consultas a tablas ajenas.</text>
+<text id="rules-2" x="1130" y="1694" font-size="20" font-weight="400" fill="#18352f" text-anchor="start" data-max-width="970">Negocio = Aplicación + Dominio; los imports se explican en Clean Architecture.</text></g></svg>
