@@ -1,617 +1,2569 @@
 {
   "slug": "estilo-arquitectonico-qatu",
-  "title": "[Estilo arquitectónico] Qatu — cliente-servidor y monolito modular",
-  "subtitle": "Capas = organización lógica · Monolito = una unidad de despliegue backend",
-  "width": 1700,
-  "height": 1500,
-  "nodes": [
+  "title": "Qatu Ayacucho — estilo arquitectónico",
+  "subtitle": "Cliente-servidor + monolito modular en capas",
+  "width": 2160,
+  "height": 1750,
+  "backgrounds": [
     {
-      "id": "browser",
-      "x": 600,
-      "y": 145,
-      "w": 420,
-      "h": 100,
-      "title": "Cliente web / navegador",
-      "lines": [
-        "Next.js · React · TypeScript",
-        "Interfaz móvil: cliente, proveedor y admin"
-      ],
-      "kind": "container"
+      "id": "api",
+      "x": 40,
+      "y": 420,
+      "width": 1720,
+      "height": 940,
+      "fill": "#ffffff",
+      "stroke": "#155c49",
+      "radius": 8,
+      "dashed": true
     },
     {
-      "id": "presentation",
-      "x": 120,
-      "y": 415,
-      "w": 1160,
-      "h": 95,
-      "title": "1. Presentación",
-      "lines": [
-        "Controladores HTTP · JWT · roles y propiedad · validación de DTO"
-      ],
-      "kind": "component"
+      "id": "presentation-band",
+      "x": 60,
+      "y": 575,
+      "width": 1680,
+      "height": 175,
+      "fill": "#edf4ff",
+      "stroke": "#a7b9b0",
+      "radius": 8
     },
     {
-      "id": "m0",
-      "x": 120,
-      "y": 630,
-      "w": 175,
-      "h": 120,
-      "title": "Usuarios",
-      "lines": [
-        "[Módulo]",
-        "Dominio +",
-        "casos de uso"
-      ],
-      "kind": "component"
+      "id": "business-band",
+      "x": 60,
+      "y": 750,
+      "width": 1680,
+      "height": 285,
+      "fill": "#eef7eb",
+      "stroke": "#a7b9b0",
+      "radius": 8
     },
     {
-      "id": "m1",
+      "id": "infra-band",
+      "x": 60,
+      "y": 1035,
+      "width": 1680,
+      "height": 295,
+      "fill": "#f4eefb",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "module-usuarios",
+      "x": 240,
+      "y": 590,
+      "width": 230,
+      "height": 615,
+      "fill": "none",
+      "stroke": "#155c49",
+      "radius": 0,
+      "dashed": true
+    },
+    {
+      "id": "module-proveedores",
+      "x": 485,
+      "y": 590,
+      "width": 230,
+      "height": 615,
+      "fill": "none",
+      "stroke": "#155c49",
+      "radius": 0,
+      "dashed": true
+    },
+    {
+      "id": "module-catalogo",
+      "x": 730,
+      "y": 590,
+      "width": 230,
+      "height": 615,
+      "fill": "none",
+      "stroke": "#a7b9b0",
+      "radius": 0,
+      "dashed": true
+    },
+    {
+      "id": "module-reservas",
+      "x": 975,
+      "y": 590,
+      "width": 230,
+      "height": 615,
+      "fill": "none",
+      "stroke": "#a7b9b0",
+      "radius": 0,
+      "dashed": true
+    },
+    {
+      "id": "module-resenas",
+      "x": 1220,
+      "y": 590,
+      "width": 230,
+      "height": 615,
+      "fill": "none",
+      "stroke": "#a7b9b0",
+      "radius": 0,
+      "dashed": true
+    },
+    {
+      "id": "module-busqueda",
+      "x": 1465,
+      "y": 590,
+      "width": 230,
+      "height": 615,
+      "fill": "none",
+      "stroke": "#a7b9b0",
+      "radius": 0,
+      "dashed": true
+    },
+    {
+      "id": "scope",
+      "x": 1820,
+      "y": 420,
+      "width": 300,
+      "height": 430,
+      "fill": "#f5f7f6",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "legend",
+      "x": 40,
+      "y": 1600,
+      "width": 1040,
+      "height": 115,
+      "fill": "#f5f7f6",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "rules",
+      "x": 1110,
+      "y": 1600,
+      "width": 1010,
+      "height": 115,
+      "fill": "#f5f7f6",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    }
+  ],
+  "boxes": [
+    {
+      "id": "actor-0",
       "x": 315,
-      "y": 630,
-      "w": 175,
-      "h": 120,
-      "title": "Proveedores",
-      "lines": [
-        "[Módulo]",
-        "Dominio +",
-        "casos de uso"
-      ],
-      "kind": "component"
+      "y": 125,
+      "width": 230,
+      "height": 58,
+      "fill": "#f5f7f6",
+      "stroke": "#a7b9b0",
+      "radius": 8
     },
     {
-      "id": "m2",
-      "x": 510,
-      "y": 630,
-      "w": 175,
-      "h": 120,
-      "title": "Catálogo",
-      "lines": [
-        "[Módulo]",
-        "Dominio +",
-        "casos de uso"
-      ],
-      "kind": "component"
+      "id": "actor-1",
+      "x": 615,
+      "y": 125,
+      "width": 230,
+      "height": 58,
+      "fill": "#f5f7f6",
+      "stroke": "#a7b9b0",
+      "radius": 8
     },
     {
-      "id": "m3",
-      "x": 705,
-      "y": 630,
-      "w": 175,
-      "h": 120,
-      "title": "Reservas",
-      "lines": [
-        "[Módulo]",
-        "Dominio +",
-        "casos de uso"
-      ],
-      "kind": "component"
+      "id": "actor-2",
+      "x": 915,
+      "y": 125,
+      "width": 230,
+      "height": 58,
+      "fill": "#f5f7f6",
+      "stroke": "#a7b9b0",
+      "radius": 8
     },
     {
-      "id": "m4",
-      "x": 900,
-      "y": 630,
-      "w": 175,
-      "h": 120,
-      "title": "Confianza",
-      "lines": [
-        "[Módulo]",
-        "Dominio +",
-        "casos de uso"
-      ],
-      "kind": "component"
+      "id": "actor-3",
+      "x": 1215,
+      "y": 125,
+      "width": 230,
+      "height": 58,
+      "fill": "#f5f7f6",
+      "stroke": "#a7b9b0",
+      "radius": 8
     },
     {
-      "id": "m5",
-      "x": 1095,
-      "y": 630,
-      "w": 175,
-      "h": 120,
-      "title": "Búsqueda IA",
-      "lines": [
-        "[Módulo]",
-        "Dominio +",
-        "casos de uso"
-      ],
-      "kind": "component"
+      "id": "web",
+      "x": 540,
+      "y": 245,
+      "width": 680,
+      "height": 110,
+      "fill": "#edf4ff",
+      "stroke": "#a7b9b0",
+      "radius": 8
     },
     {
-      "id": "infra",
-      "x": 120,
-      "y": 875,
-      "w": 1160,
-      "h": 100,
-      "title": "3. Infraestructura",
-      "lines": [
-        "Repositorios por módulo · adaptadores de pagos, IA, mapas y archivos"
-      ],
-      "kind": "component"
+      "id": "cross-cutting",
+      "x": 240,
+      "y": 480,
+      "width": 1490,
+      "height": 70,
+      "fill": "#e1eee8",
+      "stroke": "#a7b9b0",
+      "radius": 8
     },
     {
-      "id": "support",
-      "x": 120,
-      "y": 1050,
-      "w": 1160,
-      "h": 80,
-      "title": "Soporte transversal",
-      "lines": [
-        "Composición · logs · inbox/outbox · reintentos · health checks"
-      ],
-      "kind": "support"
+      "id": "usuarios-controller",
+      "x": 250,
+      "y": 665,
+      "width": 210,
+      "height": 64,
+      "fill": "#ffffff",
+      "stroke": "#a7b9b0",
+      "radius": 8
     },
     {
-      "id": "database",
-      "x": 120,
-      "y": 1240,
-      "w": 360,
-      "h": 100,
-      "title": "PostgreSQL + PostGIS",
-      "lines": [
-        "Datos persistentes y restricciones",
-        "Transacciones por módulo"
-      ],
-      "kind": "container"
+      "id": "usuarios-application",
+      "x": 250,
+      "y": 800,
+      "width": 210,
+      "height": 100,
+      "fill": "#ffffff",
+      "stroke": "#a7b9b0",
+      "radius": 8
     },
     {
-      "id": "files",
-      "x": 530,
-      "y": 1240,
-      "w": 360,
-      "h": 100,
-      "title": "Archivos privados",
-      "lines": [
-        "Fotos y evidencias persistentes",
-        "Copias fuera del VPS"
-      ],
-      "kind": "container"
+      "id": "usuarios-domain",
+      "x": 250,
+      "y": 935,
+      "width": 210,
+      "height": 85,
+      "fill": "#fff7df",
+      "stroke": "#a7b9b0",
+      "radius": 8
     },
     {
-      "id": "cache",
-      "x": 940,
-      "y": 1240,
-      "w": 340,
-      "h": 100,
-      "title": "Redis — opcional",
-      "lines": [
-        "Caché pública",
-        "Sin autoridad de disponibilidad"
-      ],
-      "kind": "container"
+      "id": "usuarios-repository",
+      "x": 250,
+      "y": 1090,
+      "width": 210,
+      "height": 100,
+      "fill": "#ffffff",
+      "stroke": "#a7b9b0",
+      "radius": 8
     },
     {
-      "id": "pay",
-      "x": 1400,
-      "y": 415,
-      "w": 260,
-      "h": 100,
-      "title": "Culqi / Yape",
-      "lines": [
-        "Pago mediante adapter",
-        "Confirmación verificada"
-      ],
-      "kind": "external"
+      "id": "proveedores-controller",
+      "x": 495,
+      "y": 665,
+      "width": 210,
+      "height": 64,
+      "fill": "#ffffff",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "proveedores-application",
+      "x": 495,
+      "y": 800,
+      "width": 210,
+      "height": 100,
+      "fill": "#ffffff",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "proveedores-domain",
+      "x": 495,
+      "y": 935,
+      "width": 210,
+      "height": 85,
+      "fill": "#fff7df",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "proveedores-repository",
+      "x": 495,
+      "y": 1090,
+      "width": 210,
+      "height": 100,
+      "fill": "#ffffff",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "catalogo-controller",
+      "x": 740,
+      "y": 665,
+      "width": 210,
+      "height": 64,
+      "fill": "#ffffff",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "catalogo-application",
+      "x": 740,
+      "y": 800,
+      "width": 210,
+      "height": 100,
+      "fill": "#ffffff",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "catalogo-domain",
+      "x": 740,
+      "y": 935,
+      "width": 210,
+      "height": 85,
+      "fill": "#fff7df",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "catalogo-repository",
+      "x": 740,
+      "y": 1090,
+      "width": 210,
+      "height": 100,
+      "fill": "#ffffff",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "reservas-controller",
+      "x": 985,
+      "y": 665,
+      "width": 210,
+      "height": 64,
+      "fill": "#ffffff",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "reservas-application",
+      "x": 985,
+      "y": 800,
+      "width": 210,
+      "height": 100,
+      "fill": "#ffffff",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "reservas-domain",
+      "x": 985,
+      "y": 935,
+      "width": 210,
+      "height": 85,
+      "fill": "#fff7df",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "reservas-repository",
+      "x": 985,
+      "y": 1090,
+      "width": 210,
+      "height": 100,
+      "fill": "#ffffff",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "resenas-controller",
+      "x": 1230,
+      "y": 665,
+      "width": 210,
+      "height": 64,
+      "fill": "#ffffff",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "resenas-application",
+      "x": 1230,
+      "y": 800,
+      "width": 210,
+      "height": 100,
+      "fill": "#ffffff",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "resenas-domain",
+      "x": 1230,
+      "y": 935,
+      "width": 210,
+      "height": 85,
+      "fill": "#fff7df",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "resenas-repository",
+      "x": 1230,
+      "y": 1090,
+      "width": 210,
+      "height": 100,
+      "fill": "#ffffff",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "busqueda-controller",
+      "x": 1475,
+      "y": 665,
+      "width": 210,
+      "height": 64,
+      "fill": "#ffffff",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "busqueda-application",
+      "x": 1475,
+      "y": 800,
+      "width": 210,
+      "height": 100,
+      "fill": "#ffffff",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "busqueda-domain",
+      "x": 1475,
+      "y": 935,
+      "width": 210,
+      "height": 85,
+      "fill": "#fff7df",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "busqueda-repository",
+      "x": 1475,
+      "y": 1090,
+      "width": 210,
+      "height": 100,
+      "fill": "#ffffff",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "module-io",
+      "x": 240,
+      "y": 1235,
+      "width": 1490,
+      "height": 85,
+      "fill": "#e8e0f4",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "payments",
+      "x": 1840,
+      "y": 925,
+      "width": 280,
+      "height": 110,
+      "fill": "#f5f7f6",
+      "stroke": "#a7b9b0",
+      "radius": 8
     },
     {
       "id": "ai",
-      "x": 1400,
-      "y": 630,
-      "w": 260,
-      "h": 100,
-      "title": "Proveedor de IA",
-      "lines": [
-        "Intención de búsqueda",
-        "Respaldo convencional"
-      ],
-      "kind": "external"
+      "x": 1840,
+      "y": 1085,
+      "width": 280,
+      "height": 110,
+      "fill": "#f5f7f6",
+      "stroke": "#a7b9b0",
+      "radius": 8
     },
     {
-      "id": "other",
-      "x": 1400,
-      "y": 875,
-      "w": 260,
-      "h": 150,
-      "title": "Mapas y mensajería",
-      "lines": [
-        "Servicios externos",
-        "Geografía y avisos",
-        "Adapter / outbox"
-      ],
-      "kind": "external"
+      "id": "maps",
+      "x": 1840,
+      "y": 1245,
+      "width": 280,
+      "height": 110,
+      "fill": "#f5f7f6",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "database",
+      "x": 420,
+      "y": 1450,
+      "width": 820,
+      "height": 110,
+      "fill": "#e3f0e9",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    }
+  ],
+  "texts": [
+    {
+      "id": "heading",
+      "x": 40,
+      "y": 52,
+      "value": "04  QATU AYACUCHO · ESTILO ARQUITECTÓNICO",
+      "size": 36,
+      "color": "#18352f",
+      "bold": true,
+      "width": 2080
+    },
+    {
+      "id": "subtitle",
+      "x": 40,
+      "y": 91,
+      "value": "Estructura global · arquitectura objetivo con estado de implementación explícito",
+      "size": 23,
+      "color": "#52665f",
+      "bold": false,
+      "width": 2080
+    },
+    {
+      "id": "actor-0-title",
+      "x": 430,
+      "y": 156,
+      "value": "Visitante",
+      "size": 23,
+      "color": "#18352f",
+      "bold": true,
+      "width": 206,
+      "anchor": "middle"
+    },
+    {
+      "id": "actor-1-title",
+      "x": 730,
+      "y": 156,
+      "value": "Cliente",
+      "size": 23,
+      "color": "#18352f",
+      "bold": true,
+      "width": 206,
+      "anchor": "middle"
+    },
+    {
+      "id": "actor-2-title",
+      "x": 1030,
+      "y": 156,
+      "value": "Proveedor",
+      "size": 23,
+      "color": "#18352f",
+      "bold": true,
+      "width": 206,
+      "anchor": "middle"
+    },
+    {
+      "id": "actor-3-title",
+      "x": 1330,
+      "y": 156,
+      "value": "Administrador",
+      "size": 23,
+      "color": "#18352f",
+      "bold": true,
+      "width": 206,
+      "anchor": "middle"
+    },
+    {
+      "id": "web-title",
+      "x": 880,
+      "y": 276,
+      "value": "Aplicación web · Next.js / React / TypeScript",
+      "size": 23,
+      "color": "#18352f",
+      "bold": true,
+      "width": 656,
+      "anchor": "middle"
+    },
+    {
+      "id": "web-line-0",
+      "x": 880,
+      "y": 305,
+      "value": "Navegador + servidor Next.js · interfaz y cliente HTTP",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 656,
+      "anchor": "middle"
+    },
+    {
+      "id": "web-line-1",
+      "x": 880,
+      "y": 332,
+      "value": "Descubrimiento actual: datos sintéticos; usuarios y proveedores: API",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 656,
+      "anchor": "middle"
+    },
+    {
+      "id": "http-label",
+      "x": 905,
+      "y": 391,
+      "value": "HTTP / JSON · /api/v1 · HTTPS en producción",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 770
+    },
+    {
+      "id": "api-title",
+      "x": 60,
+      "y": 453,
+      "value": "API Qatu · NestJS / TypeScript · un proceso y un despliegue backend",
+      "size": 23,
+      "color": "#18352f",
+      "bold": true,
+      "width": 1680
+    },
+    {
+      "id": "cross-cutting-title",
+      "x": 985,
+      "y": 511,
+      "value": "Entrada HTTP y controles transversales",
+      "size": 22,
+      "color": "#18352f",
+      "bold": true,
+      "width": 1466,
+      "anchor": "middle"
+    },
+    {
+      "id": "cross-cutting-line-0",
+      "x": 985,
+      "y": 540,
+      "value": "Sesión JWT / cookie HttpOnly · autorización · validación · errores",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 1466,
+      "anchor": "middle"
+    },
+    {
+      "id": "layer-presentation-0",
+      "x": 76,
+      "y": 620,
+      "value": "1. PRESENTACIÓN",
+      "size": 16,
+      "color": "#18352f",
+      "bold": true,
+      "width": 150
+    },
+    {
+      "id": "layer-presentation-1",
+      "x": 76,
+      "y": 649,
+      "value": "HTTP y DTO",
+      "size": 16,
+      "color": "#18352f",
+      "bold": false,
+      "width": 150
+    },
+    {
+      "id": "layer-presentation-2",
+      "x": 76,
+      "y": 678,
+      "value": "Controladores",
+      "size": 16,
+      "color": "#18352f",
+      "bold": false,
+      "width": 150
+    },
+    {
+      "id": "layer-business-0",
+      "x": 76,
+      "y": 805,
+      "value": "2. NEGOCIO",
+      "size": 16,
+      "color": "#18352f",
+      "bold": true,
+      "width": 150
+    },
+    {
+      "id": "layer-business-1",
+      "x": 76,
+      "y": 834,
+      "value": "Aplicación",
+      "size": 16,
+      "color": "#18352f",
+      "bold": false,
+      "width": 150
+    },
+    {
+      "id": "layer-business-2",
+      "x": 76,
+      "y": 863,
+      "value": "+ Dominio",
+      "size": 16,
+      "color": "#18352f",
+      "bold": false,
+      "width": 150
+    },
+    {
+      "id": "layer-infra-0",
+      "x": 76,
+      "y": 1090,
+      "value": "3. INFRA-",
+      "size": 16,
+      "color": "#18352f",
+      "bold": true,
+      "width": 150
+    },
+    {
+      "id": "layer-infra-1",
+      "x": 76,
+      "y": 1119,
+      "value": "ESTRUCTURA",
+      "size": 16,
+      "color": "#18352f",
+      "bold": false,
+      "width": 150
+    },
+    {
+      "id": "layer-infra-2",
+      "x": 76,
+      "y": 1148,
+      "value": "Repositorios",
+      "size": 16,
+      "color": "#18352f",
+      "bold": false,
+      "width": 150
+    },
+    {
+      "id": "layer-infra-3",
+      "x": 76,
+      "y": 1177,
+      "value": "y adaptadores",
+      "size": 16,
+      "color": "#18352f",
+      "bold": false,
+      "width": 150
+    },
+    {
+      "id": "layer-infra-4",
+      "x": 76,
+      "y": 1206,
+      "value": "por puertos",
+      "size": 16,
+      "color": "#18352f",
+      "bold": false,
+      "width": 150
+    },
+    {
+      "id": "usuarios-name",
+      "x": 355,
+      "y": 619,
+      "value": "Usuarios",
+      "size": 22,
+      "color": "#18352f",
+      "bold": true,
+      "width": 218,
+      "anchor": "middle"
+    },
+    {
+      "id": "usuarios-status",
+      "x": 355,
+      "y": 644,
+      "value": "IMPLEMENTADO",
+      "size": 16,
+      "color": "#155c49",
+      "bold": true,
+      "width": 218,
+      "anchor": "middle"
+    },
+    {
+      "id": "usuarios-controller-title",
+      "x": 355,
+      "y": 696,
+      "value": "UsuariosController",
+      "size": 17,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "usuarios-application-title",
+      "x": 355,
+      "y": 831,
+      "value": "Casos de uso",
+      "size": 20,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "usuarios-application-line-0",
+      "x": 355,
+      "y": 860,
+      "value": "Registro · login",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "usuarios-application-line-1",
+      "x": 355,
+      "y": 887,
+      "value": "Perfil · administración",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "usuarios-domain-title",
+      "x": 355,
+      "y": 966,
+      "value": "Reglas y contratos",
+      "size": 18,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "usuarios-domain-line-0",
+      "x": 355,
+      "y": 995,
+      "value": "Cuenta y roles",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "usuarios-domain-line-1",
+      "x": 355,
+      "y": 1017,
+      "value": "Sesiones y permisos",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "usuarios-repository-title",
+      "x": 355,
+      "y": 1121,
+      "value": "Persistencia / I/O",
+      "size": 19,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "usuarios-repository-line-0",
+      "x": 355,
+      "y": 1150,
+      "value": "PostgresUsuarios",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "usuarios-repository-line-1",
+      "x": 355,
+      "y": 1177,
+      "value": "scrypt / JWT",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "proveedores-name",
+      "x": 600,
+      "y": 619,
+      "value": "Proveedores",
+      "size": 22,
+      "color": "#18352f",
+      "bold": true,
+      "width": 218,
+      "anchor": "middle"
+    },
+    {
+      "id": "proveedores-status",
+      "x": 600,
+      "y": 644,
+      "value": "IMPLEMENTADO",
+      "size": 16,
+      "color": "#155c49",
+      "bold": true,
+      "width": 218,
+      "anchor": "middle"
+    },
+    {
+      "id": "proveedores-controller-title",
+      "x": 600,
+      "y": 696,
+      "value": "ProveedoresController",
+      "size": 17,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "proveedores-application-title",
+      "x": 600,
+      "y": 831,
+      "value": "Casos de uso",
+      "size": 20,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "proveedores-application-line-0",
+      "x": 600,
+      "y": 860,
+      "value": "Perfil y zona",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "proveedores-application-line-1",
+      "x": 600,
+      "y": 887,
+      "value": "Verificación documental",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "proveedores-domain-title",
+      "x": 600,
+      "y": 966,
+      "value": "Reglas y contratos",
+      "size": 18,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "proveedores-domain-line-0",
+      "x": 600,
+      "y": 995,
+      "value": "Proveedor",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "proveedores-domain-line-1",
+      "x": 600,
+      "y": 1017,
+      "value": "Reglas de verificación",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "proveedores-repository-title",
+      "x": 600,
+      "y": 1121,
+      "value": "Persistencia / I/O",
+      "size": 19,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "proveedores-repository-line-0",
+      "x": 600,
+      "y": 1150,
+      "value": "PostgresProveedores",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "proveedores-repository-line-1",
+      "x": 600,
+      "y": 1177,
+      "value": "Documentos cifrados",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "catalogo-name",
+      "x": 845,
+      "y": 619,
+      "value": "Catálogo",
+      "size": 22,
+      "color": "#18352f",
+      "bold": true,
+      "width": 218,
+      "anchor": "middle"
+    },
+    {
+      "id": "catalogo-status",
+      "x": 845,
+      "y": 644,
+      "value": "DISEÑADO · PENDIENTE",
+      "size": 16,
+      "color": "#52665f",
+      "bold": true,
+      "width": 218,
+      "anchor": "middle"
+    },
+    {
+      "id": "catalogo-controller-title",
+      "x": 845,
+      "y": 696,
+      "value": "Publicaciones / filtros",
+      "size": 18,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "catalogo-application-title",
+      "x": 845,
+      "y": 831,
+      "value": "Casos de uso",
+      "size": 20,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "catalogo-application-line-0",
+      "x": 845,
+      "y": 860,
+      "value": "Publicar y consultar",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "catalogo-application-line-1",
+      "x": 845,
+      "y": 887,
+      "value": "Herramientas / oficios",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "catalogo-domain-title",
+      "x": 845,
+      "y": 966,
+      "value": "Reglas y contratos",
+      "size": 18,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "catalogo-domain-line-0",
+      "x": 845,
+      "y": 995,
+      "value": "Publicación / recurso",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "catalogo-domain-line-1",
+      "x": 845,
+      "y": 1017,
+      "value": "Tarifas y categorías",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "catalogo-repository-title",
+      "x": 845,
+      "y": 1121,
+      "value": "Persistencia / I/O",
+      "size": 19,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "catalogo-repository-line-0",
+      "x": 845,
+      "y": 1150,
+      "value": "Repositorio propio",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "catalogo-repository-line-1",
+      "x": 845,
+      "y": 1177,
+      "value": "Fotos controladas",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "reservas-name",
+      "x": 1090,
+      "y": 619,
+      "value": "Reservas",
+      "size": 22,
+      "color": "#18352f",
+      "bold": true,
+      "width": 218,
+      "anchor": "middle"
+    },
+    {
+      "id": "reservas-status",
+      "x": 1090,
+      "y": 644,
+      "value": "DISEÑADO · PENDIENTE",
+      "size": 16,
+      "color": "#52665f",
+      "bold": true,
+      "width": 218,
+      "anchor": "middle"
+    },
+    {
+      "id": "reservas-controller-title",
+      "x": 1090,
+      "y": 696,
+      "value": "Solicitudes / pagos",
+      "size": 18,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "reservas-application-title",
+      "x": 1090,
+      "y": 831,
+      "value": "Casos de uso",
+      "size": 20,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "reservas-application-line-0",
+      "x": 1090,
+      "y": 860,
+      "value": "Aceptar / cancelar",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "reservas-application-line-1",
+      "x": 1090,
+      "y": 887,
+      "value": "Iniciar / confirmar pago",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "reservas-domain-title",
+      "x": 1090,
+      "y": 966,
+      "value": "Reglas y contratos",
+      "size": 18,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "reservas-domain-line-0",
+      "x": 1090,
+      "y": 995,
+      "value": "Reserva y bloqueo",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "reservas-domain-line-1",
+      "x": 1090,
+      "y": 1017,
+      "value": "Estados e idempotencia",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "reservas-repository-title",
+      "x": 1090,
+      "y": 1121,
+      "value": "Persistencia / I/O",
+      "size": 19,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "reservas-repository-line-0",
+      "x": 1090,
+      "y": 1150,
+      "value": "Repositorio propio",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "reservas-repository-line-1",
+      "x": 1090,
+      "y": 1177,
+      "value": "Adaptador de pagos",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "resenas-name",
+      "x": 1335,
+      "y": 619,
+      "value": "Reseñas y confianza",
+      "size": 22,
+      "color": "#18352f",
+      "bold": true,
+      "width": 218,
+      "anchor": "middle"
+    },
+    {
+      "id": "resenas-status",
+      "x": 1335,
+      "y": 644,
+      "value": "DISEÑADO · PENDIENTE",
+      "size": 16,
+      "color": "#52665f",
+      "bold": true,
+      "width": 218,
+      "anchor": "middle"
+    },
+    {
+      "id": "resenas-controller-title",
+      "x": 1335,
+      "y": 696,
+      "value": "Reseñas / casos",
+      "size": 18,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "resenas-application-title",
+      "x": 1335,
+      "y": 831,
+      "value": "Casos de uso",
+      "size": 20,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "resenas-application-line-0",
+      "x": 1335,
+      "y": 860,
+      "value": "Registrar reseña",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "resenas-application-line-1",
+      "x": 1335,
+      "y": 887,
+      "value": "Gestionar evidencias",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "resenas-domain-title",
+      "x": 1335,
+      "y": 966,
+      "value": "Reglas y contratos",
+      "size": 18,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "resenas-domain-line-0",
+      "x": 1335,
+      "y": 995,
+      "value": "Confianza y reseñas",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "resenas-domain-line-1",
+      "x": 1335,
+      "y": 1017,
+      "value": "Garantía documental",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "resenas-repository-title",
+      "x": 1335,
+      "y": 1121,
+      "value": "Persistencia / I/O",
+      "size": 19,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "resenas-repository-line-0",
+      "x": 1335,
+      "y": 1150,
+      "value": "Repositorio propio",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "resenas-repository-line-1",
+      "x": 1335,
+      "y": 1177,
+      "value": "Evidencias privadas",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "busqueda-name",
+      "x": 1580,
+      "y": 619,
+      "value": "Búsqueda",
+      "size": 22,
+      "color": "#18352f",
+      "bold": true,
+      "width": 218,
+      "anchor": "middle"
+    },
+    {
+      "id": "busqueda-status",
+      "x": 1580,
+      "y": 644,
+      "value": "DISEÑADO · PENDIENTE",
+      "size": 16,
+      "color": "#52665f",
+      "bold": true,
+      "width": 218,
+      "anchor": "middle"
+    },
+    {
+      "id": "busqueda-controller-title",
+      "x": 1580,
+      "y": 696,
+      "value": "Intención / filtros",
+      "size": 18,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "busqueda-application-title",
+      "x": 1580,
+      "y": 831,
+      "value": "Casos de uso",
+      "size": 20,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "busqueda-application-line-0",
+      "x": 1580,
+      "y": 860,
+      "value": "Interpretar consulta",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "busqueda-application-line-1",
+      "x": 1580,
+      "y": 887,
+      "value": "Validar filtros / fallback",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "busqueda-domain-title",
+      "x": 1580,
+      "y": 966,
+      "value": "Reglas y contratos",
+      "size": 18,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "busqueda-domain-line-0",
+      "x": 1580,
+      "y": 995,
+      "value": "Criterios validados",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "busqueda-domain-line-1",
+      "x": 1580,
+      "y": 1017,
+      "value": "Sin escrituras por IA",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "busqueda-repository-title",
+      "x": 1580,
+      "y": 1121,
+      "value": "Persistencia / I/O",
+      "size": 19,
+      "color": "#18352f",
+      "bold": true,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "busqueda-repository-line-0",
+      "x": 1580,
+      "y": 1150,
+      "value": "Cuotas y métricas",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "busqueda-repository-line-1",
+      "x": 1580,
+      "y": 1177,
+      "value": "Adaptador de IA",
+      "size": 17,
+      "color": "#18352f",
+      "bold": false,
+      "width": 186,
+      "anchor": "middle"
+    },
+    {
+      "id": "module-io-title",
+      "x": 985,
+      "y": 1266,
+      "value": "Repositorios PostgreSQL y adaptadores por módulo · driver pg / contratos externos",
+      "size": 23,
+      "color": "#18352f",
+      "bold": true,
+      "width": 1466,
+      "anchor": "middle"
+    },
+    {
+      "id": "module-io-line-0",
+      "x": 985,
+      "y": 1295,
+      "value": "Una misma base de datos; cada módulo es propietario de sus tablas y de sus integraciones.",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 1466,
+      "anchor": "middle"
+    },
+    {
+      "id": "scope-title",
+      "x": 1840,
+      "y": 453,
+      "value": "Cómo leer esta vista",
+      "size": 23,
+      "color": "#18352f",
+      "bold": true,
+      "width": 260
+    },
+    {
+      "id": "scope-0",
+      "x": 1840,
+      "y": 490,
+      "value": "6 módulos de negocio",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 260
+    },
+    {
+      "id": "scope-1",
+      "x": 1840,
+      "y": 520,
+      "value": "2 implementados en API",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 260
+    },
+    {
+      "id": "scope-2",
+      "x": 1840,
+      "y": 550,
+      "value": "4 pendientes de construir",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 260
+    },
+    {
+      "id": "scope-3",
+      "x": 1840,
+      "y": 580,
+      "value": "",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 260
+    },
+    {
+      "id": "scope-4",
+      "x": 1840,
+      "y": 610,
+      "value": "Pagos pertenece a Reservas.",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 260
+    },
+    {
+      "id": "scope-5",
+      "x": 1840,
+      "y": 640,
+      "value": "No son microservicios.",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 260
+    },
+    {
+      "id": "scope-6",
+      "x": 1840,
+      "y": 670,
+      "value": "Comparten proceso y fallos.",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 260
+    },
+    {
+      "id": "scope-7",
+      "x": 1840,
+      "y": 700,
+      "value": "",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 260
+    },
+    {
+      "id": "scope-8",
+      "x": 1840,
+      "y": 730,
+      "value": "Redis no está implementado.",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 260
+    },
+    {
+      "id": "scope-9",
+      "x": 1840,
+      "y": 760,
+      "value": "Mapas / IA / pagos externos:",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 260
+    },
+    {
+      "id": "scope-10",
+      "x": 1840,
+      "y": 790,
+      "value": "integraciones pendientes.",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 260
+    },
+    {
+      "id": "payments-title",
+      "x": 1980,
+      "y": 956,
+      "value": "Pasarela de pagos",
+      "size": 22,
+      "color": "#18352f",
+      "bold": true,
+      "width": 256,
+      "anchor": "middle"
+    },
+    {
+      "id": "payments-line-0",
+      "x": 1980,
+      "y": 985,
+      "value": "Culqi: candidata",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 256,
+      "anchor": "middle"
+    },
+    {
+      "id": "payments-line-1",
+      "x": 1980,
+      "y": 1012,
+      "value": "HTTPS · módulo Reservas",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 256,
+      "anchor": "middle"
+    },
+    {
+      "id": "ai-title",
+      "x": 1980,
+      "y": 1116,
+      "value": "Proveedor de IA",
+      "size": 22,
+      "color": "#18352f",
+      "bold": true,
+      "width": 256,
+      "anchor": "middle"
+    },
+    {
+      "id": "ai-line-0",
+      "x": 1980,
+      "y": 1145,
+      "value": "Modelo por seleccionar",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 256,
+      "anchor": "middle"
+    },
+    {
+      "id": "ai-line-1",
+      "x": 1980,
+      "y": 1172,
+      "value": "HTTPS · módulo Búsqueda",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 256,
+      "anchor": "middle"
+    },
+    {
+      "id": "maps-title",
+      "x": 1980,
+      "y": 1276,
+      "value": "Mapas / mensajería",
+      "size": 21,
+      "color": "#18352f",
+      "bold": true,
+      "width": 256,
+      "anchor": "middle"
+    },
+    {
+      "id": "maps-line-0",
+      "x": 1980,
+      "y": 1305,
+      "value": "Proveedores por definir",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 256,
+      "anchor": "middle"
+    },
+    {
+      "id": "maps-line-1",
+      "x": 1980,
+      "y": 1332,
+      "value": "Zona manual disponible",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 256,
+      "anchor": "middle"
+    },
+    {
+      "id": "sql-label",
+      "x": 855,
+      "y": 1400,
+      "value": "SQL · repositorios propios",
+      "size": 21,
+      "color": "#18352f",
+      "bold": false,
+      "width": 600
+    },
+    {
+      "id": "database-title",
+      "x": 830,
+      "y": 1481,
+      "value": "PostgreSQL 17 + PostGIS 3.5",
+      "size": 23,
+      "color": "#18352f",
+      "bold": true,
+      "width": 796,
+      "anchor": "middle"
+    },
+    {
+      "id": "database-line-0",
+      "x": 830,
+      "y": 1510,
+      "value": "Docker local · volumen persistente · sin exposición pública en producción",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 796,
+      "anchor": "middle"
+    },
+    {
+      "id": "database-line-1",
+      "x": 830,
+      "y": 1537,
+      "value": "Actual: cuentas, sesiones, proveedores y documentos cifrados",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 796,
+      "anchor": "middle"
+    },
+    {
+      "id": "legend-title",
+      "x": 60,
+      "y": 1633,
+      "value": "Leyenda y alcance",
+      "size": 23,
+      "color": "#18352f",
+      "bold": true,
+      "width": 1000
+    },
+    {
+      "id": "legend-1",
+      "x": 60,
+      "y": 1664,
+      "value": "Flecha continua: ejecución interna / conexión actual; discontinua: integración futura.",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 1000
+    },
+    {
+      "id": "legend-2",
+      "x": 60,
+      "y": 1694,
+      "value": "Los estados de cada columna distinguen implementación actual y arquitectura objetivo.",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 1000
+    },
+    {
+      "id": "rules-title",
+      "x": 1130,
+      "y": 1633,
+      "value": "Límite de esta vista",
+      "size": 23,
+      "color": "#18352f",
+      "bold": true,
+      "width": 970
+    },
+    {
+      "id": "rules-1",
+      "x": 1130,
+      "y": 1664,
+      "value": "Entre módulos: contratos públicos; nunca repositorios ni consultas a tablas ajenas.",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 970
+    },
+    {
+      "id": "rules-2",
+      "x": 1130,
+      "y": 1694,
+      "value": "Negocio = Aplicación + Dominio; los imports se explican en Clean Architecture.",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 970
     }
   ],
   "edges": [
     {
+      "id": "actor-link-0",
       "points": [
         [
-          810,
+          430,
+          183
+        ],
+        [
+          430,
+          210
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": false
+    },
+    {
+      "id": "actor-link-1",
+      "points": [
+        [
+          730,
+          183
+        ],
+        [
+          730,
+          210
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": false
+    },
+    {
+      "id": "actor-link-2",
+      "points": [
+        [
+          1030,
+          183
+        ],
+        [
+          1030,
+          210
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": false
+    },
+    {
+      "id": "actor-link-3",
+      "points": [
+        [
+          1330,
+          183
+        ],
+        [
+          1330,
+          210
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": false
+    },
+    {
+      "id": "actor-bus",
+      "points": [
+        [
+          430,
+          210
+        ],
+        [
+          1330,
+          210
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": false
+    },
+    {
+      "id": "actors-web",
+      "points": [
+        [
+          880,
+          210
+        ],
+        [
+          880,
           245
-        ],
-        [
-          810,
-          415
         ]
       ],
-      "label": "HTTPS / JSON · /api/v1",
-      "lx": 810,
-      "ly": 290,
-      "style": "solid"
+      "color": "#60736c",
+      "arrow": true
     },
     {
+      "id": "web-api",
       "points": [
         [
-          700,
-          510
+          880,
+          355
         ],
         [
-          700,
-          565
-        ],
-        [
-          207,
-          565
-        ],
-        [
-          207,
-          630
+          880,
+          480
         ]
       ],
-      "label": "2. Negocio: módulos y casos de uso",
-      "lx": 700,
-      "ly": 595,
-      "style": "solid"
+      "color": "#60736c",
+      "arrow": true
     },
     {
+      "id": "usuarios-entry",
       "points": [
         [
-          402,
-          565
+          465,
+          550
         ],
         [
-          402,
-          630
+          465,
+          655
+        ],
+        [
+          445,
+          655
+        ],
+        [
+          445,
+          665
         ]
       ],
-      "label": "",
-      "lx": 0,
-      "ly": 0,
-      "style": "solid"
+      "color": "#60736c",
+      "arrow": true
     },
     {
+      "id": "usuarios-use",
       "points": [
         [
-          597,
-          565
+          355,
+          729
         ],
         [
-          597,
-          630
+          355,
+          800
         ]
       ],
-      "label": "",
-      "lx": 0,
-      "ly": 0,
-      "style": "solid"
+      "color": "#60736c",
+      "arrow": true
     },
     {
+      "id": "usuarios-rules",
       "points": [
         [
-          792,
-          565
+          355,
+          900
         ],
         [
-          792,
-          630
+          355,
+          935
         ]
       ],
-      "label": "",
-      "lx": 0,
-      "ly": 0,
-      "style": "solid"
+      "color": "#60736c",
+      "arrow": true
     },
     {
+      "id": "usuarios-io",
       "points": [
         [
-          987,
-          565
+          355,
+          1020
         ],
         [
-          987,
-          630
+          355,
+          1090
         ]
       ],
-      "label": "",
-      "lx": 0,
-      "ly": 0,
-      "style": "solid"
+      "color": "#60736c",
+      "arrow": true
     },
     {
+      "id": "usuarios-storage",
       "points": [
         [
-          1182,
-          565
-        ],
-        [
-          1182,
-          630
-        ]
-      ],
-      "label": "",
-      "lx": 0,
-      "ly": 0,
-      "style": "solid"
-    },
-    {
-      "points": [
-        [
-          207,
-          750
-        ],
-        [
-          207,
-          815
-        ],
-        [
-          700,
-          815
-        ],
-        [
-          700,
-          875
-        ]
-      ],
-      "label": "Acceso mediante puertos",
-      "lx": 700,
-      "ly": 840,
-      "style": "solid"
-    },
-    {
-      "points": [
-        [
-          402,
-          750
-        ],
-        [
-          402,
-          815
-        ]
-      ],
-      "label": "",
-      "lx": 0,
-      "ly": 0,
-      "style": "solid"
-    },
-    {
-      "points": [
-        [
-          597,
-          750
-        ],
-        [
-          597,
-          815
-        ]
-      ],
-      "label": "",
-      "lx": 0,
-      "ly": 0,
-      "style": "solid"
-    },
-    {
-      "points": [
-        [
-          792,
-          750
-        ],
-        [
-          792,
-          815
-        ]
-      ],
-      "label": "",
-      "lx": 0,
-      "ly": 0,
-      "style": "solid"
-    },
-    {
-      "points": [
-        [
-          987,
-          750
-        ],
-        [
-          987,
-          815
-        ]
-      ],
-      "label": "",
-      "lx": 0,
-      "ly": 0,
-      "style": "solid"
-    },
-    {
-      "points": [
-        [
-          1182,
-          750
-        ],
-        [
-          1182,
-          815
-        ]
-      ],
-      "label": "",
-      "lx": 0,
-      "ly": 0,
-      "style": "solid"
-    },
-    {
-      "points": [
-        [
-          1280,
-          905
-        ],
-        [
-          1350,
-          905
-        ],
-        [
-          1350,
-          465
-        ],
-        [
-          1400,
-          465
-        ]
-      ],
-      "label": "Pagos [HTTPS]",
-      "lx": 1350,
-      "ly": 560,
-      "style": "solid"
-    },
-    {
-      "points": [
-        [
-          1280,
-          930
-        ],
-        [
-          1375,
-          930
-        ],
-        [
-          1375,
-          680
-        ],
-        [
-          1400,
-          680
-        ]
-      ],
-      "label": "IA [HTTPS]",
-      "lx": 1375,
-      "ly": 800,
-      "style": "solid"
-    },
-    {
-      "points": [
-        [
-          1280,
-          955
-        ],
-        [
-          1400,
-          955
-        ]
-      ],
-      "label": "Adapters",
-      "lx": 1340,
-      "ly": 940,
-      "style": "solid"
-    },
-    {
-      "points": [
-        [
-          700,
-          1130
-        ],
-        [
-          700,
+          355,
           1190
         ],
         [
-          300,
-          1190
-        ],
-        [
-          300,
-          1240
+          355,
+          1235
         ]
       ],
-      "label": "SQL por módulo",
-      "lx": 450,
-      "ly": 1176,
-      "style": "solid"
+      "color": "#60736c",
+      "arrow": true
     },
     {
+      "id": "proveedores-entry",
       "points": [
         [
-          700,
-          1190
+          710,
+          550
         ],
         [
           710,
-          1240
+          655
+        ],
+        [
+          690,
+          655
+        ],
+        [
+          690,
+          665
         ]
       ],
-      "label": "I/O autorizado",
-      "lx": 710,
-      "ly": 1225,
-      "style": "solid"
+      "color": "#60736c",
+      "arrow": true
     },
     {
+      "id": "proveedores-use",
       "points": [
         [
-          700,
+          600,
+          729
+        ],
+        [
+          600,
+          800
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true
+    },
+    {
+      "id": "proveedores-rules",
+      "points": [
+        [
+          600,
+          900
+        ],
+        [
+          600,
+          935
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true
+    },
+    {
+      "id": "proveedores-io",
+      "points": [
+        [
+          600,
+          1020
+        ],
+        [
+          600,
+          1090
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true
+    },
+    {
+      "id": "proveedores-storage",
+      "points": [
+        [
+          600,
           1190
         ],
         [
-          1110,
+          600,
+          1235
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true
+    },
+    {
+      "id": "catalogo-entry",
+      "points": [
+        [
+          955,
+          550
+        ],
+        [
+          955,
+          655
+        ],
+        [
+          935,
+          655
+        ],
+        [
+          935,
+          665
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true
+    },
+    {
+      "id": "catalogo-use",
+      "points": [
+        [
+          845,
+          729
+        ],
+        [
+          845,
+          800
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true
+    },
+    {
+      "id": "catalogo-rules",
+      "points": [
+        [
+          845,
+          900
+        ],
+        [
+          845,
+          935
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true
+    },
+    {
+      "id": "catalogo-io",
+      "points": [
+        [
+          845,
+          1020
+        ],
+        [
+          845,
+          1090
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true
+    },
+    {
+      "id": "catalogo-storage",
+      "points": [
+        [
+          845,
           1190
         ],
         [
-          1110,
-          1240
+          845,
+          1235
         ]
       ],
-      "label": "Opcional",
-      "lx": 1080,
-      "ly": 1176,
-      "style": "dashed"
+      "color": "#60736c",
+      "arrow": true
     },
     {
+      "id": "reservas-entry",
       "points": [
         [
-          207,
-          565
+          1200,
+          550
         ],
         [
-          1182,
-          565
+          1200,
+          655
+        ],
+        [
+          1180,
+          655
+        ],
+        [
+          1180,
+          665
         ]
       ],
-      "label": "",
-      "lx": 0,
-      "ly": 0,
-      "style": "solid"
+      "color": "#60736c",
+      "arrow": true
     },
     {
+      "id": "reservas-use",
       "points": [
         [
-          207,
-          815
+          1090,
+          729
         ],
         [
-          1182,
-          815
+          1090,
+          800
         ]
       ],
-      "label": "",
-      "lx": 0,
-      "ly": 0,
-      "style": "solid"
-    }
-  ],
-  "boundaries": [
+      "color": "#60736c",
+      "arrow": true
+    },
     {
-      "x": 80,
-      "y": 345,
-      "w": 1240,
-      "h": 820,
-      "title": "API Qatu · NestJS · Seis módulos desplegados juntos"
+      "id": "reservas-rules",
+      "points": [
+        [
+          1090,
+          900
+        ],
+        [
+          1090,
+          935
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true
+    },
+    {
+      "id": "reservas-io",
+      "points": [
+        [
+          1090,
+          1020
+        ],
+        [
+          1090,
+          1090
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true
+    },
+    {
+      "id": "reservas-storage",
+      "points": [
+        [
+          1090,
+          1190
+        ],
+        [
+          1090,
+          1235
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true
+    },
+    {
+      "id": "resenas-entry",
+      "points": [
+        [
+          1445,
+          550
+        ],
+        [
+          1445,
+          655
+        ],
+        [
+          1425,
+          655
+        ],
+        [
+          1425,
+          665
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true
+    },
+    {
+      "id": "resenas-use",
+      "points": [
+        [
+          1335,
+          729
+        ],
+        [
+          1335,
+          800
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true
+    },
+    {
+      "id": "resenas-rules",
+      "points": [
+        [
+          1335,
+          900
+        ],
+        [
+          1335,
+          935
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true
+    },
+    {
+      "id": "resenas-io",
+      "points": [
+        [
+          1335,
+          1020
+        ],
+        [
+          1335,
+          1090
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true
+    },
+    {
+      "id": "resenas-storage",
+      "points": [
+        [
+          1335,
+          1190
+        ],
+        [
+          1335,
+          1235
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true
+    },
+    {
+      "id": "busqueda-entry",
+      "points": [
+        [
+          1690,
+          550
+        ],
+        [
+          1690,
+          655
+        ],
+        [
+          1670,
+          655
+        ],
+        [
+          1670,
+          665
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true
+    },
+    {
+      "id": "busqueda-use",
+      "points": [
+        [
+          1580,
+          729
+        ],
+        [
+          1580,
+          800
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true
+    },
+    {
+      "id": "busqueda-rules",
+      "points": [
+        [
+          1580,
+          900
+        ],
+        [
+          1580,
+          935
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true
+    },
+    {
+      "id": "busqueda-io",
+      "points": [
+        [
+          1580,
+          1020
+        ],
+        [
+          1580,
+          1090
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true
+    },
+    {
+      "id": "busqueda-storage",
+      "points": [
+        [
+          1580,
+          1190
+        ],
+        [
+          1580,
+          1235
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true
+    },
+    {
+      "id": "payments-call",
+      "points": [
+        [
+          1730,
+          1255
+        ],
+        [
+          1780,
+          1255
+        ],
+        [
+          1780,
+          980
+        ],
+        [
+          1840,
+          980
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true,
+      "dashed": true
+    },
+    {
+      "id": "ai-call",
+      "points": [
+        [
+          1730,
+          1280
+        ],
+        [
+          1800,
+          1280
+        ],
+        [
+          1800,
+          1140
+        ],
+        [
+          1840,
+          1140
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true,
+      "dashed": true
+    },
+    {
+      "id": "maps-call",
+      "points": [
+        [
+          1730,
+          1305
+        ],
+        [
+          1840,
+          1305
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true,
+      "dashed": true
+    },
+    {
+      "id": "database-call",
+      "points": [
+        [
+          830,
+          1320
+        ],
+        [
+          830,
+          1450
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true
     }
-  ],
-  "notes": [
-    "Las flechas de esta vista son llamadas en ejecución; las reglas de imports se detallan en Clean Architecture.",
-    "Los seis módulos comparten proceso y recursos. Modularidad no equivale a aislamiento de fallos.",
-    "Despliegue inicial: web + API + PostgreSQL en un VPS con Docker Compose; no requiere microservicios."
   ]
 }

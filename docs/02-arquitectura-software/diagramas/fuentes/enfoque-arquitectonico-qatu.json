@@ -1,262 +1,1386 @@
 {
   "slug": "enfoque-arquitectonico-qatu",
-  "title": "[Enfoque arquitectónico] Qatu — Clean Architecture",
-  "subtitle": "Organización interna por módulo · Flechas continuas = dependencias de código",
-  "width": 1700,
-  "height": 1370,
-  "nodes": [
+  "title": "Qatu Ayacucho — enfoque Clean Architecture",
+  "subtitle": "Dependencias internas ilustradas con el módulo Usuarios implementado",
+  "width": 2160,
+  "height": 1530,
+  "backgrounds": [
+    {
+      "id": "api",
+      "x": 40,
+      "y": 130,
+      "width": 1750,
+      "height": 1070,
+      "fill": "#ffffff",
+      "stroke": "#155c49",
+      "radius": 8,
+      "dashed": true
+    },
+    {
+      "id": "frameworks",
+      "x": 70,
+      "y": 195,
+      "width": 1690,
+      "height": 975,
+      "fill": "#f5f7f6",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
     {
       "id": "presentation",
-      "x": 120,
-      "y": 250,
-      "w": 400,
-      "h": 165,
-      "title": "PRESENTACIÓN",
-      "lines": [
-        "Controladores, DTO y guards",
-        "ReservasController",
-        "BusquedaController"
-      ],
-      "kind": "component"
+      "x": 100,
+      "y": 300,
+      "width": 340,
+      "height": 610,
+      "fill": "#edf4ff",
+      "stroke": "#a7b9b0",
+      "radius": 8
     },
     {
       "id": "application",
-      "x": 650,
-      "y": 250,
-      "w": 400,
-      "h": 165,
-      "title": "APLICACIÓN",
-      "lines": [
-        "Casos de uso y coordinación",
-        "AceptarReserva · ConfirmarPago",
-        "BuscarEnLenguajeNatural"
-      ],
-      "kind": "component"
-    },
-    {
-      "id": "composition",
-      "x": 1180,
-      "y": 250,
-      "w": 400,
-      "h": 165,
-      "title": "COMPOSICIÓN",
-      "lines": [
-        "NestJS module.ts y tokens",
-        "Selecciona e inyecta adapters",
-        "Conecta todas las capas"
-      ],
-      "kind": "container"
+      "x": 490,
+      "y": 260,
+      "width": 810,
+      "height": 720,
+      "fill": "#eef7eb",
+      "stroke": "#a7b9b0",
+      "radius": 8
     },
     {
       "id": "domain",
-      "x": 580,
-      "y": 575,
-      "w": 540,
-      "h": 255,
-      "title": "DOMINIO Y PUERTOS",
-      "lines": [
-        "Reserva · RangoFechas · Dinero",
-        "IntentoPago · CriteriosBusqueda",
-        "RepositorioReservas · ProcesadorPagos",
-        "InterpreteIntencion · Reloj",
-        "Reglas sin ORM, framework ni SDK"
-      ],
-      "kind": "domain"
+      "x": 520,
+      "y": 490,
+      "width": 750,
+      "height": 455,
+      "fill": "#fff7df",
+      "stroke": "#c5a13d",
+      "radius": 8
     },
     {
-      "id": "repos",
+      "id": "infrastructure",
+      "x": 1340,
+      "y": 300,
+      "width": 390,
+      "height": 610,
+      "fill": "#f4eefb",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "actual-scope",
+      "x": 1830,
+      "y": 130,
+      "width": 290,
+      "height": 340,
+      "fill": "#f5f7f6",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "local-libraries",
+      "x": 1830,
+      "y": 790,
+      "width": 290,
+      "height": 270,
+      "fill": "#f5f7f6",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "legend",
+      "x": 40,
+      "y": 1240,
+      "width": 650,
+      "height": 250,
+      "fill": "#f5f7f6",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "rule",
+      "x": 720,
+      "y": 1240,
+      "width": 700,
+      "height": 250,
+      "fill": "#f5f7f6",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "execution",
+      "x": 1450,
+      "y": 1240,
+      "width": 670,
+      "height": 250,
+      "fill": "#f5f7f6",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    }
+  ],
+  "boxes": [
+    {
+      "id": "controller",
       "x": 120,
-      "y": 1000,
-      "w": 400,
-      "h": 120,
-      "title": "INFRAESTRUCTURA: datos",
-      "lines": [
-        "PostgresReservasRepository",
-        "Transacciones y exclusión de fechas"
-      ],
-      "kind": "support"
+      "y": 400,
+      "width": 300,
+      "height": 145,
+      "fill": "#ffffff",
+      "stroke": "#a7b9b0",
+      "radius": 8
     },
     {
-      "id": "payment",
-      "x": 650,
-      "y": 1000,
-      "w": 400,
-      "h": 120,
-      "title": "INFRAESTRUCTURA: pagos",
-      "lines": [
-        "CulqiPagoAdapter",
-        "Verificación y conciliación"
-      ],
-      "kind": "support"
+      "id": "usecases",
+      "x": 550,
+      "y": 330,
+      "width": 690,
+      "height": 100,
+      "fill": "#ffffff",
+      "stroke": "#a7b9b0",
+      "radius": 8
     },
     {
-      "id": "model",
-      "x": 1180,
-      "y": 1000,
-      "w": 400,
-      "h": 120,
-      "title": "INFRAESTRUCTURA: IA",
-      "lines": [
-        "ModeloLenguajeAdapter",
-        "Timeout, cuota y validación"
-      ],
-      "kind": "support"
+      "id": "user-model",
+      "x": 550,
+      "y": 595,
+      "width": 310,
+      "height": 95,
+      "fill": "#fffdf5",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "validation",
+      "x": 550,
+      "y": 715,
+      "width": 310,
+      "height": 125,
+      "fill": "#fffdf5",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "repo-port",
+      "x": 900,
+      "y": 595,
+      "width": 340,
+      "height": 85,
+      "fill": "#fffdf5",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "hash-port",
+      "x": 900,
+      "y": 705,
+      "width": 340,
+      "height": 85,
+      "fill": "#fffdf5",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "token-port",
+      "x": 900,
+      "y": 815,
+      "width": 340,
+      "height": 85,
+      "fill": "#fffdf5",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "postgres-adapter",
+      "x": 1370,
+      "y": 595,
+      "width": 330,
+      "height": 85,
+      "fill": "#ffffff",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "hash-adapter",
+      "x": 1370,
+      "y": 705,
+      "width": 330,
+      "height": 85,
+      "fill": "#ffffff",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "token-adapter",
+      "x": 1370,
+      "y": 815,
+      "width": 330,
+      "height": 85,
+      "fill": "#ffffff",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "composition",
+      "x": 100,
+      "y": 1020,
+      "width": 1630,
+      "height": 115,
+      "fill": "#e3eee9",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    },
+    {
+      "id": "postgres",
+      "x": 1840,
+      "y": 575,
+      "width": 280,
+      "height": 130,
+      "fill": "#e3f0e9",
+      "stroke": "#a7b9b0",
+      "radius": 8
+    }
+  ],
+  "texts": [
+    {
+      "id": "heading",
+      "x": 40,
+      "y": 52,
+      "value": "05  QATU AYACUCHO · CLEAN ARCHITECTURE",
+      "size": 36,
+      "color": "#18352f",
+      "bold": true,
+      "width": 2080
+    },
+    {
+      "id": "subtitle",
+      "x": 40,
+      "y": 91,
+      "value": "Dependencias de código hacia el núcleo · ejemplo real: backend/src/modules/usuarios",
+      "size": 23,
+      "color": "#52665f",
+      "bold": false,
+      "width": 2080
+    },
+    {
+      "id": "api-title",
+      "x": 60,
+      "y": 163,
+      "value": "API NestJS · módulo Usuarios · ejemplo implementado, no código hipotético",
+      "size": 23,
+      "color": "#18352f",
+      "bold": true,
+      "width": 1710
+    },
+    {
+      "id": "frameworks-title",
+      "x": 90,
+      "y": 228,
+      "value": "ADAPTADORES Y FRAMEWORKS · HTTP / NestJS / pg / JWT / node:crypto",
+      "size": 23,
+      "color": "#18352f",
+      "bold": true,
+      "width": 1650
+    },
+    {
+      "id": "presentation-title",
+      "x": 120,
+      "y": 333,
+      "value": "PRESENTACIÓN",
+      "size": 23,
+      "color": "#18352f",
+      "bold": true,
+      "width": 300
+    },
+    {
+      "id": "presentation-path",
+      "x": 120,
+      "y": 366,
+      "value": "presentacion/",
+      "size": 20,
+      "color": "#245b91",
+      "bold": false,
+      "width": 300
+    },
+    {
+      "id": "controller-title",
+      "x": 270,
+      "y": 431,
+      "value": "UsuariosController",
+      "size": 24,
+      "color": "#18352f",
+      "bold": true,
+      "width": 276,
+      "anchor": "middle"
+    },
+    {
+      "id": "controller-line-0",
+      "x": 270,
+      "y": 460,
+      "value": "Recibe solicitudes HTTP",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 276,
+      "anchor": "middle"
+    },
+    {
+      "id": "controller-line-1",
+      "x": 270,
+      "y": 487,
+      "value": "Lee y emite cookie de sesión",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 276,
+      "anchor": "middle"
+    },
+    {
+      "id": "controller-line-2",
+      "x": 270,
+      "y": 514,
+      "value": "Invoca casos de uso",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 276,
+      "anchor": "middle"
+    },
+    {
+      "id": "http",
+      "x": 120,
+      "y": 605,
+      "value": "Entrada desde la web Next.js",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 300
+    },
+    {
+      "id": "http-2",
+      "x": 120,
+      "y": 636,
+      "value": "HTTP / JSON · /api/v1",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 300
+    },
+    {
+      "id": "http-3",
+      "x": 120,
+      "y": 698,
+      "value": "No ejecuta consultas SQL.",
+      "size": 20,
+      "color": "#18352f",
+      "bold": true,
+      "width": 300
+    },
+    {
+      "id": "http-4",
+      "x": 120,
+      "y": 730,
+      "value": "No es dueño de las reglas.",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 300
+    },
+    {
+      "id": "application-title",
+      "x": 510,
+      "y": 293,
+      "value": "APLICACIÓN · aplicacion/ · coordinación de casos de uso",
+      "size": 23,
+      "color": "#18352f",
+      "bold": true,
+      "width": 770
+    },
+    {
+      "id": "usecases-title",
+      "x": 895,
+      "y": 361,
+      "value": "Usuarios",
+      "size": 25,
+      "color": "#18352f",
+      "bold": true,
+      "width": 666,
+      "anchor": "middle"
+    },
+    {
+      "id": "usecases-line-0",
+      "x": 895,
+      "y": 390,
+      "value": "registrar · login · perfil · editar · salir",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 666,
+      "anchor": "middle"
+    },
+    {
+      "id": "usecases-line-1",
+      "x": 895,
+      "y": 417,
+      "value": "Depende de modelos, validaciones y contratos internos",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 666,
+      "anchor": "middle"
+    },
+    {
+      "id": "domain-title",
+      "x": 540,
+      "y": 523,
+      "value": "DOMINIO · dominio/ · sin NestJS, pg ni SDK externos",
+      "size": 23,
+      "color": "#18352f",
+      "bold": true,
+      "width": 710
+    },
+    {
+      "id": "model-heading",
+      "x": 550,
+      "y": 570,
+      "value": "MODELOS Y REGLAS",
+      "size": 22,
+      "color": "#18352f",
+      "bold": true,
+      "width": 310
+    },
+    {
+      "id": "port-heading",
+      "x": 900,
+      "y": 570,
+      "value": "CONTRATOS / PUERTOS",
+      "size": 22,
+      "color": "#18352f",
+      "bold": true,
+      "width": 340
+    },
+    {
+      "id": "user-model-title",
+      "x": 705,
+      "y": 626,
+      "value": "Usuario",
+      "size": 24,
+      "color": "#18352f",
+      "bold": true,
+      "width": 286,
+      "anchor": "middle"
+    },
+    {
+      "id": "user-model-line-0",
+      "x": 705,
+      "y": 655,
+      "value": "Identidad · nombre · roles",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 286,
+      "anchor": "middle"
+    },
+    {
+      "id": "user-model-line-1",
+      "x": 705,
+      "y": 679,
+      "value": "Estado de la cuenta",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 286,
+      "anchor": "middle"
+    },
+    {
+      "id": "validation-title",
+      "x": 705,
+      "y": 746,
+      "value": "Validaciones puras",
+      "size": 23,
+      "color": "#18352f",
+      "bold": true,
+      "width": 286,
+      "anchor": "middle"
+    },
+    {
+      "id": "validation-line-0",
+      "x": 705,
+      "y": 775,
+      "value": "emailValido · passwordValido",
+      "size": 18,
+      "color": "#18352f",
+      "bold": false,
+      "width": 286,
+      "anchor": "middle"
+    },
+    {
+      "id": "validation-line-1",
+      "x": 705,
+      "y": 800,
+      "value": "nombreValido · estadoValido",
+      "size": 18,
+      "color": "#18352f",
+      "bold": false,
+      "width": 286,
+      "anchor": "middle"
+    },
+    {
+      "id": "validation-line-2",
+      "x": 705,
+      "y": 825,
+      "value": "ErrorUsuario",
+      "size": 18,
+      "color": "#18352f",
+      "bold": false,
+      "width": 286,
+      "anchor": "middle"
+    },
+    {
+      "id": "repo-port-title",
+      "x": 1070,
+      "y": 626,
+      "value": "RepositorioUsuarios",
+      "size": 24,
+      "color": "#18352f",
+      "bold": true,
+      "width": 316,
+      "anchor": "middle"
+    },
+    {
+      "id": "repo-port-line-0",
+      "x": 1070,
+      "y": 655,
+      "value": "Persistencia y sesiones",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 316,
+      "anchor": "middle"
+    },
+    {
+      "id": "hash-port-title",
+      "x": 1070,
+      "y": 736,
+      "value": "HashPasswords",
+      "size": 24,
+      "color": "#18352f",
+      "bold": true,
+      "width": 316,
+      "anchor": "middle"
+    },
+    {
+      "id": "hash-port-line-0",
+      "x": 1070,
+      "y": 765,
+      "value": "Crear / verificar hash",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 316,
+      "anchor": "middle"
+    },
+    {
+      "id": "token-port-title",
+      "x": 1070,
+      "y": 846,
+      "value": "TokensSesion",
+      "size": 24,
+      "color": "#18352f",
+      "bold": true,
+      "width": 316,
+      "anchor": "middle"
+    },
+    {
+      "id": "token-port-line-0",
+      "x": 1070,
+      "y": 875,
+      "value": "Emitir / leer token",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 316,
+      "anchor": "middle"
+    },
+    {
+      "id": "domain-pure",
+      "x": 550,
+      "y": 916,
+      "value": "TypeScript · no importa controladores ni implementaciones",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 690
+    },
+    {
+      "id": "infrastructure-title",
+      "x": 1360,
+      "y": 333,
+      "value": "INFRAESTRUCTURA",
+      "size": 23,
+      "color": "#18352f",
+      "bold": true,
+      "width": 350
+    },
+    {
+      "id": "infra-path",
+      "x": 1360,
+      "y": 366,
+      "value": "infraestructura/",
+      "size": 20,
+      "color": "#7956a4",
+      "bold": false,
+      "width": 350
+    },
+    {
+      "id": "infra-role-1",
+      "x": 1360,
+      "y": 419,
+      "value": "Implementa los contratos.",
+      "size": 22,
+      "color": "#18352f",
+      "bold": true,
+      "width": 350
+    },
+    {
+      "id": "infra-role-2",
+      "x": 1360,
+      "y": 453,
+      "value": "Conoce tecnologías concretas;",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 350
+    },
+    {
+      "id": "infra-role-3",
+      "x": 1360,
+      "y": 484,
+      "value": "el dominio no la importa.",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 350
+    },
+    {
+      "id": "postgres-adapter-title",
+      "x": 1535,
+      "y": 626,
+      "value": "PostgresUsuarios",
+      "size": 24,
+      "color": "#18352f",
+      "bold": true,
+      "width": 306,
+      "anchor": "middle"
+    },
+    {
+      "id": "postgres-adapter-line-0",
+      "x": 1535,
+      "y": 655,
+      "value": "SQL parametrizado · driver pg",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 306,
+      "anchor": "middle"
+    },
+    {
+      "id": "hash-adapter-title",
+      "x": 1535,
+      "y": 736,
+      "value": "ScryptPasswords",
+      "size": 24,
+      "color": "#18352f",
+      "bold": true,
+      "width": 306,
+      "anchor": "middle"
+    },
+    {
+      "id": "hash-adapter-line-0",
+      "x": 1535,
+      "y": 765,
+      "value": "node:crypto · hash con sal",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 306,
+      "anchor": "middle"
+    },
+    {
+      "id": "token-adapter-title",
+      "x": 1535,
+      "y": 846,
+      "value": "JwtTokens",
+      "size": 24,
+      "color": "#18352f",
+      "bold": true,
+      "width": 306,
+      "anchor": "middle"
+    },
+    {
+      "id": "token-adapter-line-0",
+      "x": 1535,
+      "y": 875,
+      "value": "JwtService · firma / validación",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 306,
+      "anchor": "middle"
+    },
+    {
+      "id": "use-contracts",
+      "x": 905,
+      "y": 464,
+      "value": "Usa reglas y contratos",
+      "size": 19,
+      "color": "#155c49",
+      "bold": false,
+      "width": 340
+    },
+    {
+      "id": "composition-title",
+      "x": 915,
+      "y": 1051,
+      "value": "RAÍZ DE COMPOSICIÓN · usuarios.module.ts",
+      "size": 25,
+      "color": "#18352f",
+      "bold": true,
+      "width": 1606,
+      "anchor": "middle"
+    },
+    {
+      "id": "composition-line-0",
+      "x": 915,
+      "y": 1080,
+      "value": "NestJS selecciona e inyecta PostgresUsuarios + ScryptPasswords + JwtTokens en Usuarios.",
+      "size": 22,
+      "color": "#18352f",
+      "bold": false,
+      "width": 1606,
+      "anchor": "middle"
+    },
+    {
+      "id": "composition-line-1",
+      "x": 915,
+      "y": 1107,
+      "value": "Es el lugar que conoce las implementaciones y conecta las capas.",
+      "size": 22,
+      "color": "#18352f",
+      "bold": false,
+      "width": 1606,
+      "anchor": "middle"
+    },
+    {
+      "id": "actual-scope-title",
+      "x": 1850,
+      "y": 163,
+      "value": "Ejemplo verificable",
+      "size": 23,
+      "color": "#18352f",
+      "bold": true,
+      "width": 250
+    },
+    {
+      "id": "actual-scope-0",
+      "x": 1850,
+      "y": 201,
+      "value": "Clases e interfaces reales",
+      "size": 18,
+      "color": "#18352f",
+      "bold": false,
+      "width": 250
+    },
+    {
+      "id": "actual-scope-1",
+      "x": 1850,
+      "y": 229,
+      "value": "del módulo Usuarios.",
+      "size": 18,
+      "color": "#18352f",
+      "bold": false,
+      "width": 250
+    },
+    {
+      "id": "actual-scope-2",
+      "x": 1850,
+      "y": 257,
+      "value": "",
+      "size": 18,
+      "color": "#18352f",
+      "bold": false,
+      "width": 250
+    },
+    {
+      "id": "actual-scope-3",
+      "x": 1850,
+      "y": 285,
+      "value": "Proveedores repite el",
+      "size": 18,
+      "color": "#18352f",
+      "bold": false,
+      "width": 250
+    },
+    {
+      "id": "actual-scope-4",
+      "x": 1850,
+      "y": 313,
+      "value": "mismo enfoque con sus",
+      "size": 18,
+      "color": "#18352f",
+      "bold": false,
+      "width": 250
+    },
+    {
+      "id": "actual-scope-5",
+      "x": 1850,
+      "y": 341,
+      "value": "propias reglas y puertos.",
+      "size": 18,
+      "color": "#18352f",
+      "bold": false,
+      "width": 250
+    },
+    {
+      "id": "actual-scope-6",
+      "x": 1850,
+      "y": 369,
+      "value": "",
+      "size": 18,
+      "color": "#18352f",
+      "bold": false,
+      "width": 250
+    },
+    {
+      "id": "actual-scope-7",
+      "x": 1850,
+      "y": 397,
+      "value": "No es el frontend Angular",
+      "size": 18,
+      "color": "#18352f",
+      "bold": false,
+      "width": 250
+    },
+    {
+      "id": "actual-scope-8",
+      "x": 1850,
+      "y": 425,
+      "value": "del ejemplo Marketplace.",
+      "size": 18,
+      "color": "#18352f",
+      "bold": false,
+      "width": 250
+    },
+    {
+      "id": "postgres-title",
+      "x": 1980,
+      "y": 606,
+      "value": "PostgreSQL",
+      "size": 25,
+      "color": "#18352f",
+      "bold": true,
+      "width": 256,
+      "anchor": "middle"
+    },
+    {
+      "id": "postgres-line-0",
+      "x": 1980,
+      "y": 635,
+      "value": "Cuentas · roles · sesiones",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 256,
+      "anchor": "middle"
+    },
+    {
+      "id": "postgres-line-1",
+      "x": 1980,
+      "y": 661,
+      "value": "Auditoría y límites",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 256,
+      "anchor": "middle"
+    },
+    {
+      "id": "postgres-line-2",
+      "x": 1980,
+      "y": 687,
+      "value": "Acceso mediante pg",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 256,
+      "anchor": "middle"
+    },
+    {
+      "id": "sql-text",
+      "x": 1765,
+      "y": 621,
+      "value": "SQL",
+      "size": 19,
+      "color": "#18352f",
+      "bold": false,
+      "width": 100,
+      "anchor": "middle"
+    },
+    {
+      "id": "local-libraries-title",
+      "x": 1850,
+      "y": 823,
+      "value": "Sin APIs externas aquí",
+      "size": 23,
+      "color": "#18352f",
+      "bold": true,
+      "width": 250
+    },
+    {
+      "id": "local-library-0",
+      "x": 1850,
+      "y": 862,
+      "value": "scrypt y JWT se ejecutan",
+      "size": 18,
+      "color": "#18352f",
+      "bold": false,
+      "width": 250
+    },
+    {
+      "id": "local-library-1",
+      "x": 1850,
+      "y": 891,
+      "value": "localmente en el backend.",
+      "size": 18,
+      "color": "#18352f",
+      "bold": false,
+      "width": 250
+    },
+    {
+      "id": "local-library-2",
+      "x": 1850,
+      "y": 920,
+      "value": "",
+      "size": 18,
+      "color": "#18352f",
+      "bold": false,
+      "width": 250
+    },
+    {
+      "id": "local-library-3",
+      "x": 1850,
+      "y": 949,
+      "value": "IA y pasarela son futuras",
+      "size": 18,
+      "color": "#18352f",
+      "bold": false,
+      "width": 250
+    },
+    {
+      "id": "local-library-4",
+      "x": 1850,
+      "y": 978,
+      "value": "integraciones de otros",
+      "size": 18,
+      "color": "#18352f",
+      "bold": false,
+      "width": 250
+    },
+    {
+      "id": "local-library-5",
+      "x": 1850,
+      "y": 1007,
+      "value": "módulos, no de Usuarios.",
+      "size": 18,
+      "color": "#18352f",
+      "bold": false,
+      "width": 250
+    },
+    {
+      "id": "legend-title",
+      "x": 60,
+      "y": 1273,
+      "value": "Leyenda · no confundir flechas",
+      "size": 23,
+      "color": "#18352f",
+      "bold": true,
+      "width": 610
+    },
+    {
+      "id": "legend-dependency-text",
+      "x": 150,
+      "y": 1318,
+      "value": "Dependencia de código hacia el núcleo.",
+      "size": 21,
+      "color": "#18352f",
+      "bold": false,
+      "width": 510
+    },
+    {
+      "id": "legend-realization-text",
+      "x": 150,
+      "y": 1372,
+      "value": "Implementa un contrato (puerto).",
+      "size": 21,
+      "color": "#18352f",
+      "bold": false,
+      "width": 510
+    },
+    {
+      "id": "legend-composition-text",
+      "x": 150,
+      "y": 1426,
+      "value": "Configuración / inyección de dependencias.",
+      "size": 21,
+      "color": "#18352f",
+      "bold": false,
+      "width": 510
+    },
+    {
+      "id": "legend-sql-text",
+      "x": 65,
+      "y": 1470,
+      "value": "SQL indica I/O, no una dependencia del dominio.",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 600
+    },
+    {
+      "id": "rule-title",
+      "x": 740,
+      "y": 1273,
+      "value": "Regla de dependencia",
+      "size": 23,
+      "color": "#18352f",
+      "bold": true,
+      "width": 660
+    },
+    {
+      "id": "rule-0",
+      "x": 740,
+      "y": 1313,
+      "value": "1. Dominio no conoce HTTP, NestJS ni PostgreSQL.",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 660
+    },
+    {
+      "id": "rule-1",
+      "x": 740,
+      "y": 1342,
+      "value": "2. Aplicación conoce contratos, no sus adapters.",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 660
+    },
+    {
+      "id": "rule-2",
+      "x": 740,
+      "y": 1371,
+      "value": "3. Infraestructura depende de esos contratos.",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 660
+    },
+    {
+      "id": "rule-3",
+      "x": 740,
+      "y": 1400,
+      "value": "4. Composición elige implementaciones concretas.",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 660
+    },
+    {
+      "id": "rule-4",
+      "x": 740,
+      "y": 1429,
+      "value": "",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 660
+    },
+    {
+      "id": "rule-5",
+      "x": 740,
+      "y": 1458,
+      "value": "Cambiar persistencia no exige reescribir las reglas.",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 660
+    },
+    {
+      "id": "execution-title",
+      "x": 1470,
+      "y": 1273,
+      "value": "Ejemplo para explicar: registrar usuario",
+      "size": 23,
+      "color": "#18352f",
+      "bold": true,
+      "width": 630
+    },
+    {
+      "id": "execution-0",
+      "x": 1470,
+      "y": 1313,
+      "value": "HTTP → UsuariosController → Usuarios.registrar",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 630
+    },
+    {
+      "id": "execution-1",
+      "x": 1470,
+      "y": 1342,
+      "value": "→ validaciones / HashPasswords",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 630
+    },
+    {
+      "id": "execution-2",
+      "x": 1470,
+      "y": 1371,
+      "value": "→ RepositorioUsuarios.crear → PostgreSQL",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 630
+    },
+    {
+      "id": "execution-3",
+      "x": 1470,
+      "y": 1400,
+      "value": "",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 630
+    },
+    {
+      "id": "execution-4",
+      "x": 1470,
+      "y": 1429,
+      "value": "La ejecución sale mediante adapters;",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 630
+    },
+    {
+      "id": "execution-5",
+      "x": 1470,
+      "y": 1458,
+      "value": "los imports siguen apuntando hacia el núcleo.",
+      "size": 20,
+      "color": "#18352f",
+      "bold": false,
+      "width": 630
     }
   ],
   "edges": [
     {
+      "id": "presentation-application",
       "points": [
         [
-          520,
-          332
+          420,
+          470
         ],
         [
-          650,
-          332
+          465,
+          470
+        ],
+        [
+          465,
+          380
+        ],
+        [
+          550,
+          380
         ]
       ],
-      "label": "Invoca caso de uso",
-      "lx": 585,
-      "ly": 315,
-      "style": "solid"
+      "color": "#245b91",
+      "arrow": true
     },
     {
+      "id": "application-domain",
       "points": [
         [
-          850,
-          415
+          880,
+          430
         ],
         [
-          850,
-          575
+          880,
+          490
         ]
       ],
-      "label": "Depende de entidades y contratos",
-      "lx": 850,
-      "ly": 500,
-      "style": "solid"
+      "color": "#155c49",
+      "arrow": true
     },
     {
+      "id": "repo-implementation",
       "points": [
         [
-          320,
-          1000
+          1370,
+          638
         ],
         [
-          320,
-          880
-        ],
-        [
-          690,
-          880
-        ],
-        [
-          690,
-          830
+          1240,
+          638
         ]
       ],
-      "label": "Implementa repositorio",
-      "lx": 480,
-      "ly": 865,
-      "style": "solid"
+      "color": "#7956a4",
+      "arrow": true,
+      "hollow": true
     },
     {
+      "id": "hash-implementation",
       "points": [
         [
-          850,
-          1000
+          1370,
+          748
         ],
         [
-          850,
-          830
+          1240,
+          748
         ]
       ],
-      "label": "Implementa puerto de pagos",
-      "lx": 850,
-      "ly": 920,
-      "style": "solid"
+      "color": "#7956a4",
+      "arrow": true,
+      "hollow": true
     },
     {
+      "id": "token-implementation",
       "points": [
         [
-          1380,
-          1000
+          1370,
+          858
         ],
         [
-          1380,
-          880
-        ],
-        [
-          1010,
-          880
-        ],
-        [
-          1010,
-          830
+          1240,
+          858
         ]
       ],
-      "label": "Implementa puerto de intención",
-      "lx": 1220,
-      "ly": 865,
-      "style": "solid"
+      "color": "#7956a4",
+      "arrow": true,
+      "hollow": true
     },
     {
+      "id": "inject-controller",
       "points": [
         [
-          1180,
-          332
+          270,
+          1020
         ],
         [
-          1050,
-          332
+          270,
+          910
         ]
       ],
-      "label": "Inyecta",
-      "lx": 1115,
-      "ly": 315,
-      "style": "dashed"
+      "color": "#52665f",
+      "arrow": true,
+      "dashed": true
     },
     {
+      "id": "inject-application",
       "points": [
         [
-          1380,
-          415
+          880,
+          1020
         ],
         [
-          1560,
-          415
-        ],
-        [
-          1560,
-          950
-        ],
-        [
-          1380,
-          950
-        ],
-        [
-          1380,
-          1000
+          880,
+          980
         ]
       ],
-      "label": "Configura adapters",
-      "lx": 1480,
-      "ly": 740,
-      "style": "dashed"
+      "color": "#52665f",
+      "arrow": true,
+      "dashed": true
+    },
+    {
+      "id": "inject-adapters",
+      "points": [
+        [
+          1540,
+          1020
+        ],
+        [
+          1540,
+          910
+        ]
+      ],
+      "color": "#52665f",
+      "arrow": true,
+      "dashed": true
+    },
+    {
+      "id": "sql",
+      "points": [
+        [
+          1700,
+          638
+        ],
+        [
+          1840,
+          638
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true
+    },
+    {
+      "id": "legend-dependency",
+      "points": [
+        [
+          65,
+          1311
+        ],
+        [
+          130,
+          1311
+        ]
+      ],
+      "color": "#245b91",
+      "arrow": true
+    },
+    {
+      "id": "legend-realization",
+      "points": [
+        [
+          65,
+          1365
+        ],
+        [
+          130,
+          1365
+        ]
+      ],
+      "color": "#7956a4",
+      "arrow": true,
+      "hollow": true
+    },
+    {
+      "id": "legend-composition",
+      "points": [
+        [
+          65,
+          1419
+        ],
+        [
+          130,
+          1419
+        ]
+      ],
+      "color": "#60736c",
+      "arrow": true,
+      "dashed": true
     }
-  ],
-  "boundaries": [
-    {
-      "x": 60,
-      "y": 130,
-      "w": 1580,
-      "h": 1050,
-      "title": "API Qatu · Patrón aplicado dentro de cada módulo del monolito"
-    }
-  ],
-  "notes": [
-    "El dominio no importa NestJS, PostgreSQL, Culqi ni la API del modelo de IA.",
-    "Las flechas de imports apuntan al núcleo; en ejecución los casos de uso llaman a los adapters por puertos.",
-    "Frontend Next.js presenta datos y valida formularios; el backend decide tarifas, disponibilidad y pagos."
   ]
 }

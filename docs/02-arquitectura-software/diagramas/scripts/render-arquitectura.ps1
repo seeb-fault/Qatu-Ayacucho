@@ -11,7 +11,7 @@ function Draw-Text([float]$x,[float]$y,[string]$value,[float]$size,[string]$colo
  $g.DrawString($value,$font,$brush,[System.Drawing.PointF]::new($x,$y-$size),$format)
  $font.Dispose();$brush.Dispose();$format.Dispose()
 }
-$slugs=@('arquitectura-inicial-qatu','enfoque-arquitectonico-qatu','estilo-arquitectonico-qatu')
+$slugs=@('arquitectura-inicial-qatu')
 foreach($slug in $slugs){
  $data=Get-Content -LiteralPath (Join-Path $GraphDirectory ($slug+'.json')) -Raw -Encoding UTF8 | ConvertFrom-Json
  $bitmap=New-Object System.Drawing.Bitmap([int]$data.width,[int]$data.height)
@@ -49,3 +49,5 @@ foreach($slug in $slugs){
  [xml]$validatedSvg=Get-Content -LiteralPath (Join-Path $VectorDirectory ($slug+'.svg')) -Raw -Encoding UTF8
  Write-Output ($slug+': PNG generado; SVG y drawio válidos.')
 }
+& node (Join-Path $PSScriptRoot 'generar-estilo-enfoque.mjs') --png --graph-directory $GraphDirectory --image-directory $ImageDirectory --vector-directory $VectorDirectory
+if ($LASTEXITCODE -ne 0) { throw 'No se pudieron generar los diagramas de estilo y enfoque.' }
