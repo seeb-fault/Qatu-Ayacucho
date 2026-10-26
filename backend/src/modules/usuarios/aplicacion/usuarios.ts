@@ -52,6 +52,8 @@ export class Usuarios {
     return (await this.identidad(token)).usuario;
   }
 
+  cuentasActivas(ids: string[]) { return this.repo.cuentasActivas(ids); }
+
   async cuentaActiva(usuarioId: string) {
     return (await this.repo.porId(usuarioId))?.estado === 'activo';
   }

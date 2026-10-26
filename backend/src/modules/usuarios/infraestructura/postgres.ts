@@ -49,6 +49,10 @@ export class PostgresUsuarios implements RepositorioUsuarios {
     return (result.rows[0] as Usuario | undefined) ?? null;
   }
 
+  async cuentasActivas(ids: string[]): Promise<string[]> {
+    return (await this.pool.query("SELECT id FROM usuarios WHERE id=ANY($1::uuid[]) AND estado='activo'",[ids])).rows.map(fila=>fila.id);
+  }
+
   async cambiarNombre(id: string, nombre: string) {
     const result = await this.pool.query("UPDATE usuarios SET nombre = $2, version = version + 1 WHERE id = $1 AND estado = 'activo' RETURNING id", [id, nombre]);
     return result.rowCount ? this.porId(id) : null;

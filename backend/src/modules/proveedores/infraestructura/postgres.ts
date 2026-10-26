@@ -16,6 +16,8 @@ const verificacionColumnas = `v.id,v.estado,v.motivo,v.revisor_id AS "revisorId"
 export class PostgresProveedores implements RepositorioProveedores {
   constructor(private readonly pool: Pool) {}
 
+  async publicables(): Promise<Proveedor[]> { return (await this.pool.query(`${seleccion} WHERE p.visible_publicamente AND p.estado_verificacion='aprobada'`)).rows; }
+
   async zonas(): Promise<ZonaProveedor[]> {
     return (await this.pool.query('SELECT id,nombre FROM zonas_proveedor ORDER BY nombre')).rows;
   }

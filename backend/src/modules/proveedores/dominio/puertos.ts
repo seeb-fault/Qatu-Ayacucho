@@ -4,10 +4,12 @@ import type { DocumentoCifrado, DocumentoPrivado, Verificacion } from './verific
 export interface IdentidadActores {
   resolver(token: string): Promise<{ id: string; roles: string[] }>;
   cuentaActiva(usuarioId: string): Promise<boolean>;
+  cuentasActivas(ids: string[]): Promise<string[]>;
 }
 
 export interface RepositorioProveedores {
   zonas(): Promise<ZonaProveedor[]>;
+  publicables(): Promise<Proveedor[]>;
   crear(usuarioId: string, datos: DatosPerfil): Promise<Proveedor>;
   porUsuario(usuarioId: string): Promise<Proveedor | null>;
   porId(id: string): Promise<Proveedor | null>;
