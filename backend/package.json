@@ -10,7 +10,9 @@
     "migrate": "node --env-file-if-exists=.env --import tsx scripts/migrate.ts",
     "admin:crear": "node --env-file-if-exists=.env --import tsx scripts/aprovisionar-admin.ts",
     "documentos:limpiar": "node --env-file-if-exists=.env --import tsx scripts/limpiar-documentos.ts",
-    "test": "node --env-file-if-exists=.env --import tsx --test --test-concurrency=1 test/usuarios/*.test.ts test/proveedores/*.test.ts"
+    "test:carga:catalogo": "node scripts/carga-catalogo.mjs",
+    "carga:preparar": "node scripts/preparar-carga-catalogo.mjs",
+    "test": "node --env-file-if-exists=.env --import tsx --test --test-concurrency=1 test/usuarios/*.test.ts test/proveedores/*.test.ts test/catalogo/*.test.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.0",
