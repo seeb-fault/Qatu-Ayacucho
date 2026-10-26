@@ -7,7 +7,7 @@ test('crear, recargar, mostrar y ocultar perfil de proveedor con datos persistid
   const registro = await page.request.post('/api/v1/auth/registro', { headers: { Origin: 'http://127.0.0.1:3100' }, data: { email, nombre: 'Propietario web', password: 'frase segura para pruebas de perfiles' } });
   expect(registro.status()).toBe(201);
   await page.goto('/cuenta');
-  await page.getByRole('link', { name: 'Mi perfil de proveedor', exact: true }).click();
+  await page.getByRole('main').getByRole('link', { name: 'Mi perfil de proveedor', exact: true }).click();
   await page.getByLabel('Nombre público', { exact: true }).fill('Taller del barrio');
   await page.getByLabel('Descripción', { exact: true }).fill(descripcion);
   await page.getByLabel('Distrito de atención', { exact: true }).selectOption('carmen-alto');
