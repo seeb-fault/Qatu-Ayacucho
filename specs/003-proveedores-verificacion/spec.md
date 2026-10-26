@@ -1,6 +1,6 @@
 # 003 — Proveedores y verificación
 
-**Estado:** perfiles, revisión documental y consulta pública implementados localmente; verificación en quickstart. D02, mapas externos e integración de Catálogo pendientes. **Actualizado:** 2026-10-19.
+**Estado:** perfiles, revisión documental y consulta pública implementados localmente; verificación en quickstart. D02 y mapas externos pendientes. La integración por fachada de Catálogo se incorporó en 004. **Actualizado:** 2026-10-26.
 **Módulo técnico:** proveedores. **Historias:** HU12.
 
 ## Objetivo y alcance

@@ -55,3 +55,7 @@ Incluir unitarias para reglas y estados, integración PostgreSQL para restriccio
 - D08: credenciales, método de verificación y capacidades vigentes Culqi/Yape/mensajería; bloquea integración real.
 
 No activar tareas afectadas mientras falte la decisión. [Tareas](./tasks.md) · [Especificación](./spec.md).
+
+## Seguimiento transversal tras 004
+
+El escenario global EQ-01/EQ-03 incorpora 5000 reservas y una mezcla 70% búsquedas, 20% detalle y 10% consultas de reservas. El ensayo local de 004 mide solo Catálogo con 100 proveedores/1000 publicaciones y mezcla 70/30; no acredita ese escenario global. Al implementar Reservas se incorporará su tráfico real y el conjunto de datos correspondiente. Los resultados en VPS y la aceptación global se registrarán en 008. No se crean reservas ficticias ni se marcan estas comprobaciones como aprobadas por pasar el ensayo local de Catálogo.

@@ -1,6 +1,6 @@
-# API Qatu — Usuarios y Proveedores
+# API Qatu — Usuarios, Proveedores y Catálogo
 
-NestJS 11/TypeScript, PostgreSQL y puertos por módulo. Implementa registro, login, perfil propio, logout y administración auditada (US1/US2/US3, RF12/RF14). El catálogo del frontend conserva fixtures.
+NestJS 11/TypeScript, PostgreSQL y puertos por módulo. Implementa registro, login, perfil propio, logout y administración auditada (US1/US2/US3, RF12/RF14). El catálogo usa PostgreSQL mediante la API; los fixtures del frontend requieren modo demo explícito.
 
 Proveedores 003 añade perfil propio, zona manual, consulta pública optativa, documentación cifrada y revisión administrativa con historial. Aplicar todas las migraciones antes de arrancar: el módulo limpia adjuntos de cuentas inactivas al iniciar y cada hora. Configuración y conservación en [PROVEEDORES.md](./PROVEEDORES.md).
 
@@ -72,3 +72,13 @@ Desactivar revoca todas las sesiones; reactivar requiere login nuevo. Una cuenta
 No hay renovación ni recuperación de contraseña; las sesiones expiran a los 15 minutos. Logout revoca en servidor. No hay asignación pública de roles ni eliminación HTTP de auditoría. Las cuotas por IP detrás del proxy se comparten; revisar proxy y cuotas antes de publicar. HTTPS, limpieza programada de sesiones/cuotas expiradas, OpenAPI estructurado y aceptación global de EQ-04/EQ-05 siguen pendientes. Las credenciales de Compose son exclusivamente locales. La auditoría no sustituye copias de seguridad ni protección del acceso directo a PostgreSQL.
 
 Referencias de implementación: [NestJS](https://docs.nestjs.com/security/authentication), [scrypt de Node.js](https://nodejs.org/api/crypto.html#cryptoscryptpassword-salt-keylen-options-callback). Política concreta en specs/002-usuarios-acceso/research.md.
+
+## Spec 004 — Catálogo y publicaciones
+
+Implementa POST/PATCH /publicaciones, consultas públicas/propias y moderación auditada. Aplicar `catalogo/001-publicaciones` con `npm run migrate`; necesita extensión PostgreSQL unaccent. Los recursos conservan UUID y las escrituras usan transacciones, restricciones diferidas y versión.
+
+Catálogo consulta exclusivamente las fachadas de Usuarios y Proveedores para permisos y habilitación. Cuenta activa, verificación aprobada y perfil público son requisitos para publicar. Las ofertas ocultas/retiradas dejan de aparecer sin borrar recursos. D02 y reservas siguen pendientes.
+
+`npm test` incluye dominio e integración de catálogo; sin TEST_DATABASE_URL se omite esta última. Configurar siempre una base exclusiva. Evidencias y limitaciones en [quickstart 004](../specs/004-catalogo-publicaciones/quickstart.md).
+
+Carga de Catálogo: `npm run carga:preparar` construye API y frontend aislado; `npm run test:carga:catalogo` exige BENCH_DATABASE_URL local exclusiva con sufijo load_test. No usar DATABASE_URL de desarrollo para el fixture. El runner no borra tablas y no modifica cuentas reales; protocolo y resultados en [cierre 004](../specs/004-catalogo-publicaciones/cierre.md).

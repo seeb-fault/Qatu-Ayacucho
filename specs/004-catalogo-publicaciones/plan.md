@@ -1,6 +1,6 @@
 # Plan técnico — Catálogo y publicaciones
 
-**Estado (2026-10-26):** implementación funcional local con migración, pruebas de dominio/PostgreSQL y E2E. Ensayos EQ-01/EQ-03 pendientes; resultados en quickstart.md.
+**Estado (2026-10-26):** implementación funcional local con migración, pruebas de dominio/PostgreSQL y E2E. Ensayo local de Catálogo aprobado; escenario global EQ-01/EQ-03 pendiente. Resultados en cierre.md y quickstart.md.
 
 ## Technical Context
 
@@ -47,4 +47,4 @@ Incluir unitarias para reglas y estados, integración PostgreSQL para restriccio
 
 - D04 resuelta el 2026-10-26: búsqueda española sin tildes, filtros AND y orden estable; ver research.md.
 
-No declarar cierre de T023/T027 sin ensayar las condiciones de carga. [Tareas](./tasks.md) · [Especificación](./spec.md).
+T023 registra el ensayo local aprobado; T027 conserva la aceptación global pendiente, sin sustituir reservas ni infraestructura objetivo. [Tareas](./tasks.md) · [Especificación](./spec.md).

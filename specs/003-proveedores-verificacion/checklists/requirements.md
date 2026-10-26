@@ -22,3 +22,5 @@
 - [ ] Seleccionar/integrar mapas por adapter y ensayar su fallo con respaldo manual.
 - [ ] Validar en 008 operación de limpieza, copias/restauración, custodia/rotación de claves, análisis adicional de archivos, HTTPS y capacidad con datos representativos.
 - [ ] OpenAPI estructurado y aceptación global EQ-04/EQ-05/EQ-06.
+
+Actualización 004 (2026-10-26): integración de Catálogo por fachada implementada y comprobada con PostgreSQL y E2E. Esta ampliación no acredita mapas externos ni cierra D02.

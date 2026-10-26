@@ -72,3 +72,13 @@ La home utiliza Tailwind CSS 4 y PrimeReact 10 en modo `unstyled`, con la identi
 Los recursos SVG son locales. Los testimonios están identificados como ficticios y las acciones de publicación, reservas y pagos conservan los avisos de funciones futuras. La integración visual no cambia contratos API ni habilita funciones comerciales.
 
 Verificación: `npm run build`, `npm test` y `npm run test:acceso` (secuenciales, porque comparten el puerto del servidor de pruebas).
+
+## Publicar ofertas (Spec 004)
+
+`/publicar` permite gestionar ofertas propias; requiere cuenta activa y perfil de proveedor verificado/público. `/admin/publicaciones` permite retirar o levantar retiradas con motivo y consultar auditoría. El header y la navegación móvil enlazan al editor; cuenta y perfil de proveedor también ofrecen acceso.
+
+Por defecto home, búsqueda y detalle consultan la API real configurada con QATU_API_URL. Si está caída muestran error; no mezclan ofertas ficticias. `QATU_CATALOGO=demo` en el servidor habilita deliberadamente el catálogo sintético para las pruebas históricas de descubrimiento. Las ilustraciones son locales y no representan fotos subidas.
+
+`npm run test:catalogo` levanta API/web en 3001/3100 y ejecuta el recorrido real con PostgreSQL, documentos sintéticos y aprobación administrativa. Exige DATABASE_URL, JWT_SECRET y DOCUMENTOS_KEY de pruebas y migraciones aplicadas. Ejecutar secuencialmente con usuarios/proveedores; nunca contra una base con datos personales. La suite se incluye en CI cuando ultimaEntrega es 004.
+
+Las suites E2E con API usan el backend compilado (npm run start). Ejecutar npm run build en backend antes de iniciarlas; el CI lo hace explícitamente. Esto comprueba el mismo artefacto JavaScript del arranque normal y evita recompilación de TypeScript al levantar cada suite.

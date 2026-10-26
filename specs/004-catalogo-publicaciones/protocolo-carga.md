@@ -16,8 +16,16 @@ Fecha de definición: 2026-10-26. Ensayo derivado de EQ-01/EQ-03, específico de
 Comandos desde backend (tras instalar dependencias y crear/migrar una base exclusiva; nunca usar la base qatu de desarrollo):
 
 ```powershell
-$env:BENCH_DATABASE_URLnpm run carga:preparar
+npm run carga:preparar
 $env:BENCH_DATABASE_URL = 'postgresql://USUARIO:CLAVE@127.0.0.1:5433/qatu_catalogo_load_test'
+$baseAnterior = $env:DATABASE_URL
+try {
+  $env:DATABASE_URL = $env:BENCH_DATABASE_URL
+  npm run migrate
+  if ($LASTEXITCODE -ne 0) { throw 'Migración de carga fallida' }
+} finally {
+  $env:DATABASE_URL = $baseAnterior
+}
 npm run test:carga:catalogo -- --warmup-seconds 2 --stage-seconds 5 --output ../.local-reconstruccion/carga-diagnostico.json
 npm run test:carga:catalogo -- --output ../specs/004-catalogo-publicaciones/evidencias/carga-local.json
 ```

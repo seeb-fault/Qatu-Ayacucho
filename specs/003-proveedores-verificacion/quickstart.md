@@ -42,3 +42,5 @@ frontend: npm run build; luego npm run test:proveedores, npm run test:usuarios y
 - Primeras ejecuciones detectaron etiquetas de select con nombres accesibles ambiguos; se corrigieron con label/htmlFor explícitos. El caso 2×5 MiB detectó corte real de Next a 10 MB: buffer elevado a 12 MiB y deadline de carga a 120 s, manteniendo 10 s para JSON. El ensayo de transporte no certifica validez semántica del PDF sintético.
 
 La suite de Proveedores genera capturas locales ignoradas en frontend/test-results: proveedor-editor-360.png, proveedor-publico-360.png y proveedor-verificado-360.png. Las suites posteriores pueden limpiar ese directorio; ejecutar test:proveedores para regenerarlas. La política documental real sigue la elección del usuario; las pruebas no contienen documentación de personas.
+
+Actualización posterior (004, 2026-10-26): Catálogo integra la fachada de Proveedores y verifica cuenta activa, perfil aprobado y visibilidad pública. La evidencia histórica de 003 anterior conserva sus condiciones originales; resultados nuevos en quickstart 004. Mapas, D02 y operación completa de conservación siguen pendientes.
