@@ -1,37 +1,27 @@
 # Contratos — Catálogo y publicaciones
 
-**Base:** /api/v1, JSON, ISO 8601; actor del contexto autenticado. Diseño, no API publicada.
+Implementación Spec 004. Base `/api/v1`; sesión HttpOnly existente, CSRF por Origin/JSON y actor derivado del servidor. D04 resuelta en research.md el 2026-10-26.
 
-## Rutas tomadas del diseño vigente
+| Método | Ruta | Acceso |
+|---|---|---|
+| GET | /publicaciones | Público; solo activas, permitidas y proveedor habilitado |
+| GET | /publicaciones/opciones | Categorías, zonas, unidades y modalidades admitidas |
+| GET | /publicaciones/mias | Sesión; lista paginada de publicaciones propias, incluso retiradas |
+| GET | /publicaciones/:id | Público; 404 si no visible |
+| POST | /publicaciones | Proveedor activo, aprobado y con perfil público |
+| PATCH | /publicaciones/:id | Mismo proveedor, activo y aprobado; versionActual obligatoria |
+| GET | /admin/publicaciones | Admin activo, listado paginado incluyendo retiradas |
+| PATCH | /admin/publicaciones/:id/moderacion | Admin; estado `permitida`/`retirada`, motivo y versionActual |
+| GET | /admin/publicaciones/:id/auditoria | Admin; historial de moderación |
 
-| Método | Ruta relativa | Acceso | Condición |
-|---|---|---|---|
-| GET | /publicaciones | Público | filtros validados; solo ofertas activas |
-| GET | /publicaciones/:id | Público | detalle público |
-| POST | /publicaciones | Proveedor verificado | actor derivado de sesión |
-| PATCH | /publicaciones/:id | Propietario autorizado | no acepta cambio de dueño libre |
+GET listado: `q` (hasta 200 caracteres), `tipo`, `categoriaId`, `zonaId`, `precioMaximoCentimos` (entero 0..99999999), `page` (1..10000), `limit` (1..50, predeterminado 20), `orden` (`recomendados`, `precio`, `nombre`). Filtros AND, búsqueda española sin tildes; orden estable por ID tras criterio principal. Precio máximo excluye cotizables. Parámetros repetidos/desconocidos o tipos incompatibles: 400. Respuesta `{items,page,limit,total}`; páginas superiores al total devuelven items vacíos.
 
-## Extensiones propuestas para cubrir requisitos existentes
+POST/PATCH: `{tipo,categoriaId,zonaId,titulo,descripcion,incluye,condiciones,modalidadPrecio,tarifaCentimos,unidad,activa,recursos}`. Título 5..120; descripción 20..3000; incluye/condiciones listas de 1..10 textos de 2..200. Herramienta fija, importe 1..99999999, unidad `día`; servicio fijo/unidad `servicio` o cotización con importe y unidad null. Recurso `{id?:UUID,identificador:string,activo:boolean}`: 1..20 unidades físicas de herramienta o una agenda de servicio, etiquetas únicas de 1..80 caracteres; al crear se omite id, al editar se conservan todos los IDs previos (retirar con activo:false). Una publicación activa necesita algún recurso activo. El tipo es inmutable.
 
-- PATCH /admin/publicaciones/:id/moderacion para moderación auditada.
-- Desactivación de publicación en PATCH existente con control de propiedad.
+PATCH añade `versionActual` entero positivo; no acepta proveedorId, usuarioId, estadoModeracion ni campos privados. No hay borrado físico. Edición ajena 403, inexistente 404, versión obsoleta o reactivación retirada 409. Moderación retirada no es reversible por el dueño; levantarla no reactiva automáticamente una oferta que el propietario dejó inactiva.
 
-Estas extensiones aún no están congeladas: completar DTO/estados en OpenAPI y actualizar docs antes de implementar. No se ejecutan operaciones ni llamadas externas desde estas especificaciones.
+Las respuestas públicas incluyen id, proveedorId, tipo, categoría, zona, título, descripción, incluye/condiciones, modalidadPrecio, tarifaCentimos/unidad/PEN, recursos e ilustración local; proveedor contiene solo id/nombrePublico/estadoVerificacion. Nunca usuarioId, correo ni documentos. Consultas propias/admin añaden activa, estadoModeracion y version. Auditoría registra actor, motivo, transición, versión e instante UTC.
 
-## Datos de entrada/salida propuestos
+Puerto `ConsultaCatalogo.consultar(id)`: oferta activa y recursos estables para futuros snapshots; no reserva, bloquea ni calcula disponibilidad. Fachada Proveedores expone proyecciones habilitadas por lote y perfil propio, sin repositorios ajenos.
 
-GET publicaciones: q, tipo (herramienta/servicio), categoriaId, zonaId, precioMaximoCentimos, page y limit. Propuesta textual: normalizar y usar búsqueda PostgreSQL parametrizada en título/descripción; definir configuración lingüística, índices y orden antes de implementar D04. Filtros estructurados se combinan con AND. Orden estable por id tras criterio principal; limit inicial 20 y validar límite general 50. Precio variable sin tarifa comparable no se presenta como coincidencia garantizada de presupuesto.
-
-Respuesta: items públicos, page, limit y total; cada item contiene id, proveedorId, tipo, titulo, categoriaId, zonaId, modalidadPrecio y tarifaCentimos/unidad cuando existan. Alta/edición valida tipo/categoría, tarifa y recursos propios. Disponibilidad no se infiere del campo activa; consultar Reservas.
-
-## Puerto interno
-
-ConsultaCatalogo: ofertas activas, recurso estable y datos de tarifa para snapshot. No autoriza reservas ni escribe bloqueos.
-
-## Errores y seguridad
-
-400 entrada inválida; 401 no autenticado; 403 no autorizado; 404 inexistente/no visible; 409 conflicto; 429 cuota; 202 pendiente cuando corresponda. Error con code, mensaje y correlationId, sin stack ni secretos. Respuestas públicas excluyen documentos y campos privados.
-
-Paginación base 20 y máximo general 50; para aceptación de EQ-01 utilizar máximo 20. Mutaciones verifican rol/propiedad/estado en aplicación además de la guarda HTTP. Idempotencia es obligatoria en pagos y eventos según RF21/RF22; no se extiende a ciegas a todas las operaciones.
-
-[Contrato fuente](../../../docs/03-diseño-de-software/diseño-externo/contratos-api.md) · [Spec](../spec.md).
+Errores `{code,mensaje,correlationId}`: 400 validación, 401 sin sesión, 403 sin permiso, 404 inexistente/no visible, 409 conflicto. Sin stack ni secretos. Mutaciones revalidan sesión y propiedad además de validación de DTO.

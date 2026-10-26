@@ -1,35 +1,20 @@
 # Modelo de datos — Catálogo y publicaciones
 
-**Fuente:** [modelo lógico Qatu](../../docs/03-diseño-de-software/modelo-de-datos.md). Esta vista pertenece a catalogo; no es una migración aplicada.
+Implementado el 2026-10-26. Migración `backend/migrations/catalogo/001-publicaciones.sql`; rollback manual separado, nunca automático.
 
-## Datos propios
+| Tabla propia | Responsabilidad y restricciones |
+|---|---|
+| catalogo_publicaciones | UUID, proveedorId lógico, tipo/categoría compatibles, zona, título/descripcion, incluye/condiciones JSON, activa, moderación, versión e instantes UTC |
+| catalogo_categorias | Diez categorías de herramientas y servicios; clave compuesta con tipo para impedir incompatibilidades |
+| catalogo_zonas | Cuatro distritos admitidos, sin geocodificación |
+| catalogo_tarifas | Una tarifa por publicación, PEN, céntimos enteros positivos hasta 99999999; herramienta por día, servicio por servicio o cotización sin importe/unidad |
+| catalogo_recursos | UUID estable, publicación, clase unidad_fisica/agenda, etiqueta única por oferta y estado activo; no se borran para editar |
+| catalogo_auditoria | Moderación con actor, transición, motivo de 10..500 caracteres, versión e instante UTC |
 
-publicaciones; categorias; recursos; tarifas.
+No hay claves físicas hacia tablas de otros módulos ni consultas a sus repositorios. La identidad y habilitación se consultan por fachadas Usuarios/Proveedores. El DTO público no contiene email, usuarioId, documentos ni decisiones de auditoría.
 
-## Campos lógicos propuestos
+Validación de dominio y constraints PostgreSQL impiden precios/tipos incompatibles, etiquetas duplicadas y publicaciones activas sin unidades activas. Triggers diferidos verifican al COMMIT que exista tarifa compatible y de una a veinte unidades (una agenda en servicios). Las transacciones crean/actualizan publicación, tarifa y recursos en conjunto; la moderación y su auditoría también son atómicas. FOR UPDATE y versionActual rechazan escrituras concurrentes con 409.
 
-| Entidad | Campos | Restricción |
-|---|---|---|
-| publicacion | id, proveedorId, tipo, categoriaId, zonaId, titulo, descripcion, activa, version | tipo/categoría compatibles; solo estado activo público |
-| recurso | id, publicacionId, clase, identificador, activo | ID estable por unidad física/agenda |
-| tarifa | id, publicacionId, montoCentimos, moneda, unidad, modalidad | PEN; monto entero no negativo; cotización variable sin total inventado |
+Búsqueda: trigger actualiza tsvector `spanish` con `unaccent`, índice GIN y parámetros enlazados. Índices de lectura pública, proveedor, filtros, precio y auditoría. Orden estable con ID final; orden por nombre usa collation C. Los intervalos de disponibilidad y los snapshots de reservas se implementarán en 005, sin derivarlos de `activa`.
 
-Los campos adicionales operativos son propuestas de detalle del modelo existente; nombres físicos y migraciones se fijan al implementar.
-
-## Invariantes de persistencia y acceso
-
-1. Proveedor activo/verificado para publicar; validar propietario también al editar.
-2. Cada unidad física tiene recursoId estable; el servicio referencia una agenda. Catálogo describe y Reservas bloquea.
-3. Tipo herramienta/servicio y categoría compatibles; importes enteros en céntimos PEN y unidad explícita.
-4. Solo publicaciones activas se descubren públicamente; cambios no reescriben snapshots previos de reserva.
-5. Búsqueda textual y filtros/indexación antes de Redis; no se crean embeddings obligatorios.
-
-## Fronteras
-
-ConsultaCatalogo: ofertas activas, recurso estable y datos de tarifa para snapshot. No autoriza reservas ni escribe bloqueos.
-
-Las claves externas lógicas no conceden permiso para usar repositories de otros módulos. Toda migración define índices, constraints y compatibilidad de rollback. Se usarán céntimos enteros para dinero y UTC para instantes; las políticas comerciales pendientes no se deducen de esa representación. No guardar secretos ni datos completos de tarjeta.
-
-## Cambios pendientes de esquema
-
-Confirmar columnas y estados contra contratos antes de generar migraciones. Toda ampliación respecto al modelo lógico se registra como propuesta y se sincroniza; no se presenta como dato ya implementado.
+La edición conserva todos los recursos previos y sus IDs; las unidades retiradas se marcan inactivas. La baja de cuentas o pérdida de consentimiento/verificación oculta ofertas al consultar la fachada; no decide la política D02 de reservas existentes.

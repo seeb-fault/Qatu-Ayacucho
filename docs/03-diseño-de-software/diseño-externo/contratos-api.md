@@ -61,3 +61,7 @@ Usuarios US3: GET /admin/usuarios lista 20 cuentas por página con pagina/q/esta
 La documentación de Culqi permite cargos con token Yape. Habilitación comercial, credenciales, medios disponibles, pruebas sandbox, mecanismos de verificación, conciliación y reembolsos deben confirmarse antes de producción. No presentar un QR y un comprobante subido manualmente como confirmación automática de pasarela.
 
 Fuentes verificadas el 13/10/2026: [Culqi cargos y Yape](https://docs.culqi.com/es/documentacion/pagos-online/cargo-unico/cargos/) y [API Culqi](https://apidocs.culqi.com/).
+
+## Contrato implementado en Spec 004 (2026-10-26)
+
+Alta/edición de ofertas, consulta propia, catálogo público y moderación administrativa se detallan en [contrato de Catálogo](../../../specs/004-catalogo-publicaciones/contracts/api.md). Este contrato concreta D04: búsqueda española sin tildes, límites 20/50, céntimos enteros PEN, recursos estables, control de versión, propiedad y auditoría de moderación. Publicación requiere cuenta activa y perfil aprobado/público. No habilita reservas, pagos ni decide D02.
