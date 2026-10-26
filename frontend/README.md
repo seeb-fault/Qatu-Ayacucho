@@ -59,3 +59,16 @@ Registro/login, edición del nombre propio y logout operan con sesión HttpOnly 
 Tipografías DM Sans/Manrope solicitadas a Google Fonts con fallback de sistema; las ilustraciones se sirven localmente. Si no hay conexión de fuentes, la navegación sigue operativa. Esta fase no acredita EQ-06 completo ni las integraciones del MVP.
 
 [Especificación](../specs/001-descubrimiento-ofertas/spec.md) · [Registro de validación](../specs/001-descubrimiento-ofertas/quickstart.md).
+
+## Interfaz marketplace
+
+La home utiliza Tailwind CSS 4 y PrimeReact 10 en modo `unstyled`, con la identidad de Qatu definida en `src/app/marketplace.css`. Tailwind se integra con PostCSS; se importan tema y utilidades sin Preflight para conservar los estilos de las pantallas existentes.
+
+- `src/components/ui/ProveedorUI.tsx`: contexto compartido de PrimeReact.
+- `src/components/descubrimiento/Buscador.tsx`: InputText y Button de PrimeReact; conserva parámetros, filtros y controles nativos de selección.
+- `src/components/home/`: confianza y testimonios ilustrativos.
+- `src/app/page.tsx`: composición de la home y accesos a categorías.
+
+Los recursos SVG son locales. Los testimonios están identificados como ficticios y las acciones de publicación, reservas y pagos conservan los avisos de funciones futuras. La integración visual no cambia contratos API ni habilita funciones comerciales.
+
+Verificación: `npm run build`, `npm test` y `npm run test:acceso` (secuenciales, porque comparten el puerto del servidor de pruebas).
