@@ -76,7 +76,7 @@ export default function MiProveedor() {
   return <section className={styles.panel} aria-labelledby="titulo-proveedor">
     <span className="eyebrow">OFRECE EN TU COMUNIDAD</span><h1 id="titulo-proveedor">Mi perfil de proveedor</h1>
     <p>Presenta tus herramientas u oficios y el distrito donde atiendes.</p>
-    <div className={styles.estado}><strong>{estadosVerificacion[perfil?.estadoVerificacion ?? 'no_solicitada']}</strong>La revisión documental es independiente de publicar ofertas. El catálogo todavía está en fase de demostración.</div>
+    <div className={styles.estado}><strong>{estadosVerificacion[perfil?.estadoVerificacion ?? 'no_solicitada']}</strong>Para publicar ofertas necesitas verificación documental aprobada y un perfil público.</div>
     {cargando && <p role="status">Cargando tu perfil…</p>}
     {error && <p role="alert" className={styles.error}>{error}</p>}
     {mensaje && <p role="status">{mensaje}</p>}
@@ -94,7 +94,7 @@ export default function MiProveedor() {
     {!cargando && !sinSesion && <div className={styles.acciones}>
       {perfil?.visiblePublicamente && <Link href={`/proveedores/${perfil.id}`}>Ver mi página pública</Link>}
       <button className="button outline" disabled={pendiente} onClick={cargar}>Recargar perfil</button>
-      <Link href="/cuenta">Volver a mi cuenta</Link>
+      <Link href="/publicar">Gestionar mis ofertas</Link><Link href="/cuenta">Volver a mi cuenta</Link>
     </div>}
     {!cargando && !sinSesion && perfil && <VerificacionProveedor perfil={perfil} onActualizado={cargar}/>}
   </section>;

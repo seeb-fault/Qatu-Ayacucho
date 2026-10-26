@@ -9,6 +9,7 @@ node_modules/
 .claude/skills/
 skills-lock.json
 frontend/.next/
+frontend/.next-carga/
 frontend/out/
 frontend/tsconfig.tsbuildinfo
 frontend/test-results/
