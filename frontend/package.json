@@ -16,15 +16,19 @@
     "test:proveedores": "playwright test --config playwright.proveedores.config.ts"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
     "next": "16.4.1",
+    "postcss": "^8.5.31",
+    "primereact": "^10.9.7",
     "react": "19.3.1",
-    "react-dom": "19.3.1"
+    "react-dom": "19.3.1",
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
-    "typescript": "5.9.3",
+    "@playwright/test": "1.64.1",
     "@types/node": "24.19.2",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
-    "@playwright/test": "1.64.1"
+    "typescript": "5.9.3"
   }
 }
