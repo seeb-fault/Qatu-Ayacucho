@@ -28,7 +28,7 @@
 - POST /admin/proveedores/:id/verificacion recibe `{solicitudId,decision,motivo}`: UUID, decisión aprobada/rechazada, motivo trim 10–500. Solo otro admin activo. 201 con decisión auditada, 403 por no admin o autoevaluación, 404 si solicitud no pertenece al perfil o cuenta no disponible, 409 ya resuelta/sin adjuntos. Resolución y estado del perfil se confirman juntos bajo bloqueo; no hay decisión aprobada sin documentos presentes.
 - PATCH /admin/proveedores/:id/estado permanece pendiente de D02; no se expone en este incremento.
 
-Contrato textual sincronizado con el diseño externo. OpenAPI estructurado sigue pendiente. La integración de Catálogo y mapas externos no se presenta como implementada.
+Contrato textual sincronizado con el diseño externo. OpenAPI estructurado sigue pendiente. Catálogo 004 consume la fachada de Proveedores para comprobar habilitación. Mapas externos siguen pendientes.
 
 ## Datos de entrada/salida propuestos
 

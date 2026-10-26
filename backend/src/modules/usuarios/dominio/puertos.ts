@@ -4,6 +4,7 @@ export interface RepositorioUsuarios {
   crear(email: string, nombre: string, passwordHash: string): Promise<Usuario>;
   credenciales(email: string): Promise<Credenciales | null>;
   porId(id: string): Promise<Usuario | null>;
+  cuentasActivas(ids: string[]): Promise<string[]>;
   cambiarNombre(id: string, nombre: string): Promise<Usuario | null>;
   crearSesion(id: string, usuarioId: string, expira: Date): Promise<void>;
   sesionActiva(id: string, usuarioId: string): Promise<boolean>;

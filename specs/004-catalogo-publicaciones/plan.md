@@ -1,6 +1,6 @@
 # Plan técnico — Catálogo y publicaciones
 
-**Estado:** plan documental; código, migraciones y pruebas aún no ejecutados.
+**Estado (2026-10-26):** implementación funcional local con migración, pruebas de dominio/PostgreSQL y E2E. Ensayo local de Catálogo aprobado; escenario global EQ-01/EQ-03 pendiente. Resultados en cierre.md y quickstart.md.
 
 ## Technical Context
 
@@ -11,11 +11,11 @@ API NestJS/TypeScript, PostgreSQL/PostGIS y web Next.js/TypeScript; versiones so
 - [x] El plan conserva el módulo catalogo, los puertos y la propiedad de datos descritos en docs.
 - [x] Las dependencias externas se ubican en infraestructura.
 - [x] Las decisiones pendientes y las pruebas de aceptación están registradas.
-- [ ] Verificar estas condiciones en el código antes de cerrar la entrega.
+- [x] Verificar estas condiciones en el código; aceptación de carga todavía pendiente.
 
 ## Project Structure
 
-Código previsto en backend/src/modules/catalogo/{dominio,aplicacion,infraestructura,presentacion}; composición en catalogo.module.ts y fachada en index.ts. Pantallas en frontend/src/app y componentes en frontend/src/components/catalogo. Migraciones propias bajo backend/migrations/catalogo; pruebas unitarias junto al dominio e integración bajo backend/test/catalogo. Rutas previstas, todavía inexistentes.
+Código previsto en backend/src/modules/catalogo/{dominio,aplicacion,infraestructura,presentacion}; composición en catalogo.module.ts y fachada en index.ts. Pantallas en frontend/src/app y componentes en frontend/src/components/catalogo. Migraciones propias bajo backend/migrations/catalogo; pruebas unitarias junto al dominio e integración bajo backend/test/catalogo. Rutas implementadas según contracts/api.md.
 
 Dominio puro; aplicación consume puertos; infraestructura implementa repositorios/SDK; controladores traducen HTTP a casos de uso. El módulo no importa repositories ajenos ni consulta sus tablas directamente.
 
@@ -45,6 +45,6 @@ Incluir unitarias para reglas y estados, integración PostgreSQL para restriccio
 
 ## Riesgos y bloqueos
 
-- D04: búsqueda textual y contrato de filtros/orden/paginación; propuesta en contratos de esta entrega, revisar antes de congelar API.
+- D04 resuelta el 2026-10-26: búsqueda española sin tildes, filtros AND y orden estable; ver research.md.
 
-No activar tareas afectadas mientras falte la decisión. [Tareas](./tasks.md) · [Especificación](./spec.md).
+T023 registra el ensayo local aprobado; T027 conserva la aceptación global pendiente, sin sustituir reservas ni infraestructura objetivo. [Tareas](./tasks.md) · [Especificación](./spec.md).

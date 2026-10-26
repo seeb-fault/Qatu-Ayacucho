@@ -7,7 +7,9 @@ test('registro real → perfil → salir → ingresar', async ({ page }) => {
   await page.getByLabel('Nombre', { exact: true }).fill('Cliente navegador');
   await page.getByLabel('Correo electrónico').fill(email);
   await page.getByLabel('Contraseña', { exact: true }).fill(password);
+  const registro = page.waitForResponse(response => response.url().endsWith('/api/v1/auth/registro') && response.request().method() === 'POST');
   await page.getByRole('button', { name: 'Crear cuenta', exact: true }).click();
+  expect((await registro).status()).toBe(201);
   await expect(page).toHaveURL(/\/cuenta$/);
   await expect(page.getByText(email, { exact: true })).toBeVisible();
   await page.reload();

@@ -1,6 +1,6 @@
 # Plan técnico — Proveedores y verificación
 
-**Estado:** implementación local de perfiles, revisión documental y consulta pública con NestJS 11, pg/PostgreSQL y Next.js 16.4.1; resultados en quickstart.md. D02/mapas/Catálogo y aceptación global pendientes.
+**Estado:** implementación local de perfiles, revisión documental y consulta pública con NestJS 11, pg/PostgreSQL y Next.js 16.4.1; resultados en quickstart.md. D02/mapas y aceptación global pendientes; integración de Catálogo disponible en 004.
 
 ## Technical Context
 

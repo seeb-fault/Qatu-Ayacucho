@@ -1,6 +1,6 @@
 # 004 — Catálogo y publicaciones
 
-**Estado:** especificado; implementación y aceptación pendientes. **Fecha:** 2026-10-15.
+**Estado:** implementación funcional local (2026-10-26); aceptación global de calidad pendiente. **Fecha:** 2026-10-15.
 **Módulo técnico:** catalogo. **Historias:** HU01, HU02.
 
 ## Objetivo y alcance
@@ -71,7 +71,7 @@ Datos propios: publicaciones; categorias; recursos; tarifas. Identidad de actor 
 
 ## Clarifications
 
-- D04: búsqueda textual y contrato de filtros/orden/paginación; propuesta en contratos de esta entrega, revisar antes de congelar API.
+- D04 resuelta el 2026-10-26 en research.md: búsqueda española sin tildes, filtros AND, orden estable y paginación 20/50.
 
 Estas decisiones bloquean únicamente las tareas afectadas. El resto del diseño y los contratos ya documentados pueden avanzar.
 

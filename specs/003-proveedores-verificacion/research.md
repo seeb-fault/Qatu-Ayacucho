@@ -37,4 +37,4 @@ Conservar monolito modular reduce operación para un VPS/equipo pequeño; extrae
 
 ## Resultado
 
-Perfiles, revisión documental y consulta pública implementados localmente según esta decisión. D02 y el adapter externo de mapas permanecen pendientes; no hay endpoint de desactivación operativa ni integración de Catálogo. Resultados y límites en quickstart.md.
+Perfiles, revisión documental y consulta pública implementados localmente según esta decisión. D02 y el adapter externo de mapas permanecen pendientes; no hay endpoint de desactivación operativa. Catálogo 004 consulta la habilitación por fachada, sin leer repositorios ajenos. Resultados y límites en quickstart.md.

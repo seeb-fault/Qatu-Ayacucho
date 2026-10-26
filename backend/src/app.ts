@@ -5,9 +5,10 @@ import { randomUUID } from 'node:crypto';
 import type { NextFunction, Request, Response } from 'express';
 import { UsuariosModule } from './modules/usuarios';
 import { ProveedoresModule } from './modules/proveedores';
+import { CatalogoModule } from './modules/catalogo';
 import { ErrorAplicacion } from './shared/dominio/error-aplicacion';
 
-@Module({ imports: [UsuariosModule, ProveedoresModule] })
+@Module({ imports: [UsuariosModule, ProveedoresModule, CatalogoModule] })
 class AppModule {}
 
 @Catch()

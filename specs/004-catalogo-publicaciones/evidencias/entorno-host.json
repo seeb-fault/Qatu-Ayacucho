@@ -1,0 +1,27 @@
+{
+  "workspaceDrive": {
+    "DeviceID": "C:",
+    "Size": 334588014592,
+    "FreeSpace": 10187100160,
+    "DriveType": 3
+  },
+  "note": "Medición local con servicios de otros proyectos activos; no equivale a un VPS aislado.",
+  "postgresContainer": {
+    "image": "postgis/postgis:17-3.5",
+    "memoryBytes": 0,
+    "nanoCpus": 0
+  },
+  "activeContainers": 10,
+  "docker": {
+    "cpus": 8,
+    "memoryBytes": 5127766016
+  },
+  "measuredAt": "2026-10-26T06:28:49.5086138Z",
+  "sharedHost": true,
+  "disks": {
+    "Model": "BIWIN SSD LN860 1TB",
+    "Size": 1024203640320,
+    "MediaType": "Fixed hard disk media",
+    "InterfaceType": "SCSI"
+  }
+}

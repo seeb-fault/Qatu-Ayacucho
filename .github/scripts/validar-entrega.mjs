@@ -3,8 +3,8 @@ import { appendFileSync, existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-const entregas = ['base', '001', '002', '003'];
-const carpetas = ['001-descubrimiento-ofertas', '002-usuarios-acceso', '003-proveedores-verificacion'];
+const entregas = ['base', '001', '002', '003', '004'];
+const carpetas = ['001-descubrimiento-ofertas', '002-usuarios-acceso', '003-proveedores-verificacion', '004-catalogo-publicaciones'];
 const artefactos = ['spec.md', 'plan.md', 'tasks.md', 'research.md', 'data-model.md', 'quickstart.md', 'contracts/api.md', 'checklists/requirements.md'];
 
 export function validarEntrega(root) {
@@ -37,11 +37,16 @@ export function validarEntrega(root) {
     ausente('backend/src/modules/proveedores');
     ausente('frontend/src/components/proveedores');
   }
+  if (indice >= 4) {
+    for (const relative of ['backend/src/modules/catalogo/catalogo.module.ts','backend/migrations/catalogo/001-publicaciones.sql','backend/test/catalogo/persistencia.test.ts','frontend/src/app/publicar/page.tsx','frontend/playwright.catalogo.config.ts','frontend/tests/catalogo/publicaciones.spec.ts']) requerir(relative);
+    scripts('frontend/package.json',['test:catalogo']);
+  } else ausente('backend/src/modules/catalogo');
   return {
     entrega: manifest.ultimaEntrega,
     frontend: indice >= 1,
     backend: indice >= 2,
     proveedores: indice >= 3,
+    catalogo: indice >= 4,
     specs: existsSync(resolve(root, '.specify/scripts/powershell/check-prerequisites.ps1')),
   };
 }

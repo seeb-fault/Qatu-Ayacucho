@@ -7,6 +7,12 @@ export class Proveedores {
 
   zonas() { return this.repo.zonas(); }
 
+  async habilitados() {
+    const perfiles = await this.repo.publicables();
+    const activos = new Set(await this.identidad.cuentasActivas(perfiles.map(p=>p.usuarioId)));
+    return perfiles.filter(p=>activos.has(p.usuarioId)).map(p=>({id:p.id,nombrePublico:p.nombrePublico,estadoVerificacion:p.estadoVerificacion}));
+  }
+
   async propio(token: string) {
     const actor = await this.identidad.resolver(token);
     const perfil = await this.repo.porUsuario(actor.id);

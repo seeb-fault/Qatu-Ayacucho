@@ -37,3 +37,11 @@ La estructura de SDD y la cobertura de identificadores están verificadas. No se
 ## Avance de la entrega 001
 
 Prototipo Next.js implementado y validado: build/TypeScript correctos y 13 pruebas Chrome aprobadas. Nueve tareas de prototipo completadas; T007/T009/T012 permanecen pendientes de integración real. [Evidencia](./001-descubrimiento-ofertas/quickstart.md). Esto no cambia el estado pendiente de los demás módulos ni de las pruebas EQ completas.
+
+## Implementación 004 (2026-10-26)
+
+Catálogo, editor y moderación implementados con datos persistidos y fachadas acíclicas. D04 resuelta y contratos sincronizados; D02 no habilita nuevas operaciones. El catálogo real es predeterminado, con modo demo explícito separado. Evidencias locales de dominio/PostgreSQL/E2E en quickstart 004. T023/T027 permanecen abiertas para el ensayo de carga global y la aceptación completa de calidad; no se presenta como cumplida por pasar pruebas funcionales.
+
+## Cierre funcional local 004 (2026-10-26)
+
+CI del código: 51 pruebas backend, 28 E2E y 8 del detector aprobadas. Ensayo local de 20 minutos: 75357 peticiones medidas, cero errores técnicos/contrato; p95 de 51/122/388 ms a 10/30/60 usuarios. SQL conserva snapshot/orden y calcula recursos después de paginar (800 → 20 evaluaciones). T023 cerrada para este protocolo local; T027 mantiene el ensayo global con Reservas y VPS en seguimiento de 005/008. Revisión humana independiente y EQ-06 con participantes siguen pendientes. Evidencias en cierre.md y evidencias/carga-local.json; no se infiere aceptación global del MVP.

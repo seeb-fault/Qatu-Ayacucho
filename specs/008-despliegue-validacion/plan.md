@@ -17,3 +17,7 @@ Construir y probar imágenes → definir health/secrets/red/volúmenes → copia
 Publicación depende de dominio/host y presupuesto elegidos. Integración final depende de sandbox, mensajes y mapas reales según RC04–RC06. Falta de credenciales queda bloqueante, no se sustituye por simulación silenciosa.
 
 [Validación](./quickstart.md).
+
+## Evidencia transversal pendiente de 004
+
+Repetir el ensayo global EQ-01/EQ-03 en el VPS con el módulo de Reservas implementado: 100 proveedores, 1000 publicaciones, 5000 reservas, mezcla 70/20/10, calentamiento y carga definidos por los escenarios fuente. La medición local aislada de Catálogo 004 no sustituye ese ensayo. Conservar pendientes la revisión humana independiente y EQ-06 con cinco participantes, sin inferirlas de capturas o E2E automatizadas.
