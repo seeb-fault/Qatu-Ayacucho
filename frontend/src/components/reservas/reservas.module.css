@@ -19,4 +19,9 @@
 .card dt { color: var(--muted); }
 .card dd { margin: 0; }
 .hint { color: var(--muted); font-size: 13px; }
+.form .check { display: flex; align-items: flex-start; gap: 10px; font-weight: 500; }
+.form .check input { flex: 0 0 19px; width: 19px; min-height: 19px; margin-top: 4px; accent-color: var(--forest); }
+.card details { border-top: 1px solid var(--line); margin-top: 20px; padding-top: 16px; }
+.card summary { cursor: pointer; font-weight: 600; }
+.card .notice { margin: 16px 0; }
 @media (max-width: 640px) { .panel { margin: 20px 0 40px; padding: 20px; } .dates { grid-template-columns: 1fr; } .card { padding: 16px; } .card dl { grid-template-columns: 1fr; gap: 4px; } .card dd { margin-bottom: 10px; } }
