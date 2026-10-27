@@ -1,4 +1,5 @@
 import type { NuevaSolicitud, Solicitud } from './solicitud';
+import type { AccionReserva } from './alquiler';
 
 export interface IdentidadReservas { resolver(token: string): Promise<{ id: string }> }
 export interface CatalogoReservas {
@@ -15,4 +16,7 @@ export interface RepositorioReservas {
   porId(id: string, actorId: string): Promise<Solicitud | null>;
   listar(actorId: string, vista: 'cliente' | 'proveedor', page: number): Promise<{ items: Solicitud[]; total: number }>;
   rechazar(id: string, propietarioId: string, versionActual: number, motivo: string): Promise<Solicitud>;
+  vencer(): Promise<number>;
+  ejecutar(id: string, actorId: string, versionActual: number, accion: AccionReserva, motivo: string | null): Promise<Solicitud>;
+  disponibilidad(recursoId: string, inicio: string, fin: string): Promise<{franjas: {inicio: string; fin: string}[]; enUso: boolean}>;
 }
