@@ -74,7 +74,7 @@ export function transicion(actual: Solicitud, actorId: string, accion: AccionRes
       estado('DEVOLUCION_PENDIENTE'); s.estado = 'EN_CURSO'; s.devolucionInformadaEn = null; break;
     case 'devolucion/confirmacion': {
       estado('DEVOLUCION_PENDIENTE');
-      if (!s.condiciones || !s.devolucionInformadaEn) conflicto();
+      if (!s.condiciones || !s.devolucionInformadaEn || Date.parse(s.devolucionInformadaEn) > ahora || Date.parse(s.devolucionInformadaEn) < Date.parse(s.entregadoEn!)) conflicto();
       const total = liquidar(s.condiciones!, s.fin, s.devolucionInformadaEn!);
       s.estado = 'DEVUELTA'; s.devueltoEn = s.devolucionInformadaEn; Object.assign(s, total); break;
     }

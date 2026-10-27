@@ -32,7 +32,7 @@ test('solicitudes persistidas: privacidad, snapshot, bandejas, rechazo concurren
     const r = await pedir('/publicaciones', 'POST', datos, proveedor); assert.equal(r.status, 201); oferta = await r.json();
     const sr = await pedir('/publicaciones', 'POST', { ...datos, tipo: 'servicio', categoriaId: 'electricidad', modalidadPrecio: 'cotizacion', tarifaCentimos: null, unidad: null, recursos: [{ identificador: 'Agenda', activo: true }] }, proveedor); assert.equal(sr.status, 201); servicio = await sr.json();
     const inicio = new Date(Date.now() + 3 * 86400000).toISOString(), fin = new Date(Date.now() + 4 * 86400000).toISOString();
-    const entrada = { publicacionId: oferta.id, recursoId: oferta.recursos.find((r: any) => r.activo).id, inicio, fin };
+    const entrada = { publicacionId: oferta.id, recursoId: oferta.recursos.find((r: any) => r.activo).id, inicio, fin, aceptaCondiciones: true, tarifaEsperadaCentimos: 4250 };
 
     await context.test('rechaza anónimos, suplantación, origen ajeno, recursos inactivos/ajenos y oferta propia', async () => {
       assert.equal((await pedir('/reservas', 'POST', entrada)).status, 401);
