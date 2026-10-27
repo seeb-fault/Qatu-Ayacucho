@@ -1,5 +1,9 @@
 # API Qatu — Usuarios, Proveedores y Catálogo
 
+## Incremento 005.1 — Solicitudes
+
+Aplicar `npm run migrate` para incorporar `reservas/001-solicitudes`. `POST /api/v1/reservas` solicita una oferta pública/unidad activa; `GET /api/v1/reservas?vista=cliente|proveedor` y `GET /api/v1/reservas/:id` consultan participación propia. `POST /api/v1/reservas/:id/rechazo` exige titular, versión y motivo. PENDIENTE no bloquea; la tarifa se conserva solo como referencia. Aceptación, cotización y pagos siguen pendientes. Solicitud/rechazo y outbox se guardan juntos, sin consumidor externo todavía. `npm test` incluye las pruebas de Reservas; la integración requiere TEST_DATABASE_URL de pruebas. [Contrato y límites](../specs/005-reservas-contratacion-pagos/contracts/api.md).
+
 NestJS 11/TypeScript, PostgreSQL y puertos por módulo. Implementa registro, login, perfil propio, logout y administración auditada (US1/US2/US3, RF12/RF14). El catálogo usa PostgreSQL mediante la API; los fixtures del frontend requieren modo demo explícito.
 
 Proveedores 003 añade perfil propio, zona manual, consulta pública optativa, documentación cifrada y revisión administrativa con historial. Aplicar todas las migraciones antes de arrancar: el módulo limpia adjuntos de cuentas inactivas al iniciar y cada hora. Configuración y conservación en [PROVEEDORES.md](./PROVEEDORES.md).

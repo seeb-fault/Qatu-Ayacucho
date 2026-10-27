@@ -8,4 +8,6 @@ export class ConsultaProveedores {
   habilitados() { return this.proveedores.habilitados(); }
 
   consultar(id: string) { return this.proveedores.publico(id); }
+
+  titular(id: string) { return this.proveedores.titular(id); }
 }

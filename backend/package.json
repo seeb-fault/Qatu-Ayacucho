@@ -12,7 +12,7 @@
     "documentos:limpiar": "node --env-file-if-exists=.env --import tsx scripts/limpiar-documentos.ts",
     "test:carga:catalogo": "node scripts/carga-catalogo.mjs",
     "carga:preparar": "node scripts/preparar-carga-catalogo.mjs",
-    "test": "node --env-file-if-exists=.env --import tsx --test --test-concurrency=1 test/usuarios/*.test.ts test/proveedores/*.test.ts test/catalogo/*.test.ts"
+    "test": "node --env-file-if-exists=.env --import tsx --test --test-concurrency=1 test/usuarios/*.test.ts test/proveedores/*.test.ts test/catalogo/*.test.ts test/reservas/*.test.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.0",
