@@ -1,4 +1,5 @@
 import { ErrorAplicacion } from '../../../shared/dominio/error-aplicacion';
+import type { CondicionesAlquiler, EstadoReserva } from './alquiler';
 
 export class ErrorReserva extends ErrorAplicacion {}
 export interface SnapshotSolicitud {
@@ -20,12 +21,25 @@ export interface Solicitud {
   fin: string;
   descripcionTrabajo: string;
   snapshot: SnapshotSolicitud;
-  estado: 'PENDIENTE' | 'RECHAZADA';
+  estado: EstadoReserva;
   motivoRechazo: string | null;
   version: number;
   creadoEn: string;
+  tipoSolicitud: 'alquiler' | 'visita';
+  condiciones: CondicionesAlquiler | null;
+  venceEn: string | null;
+  pagoEstado: 'PENDIENTE' | 'REGISTRADO_PROVEEDOR' | 'CONFIRMADO_PARTICIPANTES';
+  efectivoCentimos: number;
+  entregadoEn: string | null;
+  recibidoEn: string | null;
+  devolucionInformadaEn: string | null;
+  devueltoEn: string | null;
+  importeFinalCentimos: number | null;
+  saldoCentimos: number;
+  diasExtra: number;
+  motivoOperacion: string | null;
 }
-export type NuevaSolicitud = Omit<Solicitud, 'id' | 'estado' | 'motivoRechazo' | 'version' | 'creadoEn'>;
+export type NuevaSolicitud = Pick<Solicitud, 'clienteId' | 'propietarioId' | 'proveedorId' | 'publicacionId' | 'recursoId' | 'inicio' | 'fin' | 'descripcionTrabajo' | 'snapshot' | 'tipoSolicitud' | 'condiciones'>;
 
 export function invalida(mensaje = 'Revisa los datos de la solicitud.'): never {
   throw new ErrorReserva('ENTRADA_INVALIDA', 400, mensaje);
@@ -42,18 +56,23 @@ export function texto(value: unknown, min: number, max: number): string {
   if (typeof value !== 'string' || Array.from(value.trim()).length < min || Array.from(value.trim()).length > max || /[\u0000-\u001f\u007f]/.test(value.replace(/[\r\n\t]/g, ''))) invalida();
   return value.trim();
 }
-function instante(value: unknown): string {
+export function instante(value: unknown): string {
   if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/.test(value)) invalida('Envía las fechas en UTC.');
   const fecha = new Date(value);
   if (!Number.isFinite(fecha.getTime()) || fecha.toISOString() !== value.replace(/:([0-9]{2})Z$/, ':$1.000Z')) invalida('Fecha inválida.');
   return fecha.toISOString();
 }
 export function entradaSolicitud(value: unknown, ahora: number) {
-  const d = objeto(value, ['publicacionId', 'recursoId', 'inicio', 'fin', 'descripcionTrabajo']);
+  const d = objeto(value, ['publicacionId', 'recursoId', 'inicio', 'fin', 'descripcionTrabajo', 'tipoSolicitud', 'aceptaCondiciones', 'tarifaEsperadaCentimos']);
+  if (d.tipoSolicitud !== undefined && !['alquiler','visita'].includes(String(d.tipoSolicitud))) invalida();
+  if (d.aceptaCondiciones !== undefined && typeof d.aceptaCondiciones !== 'boolean') invalida();
+  if (d.tarifaEsperadaCentimos !== undefined && (typeof d.tarifaEsperadaCentimos !== 'number' || !Number.isSafeInteger(d.tarifaEsperadaCentimos) || d.tarifaEsperadaCentimos < 1)) invalida();
   const inicio = instante(d.inicio), fin = instante(d.fin);
   if (Date.parse(inicio) <= ahora || inicio >= fin) invalida('El inicio debe ser futuro y anterior al fin.');
   return { publicacionId: uuid(d.publicacionId), recursoId: uuid(d.recursoId), inicio, fin,
-    descripcionTrabajo: d.descripcionTrabajo === undefined ? '' : texto(d.descripcionTrabajo, 0, 1500) };
+    descripcionTrabajo: d.descripcionTrabajo === undefined ? '' : texto(d.descripcionTrabajo, 0, 1500),
+    tipoSolicitud: (d.tipoSolicitud ?? 'alquiler') as 'alquiler' | 'visita', aceptaCondiciones: d.aceptaCondiciones === true,
+    tarifaEsperadaCentimos: d.tarifaEsperadaCentimos as number | undefined };
 }
 export function entradaRechazo(value: unknown) {
   const d = objeto(value, ['versionActual', 'motivo']);
