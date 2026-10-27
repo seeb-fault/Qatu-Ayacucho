@@ -24,6 +24,12 @@ Conservar monolito modular reduce operación para un VPS/equipo pequeño; extrae
 
 ## Resultado
 
+### Incremento 005.1
+
+Se inicia únicamente el recorrido de solicitud PENDIENTE, consulta propia y rechazo con motivo. Estas operaciones no calculan precio comercial, no bloquean recursos y no cobran; D05–D08 continúan pendientes. La tarifa de referencia se captura desde Catálogo y se identifica como referencia, sin comisión ni total. La aceptación y su duración no se deducen de la propuesta de 15 minutos. Los eventos se persisten, pero la entrega externa queda pendiente de D08.
+
+El usuario autorizó iniciar el siguiente módulo y publicar el registro del CI. Se solicitaron las decisiones de cómputo de duración (D05) y vencimiento (parte de D06); no se consideran resueltas por el silencio. El resto de US1 y US2–US4 conserva sus bloqueos y criterios de aceptación.
+
 Plan elaborado contra documentación existente; decisiones pendientes aún sin resolver. Documentar decisión, fecha, responsable y cambios de contrato antes de ejecutar tareas bloqueadas.
 
 ## D12 — Coherencia entre hitos y evidencias

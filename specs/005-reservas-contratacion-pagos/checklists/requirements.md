@@ -9,6 +9,8 @@
 
 ## Aceptación funcional (pendiente)
 
+El incremento 005.1 tiene alcance propio en contracts/api.md y tasks.md (T037–T040). Su validación no cierra US1–US4 ni las decisiones D05–D08/D12. No hay pagos, reservas confirmadas ni envíos externos simulados. Los imports de Reservas se limitan a fachadas de Usuarios, Proveedores y Catálogo; su repositorio consulta únicamente sus tablas.
+
 - [ ] Ejecutar US positivos y negativos con persistencia real cuando aplica.
 - [ ] Comprobar EQ-04, EQ-05, EQ-06, EQ-07, EQ-08 y guardar evidencia de condiciones/resultados.
 - [ ] Verificar seguridad, estados web y logs sin secretos.

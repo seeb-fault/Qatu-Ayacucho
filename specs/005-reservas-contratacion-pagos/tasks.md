@@ -1,6 +1,13 @@
 # Tareas — Reservas, contratación y pagos
 
-Estado: pendiente. Alcance documental; ninguna tarea de código se ha ejecutado.
+Estado: implementación incremental iniciada. 005.1 cubre solo solicitudes, bandejas y rechazo. Las tareas originales de historias completas conservan sus pendientes; no se acredita US1 sin aceptación/bloqueo concurrente.
+
+## Incremento 005.1 — Subconjunto no bloqueado
+
+- [x] T037 Definir DTO, permisos y límites del subconjunto en contracts/api.md y sincronizar el contrato externo; conservar D05–D08 abiertas.
+- [x] T038 Implementar solicitud/snapshot de referencia, consulta participante y rechazo con versión en backend/src/modules/reservas/; migración y eventos atómicos propios, sin consultas a tablas ajenas.
+- [x] T039 Integrar formulario y bandejas en frontend/src/app/reservas/ y frontend/src/components/reservas/; enlaces desde oferta, cuenta y navegación.
+- [x] T040 Verificar dominio, HTTP/PostgreSQL, rollback de outbox y recorrido de navegador; registrar resultados en quickstart.md y activar CI específico sin declarar completa 005.
 
 ## Fase 1 — Preparación
 

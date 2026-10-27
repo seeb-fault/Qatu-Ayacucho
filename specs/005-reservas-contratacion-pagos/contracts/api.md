@@ -2,6 +2,21 @@
 
 **Base:** /api/v1, JSON, ISO 8601; actor del contexto autenticado. Diseño, no API publicada.
 
+## Incremento 005.1 — Solicitudes sin aceptación comercial
+
+Contrato de implementación para HU03/HU04 y la parte no bloqueante de US1. El resto de las rutas de este documento continúa como diseño pendiente. No se implementan aceptación, bloqueo, cotización, cobro ni cancelación con efectos económicos mientras D05–D08 estén abiertas.
+
+| Método | Ruta | Entrada y permisos |
+|---|---|---|
+| POST | /reservas | Sesión activa. JSON estricto: publicacionId, recursoId, inicio, fin, descripcionTrabajo opcional (obligatoria de 20–1500 caracteres para servicios). Fechas futuras UTC `YYYY-MM-DDTHH:mm:ss[.sss]Z`, intervalo [inicio,fin). Solo oferta pública vigente y unidad activa; no se admite solicitar una oferta propia. |
+| GET | /reservas | Sesión activa. `vista=cliente` (predeterminado) o `proveedor`, `page` 1–9999. Devuelve solo participación propia, 20 registros por página, orden creadoEn/id descendente. Una cuenta sin perfil de proveedor obtiene una bandeja recibida vacía. |
+| GET | /reservas/:id | Solo cliente o usuario titular del proveedor. Terceros, incluso administradores sin participación, reciben 404. |
+| POST | /reservas/:id/rechazo | Solo titular participante. JSON estricto `{versionActual,motivo}`; versión entera positiva y motivo de 10–500 caracteres. Únicamente PENDIENTE → RECHAZADA. Una respuesta concurrente o versión antigua devuelve 409. |
+
+La respuesta incluye id, proveedorId, publicacionId, recursoId, inicio, fin, descripcionTrabajo, snapshot, estado, motivoRechazo, version, creadoEn y participacion (cliente/proveedor). No expone los IDs de cuentas. El snapshot conserva título, tipo, nombre público del proveedor, identificador de unidad y tarifa/unidad de referencia consultados en servidor; **no constituye cotización ni total aceptado**. Solicitudes y eventos mínimos se guardan en una sola transacción; los eventos permanecen pendientes, sin afirmar envío externo. PENDIENTE no bloquea recursos. No existe estado CONFIRMADA en este incremento.
+
+La misma cuenta no puede tener dos solicitudes PENDIENTE para el mismo recurso e intervalo exacto (409); solicitudes de clientes distintos o intervalos parcialmente coincidentes sí se permiten porque no son bloqueos. Los campos clienteId, propietarioId, estado, importe y snapshot enviados por el navegador se rechazan (400). CSRF y sesión siguen el mecanismo de 002. Proveedores expone titularidad solo por fachada interna; Reservas no consulta sus tablas.
+
 ## Rutas tomadas del diseño vigente
 
 | Método | Ruta relativa | Acceso | Condición |

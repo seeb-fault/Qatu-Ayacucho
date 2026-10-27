@@ -1,6 +1,6 @@
 # 005 — Reservas, contratación y pagos
 
-**Estado:** especificado; implementación y aceptación pendientes. **Fecha:** 2026-10-15.
+**Estado:** incremento 005.1 en implementación: solicitudes y rechazo; aceptación comercial, pagos y aceptación global pendientes. **Fecha:** 2026-10-15; inicio del incremento: 2026-10-27.
 **Módulo técnico:** reservas. **Historias:** HU03, HU04, HU05, HU06, HU07, HU08, HU09, HU19, HU20.
 
 ## Objetivo y alcance

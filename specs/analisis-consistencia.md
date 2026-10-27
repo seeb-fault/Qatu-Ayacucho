@@ -1,5 +1,11 @@
 # Análisis de consistencia SDD
 
+## Incremento 005.1 (2026-10-27)
+
+Contrato acotado sincronizado entre 005/contracts/api.md y contratos externos: solicitud PENDIENTE, bandejas participantes y rechazo versionado con motivo. Reservas consume las fachadas de Usuarios, Proveedores y Catálogo sin importar sus repositorios; su infraestructura consulta solo reservas/reservas_outbox. La titularidad se expone únicamente por fachada interna, sin incorporarla al perfil público ni a las respuestas HTTP de Reservas.
+
+La solicitud/rechazo y el evento mínimo son atómicos; se prueba rollback ante fallo de outbox. PENDIENTE no bloquea disponibilidad. No hay cálculo comercial, aceptación, pago ni entrega de notificaciones simulados. D05–D08/D12 siguen abiertas. El manifiesto mantiene 004 como última entrega y declara 005.1 como incremento probado; no se cierran US1–US4, EQ-07 ni EQ-08 por este avance.
+
 **Fecha:** 2026-10-15. Revisión documental del asistente; no es resultado de aceptación de aplicación ni ejecución del skill /speckit-analyze.
 
 ## Cobertura
