@@ -11,4 +11,19 @@ export class ReservasController {
   @Get() listar(@Req() r: Request, @Query() q: unknown) { return this.reservas.listar(token(r), q); }
   @Get(':id') consultar(@Req() r: Request, @Param('id') id: string) { return this.reservas.consultar(token(r), id); }
   @Post(':id/rechazo') rechazar(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.rechazar(token(r), id, d); }
+  @Post(':id/aceptacion') aceptar(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'aceptacion',d); }
+  @Post(':id/visita') visita(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'visita',d); }
+  @Post(':id/ampliacion') ampliar(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'ampliacion',d); }
+  @Post(':id/cancelacion') cancelar(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'cancelacion',d); }
+  @Post(':id/efectivo') efectivo(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'efectivo',d); }
+  @Post(':id/recepcion') recepcion(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'recepcion',d); }
+  @Post(':id/devolucion/aviso') aviso(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'devolucion/aviso',d); }
+  @Post(':id/devolucion/confirmacion') devolucion(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'devolucion/confirmacion',d); }
+  @Post(':id/devolucion/rechazo') rechazarDevolucion(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'devolucion/rechazo',d); }
+}
+
+@Controller('recursos')
+export class DisponibilidadController {
+  constructor(@Inject(Reservas) private readonly reservas: Reservas) {}
+  @Get(':id/disponibilidad') consultar(@Param('id') id: string, @Query() q: unknown) { return this.reservas.disponibilidad(id,q); }
 }
