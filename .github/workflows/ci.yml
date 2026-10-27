@@ -28,6 +28,7 @@ jobs:
       backend: ${{ steps.alcance.outputs.backend }}
       proveedores: ${{ steps.alcance.outputs.proveedores }}
       catalogo: ${{ steps.alcance.outputs.catalogo }}
+      reservas: ${{ steps.alcance.outputs.reservas }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -159,6 +160,9 @@ jobs:
       - name: Probar catálogo y publicaciones
         if: needs.especificaciones.outputs.catalogo == 'true'
         run: npm run test:catalogo -- --output=test-results/catalogo
+      - name: Probar solicitudes de reservas (incremento 005.1)
+        if: needs.especificaciones.outputs.reservas == 'true'
+        run: npm run test:reservas -- --output=test-results/reservas
       - name: Guardar evidencias sintéticas
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9

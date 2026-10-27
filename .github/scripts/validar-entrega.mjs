@@ -9,9 +9,13 @@ const artefactos = ['spec.md', 'plan.md', 'tasks.md', 'research.md', 'data-model
 
 export function validarEntrega(root) {
   const manifest = JSON.parse(readFileSync(resolve(root, '.github/entrega.json'), 'utf8'));
-  assert.deepEqual(Object.keys(manifest), ['ultimaEntrega'], 'El manifiesto solo acepta ultimaEntrega');
+  assert.deepEqual(Object.keys(manifest).sort(), manifest.incrementos === undefined ? ['ultimaEntrega'] : ['incrementos','ultimaEntrega'], 'Campos desconocidos en manifiesto');
   const indice = entregas.indexOf(manifest.ultimaEntrega);
   assert.ok(indice >= 0, 'Entrega desconocida');
+  const incrementos = manifest.incrementos ?? [];
+  assert.ok(Array.isArray(incrementos) && incrementos.every(i => i === '005.1') && new Set(incrementos).size === incrementos.length, 'Incremento desconocido o repetido');
+  const reservas = incrementos.includes('005.1');
+  assert.ok(!reservas || indice >= 4, 'Solicitudes requiere Catálogo 004');
   const requerir = relative => assert.ok(existsSync(resolve(root, relative)), `Falta ${relative}`);
   const ausente = relative => assert.ok(!existsSync(resolve(root, relative)), `No corresponde ${relative} en esta entrega`);
   for (let posicion = 0; posicion < indice; posicion++) {
@@ -41,12 +45,18 @@ export function validarEntrega(root) {
     for (const relative of ['backend/src/modules/catalogo/catalogo.module.ts','backend/migrations/catalogo/001-publicaciones.sql','backend/test/catalogo/persistencia.test.ts','frontend/src/app/publicar/page.tsx','frontend/playwright.catalogo.config.ts','frontend/tests/catalogo/publicaciones.spec.ts']) requerir(relative);
     scripts('frontend/package.json',['test:catalogo']);
   } else ausente('backend/src/modules/catalogo');
+  if (reservas) {
+    for (const artefacto of artefactos) requerir(`specs/005-reservas-contratacion-pagos/${artefacto}`);
+    for (const relative of ['backend/src/modules/reservas/reservas.module.ts','backend/migrations/reservas/001-solicitudes.sql','backend/test/reservas/persistencia.test.ts','frontend/src/app/reservas/page.tsx','frontend/playwright.reservas.config.ts','frontend/tests/reservas/solicitudes.spec.ts']) requerir(relative);
+    scripts('frontend/package.json',['test:reservas']);
+  } else ausente('backend/src/modules/reservas');
   return {
     entrega: manifest.ultimaEntrega,
     frontend: indice >= 1,
     backend: indice >= 2,
     proveedores: indice >= 3,
     catalogo: indice >= 4,
+    reservas,
     specs: existsSync(resolve(root, '.specify/scripts/powershell/check-prerequisites.ps1')),
   };
 }

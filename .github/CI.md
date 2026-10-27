@@ -18,6 +18,8 @@ Las ramas se preparan de forma apilada para conservar dependencias. Publicarlas 
 
 `.github/entrega.json` declara la última entrega implementada. Un detector validado con pruebas exige sus especificaciones y aplicaciones; quitar un módulo exigido hace fallar el CI. No se omiten pruebas solo porque falte una carpeta.
 
+El campo opcional `incrementos` declara avances parciales: `005.1` exige los artefactos y pruebas de solicitudes y activa `test:reservas` después de Catálogo, conservando `ultimaEntrega=004`. No declara terminado el módulo 005. El backend incluye sus pruebas en `npm test`; las E2E usan las bases efímeras y se ejecutan secuencialmente con las demás suites.
+
 | Entrega declarada | Especificaciones y evidencias | Backend | Frontend |
 | --- | --- | --- | --- |
 | base | Detector, seguridad y Spec Kit cuando exista | No aplica, job omitido | No aplica, job omitido |

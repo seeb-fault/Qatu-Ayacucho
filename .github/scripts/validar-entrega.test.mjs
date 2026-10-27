@@ -19,7 +19,7 @@ function escenario(context, entrega) {
 
 test('base declara explícitamente que no hay aplicaciones', context => {
   const { root } = escenario(context, 'base');
-  assert.deepEqual(validarEntrega(root), { entrega: 'base', frontend: false, backend: false, proveedores: false, catalogo: false, specs: false });
+  assert.deepEqual(validarEntrega(root), { entrega: 'base', frontend: false, backend: false, proveedores: false, catalogo: false, reservas: false, specs: false });
 });
 
 test('no acepta entrega desconocida', context => {
@@ -67,4 +67,23 @@ test('004 rechaza la entrega si falta su migración de persistencia',context=>{
 });
 test('no permite adelantar catálogo sin declarar su entrega',context=>{
  const {root,crear}=escenario(context,'base');crear('backend/src/modules/catalogo/catalogo.module.ts');assert.throws(()=>validarEntrega(root),/No corresponde backend\/src\/modules\/catalogo/);
+});
+
+function prepararSolicitudes(context) {
+  const root = prepararCatalogo(context);
+  const crear = (relative, content = '') => { const target=join(root,relative); mkdirSync(dirname(target),{recursive:true});writeFileSync(target,content); };
+  crear('.github/entrega.json', JSON.stringify({ultimaEntrega:'004',incrementos:['005.1']}));
+  for (const nombre of ['spec.md','plan.md','tasks.md','research.md','data-model.md','quickstart.md','contracts/api.md','checklists/requirements.md']) crear(`specs/005-reservas-contratacion-pagos/${nombre}`);
+  for (const nombre of ['backend/src/modules/reservas/reservas.module.ts','backend/migrations/reservas/001-solicitudes.sql','backend/test/reservas/persistencia.test.ts','frontend/src/app/reservas/page.tsx','frontend/playwright.reservas.config.ts','frontend/tests/reservas/solicitudes.spec.ts']) crear(nombre);
+  crear('frontend/package.json',JSON.stringify({scripts:Object.fromEntries(['build','typecheck','test','test:usuarios','test:acceso','test:proveedores','test:catalogo','test:reservas'].map(n=>[n,'comando']))}));
+  return root;
+}
+test('005.1 habilita solicitudes sin declarar completa la entrega 005',context=>{
+  const resultado=validarEntrega(prepararSolicitudes(context));assert.equal(resultado.entrega,'004');assert.equal(resultado.reservas,true);
+});
+test('005.1 no permite omitir el recorrido de navegador',context=>{
+  const root=prepararSolicitudes(context);rmSync(join(root,'frontend/tests/reservas/solicitudes.spec.ts'));assert.throws(()=>validarEntrega(root),/tests\/reservas/);
+});
+test('no permite incorporar Reservas sin declarar el incremento',context=>{
+  const root=prepararSolicitudes(context);writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004'}));assert.throws(()=>validarEntrega(root),/No corresponde backend\/src\/modules\/reservas/);
 });

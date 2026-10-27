@@ -1,6 +1,6 @@
 # Plan técnico — Reservas, contratación y pagos
 
-**Estado:** plan documental; código, migraciones y pruebas aún no ejecutados.
+**Estado:** implementación incremental iniciada. 005.1 cubre solicitud PENDIENTE, bandejas privadas y rechazo con motivo. Aceptación, bloqueos, cotización y pagos continúan pendientes de sus decisiones.
 
 ## Technical Context
 
@@ -26,6 +26,8 @@ ConsultaDisponibilidad y ConsultaReservas; eventos de estado por outbox; Procesa
 Los endpoints nuevos se etiquetan como propuestas en [contratos](./contracts/api.md). Se deben sincronizar con el diseño externo/OpenAPI antes de programarlos. Las referencias entre módulos no autorizan lecturas directas.
 
 ## Secuencia técnica
+
+Antes de las operaciones comerciales se implementa el subconjunto independiente 005.1, definido en contracts/api.md: validar oferta/unidad por fachada, derivar participantes del servidor, persistir solicitud y evento mínimo juntos, consultar solo participación propia y rechazar con versión/motivo. No se implementan los pasos dependientes de D05–D08 hasta resolverlos. La tarifa conservada es referencia histórica y no un cálculo comercial. El manifiesto mantiene ultimaEntrega=004 y declara incrementos=[005.1] para ejecutar sus pruebas sin declarar completa 005.
 
 1. Resolver D05-D08 y revisar contratos/estados con snapshots.
 2. Crear reserva/bloqueos/cotizaciones y exclusión PostgreSQL.

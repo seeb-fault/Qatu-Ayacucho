@@ -65,3 +65,7 @@ Fuentes verificadas el 13/10/2026: [Culqi cargos y Yape](https://docs.culqi.com/
 ## Contrato implementado en Spec 004 (2026-10-26)
 
 Alta/edición de ofertas, consulta propia, catálogo público y moderación administrativa se detallan en [contrato de Catálogo](../../../specs/004-catalogo-publicaciones/contracts/api.md). Este contrato concreta D04: búsqueda española sin tildes, límites 20/50, céntimos enteros PEN, recursos estables, control de versión, propiedad y auditoría de moderación. Publicación requiere cuenta activa y perfil aprobado/público. No habilita reservas, pagos ni decide D02.
+
+## Incremento 005.1: solicitudes de reserva
+
+Contrato acotado de implementación: `POST /api/v1/reservas`, `GET /api/v1/reservas?vista=cliente|proveedor&page=1`, `GET /api/v1/reservas/:id` y `POST /api/v1/reservas/:id/rechazo`. Los DTO, permisos y estados PENDIENTE/RECHAZADA se detallan en [005/contracts/api.md](../../../specs/005-reservas-contratacion-pagos/contracts/api.md#incremento-0051--solicitudes-sin-aceptación-comercial). PENDIENTE no bloquea; el rechazo exige titularidad, motivo y versión. Aceptación, pagos y las demás rutas de Reservas siguen como diseño pendiente de decisiones comerciales.

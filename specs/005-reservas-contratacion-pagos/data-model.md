@@ -1,6 +1,12 @@
 # Modelo de datos — Reservas, contratación y pagos
 
-**Fuente:** [modelo lógico Qatu](../../docs/03-diseño-de-software/modelo-de-datos.md). Esta vista pertenece a reservas; no es una migración aplicada.
+**Fuente:** [modelo lógico Qatu](../../docs/03-diseño-de-software/modelo-de-datos.md). Esta vista pertenece a Reservas; distingue el esquema implementado en 005.1 del modelo completo todavía propuesto.
+
+## Esquema del incremento 005.1
+
+La migración `backend/migrations/reservas/001-solicitudes.sql` crea `reservas` y `reservas_outbox`. `reservas` registra IDs lógicos de cliente, usuario titular del proveedor, proveedor, publicación y recurso; intervalo UTC, descripción, snapshot de referencia, estado PENDIENTE/RECHAZADA, motivo, versión y creación. Comprueba intervalo finito no vacío, cliente distinto del titular y coherencia del motivo. Un índice parcial impide duplicados exactos pendientes del mismo cliente/recurso/rango; no excluye solapamientos entre solicitudes. Los índices de cliente/titular soportan sus bandejas.
+
+`reservas_outbox` referencia la solicitud y registra tipo, payload mínimo (reservaId/version), estado, intentos y próximo intento. No hay consumidor externo ni afirmación de entrega. Las transacciones de creación/rechazo guardan estado y evento juntos. El rollback manual está en `001-solicitudes.down.sql`. Bloqueos, cotizaciones, vencimientos e intentos de pago aún no tienen migración ni se simulan. Los campos del modelo completo que siguen abajo continúan como diseño propuesto.
 
 ## Datos propios
 
