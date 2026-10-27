@@ -19,6 +19,26 @@ La misma cuenta no puede tener dos solicitudes PENDIENTE para el mismo recurso e
 
 ## Rutas tomadas del diseño vigente
 
+### Incremento 005.2 — Herramientas, apartado y efectivo (acuerdo 2026-10-27)
+
+`POST /reservas` admite además `tipoSolicitud` (`alquiler` predeterminado, `visita`) y `aceptaCondiciones` (true obligatorio para nuevos alquileres de herramientas). Cada solicitud nueva conserva condiciones comerciales calculadas en servidor; las antiguas sin condiciones pueden consultarse/rechazarse, pero requieren nueva solicitud para aceptar.
+
+Todas las mutaciones siguientes son POST de participante autenticado, JSON estricto con `versionActual` positiva. Estados/versiones caducados producen 409; terceros reciben 404. Cada mutación y evento se guardan atómicamente; ningún endpoint recibe importes ni fechas de efectivo/devolución del navegador.
+
+| Sufijo de /reservas/:id | Actor / entrada adicional | Efecto |
+|---|---|---|
+| /aceptacion | Proveedor; sin campos adicionales | Solo alquiler de herramienta con condiciones vigentes: PENDIENTE → ACEPTADA, exclusión GiST recurso/rango y vencimiento en 60 min. |
+| /visita | Proveedor; `motivo` 10–500 | PENDIENTE de visita → VISITA_ACORDADA, sin bloqueo ni cobro. |
+| /ampliacion | Proveedor; `motivo` 10–500 | Renueva apartado aún vigente a 60 min desde ahora, sin superar fin. |
+| /cancelacion | Cliente o proveedor; `motivo` 10–500 | Solo apartado sin efectivo: ACEPTADA → CANCELADA, libera bloqueo. |
+| /efectivo | Proveedor; sin campos adicionales | ACEPTADA vigente → ENTREGA_POR_CONFIRMAR; registra efectivo pactado y entrega declarada, sin confirmar por cliente. |
+| /recepcion | Cliente; sin campos adicionales | Confirma pago/recepción: ENTREGA_POR_CONFIRMAR → EN_CURSO. |
+| /devolucion/aviso | Cliente; sin campos adicionales | EN_CURSO → DEVOLUCION_PENDIENTE; hora reportada asignada por servidor. |
+| /devolucion/confirmacion | Proveedor; sin campos adicionales | DEVOLUCION_PENDIENTE → DEVUELTA; confirma hora informada, calcula días extra/importe final y saldo, libera recurso. |
+| /devolucion/rechazo | Proveedor; `motivo` 10–500 | Rechaza aviso con motivo, vuelve a EN_CURSO conservando historial. |
+
+La consulta participante agrega tipoSolicitud, condiciones (versión de política, tarifa/días/importe pactado, tolerancia), venceEn, pagoEstado, efectivoCentimos, entregadoEn, recibidoEn, devolucionInformadaEn, devueltoEn, importeFinalCentimos, saldoCentimos y motivoOperacion. Las visitas y servicios no reciben un total de alquiler ficticio. `GET /recursos/:id/disponibilidad?publicacionId=<uuid>&inicio=<UTC>&fin=<UTC>` valida publicación/unidad pública por Catálogo y devuelve rangos ocupados sin identidades y si existe posesión física; no promete disponibilidad futura ante retrasos. El vencimiento se procesa periódicamente y antes de aceptar/mutar/consultar, con bloqueo transaccional. No hay pasarela ni consumidor externo.
+
 | Método | Ruta relativa | Acceso | Condición |
 |---|---|---|---|
 | GET | /recursos/:id/disponibilidad | Público | sin identidades ajenas |
