@@ -68,7 +68,7 @@ export default function Perfil() {
     {sinSesion && <p><Link href="/ingresar">Ingresar a mi cuenta</Link></p>}
     {!cargando && !sinSesion && !usuario && <button className="button outline" onClick={cargar}>Reintentar</button>}
     {usuario && <><p>{usuario.email}</p><p>Roles: {usuario.roles.join(', ')}</p>
-      <p><Link href="/proveedor">Mi perfil de proveedor</Link></p><p><Link href="/publicar">Gestionar mis ofertas</Link></p>
+      <p><Link href="/proveedor">Mi perfil de proveedor</Link></p><p><Link href="/publicar">Gestionar mis ofertas</Link></p><p><Link href="/reservas">Mis solicitudes</Link></p>
       {usuario.roles.includes('admin') && <p><Link href="/admin/usuarios">Administrar usuarios</Link></p>}
       {usuario.roles.includes('admin') && <p><Link href="/admin/proveedores">Revisar proveedores</Link></p>}{usuario.roles.includes('admin') && <p><Link href="/admin/publicaciones">Moderar publicaciones</Link></p>}
       <form onSubmit={guardar} className={styles.form}>
