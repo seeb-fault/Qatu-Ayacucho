@@ -30,6 +30,12 @@ Los jobs omitidos no son pruebas ejecutadas ni aprobadas. El manifiesto no elimi
 
 El CI corre en pushes a todas las ramas, PR hacia `main` y ejecución manual. Usa Node.js 24 y Ubuntu 24.04; PostGIS 17/3.5 con bases efímeras solo cuando corresponde. Las claves documentales/JWT de pruebas se generan por ejecución; nunca se usa `.env` de desarrollo ni producción. Las evidencias sintéticas duran siete días. El detector Mapbox no sustituye un escáner general de secretos.
 
+## Incidente de instalación tras el merge de Catálogo
+
+La [ejecución #30 de `main`](https://github.com/seeb-fault/Qatu-Ayacucho/actions/runs/40342969783), correspondiente al merge `b6aeb6c` del PR #8, agotó el límite de 25 minutos del job frontend durante `npx playwright install --with-deps chromium`. El registro muestra esperas y reintentos del repositorio `azure.archive.ubuntu.com` durante la instalación de dependencias del sistema; las pruebas del frontend no llegaron a ejecutarse en ese primer intento. Especificaciones y backend sí aprobaron.
+
+Se repitieron únicamente los trabajos fallidos con `gh run rerun 40342969783 --failed`. El intento 2 terminó con resultado **success**, con los tres jobs aprobados (especificaciones y backend conservan sus resultados del primer intento). No fue necesario modificar el workflow ni ampliar su tiempo límite. La cancelación inicial no revirtió el merge.
+
 ## Protección remota
 
 El propietario debe activar en GitHub una regla de protección/ruleset de `main` que exija PR, rama actualizada y los checks **Especificaciones y evidencias**, **Backend e integración PostgreSQL** y **Frontend y recorridos de navegador**. Seleccionar GitHub Actions como origen y no permitir bypass, force push ni eliminación de `main`. Los jobs omitidos de etapas sin aplicación deben ser visibles y revisados según la tabla.
