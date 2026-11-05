@@ -14,7 +14,8 @@
     "test:usuarios": "playwright test --config playwright.usuarios.config.ts",
     "test:acceso": "playwright test --config playwright.acceso.config.ts",
     "test:proveedores": "playwright test --config playwright.proveedores.config.ts",
-    "test:catalogo": "playwright test --config playwright.catalogo.config.ts"
+    "test:catalogo": "playwright test --config playwright.catalogo.config.ts",
+    "test:reservas": "playwright test --config playwright.reservas.config.ts"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.3.3",
