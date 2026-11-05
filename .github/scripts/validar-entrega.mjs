@@ -13,12 +13,14 @@ export function validarEntrega(root) {
   const indice = entregas.indexOf(manifest.ultimaEntrega);
   assert.ok(indice >= 0, 'Entrega desconocida');
   const incrementos = manifest.incrementos ?? [];
-  assert.ok(Array.isArray(incrementos) && incrementos.every(i => ['005.1','005.2','005.3','005.4','005.5'].includes(i)) && new Set(incrementos).size === incrementos.length, 'Incremento desconocido o repetido');
+  assert.ok(Array.isArray(incrementos) && incrementos.every(i => ['005.1','005.2','005.3','005.4','005.5','005.6'].includes(i)) && new Set(incrementos).size === incrementos.length, 'Incremento desconocido o repetido');
   const reservas = incrementos.includes('005.1');
   const efectivo = incrementos.includes('005.2');
   const cotizaciones = incrementos.includes('005.3');
   const agenda = incrementos.includes('005.4');
   const ejecucion = incrementos.includes('005.5');
+  const despacho = incrementos.includes('005.6');
+  assert.ok(!despacho || ejecucion, '005.6 requiere ejecución 005.5');
   assert.ok(!ejecucion || agenda, '005.5 requiere agenda 005.4');
   assert.ok(!agenda || cotizaciones, '005.4 requiere cotizaciones 005.3');
   assert.ok(!cotizaciones || efectivo, '005.3 requiere la base de reservas 005.2');
@@ -70,6 +72,9 @@ export function validarEntrega(root) {
   if (ejecucion) {
     for (const relative of ['backend/migrations/reservas/006-ejecucion-oficios.sql','backend/test/reservas/ejecucion.test.ts','frontend/tests/reservas/ejecucion.spec.ts']) requerir(relative);
   } else ausente('backend/migrations/reservas/006-ejecucion-oficios.sql');
+  if (despacho) {
+    for (const relative of ['backend/migrations/reservas/007-despacho-eventos.sql','backend/src/modules/reservas/aplicacion/despacho.ts','backend/test/reservas/despacho.test.ts']) requerir(relative);
+  } else ausente('backend/migrations/reservas/007-despacho-eventos.sql');
   return {
     entrega: manifest.ultimaEntrega,
     frontend: indice >= 1,

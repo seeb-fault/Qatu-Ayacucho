@@ -87,7 +87,15 @@ Para las pruebas con persistencia configurar `TEST_DATABASE_URL` con una base ex
 - Detector: 19 pruebas aprobadas y manifiesto real validado con 005.1 a 005.5, manteniendo última entrega completa 004.
 - CI remoto aprobado sobre `9583af3` en sus tres jobs ([ejecución](https://github.com/seeb-fault/Qatu-Ayacucho/actions/runs/42077694040)). No se acredita verificación bancaria ni notificación externa. Tampoco se incluyen cierre automático si el cliente no responde, cancelación después de iniciado, disputas por rechazos repetidos ni evidencia fotográfica (D12). Pasarela Culqi/Yape y EQ-08 siguen pendientes.
 
-La tabla siguiente conserva los pendientes de aceptación del módulo completo, no los de los incrementos 005.1/005.2/005.3/005.4/005.5.
+### Validación local del incremento 005.6 — despacho de eventos (2026-11-05)
+
+- Entorno: Node.js 24.21.0, Windows y PostgreSQL/PostGIS local, en bases nuevas con sufijo `_test` y variables configuradas en el proceso. No se modificó `.env`.
+- `npm test` en backend aprobó 110 pruebas, sin fallos ni omisiones. Después se corrigió la migración 007, porque revertirla y reaplicarla fallaba por eventos enviados sin hora. Con la migración corregida se repitieron las 13 pruebas del despacho, que aprobaron, y una ida y vuelta real conservó 20 eventos enviados y devolvió los fallidos a pendientes. La regresión completa con esa versión queda a cargo del CI remoto.
+- Se verificó con un doble: orden por reserva, espera entre reintentos, agotamiento a FALLIDO sin bloquear el evento siguiente, dos despachadores a la vez sin duplicados, corte con reentrega del mismo id, proceso atrasado sin efecto, timeout, rechazo definitivo y código de error sin datos personales. Con el canal caído la reserva no cambió.
+- No hay cambios en el frontend, por lo que no se repitieron los recorridos de navegador en local.
+- Esto **no acredita notificaciones reales**: ningún evento llega todavía a un usuario, porque no hay canal externo (D08). La activación con un adaptador real, el reinicio del proceso con un canal real y la deduplicación del consumidor siguen pendientes.
+
+La tabla siguiente conserva los pendientes de aceptación del módulo completo, no los de los incrementos 005.1 a 005.6.
 
 | Campo | Valor |
 |---|---|

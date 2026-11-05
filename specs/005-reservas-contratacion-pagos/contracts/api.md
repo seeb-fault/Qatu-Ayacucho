@@ -78,6 +78,10 @@ Todas son POST de participante autenticado con JSON estricto y `versionActual`. 
 
 La consulta agrega servicioIniciadoEn, servicioTerminadoEn y servicioCerradoEn. Cada mutación y su evento (SERVICIO_INICIADO, SERVICIO_TERMINADO, TERMINO_RECHAZADO, SERVICIO_CERRADO) se guardan en una transacción, sin afirmar notificación externa. El efectivo es una declaración bilateral, no una verificación bancaria. No se incluye cierre automático, cancelación posterior al inicio ni resolución de disputas.
 
+### Incremento 005.6 — Despacho de eventos
+
+No agrega rutas HTTP. El puerto interno `Notificador.enviar(evento)` recibe id, tipo, reservaId, clienteId, propietarioId, payload mínimo, creadoEn e intento. Reservas no entrega datos de contacto: el adaptador tendrá que obtenerlos por una fachada de Usuarios. Puede recibir un evento repetido y debe deduplicar por id. Si lanza `NotificacionRechazada`, el evento no se reintenta; cualquier otro error o un timeout de 10 s se reintenta. Un fallo del canal no modifica la reserva.
+
 ## Rutas tomadas del diseño vigente — alcance futuro
 
 La tabla conserva el diseño completo. Las rutas de pagos, hitos con evidencia y acceso administrativo no amplían los permisos ni reemplazan los endpoints de 005.1/005.2/005.3 implementados arriba.
