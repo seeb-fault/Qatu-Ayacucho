@@ -18,7 +18,7 @@ Las ramas se preparan de forma apilada para conservar dependencias. Publicarlas 
 
 `.github/entrega.json` declara la última entrega implementada. Un detector validado con pruebas exige sus especificaciones y aplicaciones; quitar un módulo exigido hace fallar el CI. No se omiten pruebas solo porque falte una carpeta.
 
-El campo opcional `incrementos` declara avances parciales: `005.1` exige los artefactos y pruebas de solicitudes y activa `test:reservas` después de Catálogo, conservando `ultimaEntrega=004`. No declara terminado el módulo 005. El backend incluye sus pruebas en `npm test`; las E2E usan las bases efímeras y se ejecutan secuencialmente con las demás suites.
+El campo opcional `incrementos` declara avances parciales: `005.1` exige los artefactos y pruebas de solicitudes y activa `test:reservas` después de Catálogo; `005.2` requiere `005.1` y agrega migraciones, reglas y pruebas de apartado, visitas, efectivo y devolución. `005.3` requiere la base 005.2 y agrega propuestas versionadas de oficios, aceptación/rechazo y su recorrido de navegador. Se conserva `ultimaEntrega=004`; no declara terminado el módulo 005. El backend incluye sus pruebas en `npm test`; las E2E usan las bases efímeras y se ejecutan secuencialmente con las demás suites.
 
 | Entrega declarada | Especificaciones y evidencias | Backend | Frontend |
 | --- | --- | --- | --- |
@@ -31,6 +31,8 @@ El campo opcional `incrementos` declara avances parciales: `005.1` exige los art
 Los jobs omitidos no son pruebas ejecutadas ni aprobadas. El manifiesto no elimina pendientes de aceptación: 004 cierra T023 con la medición local y conserva T027 para los ensayos globales EQ-01/EQ-03; D02 y mapas externos siguen abiertos. El detector, sus pruebas y el workflow incluyen 004. Las E2E con API arrancan el backend compilado; el job frontend instala y compila backend antes de los recorridos.
 
 El CI corre en pushes a todas las ramas, PR hacia `main` y ejecución manual. Usa Node.js 24 y Ubuntu 24.04; PostGIS 17/3.5 con bases efímeras solo cuando corresponde. Las claves documentales/JWT de pruebas se generan por ejecución; nunca se usa `.env` de desarrollo ni producción. Las evidencias sintéticas duran siete días. El detector Mapbox no sustituye un escáner general de secretos.
+
+El incremento `005.4` requiere `005.3` y exige la migración y pruebas de agenda de oficios. La suite de Reservas incluye conflicto visible entre clientes, liberación por cancelación y aceptación sin anticipo. Se mantiene `ultimaEntrega=004`; no se declara completa la entrega 005 ni integrada la pasarela.
 
 ## Protección remota
 

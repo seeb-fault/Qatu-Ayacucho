@@ -4,27 +4,30 @@ import Link from 'next/link';
 import type { FormEvent } from 'react';
 import { dinero, fechaReserva, type SolicitudReserva } from '@/lib/api/reservas';
 import styles from './reservas.module.css';
+import CotizacionesServicio from './CotizacionesServicio';
 
 const estados: Record<SolicitudReserva['estado'], string> = {
-  PENDIENTE:'Pendiente de respuesta',RECHAZADA:'Rechazada',VISITA_ACORDADA:'Visita acordada',ACEPTADA:'Apartada por 60 minutos',
+  PENDIENTE:'Pendiente de respuesta',RECHAZADA:'Rechazada',VISITA_ACORDADA:'Visita acordada',ACEPTADA:'Herramienta apartada',
   VENCIDA:'Apartado vencido',CANCELADA:'Cancelada',ENTREGA_POR_CONFIRMAR:'Entrega pendiente de confirmación',EN_CURSO:'Alquiler en curso',
-  DEVOLUCION_PENDIENTE:'Devolución pendiente de confirmación',DEVUELTA:'Herramienta devuelta',
+  DEVOLUCION_PENDIENTE:'Devolución pendiente de confirmación',DEVUELTA:'Herramienta devuelta',SERVICIO_CONFIRMADO:'Servicio confirmado',
 };
 type Props = { solicitud: SolicitudReserva; ocupado: boolean; operar: (s: SolicitudReserva, accion: string, datos?: Record<string,unknown>) => Promise<void> };
 
 export default function TarjetaReserva({solicitud:s,ocupado,operar}: Props) {
   const proveedor = s.participacion === 'proveedor';
+  const cotizacionAceptada = s.cotizaciones?.some(c => c.respuesta?.decision === 'ACEPTADA');
   const enviar = (accion:string,motivo=false) => (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault(); const form=new FormData(e.currentTarget);
     void operar(s,accion,motivo ? {motivo:form.get('motivo')} : undefined);
   };
   const textoWhatsApp = `Hola, quiero coordinar ${s.tipoSolicitud === 'visita' ? 'la visita' : 'el alquiler'} de ${s.snapshot.titulo}. Inicio: ${fechaReserva(s.inicio)}; fin: ${fechaReserva(s.fin)} (Lima). Referencia: ${s.id}. Coordinemos retiro y devolución; confirma los estados en Qatu.`;
   return <article className={styles.card} aria-label={s.snapshot.titulo}>
-    <span className={styles.status}>{estados[s.estado]}</span><h2>{s.snapshot.titulo}</h2>
+    <span className={styles.status}>{s.estado === 'PENDIENTE' && cotizacionAceptada ? 'Cotización acordada; agenda por coordinar' : estados[s.estado]}</span><h2>{s.snapshot.titulo}</h2>
     <p>{s.tipoSolicitud === 'visita' ? 'Visita previa, sin apartado' : 'Solicitud de alquiler o servicio'} · Proveedor: {s.snapshot.proveedor}</p>
     <dl><dt>Unidad / agenda</dt><dd>{s.snapshot.recurso}</dd><dt>Inicio</dt><dd>{fechaReserva(s.inicio)}</dd><dt>Fin acordado</dt><dd>{fechaReserva(s.fin)}</dd></dl>
     <p className={styles.hint}>Fechas en hora de Lima. Referencia: {s.id}</p>
     {s.descripcionTrabajo && <p>{s.descripcionTrabajo}</p>}
+    {s.snapshot.tipo === 'servicio' && s.tipoSolicitud === 'alquiler' && <CotizacionesServicio solicitud={s} ocupado={ocupado} operar={operar}/>}
     {s.condiciones && <div className={styles.notice}>
       <p><strong>{dinero(s.condiciones.importeCentimos)}</strong> por {s.condiciones.dias} {s.condiciones.dias === 1 ? 'día' : 'días'}, a {dinero(s.condiciones.tarifaCentimos)} por bloque de 24 horas iniciado.</p>
       <p className={styles.hint}>Efectivo al recoger. Tolerancia de devolución: 30 minutos; después se suma un día por bloque adicional iniciado. El fin acordado no cambia por recoger tarde.</p>
@@ -37,13 +40,14 @@ export default function TarjetaReserva({solicitud:s,ocupado,operar}: Props) {
     {s.motivoRechazo && <p><strong>Motivo del rechazo:</strong> {s.motivoRechazo}</p>}
     {s.motivoOperacion && <p><strong>Última coordinación:</strong> {s.motivoOperacion}</p>}
     {s.estado === 'PENDIENTE' && <p>Esta solicitud todavía no bloquea fechas.</p>}
+    {s.estado === 'SERVICIO_CONFIRMADO' && <p>Horario reservado para esta agenda. No se exige anticipo ni se ha registrado un pago. Puedes cancelar con motivo antes del inicio acordado.</p>}
     {s.estado === 'VENCIDA' && <p>El apartado se liberó. Necesitas solicitar nuevamente para volver a coordinar.</p>}
-    {['PENDIENTE','VISITA_ACORDADA','ACEPTADA'].includes(s.estado) && <p><a href={'https://wa.me/?text='+encodeURIComponent(textoWhatsApp)} target="_blank" rel="noopener noreferrer">Compartir coordinación por WhatsApp</a><span className={styles.hint}> · Tú eliges el destinatario. Esto no confirma pagos ni apartados.</span></p>}
+    {['PENDIENTE','VISITA_ACORDADA','ACEPTADA','SERVICIO_CONFIRMADO'].includes(s.estado) && <p><a href={'https://wa.me/?text='+encodeURIComponent(textoWhatsApp)} target="_blank" rel="noopener noreferrer">Compartir coordinación por WhatsApp</a><span className={styles.hint}> · Tú eliges el destinatario. Esto no confirma pagos ni apartados.</span></p>}
     {['VISITA_ACORDADA','VENCIDA','CANCELADA','RECHAZADA','DEVUELTA'].includes(s.estado) && <p><Link href={'/reservas/nueva?publicacion='+s.publicacionId}>Hacer una nueva solicitud de esta oferta</Link></p>}
 
-    {proveedor && s.estado === 'PENDIENTE' && <>
+    {proveedor && s.estado === 'PENDIENTE' && !cotizacionAceptada && <>
       {s.tipoSolicitud === 'alquiler' && s.snapshot.tipo === 'herramienta' && s.condiciones && <><button className="button primary" disabled={ocupado} onClick={() => {void operar(s,'aceptacion');}}>Aceptar y apartar 60 minutos</button><p className={styles.hint}>Hazlo cuando el cliente pueda acercarse durante la siguiente hora. La disponibilidad se vuelve a comprobar.</p></>}
-      {s.tipoSolicitud === 'alquiler' && !s.condiciones && <p className={styles.hint}>{s.snapshot.tipo === 'servicio' ? 'La cotización y aceptación de servicios se habilitarán después del flujo de herramientas.' : 'Esta solicitud es anterior a las condiciones diarias; el cliente debe solicitar nuevamente para aceptarlas.'}</p>}
+      {s.tipoSolicitud === 'alquiler' && !s.condiciones && s.snapshot.tipo === 'herramienta' && <p className={styles.hint}>Esta solicitud es anterior a las condiciones diarias; el cliente debe solicitar nuevamente para aceptarlas.</p>}
       {s.tipoSolicitud === 'visita' && <form className={styles.form} onSubmit={enviar('visita',true)} aria-label="Acordar visita"><label>Indicaciones para la visita<textarea name="motivo" minLength={10} maxLength={500} required disabled={ocupado}/></label><button className="button primary" disabled={ocupado}>Acordar visita sin apartar</button></form>}
       <form className={styles.form} aria-label={'Responder '+s.snapshot.titulo} onSubmit={enviar('rechazo',true)}>
         <label>Motivo del rechazo<textarea name="motivo" minLength={10} maxLength={500} required rows={3} disabled={ocupado}/></label><button className="button outline" disabled={ocupado}>Rechazar solicitud</button>
@@ -59,6 +63,6 @@ export default function TarjetaReserva({solicitud:s,ocupado,operar}: Props) {
       <form className={styles.form} onSubmit={enviar('devolucion/confirmacion')} aria-label="Confirmar devolución"><label className={styles.check}><input type="checkbox" required disabled={ocupado}/>Recibí la herramienta y acepto la hora de devolución informada por el cliente</label><button className="button primary" disabled={ocupado}>Confirmar devolución</button></form>
       <details><summary>La herramienta aún no fue devuelta</summary><form className={styles.form} onSubmit={enviar('devolucion/rechazo',true)}><label>Motivo para rechazar la devolución<textarea name="motivo" required minLength={10} maxLength={500} disabled={ocupado}/></label><button className="button outline" disabled={ocupado}>Rechazar aviso de devolución</button></form></details>
     </>}
-    {((!proveedor && s.estado === 'PENDIENTE') || ['VISITA_ACORDADA','ACEPTADA'].includes(s.estado)) && <details><summary>Cancelar {s.estado === 'ACEPTADA' ? 'apartado' : 'solicitud'}</summary><form className={styles.form} onSubmit={enviar('cancelacion',true)}><label>Motivo de cancelación<textarea name="motivo" required minLength={10} maxLength={500} disabled={ocupado}/></label><button className="button outline" disabled={ocupado}>Confirmar cancelación</button></form></details>}
+    {((!proveedor && s.estado === 'PENDIENTE') || ['VISITA_ACORDADA','ACEPTADA','SERVICIO_CONFIRMADO'].includes(s.estado)) && <details><summary>Cancelar {s.estado === 'ACEPTADA' ? 'apartado' : s.estado === 'SERVICIO_CONFIRMADO' ? 'servicio' : 'solicitud'}</summary><form className={styles.form} onSubmit={enviar('cancelacion',true)}><label>Motivo de cancelación<textarea name="motivo" required minLength={10} maxLength={500} disabled={ocupado}/></label><button className="button outline" disabled={ocupado}>Confirmar cancelación</button></form></details>}
   </article>;
 }

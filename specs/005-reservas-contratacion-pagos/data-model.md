@@ -1,12 +1,32 @@
 # Modelo de datos — Reservas, contratación y pagos
 
-**Fuente:** [modelo lógico Qatu](../../docs/03-diseño-de-software/modelo-de-datos.md). Esta vista pertenece a Reservas; distingue el esquema implementado en 005.1 del modelo completo todavía propuesto.
+**Fuente:** [modelo lógico Qatu](../../docs/03-diseño-de-software/modelo-de-datos.md). Esta vista pertenece a Reservas; distingue el esquema de 005.1/005.2/005.3 del modelo completo todavía propuesto.
 
 ## Esquema del incremento 005.1
 
 La migración `backend/migrations/reservas/001-solicitudes.sql` crea `reservas` y `reservas_outbox`. `reservas` registra IDs lógicos de cliente, usuario titular del proveedor, proveedor, publicación y recurso; intervalo UTC, descripción, snapshot de referencia, estado PENDIENTE/RECHAZADA, motivo, versión y creación. Comprueba intervalo finito no vacío, cliente distinto del titular y coherencia del motivo. Un índice parcial impide duplicados exactos pendientes del mismo cliente/recurso/rango; no excluye solapamientos entre solicitudes. Los índices de cliente/titular soportan sus bandejas.
 
-`reservas_outbox` referencia la solicitud y registra tipo, payload mínimo (reservaId/version), estado, intentos y próximo intento. No hay consumidor externo ni afirmación de entrega. Las transacciones de creación/rechazo guardan estado y evento juntos. El rollback manual está en `001-solicitudes.down.sql`. Bloqueos, cotizaciones, vencimientos e intentos de pago aún no tienen migración ni se simulan. Los campos del modelo completo que siguen abajo continúan como diseño propuesto.
+`reservas_outbox` referencia la solicitud y registra tipo, payload mínimo (reservaId/version), estado, intentos y próximo intento. No hay consumidor externo ni afirmación de entrega. Las transacciones de creación/rechazo guardan estado y evento juntos. El rollback manual está en `001-solicitudes.down.sql`.
+
+## Esquema del incremento 005.2
+
+`002-alquiler-efectivo.sql` agrega tipo de solicitud, condiciones comerciales, vencimiento, estado de efectivo, horas de entrega/recepción/devolución e importe final/saldo. Los estados de reserva son PENDIENTE, RECHAZADA, VISITA_ACORDADA, ACEPTADA, VENCIDA, CANCELADA, ENTREGA_POR_CONFIRMAR, EN_CURSO, DEVOLUCION_PENDIENTE y DEVUELTA. El pago distingue PENDIENTE, REGISTRADO_PROVEEDOR y CONFIRMADO_PARTICIPANTES; ninguno acredita verificación bancaria.
+
+`reservas_bloqueos` guarda una fila por reserva, recurso, inicio/fin y activo. La exclusión GiST impide solapar rangos activos [inicio,fin) de un recurso. Triggers diferidos exigen coherencia entre estado y bloqueo al confirmar la transacción. Un índice parcial de posesión única impide dos entregas físicas simultáneas aunque los horarios sean adyacentes. Aceptación, vencimiento, cancelación y devolución actualizan bloqueo, reserva y outbox en una transacción.
+
+`003-condiciones-estables.sql` valida la política diaria, importes enteros, tolerancia de 30 min y comisión cero del efectivo. Su trigger conserva condiciones, snapshot, participantes, publicación, recurso y tipo de solicitud ante actualizaciones. Las solicitudes antiguas sin condiciones no se convierten automáticamente en alquileres aceptables. En 005.2 todavía no se incluían cotizaciones ni intentos de pago externo; las cotizaciones se agregan abajo en 005.3.
+
+## Esquema del incremento 005.3
+
+`004-cotizaciones.sql` agrega `reservas_cotizaciones`, propia del módulo: clave compuesta reserva_id/version, alcance, materiales, importe_centimos, moneda PEN, vigente_hasta y creada_en. La respuesta conserva decision, motivo y respondida_en. La propuesta no se actualiza; solo se permite registrar una primera respuesta. Triggers impiden reescribir contenido/respuestas y borrar historial; un índice parcial permite una sola versión aceptada por solicitud. Las nuevas propuestas y respuestas incrementan la versión de la solicitud y generan outbox en la misma transacción.
+
+Las cotizaciones no modifican condiciones de alquiler ni registran bloqueos o efectivo. El acuerdo aceptado se conserva separado del estado de reserva y del pago; la consulta expone el historial solo a los participantes. El rollback se niega si existen propuestas, para no borrar acuerdos. Los intentos de pasarela siguen pendientes.
+
+## Esquema del incremento 005.4
+
+`005-agenda-oficios.sql` agrega SERVICIO_CONFIRMADO y extiende la coherencia diferida de reserva/bloqueo/cotización. Este estado exige oferta de servicio, cotización aceptada y un bloqueo activo exacto para el recurso y horario; conserva condiciones de alquiler nulas, vencimiento nulo y pago pendiente sin efectivo. La exclusión GiST existente evita cruces de agenda. Un trigger diferido sobre cotizaciones refuerza la coherencia del conjunto al confirmar la transacción.
+
+La aceptación y la cancelación usan el mismo orden de bloqueo por recurso y luego solicitud. El registro de AGENDA_CONFIRMADA forma parte de la transacción. No se migran automáticamente los acuerdos previos a horarios reservados. La reversión automática de esta migración se rechaza para no borrar compromisos; una corrección del esquema debe hacerse hacia delante.
 
 ## Datos propios
 

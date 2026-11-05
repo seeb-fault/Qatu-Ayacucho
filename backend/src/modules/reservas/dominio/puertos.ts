@@ -1,5 +1,6 @@
 import type { NuevaSolicitud, Solicitud } from './solicitud';
 import type { AccionReserva } from './alquiler';
+import type { PropuestaCotizacion } from './cotizacion';
 
 export interface IdentidadReservas { resolver(token: string): Promise<{ id: string }> }
 export interface CatalogoReservas {
@@ -12,6 +13,9 @@ export interface CatalogoReservas {
 }
 export interface ProveedoresReservas { titular(id: string): Promise<{ usuarioId: string }> }
 export interface RepositorioReservas {
+  cotizar(id: string, actorId: string, versionActual: number, propuesta: PropuestaCotizacion): Promise<Solicitud>;
+  responderCotizacion(id: string, actorId: string, versionActual: number, versionCotizacion: number, decision: 'ACEPTADA' | 'RECHAZADA', motivo: string | null): Promise<Solicitud>;
+  confirmarAgenda(id: string, actorId: string, versionActual: number, versionCotizacion: number): Promise<Solicitud>;
   crear(datos: NuevaSolicitud): Promise<Solicitud>;
   porId(id: string, actorId: string): Promise<Solicitud | null>;
   listar(actorId: string, vista: 'cliente' | 'proveedor', page: number): Promise<{ items: Solicitud[]; total: number }>;

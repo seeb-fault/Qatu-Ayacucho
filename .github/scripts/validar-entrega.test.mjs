@@ -87,3 +87,45 @@ test('005.1 no permite omitir el recorrido de navegador',context=>{
 test('no permite incorporar Reservas sin declarar el incremento',context=>{
   const root=prepararSolicitudes(context);writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004'}));assert.throws(()=>validarEntrega(root),/No corresponde backend\/src\/modules\/reservas/);
 });
+
+test('005.2 exige migración, reglas y recorrido de efectivo sin declarar completa la entrega',context=>{
+  const root=prepararSolicitudes(context);
+  const crear=(relative,content='')=>{const target=join(root,relative);mkdirSync(dirname(target),{recursive:true});writeFileSync(target,content);};
+  crear('.github/entrega.json',JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2']}));
+  for(const nombre of ['backend/migrations/reservas/002-alquiler-efectivo.sql','backend/migrations/reservas/003-condiciones-estables.sql','backend/src/modules/reservas/dominio/alquiler.ts','backend/test/reservas/alquiler.test.ts','backend/test/reservas/calendario.test.ts','frontend/src/components/reservas/TarjetaReserva.tsx','frontend/tests/reservas/efectivo.spec.ts'])crear(nombre);
+  assert.equal(validarEntrega(root).reservas,true);
+  rmSync(join(root,'frontend/tests/reservas/efectivo.spec.ts'));assert.throws(()=>validarEntrega(root),/efectivo.spec/);
+});
+test('no permite declarar efectivo sin las solicitudes previas',context=>{
+  const root=prepararSolicitudes(context);writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.2']}));assert.throws(()=>validarEntrega(root),/requiere solicitudes/);
+});
+
+function prepararCotizaciones(context) {
+  const root=prepararSolicitudes(context);
+  const crear=(relative,content='')=>{const target=join(root,relative);mkdirSync(dirname(target),{recursive:true});writeFileSync(target,content);};
+  crear('.github/entrega.json',JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2','005.3']}));
+  for(const nombre of ['backend/migrations/reservas/002-alquiler-efectivo.sql','backend/migrations/reservas/003-condiciones-estables.sql','backend/src/modules/reservas/dominio/alquiler.ts','backend/test/reservas/alquiler.test.ts','backend/test/reservas/calendario.test.ts','frontend/src/components/reservas/TarjetaReserva.tsx','frontend/tests/reservas/efectivo.spec.ts','backend/migrations/reservas/004-cotizaciones.sql','backend/src/modules/reservas/dominio/cotizacion.ts','backend/test/reservas/cotizaciones.test.ts','frontend/src/components/reservas/CotizacionesServicio.tsx','frontend/tests/reservas/cotizaciones.spec.ts'])crear(nombre);
+  return root;
+}
+test('005.3 exige propuestas versionadas y su recorrido de navegador',context=>{
+  const root=prepararCotizaciones(context);
+  assert.equal(validarEntrega(root).reservas,true);
+  rmSync(join(root,'frontend/tests/reservas/cotizaciones.spec.ts'));assert.throws(()=>validarEntrega(root),/cotizaciones.spec/);
+});
+test('005.3 no permite omitir su base de reservas',context=>{
+  const root=prepararSolicitudes(context);writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.3']}));assert.throws(()=>validarEntrega(root),/005.3 requiere/);
+});
+
+test('005.4 exige migración de agenda y pruebas de conflicto y liberación',context=>{
+  const root=prepararCotizaciones(context);
+  writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2','005.3','005.4']}));
+  for(const nombre of ['backend/migrations/reservas/005-agenda-oficios.sql','backend/test/reservas/agenda.test.ts','frontend/tests/reservas/agenda.spec.ts']) {
+    const target=join(root,nombre);mkdirSync(dirname(target),{recursive:true});writeFileSync(target,'');
+  }
+  assert.equal(validarEntrega(root).reservas,true);
+  rmSync(join(root,'frontend/tests/reservas/agenda.spec.ts'));assert.throws(()=>validarEntrega(root),/agenda.spec/);
+});
+test('005.4 no puede declararse sin cotizaciones',context=>{
+  const root=prepararSolicitudes(context);writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2','005.4']}));assert.throws(()=>validarEntrega(root),/005.4 requiere/);
+});
+

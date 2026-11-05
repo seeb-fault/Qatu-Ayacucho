@@ -127,6 +127,7 @@ test('alquiler real: 100 carreras, vencimiento, efectivo bilateral y devolución
       const s=await solicitar(inicio,fin);
       await assert.rejects(()=>pool.query("UPDATE reservas SET estado='ACEPTADA',vence_en=clock_timestamp()+interval '1 hour' WHERE id=$1",[s.id]),(e:any)=>e.code==='23514');
       assert.equal((await leer(s.id)).estado,'PENDIENTE');
+      await assert.rejects(()=>pool.query("UPDATE reservas SET condiciones=condiciones || '{\"importeCentimos\":1}'::jsonb WHERE id=$1",[s.id]),(e:any)=>e.code==='23514');
     });
   } finally {await app.close();await pool.end();}
 });

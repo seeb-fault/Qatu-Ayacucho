@@ -18,6 +18,7 @@ test('solicitud real: cliente solicita, proveedor rechaza y ambos ven el estado 
   const fin = new Date(Date.now() + 4 * 86400000).toISOString().slice(0,16);
   await page.getByLabel('Inicio (hora de Lima)', { exact: true }).fill(inicio);
   await page.getByLabel('Fin (hora de Lima)', { exact: true }).fill(fin);
+  await page.getByLabel('Acepto el horario, el importe y las condiciones de alquiler', { exact: true }).check();
   await page.getByLabel('Cuéntanos tu proyecto (opcional)').fill('Proyecto sintético de instalación de repisas en el hogar.');
   await page.getByRole('button', { name: 'Enviar solicitud', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Solicitud enviada', exact: true })).toBeVisible();

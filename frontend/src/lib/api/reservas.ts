@@ -1,4 +1,10 @@
+export interface CotizacionServicio {
+  version: number; alcance: string; materiales: string; importeCentimos: number; moneda: 'PEN';
+  vigenteHasta: string; creadaEn: string;
+  respuesta: {decision: 'ACEPTADA' | 'RECHAZADA'; motivo: string | null; respondidaEn: string} | null;
+}
 export interface SolicitudReserva {
+  cotizaciones?: CotizacionServicio[];
   id: string;
   publicacionId: string;
   proveedorId: string;
@@ -7,7 +13,7 @@ export interface SolicitudReserva {
   fin: string;
   descripcionTrabajo: string;
   snapshot: { titulo: string; tipo: 'herramienta' | 'servicio'; proveedor: string; recurso: string; tarifaReferenciaCentimos: number | null; unidad: string | null };
-  estado: 'PENDIENTE' | 'RECHAZADA' | 'VISITA_ACORDADA' | 'ACEPTADA' | 'VENCIDA' | 'CANCELADA' | 'ENTREGA_POR_CONFIRMAR' | 'EN_CURSO' | 'DEVOLUCION_PENDIENTE' | 'DEVUELTA';
+  estado: 'PENDIENTE' | 'RECHAZADA' | 'VISITA_ACORDADA' | 'ACEPTADA' | 'VENCIDA' | 'CANCELADA' | 'ENTREGA_POR_CONFIRMAR' | 'EN_CURSO' | 'DEVOLUCION_PENDIENTE' | 'DEVUELTA' | 'SERVICIO_CONFIRMADO';
   motivoRechazo: string | null;
   version: number;
   creadoEn: string;
