@@ -65,3 +65,25 @@ Fuentes verificadas el 13/10/2026: [Culqi cargos y Yape](https://docs.culqi.com/
 ## Contrato implementado en Spec 004 (2026-10-26)
 
 Alta/edición de ofertas, consulta propia, catálogo público y moderación administrativa se detallan en [contrato de Catálogo](../../../specs/004-catalogo-publicaciones/contracts/api.md). Este contrato concreta D04: búsqueda española sin tildes, límites 20/50, céntimos enteros PEN, recursos estables, control de versión, propiedad y auditoría de moderación. Publicación requiere cuenta activa y perfil aprobado/público. No habilita reservas, pagos ni decide D02.
+
+## Incremento 005.1: solicitudes de reserva
+
+Contrato acotado de implementación: `POST /api/v1/reservas`, `GET /api/v1/reservas?vista=cliente|proveedor&page=1`, `GET /api/v1/reservas/:id` y `POST /api/v1/reservas/:id/rechazo`. Los DTO y permisos se detallan en [005/contracts/api.md](../../../specs/005-reservas-contratacion-pagos/contracts/api.md). PENDIENTE no bloquea; el rechazo exige titularidad, motivo y versión.
+
+### Incremento 005.2 — Apartado y efectivo
+
+Implementados para herramientas: `GET /api/v1/recursos/:id/disponibilidad` y los POST bajo `/api/v1/reservas/:id` con sufijos `/aceptacion`, `/visita`, `/ampliacion`, `/cancelacion`, `/efectivo`, `/recepcion`, `/devolucion/aviso`, `/devolucion/confirmacion` y `/devolucion/rechazo`. Actores, entradas estrictas y transiciones están en [el contrato de 005.2](../../../specs/005-reservas-contratacion-pagos/contracts/api.md#incremento-0052--herramientas-apartado-y-efectivo-acuerdo-2026-10-27). Solo los participantes acceden a una reserva; terceros, incluidos administradores sin participación, reciben 404.
+
+El apartado bloquea el recurso durante 60 min antes del registro de efectivo; la visita no bloquea. El proveedor registra efectivo/entrega y el cliente confirma pago/recepción; son declaraciones de participantes. La devolución confirmada calcula saldo y libera el recurso. La pasarela y los hitos con archivos de evidencia permanecen como diseño pendiente.
+
+### Incremento 005.3 — Acuerdo de cotización de oficios
+
+`POST /api/v1/reservas/:id/cotizacion` publica una propuesta del proveedor con versión de solicitud, alcance, materiales, importe entero en PEN y vigencia. `POST /api/v1/reservas/:id/cotizacion/aceptacion` y `/cotizacion/rechazo` permiten al cliente responder a la última versión vigente; el rechazo exige motivo. El historial se conserva y solo es visible a participantes. El acuerdo no registra pago y no permite reescribir el precio. El comportamiento original de 005.3 sin bloqueo de agenda se amplía en 005.4. [DTO, permisos y errores](../../../specs/005-reservas-contratacion-pagos/contracts/api.md).
+
+### Incremento 005.4 — Agenda de oficios sin anticipo
+
+La aceptación de cotización reserva el intervalo exacto del recurso/agenda solicitado y cambia a SERVICIO_CONFIRMADO, sin anticipo ni vencimiento de 60 min. Un horario ocupado devuelve 409 sin cambios parciales. Los acuerdos históricos aceptados con 005.3 requieren confirmación expresa del cliente mediante `POST /api/v1/reservas/:id/agenda/confirmacion` con `{versionActual,versionCotizacion}`. La cancelación con motivo libera el horario conservando el acuerdo. No confirma ejecución, cierre ni pago del servicio; los eventos permanecen en outbox sin afirmar envío externo.
+
+### Incremento 005.5 — Ejecución y cierre de oficios con efectivo
+
+`POST /api/v1/reservas/:id/servicio/inicio` (proveedor, desde la hora acordada) pasa a SERVICIO_EN_CURSO. `POST /servicio/termino` (proveedor) declara el trabajo terminado y el efectivo por el total de la cotización aceptada: SERVICIO_POR_CONFIRMAR. `POST /servicio/confirmacion` (cliente) cierra como SERVICIO_CERRADO y libera la agenda; `POST /servicio/rechazo` (cliente, con motivo) vuelve a SERVICIO_EN_CURSO y anula la declaración de efectivo. La cancelación con motivo se admite mientras el trabajo no se haya iniciado, aunque ya pasó la hora acordada. Son declaraciones bilaterales, sin verificación bancaria, comisión ni custodia. [DTO, permisos y errores](../../../specs/005-reservas-contratacion-pagos/contracts/api.md).

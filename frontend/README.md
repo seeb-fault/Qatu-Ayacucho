@@ -1,5 +1,9 @@
 # Qatu Web — descubrimiento, cuentas y proveedores
 
+## Incremento 005.1 — Solicitudes
+
+Desde una oferta persistida, «Solicitar reserva» abre `/reservas/nueva?publicacion=<uuid>`; `/reservas` muestra enviadas/recibidas. Se solicitan fechas en hora de Lima; el proveedor puede rechazar con motivo y el cliente ve el estado persistido. Las solicitudes pendientes no apartan fechas y no se realiza ningún cobro. Aceptación comercial y checkout siguen pendientes. Navegación móvil, cuenta y pie enlazan a las bandejas. `npm run test:reservas` usa PostgreSQL exclusivo de pruebas y puertos 3001/3100 libres; ejecutar después de compilar backend/frontend, secuencialmente con las otras E2E. [Validación y límites](../specs/005-reservas-contratacion-pagos/quickstart.md).
+
 Implementación local de la especificación 001 y Usuarios 002 US1/US2/US3 con Next.js, React y TypeScript. Rutas: inicio (/), resultados (/buscar), detalle (/publicaciones/:id), guía de estados (/demo), registro (/registro), ingreso (/ingresar), perfil (/cuenta) y administración (/admin/usuarios).
 
 Proveedores 003 incorpora /proveedor para alta/edición/solicitud documental propia, /proveedores/:id como página pública de visibilidad explícita y /admin/proveedores para revisar documentación. Crear perfil no lo aprueba; el estado público proviene de revisión real del administrador, con archivos privados y motivo auditado. El catálogo no está integrado aún con esos perfiles.

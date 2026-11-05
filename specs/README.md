@@ -2,6 +2,8 @@
 
 La entrega [001 — Descubrimiento de ofertas](001-descubrimiento-ofertas/spec.md) incorpora el prototipo web con datos sintéticos. [002 — Usuarios y acceso](002-usuarios-acceso/spec.md) añade cuentas y administración con persistencia real. [003 — Proveedores y verificación](003-proveedores-verificacion/spec.md) añade perfiles, documentos cifrados y revisión administrativa; mantiene pendientes D02 y mapas externos. [004 — Catálogo y publicaciones](004-catalogo-publicaciones/spec.md) implementa ofertas persistidas, editor y moderación; ensayo local de carga aprobado, con aceptación global pendiente en 005/008. Las especificaciones futuras no se consideran implementadas por aparecer en la arquitectura.
 
+El incremento **005.1** inicia [solicitudes de reserva](005-reservas-contratacion-pagos/quickstart.md): envío, bandejas participantes y rechazo persistidos. No confirma fechas ni importes y no habilita pagos. 005 conserva su aceptación global pendiente.
+
 ## Evolución pendiente
 
 - [005 — Reservas, contratación y pagos](005-reservas-contratacion-pagos/spec.md)
