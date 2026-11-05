@@ -21,6 +21,24 @@ Ante este escenario, el sistema debe mantener un funcionamiento adecuado, garant
 | **AC05** | **Mantenibilidad**  | El sistema debe estar organizado de manera que permita realizar cambios y correcciones sin afectar innecesariamente otras funcionalidades.                   |
 | **AC06** | **Usabilidad**      | La plataforma debe ser fácil de usar desde un celular, con pocos pasos para buscar y reservar, y debe funcionar de forma aceptable con conexiones lentas.     |
 
+
+
+## Métricas de los Atributos de Calidad
+
+| ID | Atributo de Calidad | Métrica de Evaluación | Meta | Herramienta |
+|---|---|---|---|---|
+| **AC01** | **Rendimiento** | Tiempo de respuesta (p95) y errores técnicos | ≤ 1 s y errores < 1 % | k6 |
+| **AC02** | **Disponibilidad** | Disponibilidad mensual | ≥ 99.9 % | Uptime Kuma |
+| **AC03** | **Escalabilidad** | Usuarios virtuales concurrentes | 500 usuarios cumpliendo las metas de rendimiento | k6 + Grafana |
+| **AC04** | **Seguridad** | Vulnerabilidades críticas y altas sin resolver | 0 | OWASP ZAP |
+| **AC05** | **Mantenibilidad** | Cobertura de pruebas y duplicación de código | ≥ 80 % y ≤ 3 % | SonarQube + Vitest |
+| **AC06** | **Usabilidad** | Éxito en tareas y tiempo de carga (LCP) | ≥ 90 % y LCP ≤ 2.5 s | Lighthouse + pruebas con usuarios |
+| **AC07** | **Resiliencia** | Fallos externos controlados | 100 % de escenarios críticos | Toxiproxy + Postman |
+| **AC08** | **Integridad** | Reservas incompatibles y pagos duplicados | 0 duplicaciones | PostgreSQL + pruebas concurrentes |
+| **AC09** | **Recuperabilidad** | RPO y RTO | RPO ≤ 24 h y RTO ≤ 4 h | PostgreSQL + pruebas de restauración |
+
+> **Nota:** Las métricas son objetivos propuestos pendientes de validación. Para reservas y pagos se requiere una estrategia de recuperación más estricta.
+
 ## Descripción de los Atributos
 
 ### AC01 - Rendimiento
