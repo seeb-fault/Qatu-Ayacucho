@@ -8,6 +8,7 @@ import { ProveedoresModule } from './modules/proveedores';
 import { CatalogoModule } from './modules/catalogo';
 import { ReservasModule } from './modules/reservas';
 import { ErrorAplicacion } from './shared/dominio/error-aplicacion';
+import { describirError } from './shared/infraestructura/base-datos';
 
 @Module({ imports: [UsuariosModule, ProveedoresModule, CatalogoModule, ReservasModule] })
 class AppModule {}
@@ -19,6 +20,7 @@ class Errores implements ExceptionFilter {
     const status = error instanceof ErrorAplicacion ? error.status : error instanceof HttpException ? error.getStatus() : 503;
     const code = error instanceof ErrorAplicacion ? error.code : status === 503 ? 'SERVICIO_NO_DISPONIBLE' : 'SOLICITUD_INVALIDA';
     const mensaje = error instanceof ErrorAplicacion ? error.message : status === 503 ? 'El servicio no está disponible. Intenta nuevamente.' : 'No se pudo procesar la solicitud.';
+    if (status === 503) console.error('Error inesperado en la petición ' + String(response.getHeader('X-Correlation-Id')) + ':', describirError(error));
     response.status(status).json({ code, mensaje, correlationId: response.getHeader('X-Correlation-Id') });
   }
 }

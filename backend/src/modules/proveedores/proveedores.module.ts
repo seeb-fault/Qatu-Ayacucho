@@ -1,5 +1,6 @@
 import { Inject, Module, type OnApplicationBootstrap, type OnApplicationShutdown } from '@nestjs/common';
 import { Pool } from 'pg';
+import { crearPool } from '../../shared/infraestructura/base-datos';
 import { IdentidadUsuarios, UsuariosModule } from '../usuarios';
 import { Proveedores } from './aplicacion/proveedores';
 import { ConsultaProveedores } from './aplicacion/consulta';
@@ -12,7 +13,7 @@ import { DocumentosPrivados } from './infraestructura/documentos';
   controllers: [ProveedoresController, RevisionProveedoresController],
   providers: [
     SesionProveedorGuard,
-    { provide: Pool, useFactory: () => new Pool({ connectionString: process.env.DATABASE_URL, max: 5, connectionTimeoutMillis: 5000 }) },
+    { provide: Pool, useFactory: () => crearPool(5) },
     { provide: Proveedores, inject: [Pool, IdentidadUsuarios], useFactory: (pool: Pool, identidad: IdentidadUsuarios) => new Proveedores(new PostgresProveedores(pool), identidad, new DocumentosPrivados()) },
     { provide: ConsultaProveedores, inject: [Proveedores], useFactory: (proveedores: Proveedores) => new ConsultaProveedores(proveedores) },
   ],
