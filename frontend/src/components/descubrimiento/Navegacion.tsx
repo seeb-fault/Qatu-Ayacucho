@@ -1,20 +1,28 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
 import Icono from './Icono';
-import AccionFutura from './AccionFutura';
+import BuscadorCabecera from './BuscadorCabecera';
+import MenuUbicacion from './MenuUbicacion';
+import BarraCategorias from './BarraCategorias';
 import {fuenteCatalogo} from '@/lib/api/publicaciones';
 
 export function Marca() {
-  return <Link href="/" className="brand" aria-label="Qatu, inicio"><span className="brand-mark"><span/><span/><span/><span/></span>qatu<span className="brand-dot">.</span></Link>;
+  return <Link href="/" className="brand" aria-label="Qatu, inicio"><span className="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="100%" height="100%"><circle cx="15" cy="14.5" r="7" fill="none" stroke="#fff" strokeWidth="3.4"/><path d="m19.5 19.5 5 5" stroke="#fff" strokeWidth="3.4" strokeLinecap="round"/></svg></span>qatu</Link>;
 }
 export default function Navegacion() {
   return <><a className="skip-link" href="#contenido">Saltar al contenido</a>
-    <div className="demo-bar"><span><Icono nombre="leaf" size={14}/> Más proyectos. Más comunidad.</span><span className="bar-divider">|</span><span>Hecho para Ayacucho</span><span className="bar-divider">|</span><strong>{fuenteCatalogo==="demostracion"?"Catálogo de demostración":"Herramientas y servicios locales"}</strong></div>
-    <header className="header"><div className="container header-inner"><div className="brand-lockup"><Marca/><span>HERRAMIENTAS & TALENTO LOCAL</span></div><span className="header-location"><Icono nombre="pin" size={17}/> Ayacucho, Perú</span>
-      <nav className="desktop-nav" aria-label="Navegación principal"><Link href="/buscar">Explorar</Link><Link href="/#como-funciona">Cómo funciona</Link><Link className="nav-publish" href="/publicar">Publicar una oferta <Icono nombre="arrow" size={16}/></Link><Link className="account-button" href="/cuenta"><Icono nombre="user" size={19}/><span>Mi cuenta</span></Link></nav><Link className="mobile-explore" href="/buscar" aria-label="Explorar ofertas"><Icono nombre="search"/></Link></div>
-      <nav className="market-subnav container" aria-label="Explorar por tipo"><Link className="all-categories" href="/buscar"><Icono nombre="menu" size={17}/> Todas las categorías</Link><Link href="/">Inicio</Link><Link href="/buscar?tipo=herramienta">Herramientas</Link><Link href="/buscar?tipo=servicio">Servicios y oficios</Link><Link href="/buscar?categoria=jardineria&tipo=herramienta">Jardinería</Link><span><Icono nombre="pin" size={14}/> Lo bueno está cerca</span></nav>
+    <header className="header">
+      <div className="container header-inner">
+        <Marca/>
+        <BuscadorCabecera/>
+        <Suspense fallback={<span className="location-menu-placeholder"/>}><MenuUbicacion/></Suspense>
+        <nav className="desktop-nav" aria-label="Navegación principal"><Link className="nav-publish" href="/publicar" aria-label="Publicar una oferta"><Icono nombre="plus" size={17}/>Publicar</Link><Link className="account-button" href="/cuenta"><Icono nombre="user" size={19}/><span>Mi cuenta</span></Link></nav>
+        <div className="mobile-actions"><Link className="mobile-explore" href="/cuenta" aria-label="Mi cuenta"><Icono nombre="user" size={20}/></Link></div>
+      </div>
+      <Suspense fallback={<div className="category-pills"/>}><BarraCategorias/></Suspense>
     </header></>;
 }
 export function Footer() {
-  return <><footer className="footer"><div className="container footer-main"><div className="footer-brand"><Marca/><p>Herramientas y talento de Ayacucho.<br/>Para las ideas que merecen<br/>hacerse realidad.</p><span className="footer-local"><Icono nombre="pin" size={15}/> Ayacucho, Perú</span></div><div><span className="eyebrow">EXPLORA QATU</span><Link href="/buscar?tipo=herramienta">Alquilar herramientas</Link><Link href="/buscar?tipo=servicio">Encontrar un oficio</Link><Link href="/buscar">Todas las categorías</Link></div><div><span className="eyebrow">TU ESPACIO</span><Link href="/cuenta">Mi cuenta</Link><Link href="/ingresar">Iniciar sesión</Link><Link href="/registro">Crear una cuenta</Link><Link href="/proveedor">Mi perfil de proveedor</Link></div><div className="footer-note"><span className="eyebrow">CONOCE EL PROYECTO</span><Link href="/#como-funciona">Cómo funciona</Link><Link href="/demo">Acerca de este prototipo</Link><p>Un proyecto local para conectar<br/>lo que tienes con lo que necesitas.</p></div></div><div className="container footer-bottom"><span>© 2026 Qatu · Proyecto académico</span><span>{fuenteCatalogo==="demostracion"?"Catálogo de demostración. Ofertas y precios ficticios.":"Ofertas de proveedores locales. Ilustraciones de referencia."} Testimonios ilustrativos.</span><span>Hecho en Ayacucho <Icono nombre="leaf" size={14}/></span></div></footer>
-    <nav className="bottom-nav" aria-label="Navegación móvil"><Link href="/buscar"><Icono nombre="search" size={21}/>Buscar</Link><Link href="/publicar"><Icono nombre="box" size={21}/>Publicar</Link><AccionFutura titulo="Tus reservas, en una próxima entrega"><Icono nombre="calendar" size={21}/>Reservas</AccionFutura><Link href="/cuenta"><Icono nombre="user" size={21}/>Perfil</Link></nav></>;
+  return <><footer className="footer"><div className="container footer-main"><div className="footer-brand"><Marca/><p>Herramientas y talento de Ayacucho, en un solo lugar. Para las ideas que merecen hacerse realidad.</p><span className="footer-local"><Icono nombre="pin" size={15}/> Ayacucho, Perú</span></div><div><span className="eyebrow">EXPLORA QATU</span><Link href="/buscar?tipo=herramienta">Alquilar herramientas</Link><Link href="/buscar?tipo=servicio">Encontrar un oficio</Link><Link href="/buscar">Todas las categorías</Link></div><div><span className="eyebrow">TU ESPACIO</span><Link href="/cuenta">Mi cuenta</Link><Link href="/reservas">Mis solicitudes</Link><Link href="/ingresar">Iniciar sesión</Link><Link href="/registro">Crear una cuenta</Link><Link href="/proveedor">Mi perfil de proveedor</Link></div><div className="footer-note"><span className="eyebrow">CONOCE EL PROYECTO</span><Link href="/#como-funciona">Cómo funciona</Link><Link href="/demo">Acerca de este prototipo</Link><p>Un proyecto local para conectar lo que tienes con lo que necesitas.</p></div></div><div className="container footer-bottom"><span>© 2026 Qatu · Proyecto académico</span><span>{fuenteCatalogo==="demostracion"?"Catálogo de demostración. Ofertas y precios ficticios.":"Ofertas de proveedores locales. Ilustraciones de referencia."} Testimonios ilustrativos.</span><span>Hecho en Ayacucho <Icono nombre="heart" size={14}/></span></div></footer>
+    <nav className="bottom-nav" aria-label="Navegación móvil"><Link href="/"><Icono nombre="grid" size={21}/>Inicio</Link><Link href="/buscar"><Icono nombre="search" size={21}/>Buscar</Link><Link href="/publicar" className="bottom-nav-publish"><span><Icono nombre="plus" size={22}/></span>Publicar</Link><Link href="/cuenta"><Icono nombre="user" size={21}/>Perfil</Link></nav></>;
 }
