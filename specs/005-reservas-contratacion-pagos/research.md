@@ -51,6 +51,14 @@ El flujo, aprobado junto con esas reglas, es: el proveedor registra el inicio de
 
 Límites conservados: son declaraciones auditadas, sin verificación bancaria ni evidencia fotográfica (D12). No hay cierre automático si el cliente no responde, cancelación después de iniciado ni resolución de disputas por rechazos repetidos; esas políticas no se deducen de este acuerdo. Mientras no haya respuesta el bloqueo sigue activo, pero solo sobre el intervalo acordado.
 
+### Decisión técnica — 005.6, 2026-11-05, despacho de eventos
+
+Se implementa el puerto Notificador y un despachador del outbox, sin canal real: D08 sigue pendiente. Sin Notificador configurado el despacho queda inactivo y los eventos siguen pendientes. Se descartó un adaptador simulado en ejecución porque marcaría como enviados eventos que nadie recibió.
+
+La entrega es al menos una vez: un corte después de enviar repite el evento con el mismo id, y el canal debe deduplicar. Cada reserva recibe sus eventos en orden, según una secuencia asignada al insertar. Los reintentos esperan de 30 s a 1 h, con 10 intentos; después, o ante un rechazo definitivo, el evento queda FALLIDO y deja pasar al siguiente. No se mantiene una transacción durante el envío, y solo se guarda un código de error, porque el mensaje del canal podría contener datos personales.
+
+Límites: reprocesar eventos FALLIDO es una operación manual, sin interfaz. Al conectar un canal se enviarán también los eventos pendientes acumulados, incluidos los antiguos; hay que decidir antes si se descartan los que ya no sean útiles. Falta definir qué eventos recibe cada participante y por qué canal.
+
 ## Alternativas y límites
 
 Conservar monolito modular reduce operación para un VPS/equipo pequeño; extraer servicios o añadir caché requiere medición. Los contratos por adapter facilitan pruebas y sustitución sin prometer aislamiento de CPU/memoria dentro del mismo proceso.

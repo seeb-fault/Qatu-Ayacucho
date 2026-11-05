@@ -1,6 +1,6 @@
 # 005 — Reservas, contratación y pagos
 
-**Estado:** incrementos 005.1/005.2 implementados y verificados localmente: solicitudes, visitas, apartado, efectivo bilateral y devolución de herramientas. 005.3 agrega cotizaciones versionadas; 005.4 reserva la agenda al aceptar, sin anticipo; 005.5 agrega ejecución y cierre de oficios con efectivo bilateral. Pasarela, disputas y aceptación global pendientes. **Fecha:** 2026-10-15; incrementos: 2026-10-27 y 2026-11-05.
+**Estado:** incrementos 005.1/005.2 implementados y verificados localmente: solicitudes, visitas, apartado, efectivo bilateral y devolución de herramientas. 005.3 agrega cotizaciones versionadas; 005.4 reserva la agenda al aceptar, sin anticipo; 005.5 agrega ejecución y cierre de oficios con efectivo bilateral; 005.6, despacho de eventos sin canal real. Pasarela, notificaciones externas, disputas y aceptación global pendientes. **Fecha:** 2026-10-15; incrementos: 2026-10-27 y 2026-11-05.
 **Módulo técnico:** reservas. **Historias:** HU03, HU04, HU05, HU06, HU07, HU08, HU09, HU19, HU20.
 
 ## Objetivo y alcance

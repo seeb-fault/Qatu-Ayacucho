@@ -1,6 +1,6 @@
 # Tareas — Reservas, contratación y pagos
 
-Estado: 005.1/005.2 implementados y verificados localmente. Herramientas con aceptación/bloqueo concurrente, visitas, efectivo bilateral y devolución disponibles. 005.3/005.4 incorporan cotización y agenda de oficios sin anticipo; 005.5, ejecución y cierre con efectivo bilateral. Las tareas originales del módulo completo conservan sus pendientes cuando incluyen disputas, pasarela o evidencia externa.
+Estado: 005.1/005.2 implementados y verificados localmente. Herramientas con aceptación/bloqueo concurrente, visitas, efectivo bilateral y devolución disponibles. 005.3/005.4 incorporan cotización y agenda de oficios sin anticipo; 005.5, ejecución y cierre con efectivo bilateral; 005.6, despacho de eventos sin canal real. Las tareas originales del módulo completo conservan sus pendientes cuando incluyen disputas, pasarela o evidencia externa.
 
 ## Incremento 005.1 — Subconjunto no bloqueado
 
@@ -38,6 +38,12 @@ Estado: 005.1/005.2 implementados y verificados localmente. Herramientas con ace
 - [x] T056 Implementar estados, transiciones, migración 006, efectivo tomado de la cotización aceptada, liberación al cerrar y eventos atómicos en backend/src/modules/reservas/.
 - [x] T057 Integrar inicio, término, confirmación y rechazo por participante en frontend/src/components/reservas/TarjetaReserva.tsx.
 - [x] T058 Verificar permisos, hora de inicio, concurrencia, rollback, restricciones PostgreSQL y recorrido web; registrar evidencia en quickstart.md y activar 005.5 en CI.
+
+## Incremento 005.6 — Despacho de eventos
+
+- [x] T059 Registrar entrega al menos una vez, orden por reserva, reintentos y activación condicionada a un canal real en research.md y contracts/api.md.
+- [x] T060 Implementar puerto Notificador, migración 007 y despachador sin transacción durante el envío en backend/src/modules/reservas/.
+- [x] T061 Verificar con doble: orden, reintentos, agotamiento, carrera entre procesos, corte, proceso atrasado y canal caído; registrar evidencia en quickstart.md y activar 005.6 en CI.
 
 ## Fase 1 — Preparación
 

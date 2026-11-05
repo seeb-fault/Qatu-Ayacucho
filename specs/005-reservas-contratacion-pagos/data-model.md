@@ -34,6 +34,10 @@ La aceptación y la cancelación usan el mismo orden de bloqueo por recurso y lu
 
 La comprobación diferida mantiene el bloqueo exacto hasta el cierre, lo libera en SERVICIO_CERRADO y rechaza efectivo distinto del total de la cotización aceptada. Los eventos nuevos se guardan en la misma transacción. La reversión automática se rechaza para conservar declaraciones auditadas.
 
+## Esquema del incremento 005.6
+
+`007-despacho-eventos.sql` agrega a `reservas_outbox` el estado FALLIDO, secuencia, enviado_en y ultimo_error. Una restricción exige enviado_en únicamente en ENVIADO, y otra limita ultimo_error a un código sin datos. Al reclamar un evento aumenta intentos y se adelanta proximo_intento 60 s, para que otro proceso lo retome si este se corta; el número de intento impide que un proceso atrasado resuelva un evento ya reclamado por otro. Revertir devuelve los FALLIDO a pendientes; al reaplicar, los ENVIADO toman creado_en como hora de envío, porque la real se pierde.
+
 ## Datos propios
 
 reservas; bloqueos; intentos_pago; eventos_pasarela; outbox_eventos; cotizaciones y sus versiones (extensión propuesta para RF23).
