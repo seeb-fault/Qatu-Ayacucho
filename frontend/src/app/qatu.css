@@ -181,6 +181,7 @@ input::placeholder, textarea::placeholder { color: #8B93A7; }
 .q-hero-media { position: absolute; z-index: 0; top: 0; right: 0; bottom: 0; width: 64%; margin: 0; -webkit-mask-image: linear-gradient(90deg, transparent 0, rgb(0 0 0 / .55) 18%, #000 40%); mask-image: linear-gradient(90deg, transparent 0, rgb(0 0 0 / .55) 18%, #000 40%); }
 .q-hero-media img { object-fit: cover; object-position: 78% 60%; }
 .q-hero-media--ilustracion img { object-position: center bottom; }
+.q-hero-aviso { position: absolute; right: 12px; bottom: 12px; padding: 3px 8px; border-radius: 6px; background: rgba(15, 15, 30, .72); color: #fff; font-size: 11px; line-height: 1.4; }
 
 .market-search { position: relative; z-index: 3; margin: 24px 0 0; }
 .market-search .search-form { border: 1px solid var(--q-border); border-radius: var(--q-radius-lg); background: #fff; box-shadow: var(--q-shadow-sm); }
