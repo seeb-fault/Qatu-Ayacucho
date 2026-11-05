@@ -28,7 +28,7 @@ test('crear, recargar, mostrar y ocultar perfil de proveedor con datos persistid
     const visitante = await anonimo.newPage();
     await visitante.goto(ruta);
     await expect(visitante.getByRole('heading', { level: 1 })).toHaveText('Taller del barrio');
-    await expect(visitante.getByText('Carmen Alto', { exact: true })).toBeVisible();
+    await expect(visitante.locator('#contenido').getByText('Carmen Alto', { exact: true })).toBeVisible();
     await expect(visitante.getByText('Sin verificación solicitada', { exact: true })).toBeVisible();
     await expect(visitante.getByText(email, { exact: true })).toHaveCount(0);
     expect(await visitante.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
