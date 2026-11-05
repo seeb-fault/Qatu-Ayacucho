@@ -19,8 +19,10 @@ async function preparar() {
     // Estado verificado sintético. No acredita el flujo documental, cubierto por 003/004.
     await pool.query("UPDATE proveedores SET estado_verificacion='aprobada' WHERE id=$1", [perfil.id]);
     await pool.query("DELETE FROM limites_acceso WHERE clave='ip:127.0.0.1:login'");
-    const oferta = await new PostgresCatalogo(pool).crear(perfil.id, { tipo: 'herramienta', categoriaId: 'perforacion', zonaId: 'ayacucho', titulo: 'Taladro solicitud E2E ' + sufijo.slice(0,8), descripcion: 'Herramienta sintética para comprobar solicitudes persistidas en el navegador.', incluye: ['Equipo y accesorios'], condiciones: ['Coordinación de retiro y devolución'], modalidadPrecio: 'fija', tarifaCentimos: 4250, unidad: 'día', activa: true, recursos: [{ identificador: 'Unidad E2E', activo: true }] });
-    console.log(JSON.stringify({ proveedorEmail: proveedor.email, clienteEmail: cliente.email, password, publicacionId: oferta.id, titulo: oferta.titulo }));
+    const servicio = process.argv.includes('--servicio');
+    const clienteB = servicio ? await usuarios.crear('reservas-e2e-cliente-b-'+sufijo+'@example.com','Segundo cliente E2E',hash) : null;
+    const oferta = await new PostgresCatalogo(pool).crear(perfil.id, { tipo: servicio ? 'servicio' : 'herramienta', categoriaId: servicio ? 'electricidad' : 'perforacion', zonaId: 'ayacucho', titulo: (servicio ? 'Electricista cotización E2E ' : 'Taladro solicitud E2E ') + sufijo.slice(0,8), descripcion: 'Oferta sintética para comprobar solicitudes persistidas en el navegador.', incluye: ['Equipo y accesorios'], condiciones: ['Coordinar previamente el horario'], modalidadPrecio: servicio ? 'cotizacion' : 'fija', tarifaCentimos: servicio ? null : 4250, unidad: servicio ? null : 'día', activa: true, recursos: [{ identificador: servicio ? 'Agenda E2E' : 'Unidad E2E', activo: true }] });
+    console.log(JSON.stringify({ proveedorEmail: proveedor.email, clienteEmail: cliente.email, clienteBEmail: clienteB?.email, password, publicacionId: oferta.id, recursoId: oferta.recursos[0].id, titulo: oferta.titulo }));
   } finally { await pool.end(); }
 }
 preparar().catch(() => { console.error('No se pudo preparar el fixture aislado de reservas.'); process.exitCode = 1; });

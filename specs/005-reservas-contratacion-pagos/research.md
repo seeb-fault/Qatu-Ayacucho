@@ -24,10 +24,24 @@ El usuario aprobó explícitamente la propuesta de alquiler por bloques de 24 ho
 - El cliente avisa la devolución con hora de servidor; el proveedor confirma esa hora informada o rechaza el aviso con motivo. Solo la confirmación libera posesión/bloqueo y calcula importe final/saldo. Son declaraciones auditadas, no fotografías ni resolución automática de daños; D12/evidencias de Reputación siguen pendientes.
 - WhatsApp comienza como enlace para compartir el resumen y elegir el destinatario. No se envían mensajes automáticamente, no se publican teléfonos y no se altera la reserva por mensajes externos. D08 de integraciones externas continúa pendiente.
 
-- D05: días calendario o bloques 24 h, retiro/devolución, mínimos y tarifa; bloquea cálculo comercial.
-- D06: secuencia cotización/aceptación/bloqueo, vencimiento (15 min propuesto), anticipo y vigencia; bloquea aceptación/cobro de oficio.
-- D07: comisión, cancelaciones, reembolsos y pago tardío; bloquea checkout operativo.
+- D05 queda resuelta para el alcance de herramientas anterior; no bloquea 005.2.
+- D06 conserva pendientes de secuencia cotización/aceptación/bloqueo, anticipo y vigencia de oficios. Los 15 min eran una propuesta histórica, sustituida por 60 min para herramientas.
+- D07 conserva pendientes de comisión, cancelaciones, reembolsos y pago tardío del checkout externo; el acuerdo de efectivo anterior tiene alcance propio.
 - D08: credenciales, método de verificación y capacidades vigentes Culqi/Yape/mensajería; bloquea integración real.
+
+### Alcance de implementación — 005.3, 2026-10-27
+
+El usuario eligió continuar con cotizaciones de oficios después de comparar esta etapa con Culqi sandbox. Se implementa el acuerdo de alcance, materiales/exclusiones, total en PEN y vigencia, con versiones conservadas y respuesta explícita del cliente. Las partes no resueltas de D06/D07 no se transforman en políticas comerciales: aceptar no bloquea agenda, no exige anticipo ni registra un pago. La interfaz lo explica antes de confirmar; la decisión de reserva operativa de agenda permanece abierta.
+
+La vigencia la indica el proveedor y se valida hasta el inicio solicitado como máximo. Solo la versión más reciente sin respuesta y vigente puede aceptarse/rechazarse. Una respuesta incrementa la versión de solicitud; el bloqueo transaccional evita aceptar un precio mientras se sustituye. Después de aceptar se conserva el acuerdo y no se emiten nuevas versiones. El límite técnico de 50 versiones mantiene acotado el historial de una solicitud; no define duración, comisión o anticipo comercial.
+
+### Acuerdo del usuario — 005.4, confirmación de agenda sin anticipo
+
+El usuario autorizó continuar con la recomendación de reservar el horario solicitado al aceptar una cotización vigente, si sigue disponible, sin anticipo. Se incorpora SERVICIO_CONFIRMADO, distinto del apartado de herramientas de 60 min. La agenda es el recurso concreto de la oferta; no se afirma exclusión global entre agendas independientes de un proveedor.
+
+Aceptar guarda respuesta, bloqueo exacto [inicio,fin), estado y eventos en una transacción. Un conflicto revierte todos esos efectos y requiere coordinar otra solicitud. No se cobra ni se confirma ejecución del servicio. El horario confirmado no vence por el temporizador de herramientas. La cancelación con motivo antes del inicio libera el bloqueo y conserva el precio y la aceptación; el cierre/cancelación posterior al inicio queda pendiente del ciclo de ejecución del oficio.
+
+Los acuerdos aceptados en 005.3 no se convierten automáticamente: podrían tener horarios superpuestos. El cliente dispone de confirmación expresa del horario, con validación actual de oferta/recurso y exclusión. Se conserva la aceptación histórica aunque su antigua vigencia haya terminado. Las políticas de anticipo, pasarela, ejecución/cierre y disputas siguen pendientes.
 
 ## Alternativas y límites
 

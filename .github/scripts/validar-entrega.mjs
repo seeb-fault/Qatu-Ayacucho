@@ -13,8 +13,14 @@ export function validarEntrega(root) {
   const indice = entregas.indexOf(manifest.ultimaEntrega);
   assert.ok(indice >= 0, 'Entrega desconocida');
   const incrementos = manifest.incrementos ?? [];
-  assert.ok(Array.isArray(incrementos) && incrementos.every(i => i === '005.1') && new Set(incrementos).size === incrementos.length, 'Incremento desconocido o repetido');
+  assert.ok(Array.isArray(incrementos) && incrementos.every(i => ['005.1','005.2','005.3','005.4'].includes(i)) && new Set(incrementos).size === incrementos.length, 'Incremento desconocido o repetido');
   const reservas = incrementos.includes('005.1');
+  const efectivo = incrementos.includes('005.2');
+  const cotizaciones = incrementos.includes('005.3');
+  const agenda = incrementos.includes('005.4');
+  assert.ok(!agenda || cotizaciones, '005.4 requiere cotizaciones 005.3');
+  assert.ok(!cotizaciones || efectivo, '005.3 requiere la base de reservas 005.2');
+  assert.ok(!efectivo || reservas, '005.2 requiere solicitudes 005.1');
   assert.ok(!reservas || indice >= 4, 'Solicitudes requiere Catálogo 004');
   const requerir = relative => assert.ok(existsSync(resolve(root, relative)), `Falta ${relative}`);
   const ausente = relative => assert.ok(!existsSync(resolve(root, relative)), `No corresponde ${relative} en esta entrega`);
@@ -50,6 +56,15 @@ export function validarEntrega(root) {
     for (const relative of ['backend/src/modules/reservas/reservas.module.ts','backend/migrations/reservas/001-solicitudes.sql','backend/test/reservas/persistencia.test.ts','frontend/src/app/reservas/page.tsx','frontend/playwright.reservas.config.ts','frontend/tests/reservas/solicitudes.spec.ts']) requerir(relative);
     scripts('frontend/package.json',['test:reservas']);
   } else ausente('backend/src/modules/reservas');
+  if (efectivo) {
+    for (const relative of ['backend/migrations/reservas/002-alquiler-efectivo.sql','backend/migrations/reservas/003-condiciones-estables.sql','backend/src/modules/reservas/dominio/alquiler.ts','backend/test/reservas/alquiler.test.ts','backend/test/reservas/calendario.test.ts','frontend/src/components/reservas/TarjetaReserva.tsx','frontend/tests/reservas/efectivo.spec.ts']) requerir(relative);
+  } else ausente('backend/src/modules/reservas/dominio/alquiler.ts');
+  if (cotizaciones) {
+    for (const relative of ['backend/migrations/reservas/004-cotizaciones.sql','backend/src/modules/reservas/dominio/cotizacion.ts','backend/test/reservas/cotizaciones.test.ts','frontend/src/components/reservas/CotizacionesServicio.tsx','frontend/tests/reservas/cotizaciones.spec.ts']) requerir(relative);
+  } else ausente('backend/src/modules/reservas/dominio/cotizacion.ts');
+  if (agenda) {
+    for (const relative of ['backend/migrations/reservas/005-agenda-oficios.sql','backend/test/reservas/agenda.test.ts','frontend/tests/reservas/agenda.spec.ts']) requerir(relative);
+  } else ausente('backend/migrations/reservas/005-agenda-oficios.sql');
   return {
     entrega: manifest.ultimaEntrega,
     frontend: indice >= 1,

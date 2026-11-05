@@ -10,6 +10,10 @@ export class ReservasController {
   @Post() solicitar(@Req() r: Request, @Body() d: unknown) { return this.reservas.solicitar(token(r), d); }
   @Get() listar(@Req() r: Request, @Query() q: unknown) { return this.reservas.listar(token(r), q); }
   @Get(':id') consultar(@Req() r: Request, @Param('id') id: string) { return this.reservas.consultar(token(r), id); }
+  @Post(':id/cotizacion') cotizar(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.cotizar(token(r),id,d); }
+  @Post(':id/cotizacion/aceptacion') aceptarCotizacion(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.responderCotizacion(token(r),id,d,'ACEPTADA'); }
+  @Post(':id/cotizacion/rechazo') rechazarCotizacion(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.responderCotizacion(token(r),id,d,'RECHAZADA'); }
+  @Post(':id/agenda/confirmacion') confirmarAgenda(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.confirmarAgenda(token(r),id,d); }
   @Post(':id/rechazo') rechazar(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.rechazar(token(r), id, d); }
   @Post(':id/aceptacion') aceptar(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'aceptacion',d); }
   @Post(':id/visita') visita(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'visita',d); }

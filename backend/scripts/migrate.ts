@@ -10,7 +10,7 @@ async function migrate() {
     await client.query('BEGIN');
     await client.query("SELECT pg_advisory_xact_lock(488002)");
     await client.query('CREATE TABLE IF NOT EXISTS migraciones (nombre text PRIMARY KEY, aplicada_en timestamptz NOT NULL DEFAULT now())');
-    for (const nombre of ['usuarios/001-usuarios', 'usuarios/002-administracion', 'proveedores/001-perfiles', 'proveedores/002-verificaciones', 'catalogo/001-publicaciones', 'reservas/001-solicitudes', 'reservas/002-alquiler-efectivo', 'reservas/003-condiciones-estables']) {
+    for (const nombre of ['usuarios/001-usuarios', 'usuarios/002-administracion', 'proveedores/001-perfiles', 'proveedores/002-verificaciones', 'catalogo/001-publicaciones', 'reservas/001-solicitudes', 'reservas/002-alquiler-efectivo', 'reservas/003-condiciones-estables', 'reservas/004-cotizaciones', 'reservas/005-agenda-oficios']) {
       const result = await client.query('SELECT nombre FROM migraciones WHERE nombre = $1', [nombre]);
       if (!result.rowCount) {
         await client.query(await readFile(resolve('migrations', `${nombre}.sql`), 'utf8'));

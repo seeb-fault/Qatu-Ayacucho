@@ -1,5 +1,6 @@
 import { ErrorAplicacion } from '../../../shared/dominio/error-aplicacion';
 import type { CondicionesAlquiler, EstadoReserva } from './alquiler';
+import type { Cotizacion } from './cotizacion';
 
 export class ErrorReserva extends ErrorAplicacion {}
 export interface SnapshotSolicitud {
@@ -11,6 +12,7 @@ export interface SnapshotSolicitud {
   unidad: string | null;
 }
 export interface Solicitud {
+  cotizaciones?: Cotizacion[];
   id: string;
   clienteId: string;
   propietarioId: string;

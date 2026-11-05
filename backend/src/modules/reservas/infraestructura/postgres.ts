@@ -3,13 +3,18 @@ import type { Pool, PoolClient } from 'pg';
 import { ErrorReserva, type NuevaSolicitud, type Solicitud } from '../dominio/solicitud';
 import type { RepositorioReservas } from '../dominio/puertos';
 import { eventos, transicion, type AccionReserva } from '../dominio/alquiler';
+import { puedeCotizar, puedeConfirmarAgenda, type PropuestaCotizacion } from '../dominio/cotizacion';
 
 const columnas = `id, cliente_id AS "clienteId", propietario_id AS "propietarioId", proveedor_id AS "proveedorId",
   publicacion_id AS "publicacionId", recurso_id AS "recursoId", inicio, fin,
   descripcion_trabajo AS "descripcionTrabajo", snapshot, estado, motivo_rechazo AS "motivoRechazo", version, creado_en AS "creadoEn",
   tipo_solicitud AS "tipoSolicitud", condiciones, vence_en AS "venceEn", pago_estado AS "pagoEstado", efectivo_centimos AS "efectivoCentimos",
   entregado_en AS "entregadoEn", recibido_en AS "recibidoEn", devolucion_informada_en AS "devolucionInformadaEn", devuelto_en AS "devueltoEn",
-  importe_final_centimos AS "importeFinalCentimos", saldo_centimos AS "saldoCentimos", dias_extra AS "diasExtra", motivo_operacion AS "motivoOperacion"`;
+  importe_final_centimos AS "importeFinalCentimos", saldo_centimos AS "saldoCentimos", dias_extra AS "diasExtra", motivo_operacion AS "motivoOperacion",
+  COALESCE((SELECT jsonb_agg(jsonb_build_object('version',c.version,'alcance',c.alcance,'materiales',c.materiales,
+    'importeCentimos',c.importe_centimos,'moneda',c.moneda,'vigenteHasta',c.vigente_hasta,'creadaEn',c.creada_en,
+    'respuesta',CASE WHEN c.decision IS NULL THEN NULL ELSE jsonb_build_object('decision',c.decision,'motivo',c.motivo,'respondidaEn',c.respondida_en) END)
+    ORDER BY c.version) FROM reservas_cotizaciones c WHERE c.reserva_id=reservas.id),'[]'::jsonb) AS cotizaciones`;
 const convertir = (r: any): Solicitud => {
   const resultado = { ...r };
   for (const campo of ['inicio','fin','creadoEn','venceEn','entregadoEn','recibidoEn','devolucionInformadaEn','devueltoEn']) resultado[campo] = r[campo] == null ? null : new Date(r[campo]).toISOString();
@@ -29,7 +34,7 @@ export class PostgresReservas implements RepositorioReservas {
       return resultado;
     } catch (error) {
       await client.query('ROLLBACK');
-      if ((error as { code?: string }).code === '23P01') throw new ErrorReserva('RECURSO_OCUPADO',409,'La unidad ya está apartada para esas fechas. Actualiza y elige otro horario.');
+      if ((error as { code?: string }).code === '23P01') throw new ErrorReserva('RECURSO_OCUPADO',409,'La unidad o agenda ya está reservada para esas fechas. Coordina otro horario y envía una nueva solicitud.');
       if ((error as { constraint?: string }).constraint === 'reservas_posesion_unica') throw new ErrorReserva('HERRAMIENTA_SIN_DEVOLVER',409,'La unidad sigue en poder de otro cliente. Confirma su devolución antes de entregarla.');
       if ((error as { code?: string; constraint?: string }).code === '23505'
         && (error as { constraint?: string }).constraint === 'reservas_pendiente_duplicada') {
@@ -67,8 +72,10 @@ export class PostgresReservas implements RepositorioReservas {
 
   async rechazar(id: string, propietarioId: string, versionActual: number, motivo: string): Promise<Solicitud> {
     return this.transaccion(async client => {
+      await client.query('SELECT id FROM reservas WHERE id=$1 AND propietario_id=$2 FOR UPDATE', [id,propietarioId]);
       const r = await client.query(`UPDATE reservas SET estado='RECHAZADA',motivo_rechazo=$4,version=version+1
-        WHERE id=$1 AND propietario_id=$2 AND version=$3 AND estado='PENDIENTE' RETURNING ${columnas}`, [id,propietarioId,versionActual,motivo]);
+        WHERE id=$1 AND propietario_id=$2 AND version=$3 AND estado='PENDIENTE'
+        AND NOT EXISTS(SELECT 1 FROM reservas_cotizaciones WHERE reserva_id=reservas.id AND decision='ACEPTADA') RETURNING ${columnas}`, [id,propietarioId,versionActual,motivo]);
       if (!r.rowCount) throw new ErrorReserva('RESERVA_MODIFICADA',409,'La solicitud cambió o ya fue respondida. Recarga la bandeja.');
       await client.query('INSERT INTO reservas_outbox(id,agregado_id,tipo,payload) VALUES($1,$2,$3,$4)',
         [randomUUID(),id,'SOLICITUD_RECHAZADA',JSON.stringify({reservaId:id,version:r.rows[0].version})]);
@@ -109,6 +116,73 @@ export class PostgresReservas implements RepositorioReservas {
         WHERE id=$1 RETURNING ${columnas}`, [s.id,s.estado,s.version,s.venceEn,s.pagoEstado,s.efectivoCentimos,s.entregadoEn,s.recibidoEn,s.devolucionInformadaEn,s.devueltoEn,s.importeFinalCentimos,s.saldoCentimos,s.diasExtra,s.motivoOperacion]);
       await client.query('INSERT INTO reservas_outbox(id,agregado_id,tipo,payload) VALUES($1,$2,$3,$4)', [randomUUID(),s.id,eventos[accion],JSON.stringify({reservaId:s.id,version:s.version,actorId,estado:s.estado,pagoEstado:s.pagoEstado,motivo,entregadoEn:s.entregadoEn,devolucionInformadaEn:actual.devolucionInformadaEn ?? s.devolucionInformadaEn,devueltoEn:s.devueltoEn})]);
       return convertir(r.rows[0]);
+    });
+  }
+
+  private async cambiarCotizacion(id: string, actorId: string, versionActual: number, modo: 'publicar' | 'responder' | 'agenda',
+    cambiar: (client: PoolClient, s: Solicitud, ahora: number) => Promise<{tipo: string; versionCotizacion: number}>) {
+    return this.transaccion(async client => {
+      const visible = await client.query('SELECT recurso_id FROM reservas WHERE id=$1 AND (cliente_id=$2 OR propietario_id=$2)', [id,actorId]);
+      if (!visible.rowCount) throw new ErrorReserva('RESERVA_NO_DISPONIBLE',404,'La solicitud no está disponible.');
+      // Mismo orden que aceptación/cancelación de herramientas: recurso y luego solicitud.
+      await client.query('SELECT pg_advisory_xact_lock(hashtextextended($1,488005))', [visible.rows[0].recurso_id]);
+      await this.vencerEn(client,visible.rows[0].recurso_id);
+      const bloqueada = await client.query('SELECT id FROM reservas WHERE id=$1 AND (cliente_id=$2 OR propietario_id=$2) FOR UPDATE', [id,actorId]);
+      if (!bloqueada.rowCount) throw new ErrorReserva('RESERVA_NO_DISPONIBLE',404,'La solicitud no está disponible.');
+      // Leer el historial después de obtener el bloqueo: un escritor que terminó
+      // mientras esperábamos puede haber creado otra versión de la propuesta.
+      const r = await client.query(`SELECT ${columnas} FROM reservas WHERE id=$1`, [id]);
+      const s = convertir(r.rows[0]);
+      if (s.version !== versionActual) throw new ErrorReserva('RESERVA_MODIFICADA',409,'La solicitud cambió. Actualiza antes de continuar.');
+      if (modo !== 'agenda') puedeCotizar(s,actorId,modo === 'publicar');
+      const ahora = (await client.query('SELECT clock_timestamp() AS ahora')).rows[0].ahora.getTime();
+      if (Date.parse(s.inicio) <= ahora) throw new ErrorReserva('HORARIO_VENCIDO',409,'El horario solicitado ya comenzó. Solicita nuevas fechas.');
+      const cambio = await cambiar(client,s,ahora);
+      const guardada = await client.query(`UPDATE reservas SET version=version+1 WHERE id=$1 RETURNING ${columnas}`, [id]);
+      await client.query('INSERT INTO reservas_outbox(id,agregado_id,tipo,payload) VALUES($1,$2,$3,$4)',
+        [randomUUID(),id,cambio.tipo,JSON.stringify({reservaId:id,version:s.version+1,versionCotizacion:cambio.versionCotizacion,actorId})]);
+      if (cambio.tipo === 'COTIZACION_ACEPTADA') await client.query('INSERT INTO reservas_outbox(id,agregado_id,tipo,payload) VALUES($1,$2,$3,$4)',
+        [randomUUID(),id,'AGENDA_CONFIRMADA',JSON.stringify({reservaId:id,version:s.version+1,versionCotizacion:cambio.versionCotizacion,actorId})]);
+      return convertir(guardada.rows[0]);
+    });
+  }
+
+  cotizar(id: string, actorId: string, versionActual: number, p: PropuestaCotizacion) {
+    return this.cambiarCotizacion(id,actorId,versionActual,'publicar',async(client,s,ahora) => {
+      if (Date.parse(p.vigenteHasta) <= ahora || Date.parse(p.vigenteHasta) > Date.parse(s.inicio)) {
+        throw new ErrorReserva('VIGENCIA_INVALIDA',400,'La vigencia debe ser futura y no superar el inicio solicitado.');
+      }
+      const version = (s.cotizaciones?.length ?? 0)+1;
+      if (version > 50) throw new ErrorReserva('LIMITE_COTIZACIONES',409,'Se alcanzó el límite de versiones. Crea una nueva solicitud.');
+      await client.query(`INSERT INTO reservas_cotizaciones(reserva_id,version,alcance,materiales,importe_centimos,vigente_hasta)
+        VALUES($1,$2,$3,$4,$5,$6)`, [id,version,p.alcance,p.materiales,p.importeCentimos,p.vigenteHasta]);
+      return {tipo:'COTIZACION_PROPUESTA',versionCotizacion:version};
+    });
+  }
+
+  responderCotizacion(id: string, actorId: string, versionActual: number, versionCotizacion: number, decision: 'ACEPTADA' | 'RECHAZADA', motivo: string | null) {
+    return this.cambiarCotizacion(id,actorId,versionActual,'responder',async(client,s,ahora) => {
+      const c = s.cotizaciones?.at(-1);
+      if (!c || c.version !== versionCotizacion || c.respuesta || Date.parse(c.vigenteHasta) <= ahora) {
+        throw new ErrorReserva('COTIZACION_MODIFICADA',409,'La propuesta cambió, venció o ya fue respondida. Actualiza y revisa la versión vigente.');
+      }
+      await client.query(`UPDATE reservas_cotizaciones SET decision=$3,motivo=$4,respondida_en=$5 WHERE reserva_id=$1 AND version=$2`,
+        [id,versionCotizacion,decision,motivo,new Date(ahora).toISOString()]);
+      if (decision === 'ACEPTADA') await this.reservarAgendaEn(client,s);
+      return {tipo:decision === 'ACEPTADA' ? 'COTIZACION_ACEPTADA' : 'COTIZACION_RECHAZADA',versionCotizacion};
+    });
+  }
+
+  private async reservarAgendaEn(client: PoolClient, s: Solicitud) {
+    await client.query('INSERT INTO reservas_bloqueos(reserva_id,recurso_id,inicio,fin) VALUES($1,$2,$3,$4)', [s.id,s.recursoId,s.inicio,s.fin]);
+    await client.query("UPDATE reservas SET estado='SERVICIO_CONFIRMADO' WHERE id=$1", [s.id]);
+  }
+
+  confirmarAgenda(id: string, actorId: string, versionActual: number, versionCotizacion: number) {
+    return this.cambiarCotizacion(id,actorId,versionActual,'agenda',async(client,s) => {
+      puedeConfirmarAgenda(s,actorId,versionCotizacion);
+      await this.reservarAgendaEn(client,s);
+      return {tipo:'AGENDA_CONFIRMADA',versionCotizacion};
     });
   }
 

@@ -68,4 +68,18 @@ Alta/edición de ofertas, consulta propia, catálogo público y moderación admi
 
 ## Incremento 005.1: solicitudes de reserva
 
-Contrato acotado de implementación: `POST /api/v1/reservas`, `GET /api/v1/reservas?vista=cliente|proveedor&page=1`, `GET /api/v1/reservas/:id` y `POST /api/v1/reservas/:id/rechazo`. Los DTO, permisos y estados PENDIENTE/RECHAZADA se detallan en [005/contracts/api.md](../../../specs/005-reservas-contratacion-pagos/contracts/api.md#incremento-0051--solicitudes-sin-aceptación-comercial). PENDIENTE no bloquea; el rechazo exige titularidad, motivo y versión. Aceptación, pagos y las demás rutas de Reservas siguen como diseño pendiente de decisiones comerciales.
+Contrato acotado de implementación: `POST /api/v1/reservas`, `GET /api/v1/reservas?vista=cliente|proveedor&page=1`, `GET /api/v1/reservas/:id` y `POST /api/v1/reservas/:id/rechazo`. Los DTO y permisos se detallan en [005/contracts/api.md](../../../specs/005-reservas-contratacion-pagos/contracts/api.md). PENDIENTE no bloquea; el rechazo exige titularidad, motivo y versión.
+
+### Incremento 005.2 — Apartado y efectivo
+
+Implementados para herramientas: `GET /api/v1/recursos/:id/disponibilidad` y los POST bajo `/api/v1/reservas/:id` con sufijos `/aceptacion`, `/visita`, `/ampliacion`, `/cancelacion`, `/efectivo`, `/recepcion`, `/devolucion/aviso`, `/devolucion/confirmacion` y `/devolucion/rechazo`. Actores, entradas estrictas y transiciones están en [el contrato de 005.2](../../../specs/005-reservas-contratacion-pagos/contracts/api.md#incremento-0052--herramientas-apartado-y-efectivo-acuerdo-2026-10-27). Solo los participantes acceden a una reserva; terceros, incluidos administradores sin participación, reciben 404.
+
+El apartado bloquea el recurso durante 60 min antes del registro de efectivo; la visita no bloquea. El proveedor registra efectivo/entrega y el cliente confirma pago/recepción; son declaraciones de participantes. La devolución confirmada calcula saldo y libera el recurso. La pasarela y los hitos con archivos de evidencia permanecen como diseño pendiente.
+
+### Incremento 005.3 — Acuerdo de cotización de oficios
+
+`POST /api/v1/reservas/:id/cotizacion` publica una propuesta del proveedor con versión de solicitud, alcance, materiales, importe entero en PEN y vigencia. `POST /api/v1/reservas/:id/cotizacion/aceptacion` y `/cotizacion/rechazo` permiten al cliente responder a la última versión vigente; el rechazo exige motivo. El historial se conserva y solo es visible a participantes. El acuerdo no registra pago y no permite reescribir el precio. El comportamiento original de 005.3 sin bloqueo de agenda se amplía en 005.4. [DTO, permisos y errores](../../../specs/005-reservas-contratacion-pagos/contracts/api.md).
+
+### Incremento 005.4 — Agenda de oficios sin anticipo
+
+La aceptación de cotización reserva el intervalo exacto del recurso/agenda solicitado y cambia a SERVICIO_CONFIRMADO, sin anticipo ni vencimiento de 60 min. Un horario ocupado devuelve 409 sin cambios parciales. Los acuerdos históricos aceptados con 005.3 requieren confirmación expresa del cliente mediante `POST /api/v1/reservas/:id/agenda/confirmacion` con `{versionActual,versionCotizacion}`. La cancelación con motivo antes del inicio libera el horario conservando el acuerdo. No confirma ejecución, cierre ni pago del servicio; los eventos permanecen en outbox sin afirmar envío externo.

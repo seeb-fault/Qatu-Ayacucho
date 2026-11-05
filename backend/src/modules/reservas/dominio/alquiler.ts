@@ -7,7 +7,7 @@ export interface CondicionesAlquiler {
   toleranciaMinutos: 30; comisionCentimos: 0; medioPago: 'efectivo';
 }
 export type EstadoReserva = 'PENDIENTE' | 'RECHAZADA' | 'VISITA_ACORDADA' | 'ACEPTADA' | 'VENCIDA' | 'CANCELADA'
-  | 'ENTREGA_POR_CONFIRMAR' | 'EN_CURSO' | 'DEVOLUCION_PENDIENTE' | 'DEVUELTA';
+  | 'ENTREGA_POR_CONFIRMAR' | 'EN_CURSO' | 'DEVOLUCION_PENDIENTE' | 'DEVUELTA' | 'SERVICIO_CONFIRMADO';
 export type AccionReserva = 'aceptacion' | 'visita' | 'ampliacion' | 'cancelacion' | 'efectivo' | 'recepcion'
   | 'devolucion/aviso' | 'devolucion/confirmacion' | 'devolucion/rechazo';
 export const eventos: Record<AccionReserva, string> = {
@@ -59,8 +59,9 @@ export function transicion(actual: Solicitud, actorId: string, accion: AccionRes
       if (Date.parse(nuevoVencimiento()) <= Date.parse(s.venceEn!)) conflicto('El apartado ya dispone de ese tiempo.');
       s.venceEn = nuevoVencimiento(); break;
     case 'cancelacion':
-      estado('PENDIENTE', 'VISITA_ACORDADA', 'ACEPTADA');
+      estado('PENDIENTE', 'VISITA_ACORDADA', 'ACEPTADA', 'SERVICIO_CONFIRMADO');
       if (s.estado === 'ACEPTADA') vigente();
+      if (s.estado === 'SERVICIO_CONFIRMADO' && Date.parse(s.inicio) <= ahora) conflicto('El servicio ya comenzó. Su cierre debe coordinarse con el proveedor.');
       s.estado = 'CANCELADA'; s.venceEn = null; break;
     case 'efectivo':
       estado('ACEPTADA'); vigente();

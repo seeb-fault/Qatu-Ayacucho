@@ -1,5 +1,6 @@
 import { entradaSolicitud, entradaRechazo, filtros, uuid, texto, objeto, instante, invalida, ErrorReserva, type Solicitud } from '../dominio/solicitud';
 import { condiciones, entradaAccion, type AccionReserva } from '../dominio/alquiler';
+import { entradaCotizacion, entradaRespuestaCotizacion } from '../dominio/cotizacion';
 import type { CatalogoReservas, IdentidadReservas, ProveedoresReservas, RepositorioReservas } from '../dominio/puertos';
 
 export class Reservas {
@@ -50,6 +51,33 @@ export class Reservas {
     if (!solicitud) throw new ErrorReserva('RESERVA_NO_DISPONIBLE', 404, 'La solicitud no está disponible.');
     if (solicitud.propietarioId !== actor.id) throw new ErrorReserva('SIN_PERMISO', 403, 'Solo el proveedor puede rechazar la solicitud.');
     return this.presentar(await this.repo.rechazar(id, actor.id, datos.versionActual, datos.motivo), actor.id);
+  }
+
+  async cotizar(token: string, id: string, value: unknown) {
+    const actor = await this.identidad.resolver(token), d = entradaCotizacion(value,this.ahora());
+    return this.presentar(await this.repo.cotizar(uuid(id),actor.id,d.versionActual,d.propuesta),actor.id);
+  }
+
+  async responderCotizacion(token: string, id: string, value: unknown, decision: 'ACEPTADA' | 'RECHAZADA') {
+    const actor = await this.identidad.resolver(token), d = entradaRespuestaCotizacion(value,decision);
+    if (decision === 'ACEPTADA') await this.validarAgendaPublica(uuid(id),actor.id);
+    return this.presentar(await this.repo.responderCotizacion(uuid(id),actor.id,d.versionActual,d.versionCotizacion,decision,d.motivo),actor.id);
+  }
+
+  private async validarAgendaPublica(id: string, actorId: string) {
+    const s = await this.repo.porId(id,actorId);
+    if (!s) throw new ErrorReserva('RESERVA_NO_DISPONIBLE',404,'La solicitud no está disponible.');
+    if (s.clienteId !== actorId) throw new ErrorReserva('SIN_PERMISO',403,'Solo el cliente puede confirmar el horario.');
+    const oferta = await this.catalogo.consultar(s.publicacionId);
+    if (oferta.tipo !== 'servicio' || !oferta.recursos.some(r=>r.id===s.recursoId && r.activo)) {
+      throw new ErrorReserva('RECURSO_NO_DISPONIBLE',409,'La agenda ya no está disponible. Coordina una nueva solicitud con el proveedor.');
+    }
+  }
+
+  async confirmarAgenda(token: string, id: string, value: unknown) {
+    const actor = await this.identidad.resolver(token), d = entradaRespuestaCotizacion(value,'ACEPTADA');
+    await this.validarAgendaPublica(uuid(id),actor.id);
+    return this.presentar(await this.repo.confirmarAgenda(id,actor.id,d.versionActual,d.versionCotizacion),actor.id);
   }
 
   vencer() { return this.repo.vencer(); }
