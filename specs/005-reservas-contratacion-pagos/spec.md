@@ -1,6 +1,6 @@
 # 005 — Reservas, contratación y pagos
 
-**Estado:** especificado; implementación y aceptación pendientes. **Fecha:** 2026-10-15.
+**Estado:** incrementos 005.1/005.2 implementados y verificados localmente: solicitudes, visitas, apartado, efectivo bilateral y devolución de herramientas. 005.3 agrega cotizaciones versionadas; 005.4 reserva la agenda al aceptar, sin anticipo; 005.5 agrega ejecución y cierre de oficios con efectivo bilateral. Pasarela, disputas y aceptación global pendientes. **Fecha:** 2026-10-15; incrementos: 2026-10-27 y 2026-11-05.
 **Módulo técnico:** reservas. **Historias:** HU03, HU04, HU05, HU06, HU07, HU08, HU09, HU19, HU20.
 
 ## Objetivo y alcance
@@ -84,9 +84,9 @@ Datos propios: reservas; bloqueos; intentos_pago; eventos_pasarela; outbox_event
 
 ## Clarifications
 
-- D05: días calendario o bloques 24 h, retiro/devolución, mínimos y tarifa; bloquea cálculo comercial.
-- D06: secuencia cotización/aceptación/bloqueo, vencimiento (15 min propuesto), anticipo y vigencia; bloquea aceptación/cobro de oficio.
-- D07: comisión, cancelaciones, reembolsos y pago tardío; bloquea checkout operativo.
+- D05 resuelta para herramientas fijas: bloques de 24 h iniciados, mínimo uno, horario pactado y tolerancia de devolución de 30 min; detalles en research.md.
+- D06 parcial: apartado de herramientas durante 60 min y visita sin bloqueo implementados. Cotizaciones vigentes y reserva de agenda por recurso al aceptar, sin anticipo, incorporadas en 005.3/005.4. Ejecución y cierre con efectivo incorporados en 005.5; anticipos y disputas pendientes. La propuesta histórica de 15 min no rige las herramientas.
+- D07 parcial: efectivo directo sin comisión ni custodia en herramientas y oficios, cancelación antes de registrar efectivo o de iniciar el trabajo y saldo por retraso sin cobro automático. Comisión de pasarela, reembolsos y pago tardío pendientes.
 - D08: credenciales, método de verificación y capacidades vigentes Culqi/Yape/mensajería; bloquea integración real.
 
 - D12: protocolo de registro de hitos y evidencias entre módulos sin ciclo; pendiente antes de RF18/RF19.

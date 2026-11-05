@@ -107,6 +107,12 @@ Diseño propuesto para el MVP académico de noviembre de 2026; implementación y
 
 ## Verificación y fuentes
 
+### ADR-013 — Alquiler diario y efectivo antes de pasarela (2026-10-27)
+
+- **Contexto:** El usuario quiere ver la herramienta, coordinar por WhatsApp y pagar en efectivo al recoger. Aprobó implementar este recorrido antes de la pasarela.
+- **Decisión:** Herramientas con tarifa diaria fija, bloques iniciados de 24 h, apartado de 60 min con ampliación expresa, visitas sin bloqueo y tolerancia de devolución de 30 min. Registro de efectivo/entrega por proveedor y confirmación por cliente; devolución informada por cliente y confirmada por proveedor. No hay comisión ni custodia de plataforma en esta etapa. Snapshot de condiciones aceptadas, control de versión y outbox atómicos; exclusión de rangos y posesión única por recurso.
+- **Consecuencias:** Constitución 1.1.0 admite efectivo. Pasarela, comisiones/reembolsos online, cotizaciones variables y evidencias fotográficas permanecen pendientes. WhatsApp comparte un resumen mediante elección manual del destinatario; no confirma pagos ni estados. El saldo por retraso no se declara cobrado automáticamente.
+
 [Escenarios EQ-01 a EQ-10](./08-escenarios-atributos-calidad.md) y [plan de validación](../03-diseño-de-software/validacion-del-diseno.md).
 
 Fuentes oficiales verificadas el 13/10/2026: [Culqi cargos/Yape](https://docs.culqi.com/es/documentacion/pagos-online/cargo-unico/cargos/), [API Culqi](https://apidocs.culqi.com/), [PostgreSQL rangos](https://www.postgresql.org/docs/17/rangetypes.html), [Docker Compose en producción](https://docs.docker.com/compose/how-tos/production/).

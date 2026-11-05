@@ -1,6 +1,43 @@
 # Tareas — Reservas, contratación y pagos
 
-Estado: pendiente. Alcance documental; ninguna tarea de código se ha ejecutado.
+Estado: 005.1/005.2 implementados y verificados localmente. Herramientas con aceptación/bloqueo concurrente, visitas, efectivo bilateral y devolución disponibles. 005.3/005.4 incorporan cotización y agenda de oficios sin anticipo; 005.5, ejecución y cierre con efectivo bilateral. Las tareas originales del módulo completo conservan sus pendientes cuando incluyen disputas, pasarela o evidencia externa.
+
+## Incremento 005.1 — Subconjunto no bloqueado
+
+- [x] T037 Definir DTO, permisos y límites del subconjunto en contracts/api.md y sincronizar el contrato externo; conservar D05–D08 abiertas.
+- [x] T038 Implementar solicitud/snapshot de referencia, consulta participante y rechazo con versión en backend/src/modules/reservas/; migración y eventos atómicos propios, sin consultas a tablas ajenas.
+- [x] T039 Integrar formulario y bandejas en frontend/src/app/reservas/ y frontend/src/components/reservas/; enlaces desde oferta, cuenta y navegación.
+- [x] T040 Verificar dominio, HTTP/PostgreSQL, rollback de outbox y recorrido de navegador; registrar resultados en quickstart.md y activar CI específico sin declarar completa 005.
+
+## Incremento 005.2 — Herramientas y efectivo
+
+- [x] T041 Registrar el acuerdo de bloques de 24 h, apartado de 60 min, tolerancia de devolución y efectivo directo en research.md y contratos.
+- [x] T042 Implementar condiciones inmutables, bloqueo GiST, posesión única y vencimiento transaccional; migraciones 002/003 en backend/migrations/reservas/.
+- [x] T043 Implementar visita, ampliación/cancelación, efectivo bilateral y devolución con saldo sin cobro automático en backend/src/modules/reservas/.
+- [x] T044 Integrar disponibilidad, condiciones aceptadas, acciones por participante y coordinación por enlace WhatsApp en frontend/src/components/reservas/.
+- [x] T045 Verificar 24 pruebas de reservas con PostgreSQL, incluidos 100 pares concurrentes, y tres escenarios de navegador; registrar ejecuciones y corrección del selector en quickstart.md.
+- [x] T046 Declarar 005.2 en manifiesto/detector CI y sincronizar estado, modelo y pendientes sin declarar completa la entrega 005.
+
+## Incremento 005.3 — Acuerdo económico de oficios
+
+- [x] T047 Concretar propuestas con alcance/materiales/total/vigencia y distinguir acuerdo de agenda/pago en research.md y contracts/api.md.
+- [x] T048 Implementar migración 004, versiones inmutables, respuesta sobre última propuesta vigente y evento atómico en backend/src/modules/reservas/.
+- [x] T049 Integrar propuesta, rechazo con motivo, nueva versión y aceptación explícita en frontend/src/components/reservas/CotizacionesServicio.tsx.
+- [x] T050 Verificar permisos, vencimiento, concurrencia, inmutabilidad y rollback con PostgreSQL y recorrido web; registrar resultados en quickstart.md y activar 005.3 en CI.
+
+## Incremento 005.4 — Confirmación de agenda sin anticipo
+
+- [x] T051 Registrar la decisión de confirmar horario al aceptar y la compatibilidad con acuerdos previos en research.md y contracts/api.md.
+- [x] T052 Implementar estado SERVICIO_CONFIRMADO, exclusión por agenda, cancelación previa al inicio y evento atómico; migración 005 y backend de Reservas.
+- [x] T053 Integrar estado, explicación de horario/anticipo y confirmación expresa de acuerdos previos en la interfaz de Reservas.
+- [x] T054 Verificar aceptación concurrente, conflictos, cancelación/liberación, rollback, rangos adyacentes y acuerdos históricos; registrar evidencia y activar 005.4 en CI.
+
+## Incremento 005.5 — Ejecución y cierre de oficios
+
+- [x] T055 Registrar las reglas elegidas por el usuario (efectivo al cierre por el total aceptado y cancelación con motivo mientras no se inicie) en research.md y contracts/api.md.
+- [x] T056 Implementar estados, transiciones, migración 006, efectivo tomado de la cotización aceptada, liberación al cerrar y eventos atómicos en backend/src/modules/reservas/.
+- [x] T057 Integrar inicio, término, confirmación y rechazo por participante en frontend/src/components/reservas/TarjetaReserva.tsx.
+- [x] T058 Verificar permisos, hora de inicio, concurrencia, rollback, restricciones PostgreSQL y recorrido web; registrar evidencia en quickstart.md y activar 005.5 en CI.
 
 ## Fase 1 — Preparación
 

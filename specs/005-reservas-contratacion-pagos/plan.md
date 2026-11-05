@@ -1,6 +1,6 @@
 # Plan técnico — Reservas, contratación y pagos
 
-**Estado:** plan documental; código, migraciones y pruebas aún no ejecutados.
+**Estado:** 005.1/005.2 implementados y verificados localmente. Solicitudes, bandejas, rechazo, visita, apartado de herramientas, efectivo bilateral y devolución disponibles. 005.3 incorpora cotizaciones; 005.4 confirma la agenda al aceptar sin anticipo; 005.5 agrega ejecución y cierre de oficios con efectivo bilateral. Pasarela y disputas conservan sus decisiones e integración pendientes.
 
 ## Technical Context
 
@@ -15,7 +15,7 @@ API NestJS/TypeScript, PostgreSQL/PostGIS y web Next.js/TypeScript; versiones so
 
 ## Project Structure
 
-Código previsto en backend/src/modules/reservas/{dominio,aplicacion,infraestructura,presentacion}; composición en reservas.module.ts y fachada en index.ts. Pantallas en frontend/src/app y componentes en frontend/src/components/reservas. Migraciones propias bajo backend/migrations/reservas; pruebas unitarias junto al dominio e integración bajo backend/test/reservas. Rutas previstas, todavía inexistentes.
+Código en backend/src/modules/reservas/{dominio,aplicacion,infraestructura,presentacion}; composición en reservas.module.ts y fachada en index.ts. Pantallas en frontend/src/app/reservas y componentes en frontend/src/components/reservas. Migraciones propias bajo backend/migrations/reservas; pruebas de dominio e integración bajo backend/test/reservas. Las rutas de 005.1/005.2/005.3 se distinguen del diseño futuro en contracts/api.md.
 
 Dominio puro; aplicación consume puertos; infraestructura implementa repositorios/SDK; controladores traducen HTTP a casos de uso. El módulo no importa repositories ajenos ni consulta sus tablas directamente.
 
@@ -26,6 +26,8 @@ ConsultaDisponibilidad y ConsultaReservas; eventos de estado por outbox; Procesa
 Los endpoints nuevos se etiquetan como propuestas en [contratos](./contracts/api.md). Se deben sincronizar con el diseño externo/OpenAPI antes de programarlos. Las referencias entre módulos no autorizan lecturas directas.
 
 ## Secuencia técnica
+
+005.1 implementa solicitud y consulta propia/rechazo; 005.2 agrega las condiciones comerciales de herramientas autorizadas en research.md, bloqueo GiST, vencimiento, efectivo bilateral y devolución. El snapshot de referencia se conserva; las nuevas condiciones aceptadas son un registro independiente e inmutable calculado por servidor. El manifiesto mantiene ultimaEntrega=004 e incrementos=[005.1,005.2] para ejecutar sus pruebas sin declarar completa 005. Los pasos afectados por las partes pendientes de D06–D08/D12 conservan sus bloqueos.
 
 1. Resolver D05-D08 y revisar contratos/estados con snapshots.
 2. Crear reserva/bloqueos/cotizaciones y exclusión PostgreSQL.
@@ -49,9 +51,9 @@ Incluir unitarias para reglas y estados, integración PostgreSQL para restriccio
 
 ## Riesgos y bloqueos
 
-- D05: días calendario o bloques 24 h, retiro/devolución, mínimos y tarifa; bloquea cálculo comercial.
-- D06: secuencia cotización/aceptación/bloqueo, vencimiento (15 min propuesto), anticipo y vigencia; bloquea aceptación/cobro de oficio.
-- D07: comisión, cancelaciones, reembolsos y pago tardío; bloquea checkout operativo.
+- D05 resuelta para herramientas fijas por bloques de 24 h; tarifa y condiciones inmutables implementadas.
+- D06 parcial: herramientas con apartado de 60 min y visitas sin bloqueo implementadas; 005.3/005.4 permiten acordar cotizaciones con vigencia y confirmar agenda sin anticipo; 005.5 cubre ejecución y cierre con efectivo. Anticipos y disputas pendientes.
+- D07 parcial: efectivo directo sin comisión y cancelación previa al registro implementados; checkout externo, reembolsos y pago tardío pendientes.
 - D08: credenciales, método de verificación y capacidades vigentes Culqi/Yape/mensajería; bloquea integración real.
 
 No activar tareas afectadas mientras falte la decisión. [Tareas](./tasks.md) · [Especificación](./spec.md).
