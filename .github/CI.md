@@ -32,7 +32,7 @@ Los jobs omitidos no son pruebas ejecutadas ni aprobadas. El manifiesto no elimi
 
 El CI corre en pushes a todas las ramas, PR hacia `main` y ejecución manual. Usa Node.js 24 y Ubuntu 24.04; PostGIS 17/3.5 con bases efímeras solo cuando corresponde. Las claves documentales/JWT de pruebas se generan por ejecución; nunca se usa `.env` de desarrollo ni producción. Las evidencias sintéticas duran siete días. El detector Mapbox no sustituye un escáner general de secretos.
 
-El incremento `005.4` requiere `005.3` y exige la migración y pruebas de agenda de oficios. La suite de Reservas incluye conflicto visible entre clientes, liberación por cancelación y aceptación sin anticipo. Se mantiene `ultimaEntrega=004`; no se declara completa la entrega 005 ni integrada la pasarela.
+El incremento `005.4` requiere `005.3` y exige la migración y pruebas de agenda de oficios. La suite de Reservas incluye conflicto visible entre clientes, liberación por cancelación y aceptación sin anticipo. El incremento `005.5` requiere `005.4` y exige la migración y pruebas de ejecución y cierre de oficios con efectivo bilateral. Se mantiene `ultimaEntrega=004`; no se declara completa la entrega 005 ni integrada la pasarela.
 
 ## Protección remota
 

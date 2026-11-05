@@ -1,6 +1,6 @@
 # Tareas — Reservas, contratación y pagos
 
-Estado: 005.1/005.2 implementados y verificados localmente. Herramientas con aceptación/bloqueo concurrente, visitas, efectivo bilateral y devolución disponibles. 005.3/005.4 incorporan cotización y agenda de oficios sin anticipo. Las tareas originales del módulo completo conservan sus pendientes cuando incluyen ejecución/cierre de oficios, pasarela o evidencia externa.
+Estado: 005.1/005.2 implementados y verificados localmente. Herramientas con aceptación/bloqueo concurrente, visitas, efectivo bilateral y devolución disponibles. 005.3/005.4 incorporan cotización y agenda de oficios sin anticipo; 005.5, ejecución y cierre con efectivo bilateral. Las tareas originales del módulo completo conservan sus pendientes cuando incluyen disputas, pasarela o evidencia externa.
 
 ## Incremento 005.1 — Subconjunto no bloqueado
 
@@ -31,6 +31,13 @@ Estado: 005.1/005.2 implementados y verificados localmente. Herramientas con ace
 - [x] T052 Implementar estado SERVICIO_CONFIRMADO, exclusión por agenda, cancelación previa al inicio y evento atómico; migración 005 y backend de Reservas.
 - [x] T053 Integrar estado, explicación de horario/anticipo y confirmación expresa de acuerdos previos en la interfaz de Reservas.
 - [x] T054 Verificar aceptación concurrente, conflictos, cancelación/liberación, rollback, rangos adyacentes y acuerdos históricos; registrar evidencia y activar 005.4 en CI.
+
+## Incremento 005.5 — Ejecución y cierre de oficios
+
+- [x] T055 Registrar las reglas elegidas por el usuario (efectivo al cierre por el total aceptado y cancelación con motivo mientras no se inicie) en research.md y contracts/api.md.
+- [x] T056 Implementar estados, transiciones, migración 006, efectivo tomado de la cotización aceptada, liberación al cerrar y eventos atómicos en backend/src/modules/reservas/.
+- [x] T057 Integrar inicio, término, confirmación y rechazo por participante en frontend/src/components/reservas/TarjetaReserva.tsx.
+- [x] T058 Verificar permisos, hora de inicio, concurrencia, rollback, restricciones PostgreSQL y recorrido web; registrar evidencia en quickstart.md y activar 005.5 en CI.
 
 ## Fase 1 — Preparación
 

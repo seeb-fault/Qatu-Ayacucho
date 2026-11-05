@@ -13,7 +13,7 @@ export interface SolicitudReserva {
   fin: string;
   descripcionTrabajo: string;
   snapshot: { titulo: string; tipo: 'herramienta' | 'servicio'; proveedor: string; recurso: string; tarifaReferenciaCentimos: number | null; unidad: string | null };
-  estado: 'PENDIENTE' | 'RECHAZADA' | 'VISITA_ACORDADA' | 'ACEPTADA' | 'VENCIDA' | 'CANCELADA' | 'ENTREGA_POR_CONFIRMAR' | 'EN_CURSO' | 'DEVOLUCION_PENDIENTE' | 'DEVUELTA' | 'SERVICIO_CONFIRMADO';
+  estado: 'PENDIENTE' | 'RECHAZADA' | 'VISITA_ACORDADA' | 'ACEPTADA' | 'VENCIDA' | 'CANCELADA' | 'ENTREGA_POR_CONFIRMAR' | 'EN_CURSO' | 'DEVOLUCION_PENDIENTE' | 'DEVUELTA' | 'SERVICIO_CONFIRMADO' | 'SERVICIO_EN_CURSO' | 'SERVICIO_POR_CONFIRMAR' | 'SERVICIO_CERRADO';
   motivoRechazo: string | null;
   version: number;
   creadoEn: string;
@@ -31,6 +31,9 @@ export interface SolicitudReserva {
   saldoCentimos: number;
   diasExtra: number;
   motivoOperacion: string | null;
+  servicioIniciadoEn: string | null;
+  servicioTerminadoEn: string | null;
+  servicioCerradoEn: string | null;
 }
 export interface PaginaReservas { items: SolicitudReserva[]; total: number; page: number; limit: number; vista: 'cliente' | 'proveedor' }
 export function fechaReserva(iso: string) {
