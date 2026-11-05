@@ -1,5 +1,6 @@
 import { Inject, Module, type OnApplicationBootstrap, type OnApplicationShutdown } from '@nestjs/common';
 import { Pool } from 'pg';
+import { crearPool } from '../../shared/infraestructura/base-datos';
 import { UsuariosModule, IdentidadUsuarios } from '../usuarios';
 import { CatalogoModule, ConsultaCatalogo } from '../catalogo';
 import { ProveedoresModule, ConsultaProveedores } from '../proveedores';
@@ -23,7 +24,7 @@ export function crearNotificador(pool: Pool): Notificador | null {
   imports: [UsuariosModule, CatalogoModule, ProveedoresModule], controllers: [ReservasController, DisponibilidadController, AvisosController],
   providers: [
     { provide: Avisos, inject: [Pool,IdentidadUsuarios], useFactory: (pool: Pool, identidad: IdentidadUsuarios) => new Avisos(new PostgresAvisos(pool),identidad) },
-    { provide: Pool, useFactory: () => new Pool({ connectionString: process.env.DATABASE_URL, max: 5, connectionTimeoutMillis: 5000 }) },
+    { provide: Pool, useFactory: () => crearPool(5) },
     { provide: Reservas, inject: [Pool,IdentidadUsuarios,ConsultaCatalogo,ConsultaProveedores],
       useFactory: (pool: Pool, identidad: IdentidadUsuarios, catalogo: ConsultaCatalogo, proveedores: ConsultaProveedores) =>
         new Reservas(new PostgresReservas(pool),identidad,catalogo,proveedores) },
