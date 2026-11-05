@@ -7,8 +7,8 @@ import { type PaginaReservas, type SolicitudReserva } from '@/lib/api/reservas';
 import TarjetaReserva from './TarjetaReserva';
 import styles from './reservas.module.css';
 
-export default function BandejaReservas() {
-  const [vista, setVista] = useState<'cliente' | 'proveedor'>('cliente');
+export default function BandejaReservas({ vistaInicial = 'cliente' }: { vistaInicial?: 'cliente' | 'proveedor' }) {
+  const [vista, setVista] = useState<'cliente' | 'proveedor'>(vistaInicial);
   const [page, setPage] = useState(1);
   const [datos, setDatos] = useState<PaginaReservas | null>(null);
   const [cargando, setCargando] = useState(true);

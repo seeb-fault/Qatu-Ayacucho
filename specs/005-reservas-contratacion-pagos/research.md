@@ -59,6 +59,14 @@ La entrega es al menos una vez: un corte después de enviar repite el evento con
 
 Límites: reprocesar eventos FALLIDO es una operación manual, sin interfaz. Al conectar un canal se enviarán también los eventos pendientes acumulados, incluidos los antiguos; hay que decidir antes si se descartan los que ya no sean útiles. Falta definir qué eventos recibe cada participante y por qué canal.
 
+### Decisión del usuario — 005.7, 2026-11-05, avisos dentro de la app
+
+El usuario aceptó la recomendación de empezar por un canal dentro de la app, porque no requiere credenciales ni proveedor externo y cubre HU09/RF10 sin esperar a D08. Entregar un evento significa dejar el aviso en la bandeja del destinatario. Esto actualiza la inactividad descrita en 005.6: el despacho queda activo por defecto, y `QATU_DESPACHO_EVENTOS=inactivo` lo detiene.
+
+Criterios técnicos del incremento, revisables por el usuario: una acción avisa al otro participante y nunca a quien la hizo; un vencimiento avisa a ambos; los eventos anteriores al canal no se convierten en avisos, para no inundar la bandeja con noticias antiguas. Los mensajes se generan al leer, sin guardar texto ni datos personales en el aviso. La campana consulta el resumen al navegar y cada 60 s, sin conexión en tiempo real, por lo que un aviso puede tardar en verse.
+
+Límites: no hay envío fuera de la app, preferencias por tipo de aviso ni límite de conservación. WhatsApp y correo siguen pendientes de D08.
+
 ## Alternativas y límites
 
 Conservar monolito modular reduce operación para un VPS/equipo pequeño; extraer servicios o añadir caché requiere medición. Los contratos por adapter facilitan pruebas y sustitución sin prometer aislamiento de CPU/memoria dentro del mismo proceso.
