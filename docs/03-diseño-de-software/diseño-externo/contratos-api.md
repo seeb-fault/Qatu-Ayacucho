@@ -84,6 +84,10 @@ El apartado bloquea el recurso durante 60 min antes del registro de efectivo; la
 
 La aceptación de cotización reserva el intervalo exacto del recurso/agenda solicitado y cambia a SERVICIO_CONFIRMADO, sin anticipo ni vencimiento de 60 min. Un horario ocupado devuelve 409 sin cambios parciales. Los acuerdos históricos aceptados con 005.3 requieren confirmación expresa del cliente mediante `POST /api/v1/reservas/:id/agenda/confirmacion` con `{versionActual,versionCotizacion}`. La cancelación con motivo libera el horario conservando el acuerdo. No confirma ejecución, cierre ni pago del servicio; los eventos permanecen en outbox sin afirmar envío externo.
 
+### Incremento 005.7 — Avisos dentro de la app
+
+`GET /api/v1/avisos` devuelve los avisos propios de 20 en 20, y `GET /api/v1/avisos/resumen` el total sin leer. `POST /api/v1/avisos/:id/lectura` marca uno y `POST /api/v1/avisos/lectura` todos los propios. Requieren sesión; el aviso de otra persona responde 404. [DTO, permisos y errores](../../../specs/005-reservas-contratacion-pagos/contracts/api.md).
+
 ### Incremento 005.5 — Ejecución y cierre de oficios con efectivo
 
 `POST /api/v1/reservas/:id/servicio/inicio` (proveedor, desde la hora acordada) pasa a SERVICIO_EN_CURSO. `POST /servicio/termino` (proveedor) declara el trabajo terminado y el efectivo por el total de la cotización aceptada: SERVICIO_POR_CONFIRMAR. `POST /servicio/confirmacion` (cliente) cierra como SERVICIO_CERRADO y libera la agenda; `POST /servicio/rechazo` (cliente, con motivo) vuelve a SERVICIO_EN_CURSO y anula la declaración de efectivo. La cancelación con motivo se admite mientras el trabajo no se haya iniciado, aunque ya pasó la hora acordada. Son declaraciones bilaterales, sin verificación bancaria, comisión ni custodia. [DTO, permisos y errores](../../../specs/005-reservas-contratacion-pagos/contracts/api.md).

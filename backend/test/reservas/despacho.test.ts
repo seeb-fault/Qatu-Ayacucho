@@ -21,7 +21,7 @@ test('la espera crece y tiene un máximo de una hora',()=>{
   assert.equal(esperaReintento(9),HORA);assert.equal(esperaReintento(500),HORA);
 });
 
-test('sin canal externo configurado el despacho no se activa ni afirma envíos',()=>{assert.equal(crearNotificador(),null);});
+test('el despacho se puede desactivar y entonces no afirma envíos',()=>{const antes=process.env.QATU_DESPACHO_EVENTOS;process.env.QATU_DESPACHO_EVENTOS='inactivo';try {assert.equal(crearNotificador({} as Pool),null);} finally {process.env.QATU_DESPACHO_EVENTOS=antes;}});
 
 test('un canal colgado se corta por timeout y se reintenta',async()=>{
   const {repo,registro}=repoDoble([evento()]);
@@ -52,7 +52,7 @@ test('un fallo al registrar el resultado no interrumpe el resto del lote',async(
 
 test('despacho real: orden por reserva, reintentos, carrera, corte y canal caído',{skip:!process.env.TEST_DATABASE_URL},async context=>{
   process.env.DATABASE_URL=process.env.TEST_DATABASE_URL;
-  process.env.JWT_SECRET='secreto-exclusivo-despacho-pruebas-2026-488';process.env.NODE_ENV='test';process.env.APP_ORIGIN='http://127.0.0.1:3100';
+  process.env.JWT_SECRET='secreto-exclusivo-despacho-pruebas-2026-488';process.env.NODE_ENV='test';process.env.APP_ORIGIN='http://127.0.0.1:3100';process.env.QATU_DESPACHO_EVENTOS='inactivo';
   const f=JSON.parse(execFileSync(process.execPath,['--env-file-if-exists=.env','--import','tsx','test/reservas/fixture-e2e.ts','--servicio'],{encoding:'utf8',env:{...process.env,QATU_E2E_RESERVAS:'1'}}));
   const pool=new Pool({connectionString:process.env.TEST_DATABASE_URL});
   // Base exclusiva de pruebas: los eventos de otras suites no deben entrar en estos lotes.
