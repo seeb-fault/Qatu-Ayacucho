@@ -2,6 +2,25 @@ import type { NuevaSolicitud, Solicitud } from './solicitud';
 import type { AccionReserva } from './alquiler';
 import type { PropuestaCotizacion } from './cotizacion';
 
+export interface EventoReserva {
+  id: string; tipo: string; reservaId: string; clienteId: string; propietarioId: string;
+  payload: Record<string, unknown>; creadoEn: string; intento: number;
+}
+/** Canal externo. Puede recibir un evento repetido: debe deduplicar por su id. */
+export interface Notificador { enviar(evento: EventoReserva): Promise<void> }
+/** El canal rechazó el evento de forma definitiva: reintentar no serviría. */
+export class NotificacionRechazada extends Error {
+  readonly codigo: string;
+  constructor(codigo: string) {
+    super('Notificación rechazada por el canal.');
+    this.codigo = /^[A-Z0-9_]{1,64}$/.test(codigo) ? codigo : 'RECHAZADA';
+  }
+}
+export interface RepositorioDespacho {
+  reclamar(limite: number, reclamoMs: number): Promise<EventoReserva[]>;
+  confirmar(id: string, intento: number): Promise<void>;
+  fallar(id: string, intento: number, codigo: string, esperaMs: number | null): Promise<void>;
+}
 export interface IdentidadReservas { resolver(token: string): Promise<{ id: string }> }
 export interface CatalogoReservas {
   consultar(id: string): Promise<{
