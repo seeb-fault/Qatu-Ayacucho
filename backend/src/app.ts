@@ -6,9 +6,10 @@ import type { NextFunction, Request, Response } from 'express';
 import { UsuariosModule } from './modules/usuarios';
 import { ProveedoresModule } from './modules/proveedores';
 import { CatalogoModule } from './modules/catalogo';
+import { ReservasModule } from './modules/reservas';
 import { ErrorAplicacion } from './shared/dominio/error-aplicacion';
 
-@Module({ imports: [UsuariosModule, ProveedoresModule, CatalogoModule] })
+@Module({ imports: [UsuariosModule, ProveedoresModule, CatalogoModule, ReservasModule] })
 class AppModule {}
 
 @Catch()

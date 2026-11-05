@@ -7,6 +7,13 @@ export class Proveedores {
 
   zonas() { return this.repo.zonas(); }
 
+  // Fachada interna: la titularidad no se incorpora al perfil público.
+  async titular(id: string) {
+    const perfil = await this.repo.porId(proveedorIdValido(id));
+    if (!perfil) throw new ErrorProveedor('PERFIL_NO_DISPONIBLE', 404, 'Este perfil no está disponible.');
+    return { usuarioId: perfil.usuarioId };
+  }
+
   async habilitados() {
     const perfiles = await this.repo.publicables();
     const activos = new Set(await this.identidad.cuentasActivas(perfiles.map(p=>p.usuarioId)));

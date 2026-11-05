@@ -1,4 +1,4 @@
-<!-- Sync impact: initial Qatu constitution 1.0.0, 2026-10-15. No prior ratified version. Shared upstream templates retained unchanged; domain rules live here. -->
+<!-- Sync impact: 1.1.0, 2026-10-27. El usuario autoriza efectivo al recoger antes de integrar la pasarela. ADR-013 y 005/research documentan alcance y confirmación bilateral. -->
 # Constitución de Qatu
 
 ## Core Principles
@@ -21,7 +21,7 @@ Pendientes no bloquean. Aceptación guarda reserva, bloqueo por recurso/rango y 
 
 ### V. Pagos verificables e integraciones resistentes
 
-La pasarela es obligatoria, Culqi candidata y Yape sujeto a habilitación. Checkout tokeniza con el proveedor. Persistir intento antes de I/O; deduplicar operación/evento; verificar referencia/monto/moneda/estado; timeout desconocido se concilia antes de recobrar. Pago tardío no reasigna fechas. Outbox/reintentos no duplican efectos. Sandbox real es condición de aceptación de pagos; un simulador no lo sustituye.
+Se admite efectivo al recoger, con registro del proveedor y confirmación del cliente; una declaración unilateral o un mensaje de WhatsApp no acredita pago confirmado. La pasarela se implementará después de este flujo (Culqi candidata, Yape sujeto a habilitación). Cuando se integre: checkout tokeniza con el proveedor, se persiste intento antes de I/O, se deduplica operación/evento y se verifica referencia/monto/moneda/estado; timeout desconocido se concilia antes de recobrar. Pago tardío no reasigna fechas. Outbox/reintentos no duplican efectos. Sandbox real es condición de aceptación de pasarela; efectivo o un simulador no lo sustituyen.
 
 ### VI. IA limitada a búsqueda
 
@@ -43,4 +43,4 @@ Constitución → especificación → aclaraciones necesarias → plan → tarea
 
 La constitución recoge el diseño Qatu existente; no sustituye instrucciones del usuario. Ante contradicción entre docs/specs/código, registrar el hallazgo, resolverlo y actualizar trazabilidad. Cambios de alcance, límites de módulos o invariantes requieren decisión documentada y versión de esta constitución; no se introducen silenciosamente. Ninguna casilla de implementación se marca por redactar documentos. Commits y publicación quedan bajo control del usuario.
 
-**Version**: 1.0.0 | **Ratified**: 2026-10-15 | **Last Amended**: 2026-10-15
+**Version**: 1.1.0 | **Ratified**: 2026-10-15 | **Last Amended**: 2026-10-27
