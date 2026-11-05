@@ -4,28 +4,31 @@ import { UsuariosModule, IdentidadUsuarios } from '../usuarios';
 import { CatalogoModule, ConsultaCatalogo } from '../catalogo';
 import { ProveedoresModule, ConsultaProveedores } from '../proveedores';
 import { Reservas } from './aplicacion/reservas';
+import { Avisos } from './aplicacion/avisos';
 import { DespachadorEventos } from './aplicacion/despacho';
 import type { Notificador } from './dominio/puertos';
 import { PostgresReservas } from './infraestructura/postgres';
+import { AvisosNotificador, PostgresAvisos } from './infraestructura/postgres-avisos';
 import { PostgresDespacho } from './infraestructura/postgres-despacho';
 import { ReservasController, DisponibilidadController } from './presentacion/reservas.controller';
+import { AvisosController } from './presentacion/avisos.controller';
 
 const DESPACHADOR = Symbol('DESPACHADOR_RESERVAS');
-/**
- * Aún no hay un canal externo (D08). Sin Notificador el despacho queda inactivo y los eventos siguen
- * pendientes: un adaptador simulado los marcaría como enviados sin que nadie los haya recibido.
- */
-export function crearNotificador(): Notificador | null { return null; }
+/** El canal vigente es la bandeja de avisos de la app. Los canales externos siguen pendientes de D08. */
+export function crearNotificador(pool: Pool): Notificador | null {
+  return process.env.QATU_DESPACHO_EVENTOS === 'inactivo' ? null : new AvisosNotificador(pool);
+}
 
 @Module({
-  imports: [UsuariosModule, CatalogoModule, ProveedoresModule], controllers: [ReservasController, DisponibilidadController],
+  imports: [UsuariosModule, CatalogoModule, ProveedoresModule], controllers: [ReservasController, DisponibilidadController, AvisosController],
   providers: [
+    { provide: Avisos, inject: [Pool,IdentidadUsuarios], useFactory: (pool: Pool, identidad: IdentidadUsuarios) => new Avisos(new PostgresAvisos(pool),identidad) },
     { provide: Pool, useFactory: () => new Pool({ connectionString: process.env.DATABASE_URL, max: 5, connectionTimeoutMillis: 5000 }) },
     { provide: Reservas, inject: [Pool,IdentidadUsuarios,ConsultaCatalogo,ConsultaProveedores],
       useFactory: (pool: Pool, identidad: IdentidadUsuarios, catalogo: ConsultaCatalogo, proveedores: ConsultaProveedores) =>
         new Reservas(new PostgresReservas(pool),identidad,catalogo,proveedores) },
     { provide: DESPACHADOR, inject: [Pool], useFactory: (pool: Pool) => {
-      const notificador = crearNotificador();
+      const notificador = crearNotificador(pool);
       return notificador ? new DespachadorEventos(new PostgresDespacho(pool),notificador) : null;
     } },
   ],
