@@ -40,7 +40,7 @@ flowchart LR
 | `ServicioMapas` | `MapasAdapter` | Mapas y geocodificación (proveedor por definir) | Proveedores / Catálogo | Diseñado; distrito manual como respaldo |
 | `AlmacenArchivos` | `AlmacenLocalAdapter` → `AlmacenS3Adapter` | Volumen persistente del VPS; luego almacenamiento S3 compatible | Catálogo / Reseñas | Diseñado |
 | `CacheConsultas` | `RedisCacheAdapter` | Redis (opcional) | Catálogo / Búsqueda | Opcional; se activa solo si EQ-01 lo justifica |
-| `Notificador` | `MensajeriaAdapter` | Mensajería (proveedor por definir) | Reservas | Diseñado |
+| `Notificador` | `MensajeriaAdapter` | Mensajería (proveedor por definir) | Reservas | Puerto y despachador implementados; adaptador pendiente |
 | `TokensSesion` | `JwtTokens` | `JwtService` de NestJS | Usuarios | **Implementado** |
 | `HashPasswords` | `ScryptPasswords` | `node:crypto` (scrypt) | Usuarios | **Implementado** |
 | `RepositorioUsuarios` | `PostgresUsuarios` | PostgreSQL mediante `pg` | Usuarios | **Implementado** |
