@@ -1,6 +1,6 @@
 # Tareas — Reservas, contratación y pagos
 
-Estado: 005.1/005.2 implementados y verificados localmente. Herramientas con aceptación/bloqueo concurrente, visitas, efectivo bilateral y devolución disponibles. 005.3/005.4 incorporan cotización y agenda de oficios sin anticipo; 005.5, ejecución y cierre con efectivo bilateral; 005.6, despacho de eventos sin canal real. Las tareas originales del módulo completo conservan sus pendientes cuando incluyen disputas, pasarela o evidencia externa.
+Estado: 005.1/005.2 implementados y verificados localmente. Herramientas con aceptación/bloqueo concurrente, visitas, efectivo bilateral y devolución disponibles. 005.3/005.4 incorporan cotización y agenda de oficios sin anticipo; 005.5, ejecución y cierre con efectivo bilateral; 005.6/005.7, despacho de eventos y avisos dentro de la app. Las tareas originales del módulo completo conservan sus pendientes cuando incluyen disputas, pasarela o evidencia externa.
 
 ## Incremento 005.1 — Subconjunto no bloqueado
 
@@ -44,6 +44,13 @@ Estado: 005.1/005.2 implementados y verificados localmente. Herramientas con ace
 - [x] T059 Registrar entrega al menos una vez, orden por reserva, reintentos y activación condicionada a un canal real en research.md y contracts/api.md.
 - [x] T060 Implementar puerto Notificador, migración 007 y despachador sin transacción durante el envío en backend/src/modules/reservas/.
 - [x] T061 Verificar con doble: orden, reintentos, agotamiento, carrera entre procesos, corte, proceso atrasado y canal caído; registrar evidencia en quickstart.md y activar 005.6 en CI.
+
+## Incremento 005.7 — Avisos dentro de la app
+
+- [x] T062 Registrar el canal dentro de la app, los destinatarios por evento y el tratamiento de eventos anteriores en research.md y contracts/api.md.
+- [x] T063 Implementar migración 008, adaptador de bandeja, lectura aislada por usuario y activación del despacho en backend/src/modules/reservas/.
+- [x] T064 Integrar campana, bandeja de avisos y enlace a la solicitud en frontend/src/components/avisos/ y frontend/src/app/avisos/.
+- [x] T065 Verificar destinatarios, duplicados, aislamiento y recorrido web; registrar evidencia en quickstart.md y activar 005.7 en CI.
 
 ## Fase 1 — Preparación
 

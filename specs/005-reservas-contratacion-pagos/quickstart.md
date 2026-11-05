@@ -93,9 +93,18 @@ Para las pruebas con persistencia configurar `TEST_DATABASE_URL` con una base ex
 - `npm test` en backend aprobó 110 pruebas, sin fallos ni omisiones. Después se corrigió la migración 007, porque revertirla y reaplicarla fallaba por eventos enviados sin hora. Con la migración corregida se repitieron las 13 pruebas del despacho, que aprobaron, y una ida y vuelta real conservó 20 eventos enviados y devolvió los fallidos a pendientes. La regresión completa con esa versión queda a cargo del CI remoto.
 - Se verificó con un doble: orden por reserva, espera entre reintentos, agotamiento a FALLIDO sin bloquear el evento siguiente, dos despachadores a la vez sin duplicados, corte con reentrega del mismo id, proceso atrasado sin efecto, timeout, rechazo definitivo y código de error sin datos personales. Con el canal caído la reserva no cambió.
 - No hay cambios en el frontend, por lo que no se repitieron los recorridos de navegador en local.
-- Esto **no acredita notificaciones reales**: ningún evento llega todavía a un usuario, porque no hay canal externo (D08). La activación con un adaptador real, el reinicio del proceso con un canal real y la deduplicación del consumidor siguen pendientes.
+- Esto **no acredita notificaciones reales**: en este incremento ningún evento llega a un usuario, porque no hay canal; 005.7 agrega el canal dentro de la app. La activación con un adaptador real, el reinicio del proceso con un canal real y la deduplicación del consumidor siguen pendientes.
 
-La tabla siguiente conserva los pendientes de aceptación del módulo completo, no los de los incrementos 005.1 a 005.6.
+### Validación local del incremento 005.7 — avisos dentro de la app (2026-11-05)
+
+- Entorno: Node.js 24.21.0, Windows y PostgreSQL/PostGIS local, en bases nuevas con sufijo `_test`, sin modificar `.env`. `npm run build` en backend y frontend y `npm run typecheck` correctos.
+- `npm test` en backend aprobó 119 pruebas, sin fallos ni omisiones. Se verificaron destinatarios por evento, un aviso por persona ante reentregas, 401 sin sesión, 404 para avisos ajenos, consultas manipuladas, paginación y que todo tipo de evento admitido por PostgreSQL tenga aviso.
+- Navegador: descubrimiento 14, acceso 3, usuarios 4, proveedores 6 y catálogo 2 aprobadas. El recorrido nuevo de avisos usa el despachador real: campana, bandeja, enlace a Recibidas, respuesta al cliente en 360 px y marcar todos como leídos. Capturas revisadas: `frontend/test-results/avisos-360.png` y `avisos-escritorio.png`, ignoradas por Git.
+- `npm run test:reservas` **no aprobó completa en local: 6 de 7**. Falló `solicitudes.spec.ts` al recargar, porque una petición entre el proxy de Next y el backend recibió ECONNRESET y la bandeja mostró «El servicio no está disponible». No se reprodujo al repetir esa prueba 10 veces (10 de 10). Tampoco lo reprodujeron 36 peticiones con pausas de unos 5 s, por lo que no se pudo confirmar la hipótesis de reutilización de conexiones inactivas, y el ajuste de keep-alive probado se revirtió. Un error similar ya se registró en 005.3. **Causa sin determinar**; no se descarta que las consultas adicionales de la campana influyan.
+- Sin backend, como en descubrimiento y acceso, la campana se oculta y el servidor web registra errores de proxy para `/avisos/resumen`; no afecta al resultado de esas suites.
+- No se acreditan WhatsApp, correo ni entrega fuera de la app. El CI remoto se registra en su PR.
+
+La tabla siguiente conserva los pendientes de aceptación del módulo completo, no los de los incrementos 005.1 a 005.7.
 
 | Campo | Valor |
 |---|---|

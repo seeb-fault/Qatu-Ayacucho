@@ -154,3 +154,16 @@ test('005.6 exige migración, despachador y pruebas de entrega',context=>{
 test('005.6 no puede declararse sin ejecución',context=>{
   const root=prepararCotizaciones(context);writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2','005.3','005.4','005.6']}));assert.throws(()=>validarEntrega(root),/005.6 requiere/);
 });
+
+test('005.7 exige migración, bandeja y pruebas de avisos',context=>{
+  const root=prepararCotizaciones(context);
+  writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2','005.3','005.4','005.5','005.6','005.7']}));
+  for(const nombre of ['backend/migrations/reservas/005-agenda-oficios.sql','backend/test/reservas/agenda.test.ts','frontend/tests/reservas/agenda.spec.ts','backend/migrations/reservas/006-ejecucion-oficios.sql','backend/test/reservas/ejecucion.test.ts','frontend/tests/reservas/ejecucion.spec.ts','backend/migrations/reservas/007-despacho-eventos.sql','backend/src/modules/reservas/aplicacion/despacho.ts','backend/test/reservas/despacho.test.ts','backend/migrations/reservas/008-avisos.sql','backend/src/modules/reservas/aplicacion/avisos.ts','backend/test/reservas/avisos.test.ts','frontend/src/app/avisos/page.tsx','frontend/tests/reservas/avisos.spec.ts']) {
+    const target=join(root,nombre);mkdirSync(dirname(target),{recursive:true});writeFileSync(target,'');
+  }
+  assert.equal(validarEntrega(root).reservas,true);
+  rmSync(join(root,'frontend/tests/reservas/avisos.spec.ts'));assert.throws(()=>validarEntrega(root),/avisos.spec/);
+});
+test('005.7 no puede declararse sin despacho',context=>{
+  const root=prepararCotizaciones(context);writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2','005.3','005.4','005.5','005.7']}));assert.throws(()=>validarEntrega(root),/005.7 requiere/);
+});

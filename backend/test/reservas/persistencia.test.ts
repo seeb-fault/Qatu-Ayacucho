@@ -10,7 +10,7 @@ import { ScryptPasswords } from '../../src/modules/usuarios/infraestructura/pass
 test('solicitudes persistidas: privacidad, snapshot, bandejas, rechazo concurrente y outbox atómico', { skip: !process.env.TEST_DATABASE_URL }, async context => {
   process.env.DATABASE_URL = process.env.TEST_DATABASE_URL;
   process.env.JWT_SECRET = 'secreto-exclusivo-pruebas-reservas-2026-488';
-  process.env.APP_ORIGIN = 'http://127.0.0.1:3100'; process.env.NODE_ENV = 'test';
+  process.env.APP_ORIGIN = 'http://127.0.0.1:3100'; process.env.NODE_ENV = 'test'; process.env.QATU_DESPACHO_EVENTOS = 'inactivo';
   const pool = new Pool({ connectionString: process.env.TEST_DATABASE_URL });
   const usuarios = new PostgresUsuarios(pool), proveedores = new PostgresProveedores(pool);
   const sufijo = randomUUID(), password = 'frase exclusiva solicitudes de prueba', hash = await new ScryptPasswords().crear(password);

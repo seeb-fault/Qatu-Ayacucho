@@ -82,6 +82,19 @@ La consulta agrega servicioIniciadoEn, servicioTerminadoEn y servicioCerradoEn. 
 
 No agrega rutas HTTP. El puerto interno `Notificador.enviar(evento)` recibe id, tipo, reservaId, clienteId, propietarioId, payload mínimo, creadoEn e intento. Reservas no entrega datos de contacto: el adaptador tendrá que obtenerlos por una fachada de Usuarios. Puede recibir un evento repetido y debe deduplicar por id. Si lanza `NotificacionRechazada`, el evento no se reintenta; cualquier otro error o un timeout de 10 s se reintenta. Un fallo del canal no modifica la reserva.
 
+### Incremento 005.7 — Avisos dentro de la app
+
+Todas requieren sesión (401 sin ella) y actúan solo sobre avisos propios; identidad derivada del servidor.
+
+| Método | Ruta | Entrada | Efecto |
+|---|---|---|---|
+| GET | /avisos | `page` 1–9999 opcional | `{items,total,noLeidos,page,limit}`, 20 por página, del más reciente al más antiguo. Cada ítem: id, reservaId, tipo, mensaje, titulo, vista (cliente/proveedor), creadoEn, leidoEn. |
+| GET | /avisos/resumen | — | `{noLeidos}`. |
+| POST | /avisos/:id/lectura | JSON vacío | Marca leído y conserva la primera lectura si se repite. Devuelve `{noLeidos}`. Aviso ajeno o inexistente: 404. |
+| POST | /avisos/lectura | JSON vacío | Marca todos los propios. Devuelve `{marcados,noLeidos}`. |
+
+Campos o parámetros adicionales devuelven 400. La respuesta no expone identificadores de cuentas ni datos de contacto.
+
 ## Rutas tomadas del diseño vigente — alcance futuro
 
 La tabla conserva el diseño completo. Las rutas de pagos, hitos con evidencia y acceso administrativo no amplían los permisos ni reemplazan los endpoints de 005.1/005.2/005.3 implementados arriba.

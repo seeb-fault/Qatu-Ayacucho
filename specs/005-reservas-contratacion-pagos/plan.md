@@ -1,6 +1,6 @@
 # Plan técnico — Reservas, contratación y pagos
 
-**Estado:** 005.1/005.2 implementados y verificados localmente. Solicitudes, bandejas, rechazo, visita, apartado de herramientas, efectivo bilateral y devolución disponibles. 005.3 incorpora cotizaciones; 005.4 confirma la agenda al aceptar sin anticipo; 005.5 agrega ejecución y cierre de oficios con efectivo bilateral; 005.6, despacho de eventos inactivo hasta conectar un canal. Pasarela, canal externo y disputas conservan sus decisiones e integración pendientes.
+**Estado:** 005.1/005.2 implementados y verificados localmente. Solicitudes, bandejas, rechazo, visita, apartado de herramientas, efectivo bilateral y devolución disponibles. 005.3 incorpora cotizaciones; 005.4 confirma la agenda al aceptar sin anticipo; 005.5 agrega ejecución y cierre de oficios con efectivo bilateral; 005.6/005.7, despacho de eventos y avisos dentro de la app. Pasarela, canales externos y disputas conservan sus decisiones e integración pendientes.
 
 ## Technical Context
 
