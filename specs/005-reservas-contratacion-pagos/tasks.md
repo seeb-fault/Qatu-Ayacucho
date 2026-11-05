@@ -52,6 +52,32 @@ Estado: 005.1/005.2 implementados y verificados localmente. Herramientas con ace
 - [x] T064 Integrar campana, bandeja de avisos y enlace a la solicitud en frontend/src/components/avisos/ y frontend/src/app/avisos/.
 - [x] T065 Verificar destinatarios, duplicados, aislamiento y recorrido web; registrar evidencia en quickstart.md y activar 005.7 en CI.
 
+## Conciliación de tareas originales (2026-11-05)
+
+Se revisaron T001–T036 contra lo implementado en 005.1–005.7. Se marcaron únicamente las cubiertas por completo:
+
+| Tareas | Cubiertas por |
+|---|---|
+| T006–T009 (US1) | Solicitud, aceptación y rechazo con exclusión concurrente: T038–T045 |
+| T010–T013 (US2) | Cotización versionada y aceptación: T047–T050. El importe aceptado es el que usa el cierre en efectivo (T056); el cobro en línea queda en US3 |
+| T023, T025 | Bloqueos, exclusión y cotizaciones: T042, T048 y T052 |
+| T031 | EQ-07 local, 100 pares concurrentes: registrado en quickstart.md para 005.2 |
+
+Siguen abiertas porque falta una parte concreta:
+
+| Tareas | Hecho | Falta |
+|---|---|---|
+| T001, T002, T022 | D05, y D06/D07 en parte | D07 de pasarela, D08, DTO de pagos |
+| T003–T005 | Entidades, migraciones y composición de reservas, cotizaciones y avisos | Intentos de pago, eventos de pasarela y ProcesadorPagos |
+| T018–T021 (US4) | Consulta, entrega, devolución e inicio/cierre de oficios (T042–T045 y T055–T058) | Evidencia privada de hitos (D12) y disputas |
+| T024 | Solicitudes, aceptación, rechazo, vencimiento y consulta de disponibilidad | Gestión del calendario por el proveedor |
+| T028, T034 | Outbox, reintentos y canal dentro de la app, verificados con doble y bandeja real | Adaptador externo y canal externo caído (D08) |
+| T029 | Bandejas, entrega, devolución y estados separados | Checkout |
+| T033 | Límites adyacentes de rango y agenda | Carrera entre expiración y pago |
+| T036 | Consistencia parcial por incremento | Análisis final al cierre de la entrega |
+
+Sin iniciar por depender de la pasarela: T014–T017, T026, T027, T030, T032 y T035.
+
 ## Fase 1 — Preparación
 
 - [ ] T001 Resolver las decisiones afectadas en specs/005-reservas-contratacion-pagos/research.md; sincronizar ADR/contratos si cambian.
@@ -67,19 +93,19 @@ Estado: 005.1/005.2 implementados y verificados localmente. Herramientas con ace
 
 Objetivo y prueba independiente: dado dos solicitudes para el mismo recurso, se aceptan concurrentemente; una sola queda aceptada y la otra obtiene conflicto.
 
-- [ ] T006 [US1] Implementar el caso «Solicitar y responder» con autorización/transiciones en backend/src/modules/reservas/aplicacion/; cumplir los FR aplicables de spec.md.
-- [ ] T007 [US1] Exponer DTO y controlador del caso «Solicitar y responder» en backend/src/modules/reservas/presentacion/ según contracts/api.md.
-- [ ] T008 [US1] Integrar el recorrido «Solicitar y responder» y sus estados negativos en frontend/src/components/reservas/ y frontend/src/app/.
-- [ ] T009 [US1] Verificar el caso positivo y el rechazo no autorizado de «Solicitar y responder» en backend/test/reservas/ y frontend/tests/reservas/; registrar resultado en quickstart.md.
+- [x] T006 [US1] Implementar el caso «Solicitar y responder» con autorización/transiciones en backend/src/modules/reservas/aplicacion/; cumplir los FR aplicables de spec.md.
+- [x] T007 [US1] Exponer DTO y controlador del caso «Solicitar y responder» en backend/src/modules/reservas/presentacion/ según contracts/api.md.
+- [x] T008 [US1] Integrar el recorrido «Solicitar y responder» y sus estados negativos en frontend/src/components/reservas/ y frontend/src/app/.
+- [x] T009 [US1] Verificar el caso positivo y el rechazo no autorizado de «Solicitar y responder» en backend/test/reservas/ y frontend/tests/reservas/; registrar resultado en quickstart.md.
 
 ## Fase 4 — US2: Cotizar un oficio
 
 Objetivo y prueba independiente: dado un servicio variable, acepto una versión vigente; el pago usa el snapshot aceptado y no un precio del navegador.
 
-- [ ] T010 [US2] Implementar el caso «Cotizar un oficio» con autorización/transiciones en backend/src/modules/reservas/aplicacion/; cumplir los FR aplicables de spec.md.
-- [ ] T011 [US2] Exponer DTO y controlador del caso «Cotizar un oficio» en backend/src/modules/reservas/presentacion/ según contracts/api.md.
-- [ ] T012 [US2] Integrar el recorrido «Cotizar un oficio» y sus estados negativos en frontend/src/components/reservas/ y frontend/src/app/.
-- [ ] T013 [US2] Verificar el caso positivo y el rechazo no autorizado de «Cotizar un oficio» en backend/test/reservas/ y frontend/tests/reservas/; registrar resultado en quickstart.md.
+- [x] T010 [US2] Implementar el caso «Cotizar un oficio» con autorización/transiciones en backend/src/modules/reservas/aplicacion/; cumplir los FR aplicables de spec.md.
+- [x] T011 [US2] Exponer DTO y controlador del caso «Cotizar un oficio» en backend/src/modules/reservas/presentacion/ según contracts/api.md.
+- [x] T012 [US2] Integrar el recorrido «Cotizar un oficio» y sus estados negativos en frontend/src/components/reservas/ y frontend/src/app/.
+- [x] T013 [US2] Verificar el caso positivo y el rechazo no autorizado de «Cotizar un oficio» en backend/test/reservas/ y frontend/tests/reservas/; registrar resultado en quickstart.md.
 
 ## Fase 5 — US3: Pagar con recuperación
 
@@ -102,9 +128,9 @@ Objetivo y prueba independiente: dado una reserva autorizada, registro inicio o 
 ## Trabajo de integración específico
 
 - [ ] T022 Resolver D05-D08 y revisar contratos/estados con snapshots; archivos previstos en backend/src/modules/reservas/ o frontend/src/components/reservas/ según plan.md.
-- [ ] T023 Crear reserva/bloqueos/cotizaciones y exclusión PostgreSQL; archivos previstos en backend/src/modules/reservas/ o frontend/src/components/reservas/ según plan.md.
+- [x] T023 Crear reserva/bloqueos/cotizaciones y exclusión PostgreSQL; archivos previstos en backend/src/modules/reservas/ o frontend/src/components/reservas/ según plan.md.
 - [ ] T024 Implementar solicitudes, aceptación/rechazo, expiración y calendario; archivos previstos en backend/src/modules/reservas/ o frontend/src/components/reservas/ según plan.md.
-- [ ] T025 Implementar cotización versionada y aceptación explícita; archivos previstos en backend/src/modules/reservas/ o frontend/src/components/reservas/ según plan.md.
+- [x] T025 Implementar cotización versionada y aceptación explícita; archivos previstos en backend/src/modules/reservas/ o frontend/src/components/reservas/ según plan.md.
 - [ ] T026 Implementar intento persistido, adapter Culqi e idempotencia; archivos previstos en backend/src/modules/reservas/ o frontend/src/components/reservas/ según plan.md.
 - [ ] T027 Implementar webhook verificado, conciliación y pago tardío; archivos previstos en backend/src/modules/reservas/ o frontend/src/components/reservas/ según plan.md.
 - [ ] T028 Implementar outbox y adapter externo de notificación con reintento; archivos previstos en backend/src/modules/reservas/ o frontend/src/components/reservas/ según plan.md.
@@ -113,7 +139,7 @@ Objetivo y prueba independiente: dado una reserva autorizada, registro inicio o 
 
 ## Cierre y verificación crítica
 
-- [ ] T031 EQ-07: 100 pares concurrentes, una aceptación por par y cero bloqueos superpuestos. Registrar evidencia en specs/005-reservas-contratacion-pagos/quickstart.md.
+- [x] T031 EQ-07: 100 pares concurrentes, una aceptación por par y cero bloqueos superpuestos. Registrar evidencia en specs/005-reservas-contratacion-pagos/quickstart.md.
 - [ ] T032 EQ-08: 20 reenvíos, un efecto; monto/moneda incorrectos, falsificación, timeout, pago tardío y claves distintas. Registrar evidencia en specs/005-reservas-contratacion-pagos/quickstart.md.
 - [ ] T033 Carrera entre expiración y pago; límites adyacentes de rango y agenda del mismo proveedor. Registrar evidencia en specs/005-reservas-contratacion-pagos/quickstart.md.
 - [ ] T034 Outbox tras reinicio y canal externo caído; consumidores deduplicados. Registrar evidencia en specs/005-reservas-contratacion-pagos/quickstart.md.
