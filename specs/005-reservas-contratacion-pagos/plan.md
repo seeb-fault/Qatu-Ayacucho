@@ -1,6 +1,6 @@
 # Plan técnico — Reservas, contratación y pagos
 
-**Estado:** 005.1/005.2 implementados y verificados localmente. Solicitudes, bandejas, rechazo, visita, apartado de herramientas, efectivo bilateral y devolución disponibles. 005.3 incorpora cotizaciones; 005.4 confirma la agenda al aceptar sin anticipo. Ejecución/cierre de oficios y pasarela conservan sus decisiones e integración pendientes.
+**Estado:** 005.1/005.2 implementados y verificados localmente. Solicitudes, bandejas, rechazo, visita, apartado de herramientas, efectivo bilateral y devolución disponibles. 005.3 incorpora cotizaciones; 005.4 confirma la agenda al aceptar sin anticipo; 005.5 agrega ejecución y cierre de oficios con efectivo bilateral. Pasarela y disputas conservan sus decisiones e integración pendientes.
 
 ## Technical Context
 
@@ -52,7 +52,7 @@ Incluir unitarias para reglas y estados, integración PostgreSQL para restriccio
 ## Riesgos y bloqueos
 
 - D05 resuelta para herramientas fijas por bloques de 24 h; tarifa y condiciones inmutables implementadas.
-- D06 parcial: herramientas con apartado de 60 min y visitas sin bloqueo implementadas; 005.3/005.4 permiten acordar cotizaciones con vigencia y confirmar agenda sin anticipo. Ejecución/cierre y pagos de oficios pendientes.
+- D06 parcial: herramientas con apartado de 60 min y visitas sin bloqueo implementadas; 005.3/005.4 permiten acordar cotizaciones con vigencia y confirmar agenda sin anticipo; 005.5 cubre ejecución y cierre con efectivo. Anticipos y disputas pendientes.
 - D07 parcial: efectivo directo sin comisión y cancelación previa al registro implementados; checkout externo, reembolsos y pago tardío pendientes.
 - D08: credenciales, método de verificación y capacidades vigentes Culqi/Yape/mensajería; bloquea integración real.
 

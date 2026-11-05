@@ -129,3 +129,15 @@ test('005.4 no puede declararse sin cotizaciones',context=>{
   const root=prepararSolicitudes(context);writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2','005.4']}));assert.throws(()=>validarEntrega(root),/005.4 requiere/);
 });
 
+test('005.5 exige migración y pruebas de ejecución de oficios',context=>{
+  const root=prepararCotizaciones(context);
+  writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2','005.3','005.4','005.5']}));
+  for(const nombre of ['backend/migrations/reservas/005-agenda-oficios.sql','backend/test/reservas/agenda.test.ts','frontend/tests/reservas/agenda.spec.ts','backend/migrations/reservas/006-ejecucion-oficios.sql','backend/test/reservas/ejecucion.test.ts','frontend/tests/reservas/ejecucion.spec.ts']) {
+    const target=join(root,nombre);mkdirSync(dirname(target),{recursive:true});writeFileSync(target,'');
+  }
+  assert.equal(validarEntrega(root).reservas,true);
+  rmSync(join(root,'frontend/tests/reservas/ejecucion.spec.ts'));assert.throws(()=>validarEntrega(root),/ejecucion.spec/);
+});
+test('005.5 no puede declararse sin agenda',context=>{
+  const root=prepararCotizaciones(context);writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2','005.3','005.5']}));assert.throws(()=>validarEntrega(root),/005.5 requiere/);
+});

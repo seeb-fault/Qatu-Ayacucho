@@ -28,6 +28,12 @@ Las cotizaciones no modifican condiciones de alquiler ni registran bloqueos o ef
 
 La aceptación y la cancelación usan el mismo orden de bloqueo por recurso y luego solicitud. El registro de AGENDA_CONFIRMADA forma parte de la transacción. No se migran automáticamente los acuerdos previos a horarios reservados. La reversión automática de esta migración se rechaza para no borrar compromisos; una corrección del esquema debe hacerse hacia delante.
 
+## Esquema del incremento 005.5
+
+`006-ejecucion-oficios.sql` agrega servicio_iniciado_en, servicio_terminado_en y servicio_cerrado_en, y los estados SERVICIO_EN_CURSO, SERVICIO_POR_CONFIRMAR y SERVICIO_CERRADO. Las restricciones exigen coherencia entre estado, marcas de tiempo y pago: en curso sin efectivo, por confirmar con REGISTRADO_PROVEEDOR y cerrado con CONFIRMADO_PARTICIPANTES, importe final igual al efectivo y saldo cero. Las marcas solo existen en esos estados, por lo que un servicio iniciado no puede volver a SERVICIO_CONFIRMADO ni cancelarse.
+
+La comprobación diferida mantiene el bloqueo exacto hasta el cierre, lo libera en SERVICIO_CERRADO y rechaza efectivo distinto del total de la cotización aceptada. Los eventos nuevos se guardan en la misma transacción. La reversión automática se rechaza para conservar declaraciones auditadas.
+
 ## Datos propios
 
 reservas; bloqueos; intentos_pago; eventos_pasarela; outbox_eventos; cotizaciones y sus versiones (extensión propuesta para RF23).

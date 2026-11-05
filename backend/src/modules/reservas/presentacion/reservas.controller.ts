@@ -24,6 +24,10 @@ export class ReservasController {
   @Post(':id/devolucion/aviso') aviso(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'devolucion/aviso',d); }
   @Post(':id/devolucion/confirmacion') devolucion(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'devolucion/confirmacion',d); }
   @Post(':id/devolucion/rechazo') rechazarDevolucion(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'devolucion/rechazo',d); }
+  @Post(':id/servicio/inicio') iniciarServicio(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'servicio/inicio',d); }
+  @Post(':id/servicio/termino') terminarServicio(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'servicio/termino',d); }
+  @Post(':id/servicio/confirmacion') confirmarServicio(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'servicio/confirmacion',d); }
+  @Post(':id/servicio/rechazo') rechazarTermino(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'servicio/rechazo',d); }
 }
 
 @Controller('recursos')

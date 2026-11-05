@@ -61,7 +61,22 @@ La exclusión se aplica al recurso/agenda seleccionado y al intervalo exacto [in
 
 Para acuerdos aceptados antes de 005.4 que siguen PENDIENTE, `POST /reservas/:id/agenda/confirmacion` permite al cliente confirmar explícitamente el horario con JSON estricto `{versionActual,versionCotizacion}`. La versión indicada debe estar aceptada, el inicio seguir futuro y la agenda disponible. No se reescribe el acuerdo ni se exige que su vigencia original siga abierta: ya fue aceptado válidamente. Terceros reciben 404; proveedor, 403; campos extra, 400; versión antigua, falta de acuerdo, horario ocupado o agenda ya confirmada, 409. Las nuevas aceptaciones no necesitan este segundo paso.
 
-`POST /reservas/:id/cancelacion` admite también SERVICIO_CONFIRMADO antes del inicio, para cualquiera de los participantes con versión y motivo. Libera el bloqueo en transacción conservando la aceptación y el precio. Después del inicio devuelve 409: el cierre operativo del oficio sigue pendiente. La confirmación emite AGENDA_CONFIRMADA, además de COTIZACION_ACEPTADA cuando corresponde, mediante outbox; no afirma notificación externa ni pago.
+`POST /reservas/:id/cancelacion` admite también SERVICIO_CONFIRMADO antes del inicio, para cualquiera de los participantes con versión y motivo. Libera el bloqueo en transacción conservando la aceptación y el precio. 005.5 amplía este límite: la cancelación se admite hasta que el trabajo se inicie. La confirmación emite AGENDA_CONFIRMADA, además de COTIZACION_ACEPTADA cuando corresponde, mediante outbox; no afirma notificación externa ni pago.
+
+### Incremento 005.5 — Ejecución y cierre de oficios
+
+Amplía 005.4: `POST /reservas/:id/cancelacion` admite SERVICIO_CONFIRMADO mientras el trabajo no se haya iniciado, aunque ya pasó la hora acordada. Una vez iniciado devuelve 409.
+
+Todas son POST de participante autenticado con JSON estricto y `versionActual`. Terceros reciben 404; el otro participante, 403; entrada inválida o campos adicionales como importes y fechas, 400; versión antigua o estado incompatible, 409.
+
+| Sufijo de /reservas/:id | Actor / entrada adicional | Efecto |
+|---|---|---|
+| /servicio/inicio | Proveedor; sin campos adicionales | SERVICIO_CONFIRMADO → SERVICIO_EN_CURSO, solo desde la hora de inicio acordada. Registra servicioIniciadoEn con hora de servidor. |
+| /servicio/termino | Proveedor; sin campos adicionales | SERVICIO_EN_CURSO → SERVICIO_POR_CONFIRMAR. pagoEstado=REGISTRADO_PROVEEDOR y efectivoCentimos igual al total de la cotización aceptada. |
+| /servicio/confirmacion | Cliente; sin campos adicionales | SERVICIO_POR_CONFIRMAR → SERVICIO_CERRADO. pagoEstado=CONFIRMADO_PARTICIPANTES, importeFinalCentimos igual al efectivo, saldo cero y agenda liberada. |
+| /servicio/rechazo | Cliente; `motivo` 10–500 | SERVICIO_POR_CONFIRMAR → SERVICIO_EN_CURSO. Anula término y efectivo declarados (pagoEstado=PENDIENTE, efectivo cero) y conserva el motivo. |
+
+La consulta agrega servicioIniciadoEn, servicioTerminadoEn y servicioCerradoEn. Cada mutación y su evento (SERVICIO_INICIADO, SERVICIO_TERMINADO, TERMINO_RECHAZADO, SERVICIO_CERRADO) se guardan en una transacción, sin afirmar notificación externa. El efectivo es una declaración bilateral, no una verificación bancaria. No se incluye cierre automático, cancelación posterior al inicio ni resolución de disputas.
 
 ## Rutas tomadas del diseño vigente — alcance futuro
 

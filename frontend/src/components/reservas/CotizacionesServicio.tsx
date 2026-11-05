@@ -29,7 +29,7 @@ export default function CotizacionesServicio({solicitud:s,ocupado,operar}: Props
   }
   return <section aria-label="Cotizaciones del oficio" className={styles.notice}>
     <h3>{aceptada ? 'Cotización acordada' : 'Propuesta para tu servicio'}</h3>
-    <p className={styles.hint}>Aceptar acuerda el alcance y el precio y reserva el horario solicitado si sigue disponible. No se exige anticipo ni se registra un pago.</p>
+    <p className={styles.hint}>Aceptar acuerda el alcance y el precio y reserva el horario solicitado si sigue disponible. No se exige anticipo: el total se paga en efectivo al proveedor al terminar el trabajo y ambos lo confirman en Qatu.</p>
     {s.estado === 'PENDIENTE' && aceptada && <>
       <p>Tu cotización se aceptó antes de habilitar la reserva de agenda. El horario todavía necesita confirmación.</p>
       {!proveedor && <form className={styles.form} aria-label="Confirmar horario acordado" onSubmit={e=>{e.preventDefault();void operar(s,'agenda/confirmacion',{versionCotizacion:aceptada.version});}}>

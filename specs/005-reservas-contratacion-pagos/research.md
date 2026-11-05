@@ -43,6 +43,14 @@ Aceptar guarda respuesta, bloqueo exacto [inicio,fin), estado y eventos en una t
 
 Los acuerdos aceptados en 005.3 no se convierten automáticamente: podrían tener horarios superpuestos. El cliente dispone de confirmación expresa del horario, con validación actual de oferta/recurso y exclusión. Se conserva la aceptación histórica aunque su antigua vigencia haya terminado. Las políticas de anticipo, pasarela, ejecución/cierre y disputas siguen pendientes.
 
+### Acuerdo del usuario — 005.5, 2026-11-05, ejecución y cierre de oficios
+
+El usuario eligió dos reglas al preguntársele antes de implementar. Primera: el oficio se paga en efectivo directo al proveedor al cerrar, por el total de la cotización aceptada, sin comisión ni custodia. Segunda: cualquiera de los participantes puede cancelar con motivo mientras el trabajo no se haya iniciado, aunque ya pasó la hora acordada; libera la agenda, sin penalidad ni dinero. Sustituye la respuesta 409 de cancelación posterior al inicio de 005.4.
+
+El flujo, aprobado junto con esas reglas, es: el proveedor registra el inicio desde la hora acordada; declara el término y el efectivo recibido; el cliente confirma, o rechaza con motivo, lo que anula la declaración y vuelve al trabajo en curso. El importe proviene siempre de la cotización aceptada; ningún endpoint lo recibe del navegador. La agenda se libera al confirmar el cierre.
+
+Límites conservados: son declaraciones auditadas, sin verificación bancaria ni evidencia fotográfica (D12). No hay cierre automático si el cliente no responde, cancelación después de iniciado ni resolución de disputas por rechazos repetidos; esas políticas no se deducen de este acuerdo. Mientras no haya respuesta el bloqueo sigue activo, pero solo sobre el intervalo acordado.
+
 ## Alternativas y límites
 
 Conservar monolito modular reduce operación para un VPS/equipo pequeño; extraer servicios o añadir caché requiere medición. Los contratos por adapter facilitan pruebas y sustitución sin prometer aislamiento de CPU/memoria dentro del mismo proceso.

@@ -11,13 +11,14 @@ const columnas = `id, cliente_id AS "clienteId", propietario_id AS "propietarioI
   tipo_solicitud AS "tipoSolicitud", condiciones, vence_en AS "venceEn", pago_estado AS "pagoEstado", efectivo_centimos AS "efectivoCentimos",
   entregado_en AS "entregadoEn", recibido_en AS "recibidoEn", devolucion_informada_en AS "devolucionInformadaEn", devuelto_en AS "devueltoEn",
   importe_final_centimos AS "importeFinalCentimos", saldo_centimos AS "saldoCentimos", dias_extra AS "diasExtra", motivo_operacion AS "motivoOperacion",
+  servicio_iniciado_en AS "servicioIniciadoEn", servicio_terminado_en AS "servicioTerminadoEn", servicio_cerrado_en AS "servicioCerradoEn",
   COALESCE((SELECT jsonb_agg(jsonb_build_object('version',c.version,'alcance',c.alcance,'materiales',c.materiales,
     'importeCentimos',c.importe_centimos,'moneda',c.moneda,'vigenteHasta',c.vigente_hasta,'creadaEn',c.creada_en,
     'respuesta',CASE WHEN c.decision IS NULL THEN NULL ELSE jsonb_build_object('decision',c.decision,'motivo',c.motivo,'respondidaEn',c.respondida_en) END)
     ORDER BY c.version) FROM reservas_cotizaciones c WHERE c.reserva_id=reservas.id),'[]'::jsonb) AS cotizaciones`;
 const convertir = (r: any): Solicitud => {
   const resultado = { ...r };
-  for (const campo of ['inicio','fin','creadoEn','venceEn','entregadoEn','recibidoEn','devolucionInformadaEn','devueltoEn']) resultado[campo] = r[campo] == null ? null : new Date(r[campo]).toISOString();
+  for (const campo of ['inicio','fin','creadoEn','venceEn','entregadoEn','recibidoEn','devolucionInformadaEn','devueltoEn','servicioIniciadoEn','servicioTerminadoEn','servicioCerradoEn']) resultado[campo] = r[campo] == null ? null : new Date(r[campo]).toISOString();
   for (const campo of ['efectivoCentimos','saldoCentimos','importeFinalCentimos']) resultado[campo] = r[campo] == null ? null : Number(r[campo]);
   return resultado;
 };
@@ -110,10 +111,11 @@ export class PostgresReservas implements RepositorioReservas {
       const s = transicion(actual,actorId,accion,motivo,ahora);
       if (accion === 'aceptacion') await client.query('INSERT INTO reservas_bloqueos(reserva_id,recurso_id,inicio,fin) VALUES($1,$2,$3,$4)', [s.id,s.recursoId,s.inicio,s.fin]);
       if (accion === 'efectivo') await client.query('UPDATE reservas_bloqueos SET inicio=LEAST(inicio,$2::timestamptz) WHERE reserva_id=$1', [s.id,s.entregadoEn]);
-      if (['cancelacion','devolucion/confirmacion'].includes(accion)) await client.query('UPDATE reservas_bloqueos SET activo=false WHERE reserva_id=$1', [s.id]);
+      if (['cancelacion','devolucion/confirmacion','servicio/confirmacion'].includes(accion)) await client.query('UPDATE reservas_bloqueos SET activo=false WHERE reserva_id=$1', [s.id]);
       const r = await client.query(`UPDATE reservas SET estado=$2,version=$3,vence_en=$4,pago_estado=$5,efectivo_centimos=$6,
-        entregado_en=$7,recibido_en=$8,devolucion_informada_en=$9,devuelto_en=$10,importe_final_centimos=$11,saldo_centimos=$12,dias_extra=$13,motivo_operacion=$14
-        WHERE id=$1 RETURNING ${columnas}`, [s.id,s.estado,s.version,s.venceEn,s.pagoEstado,s.efectivoCentimos,s.entregadoEn,s.recibidoEn,s.devolucionInformadaEn,s.devueltoEn,s.importeFinalCentimos,s.saldoCentimos,s.diasExtra,s.motivoOperacion]);
+        entregado_en=$7,recibido_en=$8,devolucion_informada_en=$9,devuelto_en=$10,importe_final_centimos=$11,saldo_centimos=$12,dias_extra=$13,motivo_operacion=$14,
+        servicio_iniciado_en=$15,servicio_terminado_en=$16,servicio_cerrado_en=$17
+        WHERE id=$1 RETURNING ${columnas}`, [s.id,s.estado,s.version,s.venceEn,s.pagoEstado,s.efectivoCentimos,s.entregadoEn,s.recibidoEn,s.devolucionInformadaEn,s.devueltoEn,s.importeFinalCentimos,s.saldoCentimos,s.diasExtra,s.motivoOperacion,s.servicioIniciadoEn,s.servicioTerminadoEn,s.servicioCerradoEn]);
       await client.query('INSERT INTO reservas_outbox(id,agregado_id,tipo,payload) VALUES($1,$2,$3,$4)', [randomUUID(),s.id,eventos[accion],JSON.stringify({reservaId:s.id,version:s.version,actorId,estado:s.estado,pagoEstado:s.pagoEstado,motivo,entregadoEn:s.entregadoEn,devolucionInformadaEn:actual.devolucionInformadaEn ?? s.devolucionInformadaEn,devueltoEn:s.devueltoEn})]);
       return convertir(r.rows[0]);
     });

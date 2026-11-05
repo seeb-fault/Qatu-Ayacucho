@@ -40,6 +40,9 @@ export interface Solicitud {
   saldoCentimos: number;
   diasExtra: number;
   motivoOperacion: string | null;
+  servicioIniciadoEn: string | null;
+  servicioTerminadoEn: string | null;
+  servicioCerradoEn: string | null;
 }
 export type NuevaSolicitud = Pick<Solicitud, 'clienteId' | 'propietarioId' | 'proveedorId' | 'publicacionId' | 'recursoId' | 'inicio' | 'fin' | 'descripcionTrabajo' | 'snapshot' | 'tipoSolicitud' | 'condiciones'>;
 

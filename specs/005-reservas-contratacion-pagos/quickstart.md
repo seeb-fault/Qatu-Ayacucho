@@ -2,9 +2,11 @@
 
 ## Preparación
 
-Los incrementos 005.1/005.2 tienen API y web ejecutables para solicitar, consultar, rechazar, acordar visitas, apartar herramientas y registrar efectivo/entrega y devolución por participantes. 005.3 agrega cotizaciones versionadas; 005.4 confirma agenda al aceptar, sin anticipo. Preparar PostgreSQL y configurar backend/.env como indica backend/README.md. Ejecutar `npm run migrate` desde backend; iniciar `npm run dev` en backend y frontend. Abrir `/reservas`, o elegir una oferta pública y pulsar «Solicitar reserva». Ejecución/cierre del oficio y pasarela siguen pendientes.
+Los incrementos 005.1/005.2 tienen API y web ejecutables para solicitar, consultar, rechazar, acordar visitas, apartar herramientas y registrar efectivo/entrega y devolución por participantes. 005.3 agrega cotizaciones versionadas; 005.4 confirma agenda al aceptar, sin anticipo. Preparar PostgreSQL y configurar backend/.env como indica backend/README.md. Ejecutar `npm run migrate` desde backend; iniciar `npm run dev` en backend y frontend. Abrir `/reservas`, o elegir una oferta pública y pulsar «Solicitar reserva». 005.5 agrega la ejecución y el cierre del oficio; pasarela y disputas siguen pendientes.
 
-Para cotizar un oficio, el cliente solicita un servicio e indica el trabajo y horario. El proveedor abre Recibidas → Preparar cotización e indica alcance, materiales, total y vigencia en hora de Lima. El cliente revisa la propuesta en Enviadas y acepta la versión o la rechaza con motivo. Una nueva versión conserva las anteriores. Aceptar confirma el servicio y reserva el horario si sigue disponible, sin anticipo ni pago. Si hay conflicto, se coordina otra solicitud. Los acuerdos aceptados con 005.3 muestran «Confirmar horario acordado» al cliente; no se bloquean automáticamente al migrar. Cancelar un servicio confirmado antes del inicio libera la agenda y conserva la aceptación histórica.
+Para cotizar un oficio, el cliente solicita un servicio e indica el trabajo y horario. El proveedor abre Recibidas → Preparar cotización e indica alcance, materiales, total y vigencia en hora de Lima. El cliente revisa la propuesta en Enviadas y acepta la versión o la rechaza con motivo. Una nueva versión conserva las anteriores. Aceptar confirma el servicio y reserva el horario si sigue disponible, sin anticipo ni pago. Si hay conflicto, se coordina otra solicitud. Los acuerdos aceptados con 005.3 muestran «Confirmar horario acordado» al cliente; no se bloquean automáticamente al migrar. Cancelar un servicio confirmado mientras el trabajo no se haya iniciado libera la agenda y conserva la aceptación histórica.
+
+Para ejecutar el oficio, desde la hora acordada el proveedor abre Recibidas y registra el inicio; al terminar declara el trabajo terminado y el efectivo recibido. El cliente abre Enviadas y confirma el trabajo y el pago, o rechaza el término con motivo. Confirmar cierra el servicio y libera la agenda.
 
 Para pruebas usar exclusivamente una base con sufijo `_test`; definir DATABASE_URL y TEST_DATABASE_URL para esa base, JWT_SECRET de pruebas (mínimo 32 caracteres) y DOCUMENTOS_KEY de pruebas (64 caracteres hexadecimales). No usar una base de desarrollo con cuentas personales.
 
@@ -75,7 +77,17 @@ Para las pruebas con persistencia configurar `TEST_DATABASE_URL` con una base ex
 - Una ejecución inicial de cotizaciones tuvo una interrupción prolongada y caducaron sus sesiones; la repetición final en la base nueva aprobó todos los casos. No se atribuye ese resultado interrumpido a una validación completa.
 - La agenda se reserva por recurso concreto e intervalo [inicio,fin), sin anticipo ni ejecución/cobro automáticos. Ejecución/cierre del oficio, disputas, pasarela, notificaciones externas y CI remoto siguen pendientes. La reversión automática de esta migración se rechaza para conservar compromisos auditados; los cambios de esquema posteriores deben aplicarse hacia delante.
 
-La tabla siguiente conserva los pendientes de aceptación del módulo completo, no los de los incrementos 005.1/005.2/005.3/005.4.
+### Validación local del incremento 005.5 — ejecución y cierre de oficios (2026-11-05)
+
+- Entorno: Node.js 24.21.0, Windows y PostgreSQL/PostGIS local en el puerto 5433. Se usaron bases nuevas y exclusivas con sufijo `_test`, con el esquema completo hasta `006-ejecucion-oficios.sql` y variables configuradas en el proceso, sin modificar `.env` ni migrar la base habitual del usuario.
+- Antes de cambiar código, `npm test` en backend aprobó 89 pruebas sin omisiones. Después aprobó 97 sin fallos ni omisiones (96.5 s). `npm run build` en backend y frontend y `npm run typecheck` correctos.
+- Se verificaron permisos (401, 403, 404), JSON estricto sin importes ni fechas del navegador, inicio solo desde la hora acordada, efectivo igual al total aceptado, rechazo que anula la declaración, cierre que libera la agenda, cancelación sin iniciar después de la hora y 409 una vez iniciado. Confirmar y rechazar a la vez tuvo un solo efecto. Un fallo de outbox revirtió el cierre. PostgreSQL rechazó importes ajenos a la cotización y estados incoherentes.
+- `npm run test:reservas` aprobó los seis recorridos juntos (3.5 min), incluido el nuevo: horario futuro sin acción de inicio, inicio, término rechazado, nuevo término, confirmación y estado persistido al recargar. El fixture `adelantar-horario-e2e.ts` adelanta la hora acordada en la base de prueba, por lo que el recorrido no espera a que llegue el horario real.
+- La revisión de la captura móvil de 360 px (`frontend/test-results/servicio-cerrado-360.png`, ignorada por Git) detectó fechas con doble punto. Se corrigió y se repitió la suite completa. La prueba comprueba que no hay desbordamiento horizontal.
+- Detector: 19 pruebas aprobadas y manifiesto real validado con 005.1 a 005.5, manteniendo última entrega completa 004.
+- No se acredita CI remoto, verificación bancaria ni notificación externa. Tampoco se incluyen cierre automático si el cliente no responde, cancelación después de iniciado, disputas por rechazos repetidos ni evidencia fotográfica (D12). Pasarela Culqi/Yape y EQ-08 siguen pendientes.
+
+La tabla siguiente conserva los pendientes de aceptación del módulo completo, no los de los incrementos 005.1/005.2/005.3/005.4/005.5.
 
 | Campo | Valor |
 |---|---|
