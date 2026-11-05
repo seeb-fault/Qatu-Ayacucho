@@ -104,6 +104,15 @@ Para las pruebas con persistencia configurar `TEST_DATABASE_URL` con una base ex
 - Sin backend, como en descubrimiento y acceso, la campana se oculta y el servidor web registra errores de proxy para `/avisos/resumen`; no afecta al resultado de esas suites.
 - No se acreditan WhatsApp, correo ni entrega fuera de la app. El CI remoto se registra en su PR.
 
+### Investigación de fallos intermitentes y resiliencia de conexiones (2026-11-05)
+
+- **Defecto corregido:** los pools de PostgreSQL no tenían manejador de `error`. Al cortar sus conexiones inactivas con `pg_terminate_backend`, el backend terminaba con código 1 y dejaba de responder, sin recuperarse. Ahora los cuatro módulos usan `crearPool`: al cortar 19 conexiones el proceso sigue activo y responde 200. `test/usuarios/conexiones.test.ts` reproduce el caso y falla sin el arreglo.
+- Los errores 503 ahora registran su causa con el correlationId, sin copiar mensajes de PostgreSQL que puedan citar datos.
+- `npm test` en backend: 121 aprobadas, sin omisiones. `npm run test:reservas` tras el arreglo, 4 pasadas: 7/7, 6/7, 7/7 y 7/7. La pasada con fallo fue en `efectivo.spec.ts`: `POST /aceptacion` superó los 10 s y el navegador la canceló, sin error en el backend ni en PostgreSQL.
+- **Causa de los fallos intermitentes en local: sin determinar.** Tres fallos en pruebas distintas, siempre por una petición lenta o fallida. Descartado: el backend no terminó durante esas pasadas (diagnóstico de proceso, sin excepciones ni salidas), y PostgreSQL no registró errores salvo los conflictos esperados. Sin evidencia: 720 peticiones en paralelo alrededor del cierre de conexiones de 5 s no produjeron ningún reset, por lo que no se aplicó ningún ajuste de keep-alive.
+- Una sonda independiente, durante 2 pasadas sin fallos, midió por segundo: SELECT p50 32 ms y máximo 2111 ms; INSERT con COMMIT y conexión nueva p50 248 ms y máximo 2847 ms; API p50 123 ms y máximo 2533 ms. Los picos mayores coinciden en las tres medidas, lo que apunta al entorno compartido (Windows y Docker) antes que a una petición concreta, **sin demostrarlo**: no se capturó ninguna pausa de 10 s. La medida de pausas de la máquina se descartó porque incluía el tiempo de las propias consultas. No se puede descartar por completo una contribución del despachador o de la campana.
+- El arreglo del pool pudo evitar el ECONNRESET registrado en 005.7, pero no se puede demostrar a posteriori. Revisar los registros «Error inesperado» si el síntoma reaparece, y en el VPS durante 008.
+
 La tabla siguiente conserva los pendientes de aceptación del módulo completo, no los de los incrementos 005.1 a 005.7.
 
 | Campo | Valor |
