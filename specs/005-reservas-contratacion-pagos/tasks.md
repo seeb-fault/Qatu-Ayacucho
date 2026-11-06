@@ -1,6 +1,6 @@
 # Tareas — Reservas, contratación y pagos
 
-Estado: 005.1/005.2 implementados y verificados localmente. Herramientas con aceptación/bloqueo concurrente, visitas, efectivo bilateral y devolución disponibles. 005.3/005.4 incorporan cotización y agenda de oficios sin anticipo; 005.5, ejecución y cierre con efectivo bilateral; 005.6/005.7, despacho de eventos y avisos dentro de la app. Las tareas originales del módulo completo conservan sus pendientes cuando incluyen disputas, pasarela o evidencia externa.
+Estado: 005.1/005.2 implementados y verificados localmente. Herramientas con aceptación/bloqueo concurrente, visitas, efectivo bilateral y devolución disponibles. 005.3/005.4 incorporan cotización y agenda de oficios sin anticipo; 005.5, ejecución y cierre con efectivo bilateral; 005.6/005.7, despacho de eventos y avisos dentro de la app; 005.8, pago en línea en modo de prueba verificado con doble. Las tareas originales del módulo completo conservan sus pendientes cuando incluyen disputas, pasarela o evidencia externa.
 
 ## Incremento 005.1 — Subconjunto no bloqueado
 
@@ -52,6 +52,15 @@ Estado: 005.1/005.2 implementados y verificados localmente. Herramientas con ace
 - [x] T064 Integrar campana, bandeja de avisos y enlace a la solicitud en frontend/src/components/avisos/ y frontend/src/app/avisos/.
 - [x] T065 Verificar destinatarios, duplicados, aislamiento y recorrido web; registrar evidencia en quickstart.md y activar 005.7 en CI.
 
+## Incremento 005.8 — Pago en línea en modo de prueba
+
+- [x] T066 Registrar las reglas elegidas por el usuario y lo que falta confirmar en Culqi en research.md y contracts/api.md.
+- [x] T067 Implementar migración 009, intento persistido antes de cobrar, idempotencia, conciliación, webhook verificado por consulta y pago tardío en backend/src/modules/reservas/.
+- [x] T068 Implementar el adaptador Culqi solo con llaves de prueba y un doble determinista en infraestructura/culqi.ts.
+- [x] T069 Integrar Checkout Custom, estados del pago y acciones por participante en frontend/src/components/reservas/.
+- [x] T070 Verificar con doble e HTTP simulado: 20 reenvíos, claves distintas, importes y monedas incorrectos, falsificación, timeout y pago tardío; registrar evidencia en quickstart.md y activar 005.8 en CI.
+- [ ] T071 Probar con llaves reales de sandbox de Culqi: rutas, tokens, cargos, 3DS, listado y webhooks; ajustar el adaptador y registrar la evidencia.
+
 ## Conciliación de tareas originales (2026-11-05)
 
 Se revisaron T001–T036 contra lo implementado en 005.1–005.7. Se marcaron únicamente las cubiertas por completo:
@@ -76,7 +85,7 @@ Siguen abiertas porque falta una parte concreta:
 | T033 | Límites adyacentes de rango y agenda | Carrera entre expiración y pago |
 | T036 | Consistencia parcial por incremento | Análisis final al cierre de la entrega |
 
-Sin iniciar por depender de la pasarela: T014–T017, T026, T027, T030, T032 y T035.
+Actualización con 005.8: T014–T017 quedan cubiertas con doble (T067–T070). Siguen abiertas T026, T027, T032 y T035 porque el adaptador y EQ-08 están verificados con doble, sin el sandbox real (T071), y T030 por la evidencia en sandbox.
 
 ## Fase 1 — Preparación
 
@@ -111,10 +120,10 @@ Objetivo y prueba independiente: dado un servicio variable, acepto una versión 
 
 Objetivo y prueba independiente: dado un intento persistido, ocurre timeout o se repite el webhook; se consulta/deduplica sin iniciar un cobro adicional por incertidumbre.
 
-- [ ] T014 [US3] Implementar el caso «Pagar con recuperación» con autorización/transiciones en backend/src/modules/reservas/aplicacion/; cumplir los FR aplicables de spec.md.
-- [ ] T015 [US3] Exponer DTO y controlador del caso «Pagar con recuperación» en backend/src/modules/reservas/presentacion/ según contracts/api.md.
-- [ ] T016 [US3] Integrar el recorrido «Pagar con recuperación» y sus estados negativos en frontend/src/components/reservas/ y frontend/src/app/.
-- [ ] T017 [US3] Verificar el caso positivo y el rechazo no autorizado de «Pagar con recuperación» en backend/test/reservas/ y frontend/tests/reservas/; registrar resultado en quickstart.md.
+- [x] T014 [US3] Implementar el caso «Pagar con recuperación» con autorización/transiciones en backend/src/modules/reservas/aplicacion/; cumplir los FR aplicables de spec.md.
+- [x] T015 [US3] Exponer DTO y controlador del caso «Pagar con recuperación» en backend/src/modules/reservas/presentacion/ según contracts/api.md.
+- [x] T016 [US3] Integrar el recorrido «Pagar con recuperación» y sus estados negativos en frontend/src/components/reservas/ y frontend/src/app/.
+- [x] T017 [US3] Verificar el caso positivo y el rechazo no autorizado de «Pagar con recuperación» en backend/test/reservas/ y frontend/tests/reservas/; registrar resultado en quickstart.md.
 
 ## Fase 6 — US4: Consultar y cerrar operación
 

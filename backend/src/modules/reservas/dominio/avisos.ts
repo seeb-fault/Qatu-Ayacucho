@@ -24,6 +24,10 @@ export const AVISOS: Record<string, { para: Receptor; mensaje: string }> = {
   SERVICIO_TERMINADO: { para: 'cliente', mensaje: 'El proveedor declaró el trabajo terminado. Falta tu confirmación.' },
   TERMINO_RECHAZADO: { para: 'proveedor', mensaje: 'El cliente rechazó el término del trabajo.' },
   SERVICIO_CERRADO: { para: 'proveedor', mensaje: 'El cliente confirmó el trabajo y el pago.' },
+  PAGO_APROBADO: { para: 'proveedor', mensaje: 'El cliente pagó en línea.' },
+  REEMBOLSO_PENDIENTE: { para: 'cliente', mensaje: 'Tu pago en línea quedó pendiente de reembolso.' },
+  ENTREGA_REGISTRADA: { para: 'cliente', mensaje: 'El proveedor registró la entrega. Falta tu confirmación.' },
+  COBRO_SOLICITADO: { para: 'cliente', mensaje: 'El proveedor terminó el trabajo. Ya puedes pagarlo en línea.' },
 };
 
 export function destinatarios(evento: EventoReserva): string[] | null {

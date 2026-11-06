@@ -67,6 +67,21 @@ Criterios técnicos del incremento, revisables por el usuario: una acción avisa
 
 Límites: no hay envío fuera de la app, preferencias por tipo de aviso ni límite de conservación. WhatsApp y correo siguen pendientes de D08.
 
+### Acuerdo del usuario — 005.8, 2026-11-05, pago en línea
+
+El usuario eligió cuatro reglas al preguntársele. **Alcance: solo sandbox.** La documentación consultada no menciona pagos a terceros ni reparto entre comercios, y con una cuenta única el dinero llegaría a Qatu, lo que choca con la regla de no custodia; producción queda bloqueada hasta confirmarlo con Culqi. **Comisión de plataforma: 0 %.** **Momento: el mismo que el efectivo**, durante el apartado de 60 min en herramientas y al terminar el trabajo en oficios, con el efectivo como alternativa. **Reembolsos: manuales y registrados.** Un pago tardío o una reserva pagada y cancelada queda marcada como reembolso pendiente, y una persona lo devuelve desde el panel de Culqi.
+
+Decisiones técnicas: se usa Culqi Checkout Custom porque Checkout v4 anuncia su retiro, solo con tarjeta porque los demás medios exigen crear una orden. El intento se guarda antes de cobrar y sin transacción abierta durante la llamada. Culqi no documenta idempotencia, pero su token es de un solo uso durante 5 minutos, y un índice impide dos intentos activos por reserva. Un timeout o una respuesta ambigua queda DESCONOCIDO y se concilia sin volver a cobrar. Pasada una hora sin localizar un cargo, el intento se da por no cobrado y permite reintentar; si el cargo aparece después, se registra para poder devolverlo.
+
+Fuentes consultadas el 2026-11-05: [cargos](https://docs.culqi.com/es/documentacion/pagos-online/cargo-unico/cargos/), [tokens](https://docs.culqi.com/es/documentacion/pagos-online/cargo-unico/tokens/), [Checkout Custom](https://docs.culqi.com/es/documentacion/checkout/checkout-custom), [webhooks](https://docs.culqi.com/es/documentacion/pagos-online/webhooks), [devoluciones](https://docs.culqi.com/es/documentacion/pagos-online/operaciones/devoluciones), [flujo 3DS](https://docs.culqi.com/es/documentacion/culqi-3ds/flujo-con-3ds) y [SDK oficial de Python](https://github.com/culqi/culqi-python), del que provienen las rutas y la cabecera `Authorization: Bearer`. La referencia en apidocs.culqi.com no se pudo leer.
+
+**Sin confirmar hasta probar con llaves reales de sandbox (D08):**
+
+- Las páginas de Culqi se contradicen sobre si 200 o 201 significa éxito o pedir 3DS; por eso el adaptador decide por el cuerpo de la respuesta.
+- 3DS figura como mandatorio en la documentación y no está integrado: un cobro que lo pida queda rechazado con AUTENTICACION_3DS_REQUERIDA.
+- No están documentados el formato ni la firma de los webhooks; su contenido no se considera cierto y solo indica qué cargo consultar.
+- Los filtros de listado provienen del SDK y no de una referencia oficial leída, y el parámetro de límite no está confirmado.
+
 ## Alternativas y límites
 
 Conservar monolito modular reduce operación para un VPS/equipo pequeño; extraer servicios o añadir caché requiere medición. Los contratos por adapter facilitan pruebas y sustitución sin prometer aislamiento de CPU/memoria dentro del mismo proceso.

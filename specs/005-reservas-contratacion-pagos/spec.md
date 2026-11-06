@@ -1,6 +1,6 @@
 # 005 — Reservas, contratación y pagos
 
-**Estado:** incrementos 005.1/005.2 implementados y verificados localmente: solicitudes, visitas, apartado, efectivo bilateral y devolución de herramientas. 005.3 agrega cotizaciones versionadas; 005.4 reserva la agenda al aceptar, sin anticipo; 005.5 agrega ejecución y cierre de oficios con efectivo bilateral; 005.6/005.7, despacho de eventos y avisos dentro de la app. Pasarela, canales externos, disputas y aceptación global pendientes. **Fecha:** 2026-10-15; incrementos: 2026-10-27 y 2026-11-05.
+**Estado:** incrementos 005.1/005.2 implementados y verificados localmente: solicitudes, visitas, apartado, efectivo bilateral y devolución de herramientas. 005.3 agrega cotizaciones versionadas; 005.4 reserva la agenda al aceptar, sin anticipo; 005.5 agrega ejecución y cierre de oficios con efectivo bilateral; 005.6/005.7, despacho de eventos y avisos dentro de la app; 005.8, pago en línea solo en modo de prueba. Sandbox real de Culqi, 3DS, producción, canales externos, disputas y aceptación global pendientes. **Fecha:** 2026-10-15; incrementos: 2026-10-27 y 2026-11-05.
 **Módulo técnico:** reservas. **Historias:** HU03, HU04, HU05, HU06, HU07, HU08, HU09, HU19, HU20.
 
 ## Objetivo y alcance
@@ -86,7 +86,7 @@ Datos propios: reservas; bloqueos; intentos_pago; eventos_pasarela; outbox_event
 
 - D05 resuelta para herramientas fijas: bloques de 24 h iniciados, mínimo uno, horario pactado y tolerancia de devolución de 30 min; detalles en research.md.
 - D06 parcial: apartado de herramientas durante 60 min y visita sin bloqueo implementados. Cotizaciones vigentes y reserva de agenda por recurso al aceptar, sin anticipo, incorporadas en 005.3/005.4. Ejecución y cierre con efectivo incorporados en 005.5; anticipos y disputas pendientes. La propuesta histórica de 15 min no rige las herramientas.
-- D07 parcial: efectivo directo sin comisión ni custodia en herramientas y oficios, cancelación antes de registrar efectivo o de iniciar el trabajo y saldo por retraso sin cobro automático. Comisión de pasarela, reembolsos y pago tardío pendientes.
+- D07 parcial: efectivo directo sin comisión ni custodia en herramientas y oficios, cancelación antes de registrar efectivo o de iniciar el trabajo y saldo por retraso sin cobro automático. Pasarela solo en sandbox: comisión de plataforma 0 %, reembolsos manuales registrados y pago tardío sin reactivar la reserva. Producción bloqueada hasta confirmar la liquidación a proveedores.
 - D08: credenciales, método de verificación y capacidades vigentes Culqi/Yape/mensajería; bloquea integración real.
 
 - D12: protocolo de registro de hitos y evidencias entre módulos sin ciclo; pendiente antes de RF18/RF19.
