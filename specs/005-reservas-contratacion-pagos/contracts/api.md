@@ -95,6 +95,21 @@ Todas requieren sesión (401 sin ella) y actúan solo sobre avisos propios; iden
 
 Campos o parámetros adicionales devuelven 400. La respuesta no expone identificadores de cuentas ni datos de contacto.
 
+### Incremento 005.8 — Pago en línea en modo de prueba
+
+| Método | Ruta | Actor / entrada | Efecto |
+|---|---|---|---|
+| GET | /pagos/configuracion | Público | `{disponible,llavePublica,modo:'prueba'}`. |
+| POST | /reservas/:id/pagos | Cliente; cabecera `Idempotency-Key` de 16–64 caracteres; JSON estricto `{tokenId}` con `tkn_test_` | Cobra el importe del servidor. 201 si se aprueba o rechaza; 202 si es incierto. Repetir la clave con el mismo token devuelve el mismo intento. Con otro token: 409. |
+| GET | /reservas/:id/pagos | Participante | `{items}` con id, importe, moneda, estado, código, reembolso pendiente y creación; sin referencia externa. |
+| POST | /reservas/:id/entrega | Proveedor; `versionActual` | APARTADO_PAGADO → ENTREGA_POR_CONFIRMAR. |
+| POST | /reservas/:id/servicio/cobro | Proveedor; `versionActual` | SERVICIO_EN_CURSO → SERVICIO_POR_PAGAR. |
+| POST | /pagos/webhooks/culqi | Pasarela, sin sesión ni origen | Responde 200. Solo consulta por la API autenticada el cargo citado, y lo acepta si coinciden intento, importe, moneda y éxito. Deduplica por evento. |
+
+Se puede pagar en ACEPTADA vigente, y pasa a APARTADO_PAGADO sin vencimiento, o en SERVICIO_POR_PAGAR, y pasa a SERVICIO_CERRADO liberando la agenda. Otro estado: 409 `PAGO_NO_DISPONIBLE`; otro intento activo: 409 `PAGO_EN_CURSO`; sin pasarela configurada: 503 `PAGOS_NO_DISPONIBLES`. Terceros reciben 404; el proveedor, 403; token o clave inválidos, o campos adicionales, 400.
+
+`/servicio/rechazo` y `/servicio/termino` también admiten SERVICIO_POR_PAGAR. `/cancelacion` admite APARTADO_PAGADO y deja el pago como reembolso pendiente. Un pago aprobado cuando la reserva ya no lo admite no la reactiva: queda REEMBOLSO_PENDIENTE con motivo PAGO_TARDIO. La consulta de reservas agrega pagadoEnLineaCentimos y ultimoPago. El token nunca se guarda ni se registra.
+
 ## Rutas tomadas del diseño vigente — alcance futuro
 
 La tabla conserva el diseño completo. Las rutas de pagos, hitos con evidencia y acceso administrativo no amplían los permisos ni reemplazan los endpoints de 005.1/005.2/005.3 implementados arriba.

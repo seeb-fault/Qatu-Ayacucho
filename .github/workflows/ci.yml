@@ -160,7 +160,7 @@ jobs:
       - name: Probar catálogo y publicaciones
         if: needs.especificaciones.outputs.catalogo == 'true'
         run: npm run test:catalogo -- --output=test-results/catalogo
-      - name: Probar reservas, efectivo, cotizaciones, agenda, ejecución y avisos (incrementos 005.1 a 005.7)
+      - name: Probar reservas, efectivo, cotizaciones, agenda, ejecución, avisos y pagos con doble (incrementos 005.1 a 005.8)
         if: needs.especificaciones.outputs.reservas == 'true'
         run: npm run test:reservas -- --output=test-results/reservas
       - name: Guardar evidencias sintéticas

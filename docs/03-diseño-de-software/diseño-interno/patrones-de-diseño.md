@@ -55,7 +55,7 @@ Los tres últimos están en `backend/src/modules/usuarios/infraestructura/` y de
 2. El caso de uso calcula el importe en el servidor y llama a `ProcesadorPagos.cobrar(...)`.
 3. `CulqiPagoAdapter` persiste antes el intento con una clave de operación, envía el cargo con la llave privada y traduce la respuesta a `ResultadoPago`: `pendiente`, `aprobado`, `rechazado` o `desconocido`.
 4. Un timeout se traduce como `desconocido`, no como rechazo: se concilia consultando el cargo, sin cobrar otra vez a ciegas.
-5. Las notificaciones de Culqi se verifican con el mecanismo oficial o consultando el recurso por API autenticada; un evento repetido se ignora por su identificador.
+5. Las notificaciones de Culqi se verifican consultando el recurso por API autenticada, porque la documentación consultada no describe firma ni formato; un evento repetido se ignora por su identificador.
 
 ### Búsqueda con IA
 

@@ -2,7 +2,7 @@
 
 ## Preparación
 
-Los incrementos 005.1/005.2 tienen API y web ejecutables para solicitar, consultar, rechazar, acordar visitas, apartar herramientas y registrar efectivo/entrega y devolución por participantes. 005.3 agrega cotizaciones versionadas; 005.4 confirma agenda al aceptar, sin anticipo. Preparar PostgreSQL y configurar backend/.env como indica backend/README.md. Ejecutar `npm run migrate` desde backend; iniciar `npm run dev` en backend y frontend. Abrir `/reservas`, o elegir una oferta pública y pulsar «Solicitar reserva». 005.5 agrega la ejecución y el cierre del oficio; pasarela y disputas siguen pendientes.
+Los incrementos 005.1/005.2 tienen API y web ejecutables para solicitar, consultar, rechazar, acordar visitas, apartar herramientas y registrar efectivo/entrega y devolución por participantes. 005.3 agrega cotizaciones versionadas; 005.4 confirma agenda al aceptar, sin anticipo. Preparar PostgreSQL y configurar backend/.env como indica backend/README.md. Ejecutar `npm run migrate` desde backend; iniciar `npm run dev` en backend y frontend. Abrir `/reservas`, o elegir una oferta pública y pulsar «Solicitar reserva». 005.5 agrega la ejecución y el cierre del oficio; 005.8, el pago en línea en modo de prueba. Sandbox real y disputas siguen pendientes.
 
 Para cotizar un oficio, el cliente solicita un servicio e indica el trabajo y horario. El proveedor abre Recibidas → Preparar cotización e indica alcance, materiales, total y vigencia en hora de Lima. El cliente revisa la propuesta en Enviadas y acepta la versión o la rechaza con motivo. Una nueva versión conserva las anteriores. Aceptar confirma el servicio y reserva el horario si sigue disponible, sin anticipo ni pago. Si hay conflicto, se coordina otra solicitud. Los acuerdos aceptados con 005.3 muestran «Confirmar horario acordado» al cliente; no se bloquean automáticamente al migrar. Cancelar un servicio confirmado mientras el trabajo no se haya iniciado libera la agenda y conserva la aceptación histórica.
 
@@ -113,7 +113,24 @@ Para las pruebas con persistencia configurar `TEST_DATABASE_URL` con una base ex
 - Una sonda independiente, durante 2 pasadas sin fallos, midió por segundo: SELECT p50 32 ms y máximo 2111 ms; INSERT con COMMIT y conexión nueva p50 248 ms y máximo 2847 ms; API p50 123 ms y máximo 2533 ms. Los picos mayores coinciden en las tres medidas, lo que apunta al entorno compartido (Windows y Docker) antes que a una petición concreta, **sin demostrarlo**: no se capturó ninguna pausa de 10 s. La medida de pausas de la máquina se descartó porque incluía el tiempo de las propias consultas. No se puede descartar por completo una contribución del despachador o de la campana.
 - El arreglo del pool pudo evitar el ECONNRESET registrado en 005.7, pero no se puede demostrar a posteriori. Revisar los registros «Error inesperado» si el síntoma reaparece, y en el VPS durante 008.
 
-La tabla siguiente conserva los pendientes de aceptación del módulo completo, no los de los incrementos 005.1 a 005.7.
+### Validación local del incremento 005.8 — pago en línea en modo de prueba (2026-11-05)
+
+- Entorno: Node.js 24.21.0, Windows y PostgreSQL/PostGIS local, en bases nuevas con sufijo `_test`, sin modificar `.env`.
+- `npm test` en backend aprobó 140 pruebas, sin fallos ni omisiones. Navegador: descubrimiento 14, acceso 3, usuarios 4, proveedores 6 y catálogo 2 aprobadas; estas tres últimas, junto con acceso, antes de añadir el reintento de lecturas.
+- EQ-08 **con doble, no con Culqi real**: 20 repeticiones de una clave con un solo efecto, claves distintas sin dos cobros, importe y moneda incorrectos, cargo sin éxito, webhook falso, 20 reenvíos del evento con una sola consulta, timeout conciliado sin nuevo cobro y pago tardío sin reactivar la reserva ni tocar el bloqueo. El adaptador se probó contra respuestas HTTP simuladas.
+- `npm run test:reservas`: una primera pasada aprobó 8 de 9, con un ECONNRESET entre proxy y backend capturado en su traza: al cargar la bandeja, `GET /avisos/resumen` respondió y `GET /reservas` recibió 500 en 43 ms, con el backend activo. **La causa exacta sigue sin demostrarse.** Como mitigación, el cliente reintenta una vez las lecturas ante un fallo de conexión o un 500 del proxy, y nunca las escrituras. Después, 3 pasadas seguidas aprobaron 10 de 10, sin ningún reset real en ellas: el reintento solo está probado con el fallo simulado de `reintento.spec.ts`.
+- El checkout se sustituye por un doble en navegador. Las pausas largas descritas en la investigación anterior siguen sin explicar.
+
+**Para la prueba real (T071):**
+
+1. Crear una cuenta en Culqi y copiar las llaves de prueba desde Desarrollo → API Keys.
+2. En `backend/.env`, definir `CULQI_PUBLIC_KEY=pk_test_…` y `CULQI_SECRET_KEY=sk_test_…`, sin compartirlas. Las llaves `live` hacen que el backend no arranque.
+3. Reiniciar el backend. Aceptar una herramienta y pagar desde Enviadas con una tarjeta de prueba de Culqi, como Visa 4111 1111 1111 1111, 09/30, CVV 123.
+4. Comprobar el cargo en CulqiPanel y una tarjeta de rechazo, como 4000 0400 0000 0008. Para recibir webhooks hace falta una URL pública, configurada en CulqiPanel → Eventos → Webhooks.
+
+Esto **no acredita Culqi real, 3DS, webhooks reales, Yape ni producción**. Los reembolsos son manuales.
+
+La tabla siguiente conserva los pendientes de aceptación del módulo completo, no los de los incrementos 005.1 a 005.8.
 
 | Campo | Valor |
 |---|---|

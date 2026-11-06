@@ -42,6 +42,10 @@ La comprobación diferida mantiene el bloqueo exacto hasta el cierre, lo libera 
 
 `008-avisos.sql` crea `reservas_avisos` con evento, usuario, reserva, tipo, creación y lectura. Una restricción única por evento y usuario impide duplicar un aviso cuando un evento se reentrega. Los eventos pendientes al migrar pasan a FALLIDO con el código ANTERIOR_A_AVISOS, para no enviarlos en bloque; revertir los devuelve a pendientes y borra los avisos y su estado de lectura.
 
+## Esquema del incremento 005.8
+
+`009-pagos-en-linea.sql` crea `reservas_pagos` y `reservas_eventos_pasarela`, y agrega a `reservas` los estados APARTADO_PAGADO y SERVICIO_POR_PAGAR, el pago PAGADO_EN_LINEA y pagado_en_linea_centimos. El intento guarda la clave y una huella del token, nunca el token. Índices únicos parciales impiden dos intentos activos y dos pagos vigentes por reserva. Las restricciones exigen que lo pagado coincida con las condiciones o con la cotización aceptada. La reversión automática se rechaza para conservar los registros de pago.
+
 ## Datos propios
 
 reservas; bloqueos; intentos_pago; eventos_pasarela; outbox_eventos; cotizaciones y sus versiones (extensión propuesta para RF23).
