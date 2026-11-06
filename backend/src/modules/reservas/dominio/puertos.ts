@@ -21,7 +21,7 @@ export interface RepositorioDespacho {
   confirmar(id: string, intento: number): Promise<void>;
   fallar(id: string, intento: number, codigo: string, esperaMs: number | null): Promise<void>;
 }
-export interface IdentidadReservas { resolver(token: string): Promise<{ id: string }> }
+export interface IdentidadReservas { resolver(token: string): Promise<{ id: string; email: string }> }
 export interface CatalogoReservas {
   consultar(id: string): Promise<{
     id: string; proveedorId: string; titulo: string; tipo: 'herramienta' | 'servicio';

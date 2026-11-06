@@ -5,16 +5,19 @@ import type { FormEvent } from 'react';
 import { dinero, fechaReserva, type SolicitudReserva } from '@/lib/api/reservas';
 import styles from './reservas.module.css';
 import CotizacionesServicio from './CotizacionesServicio';
+import PagoEnLinea, { EstadoPago, useConfiguracionPagos } from './PagoEnLinea';
 
 const estados: Record<SolicitudReserva['estado'], string> = {
   PENDIENTE:'Pendiente de respuesta',RECHAZADA:'Rechazada',VISITA_ACORDADA:'Visita acordada',ACEPTADA:'Herramienta apartada',
   VENCIDA:'Apartado vencido',CANCELADA:'Cancelada',ENTREGA_POR_CONFIRMAR:'Entrega pendiente de confirmación',EN_CURSO:'Alquiler en curso',
   DEVOLUCION_PENDIENTE:'Devolución pendiente de confirmación',DEVUELTA:'Herramienta devuelta',SERVICIO_CONFIRMADO:'Servicio confirmado',
   SERVICIO_EN_CURSO:'Trabajo en curso',SERVICIO_POR_CONFIRMAR:'Término pendiente de confirmación',SERVICIO_CERRADO:'Servicio cerrado',
+  APARTADO_PAGADO:'Herramienta apartada y pagada',SERVICIO_POR_PAGAR:'Trabajo terminado, pendiente de pago',
 };
-type Props = { solicitud: SolicitudReserva; ocupado: boolean; operar: (s: SolicitudReserva, accion: string, datos?: Record<string,unknown>) => Promise<void> };
+type Props = { solicitud: SolicitudReserva; ocupado: boolean; operar: (s: SolicitudReserva, accion: string, datos?: Record<string,unknown>) => Promise<void>; recargar: () => Promise<void> };
 
-export default function TarjetaReserva({solicitud:s,ocupado,operar}: Props) {
+export default function TarjetaReserva({solicitud:s,ocupado,operar,recargar}: Props) {
+  const pagos = useConfiguracionPagos();
   const proveedor = s.participacion === 'proveedor';
   const acordada = s.cotizaciones?.find(c => c.respuesta?.decision === 'ACEPTADA');
   const cotizacionAceptada = Boolean(acordada);
@@ -34,7 +37,10 @@ export default function TarjetaReserva({solicitud:s,ocupado,operar}: Props) {
       <p><strong>{dinero(s.condiciones.importeCentimos)}</strong> por {s.condiciones.dias} {s.condiciones.dias === 1 ? 'día' : 'días'}, a {dinero(s.condiciones.tarifaCentimos)} por bloque de 24 horas iniciado.</p>
       <p className={styles.hint}>Efectivo al recoger. Tolerancia de devolución: 30 minutos; después se suma un día por bloque adicional iniciado. El fin acordado no cambia por recoger tarde.</p>
     </div>}
+    {!proveedor && s.estado === 'ACEPTADA' && s.condiciones && <PagoEnLinea solicitud={s} importe={s.condiciones.importeCentimos} config={pagos} ocupado={ocupado} alTerminar={recargar}/>}
     {s.venceEn && <p><strong>Acércate antes de: {fechaReserva(s.venceEn)}.</strong> Si vence sin registro de efectivo, la unidad se libera. Actualiza la bandeja para comprobar el estado.</p>}
+    <EstadoPago solicitud={s}/>
+    {s.pagoEstado === 'PAGADO_EN_LINEA' && <p>Pagado en línea: {dinero(s.pagadoEnLineaCentimos)}. Modo de prueba, sin cobro real.</p>}
     {s.pagoEstado === 'REGISTRADO_PROVEEDOR' && <p>El proveedor declara haber recibido {dinero(s.efectivoCentimos)} y {s.snapshot.tipo === 'servicio' ? 'terminado el trabajo' : 'entregado la herramienta'}. Falta la confirmación del cliente.</p>}
     {s.pagoEstado === 'CONFIRMADO_PARTICIPANTES' && <p>{s.snapshot.tipo === 'servicio' ? 'Efectivo' : 'Efectivo inicial'} confirmado por ambos participantes: {dinero(s.efectivoCentimos)}.</p>}
     {s.devolucionInformadaEn && <p>El cliente informa devolución a las {fechaReserva(s.devolucionInformadaEn)}.</p>}
@@ -70,12 +76,19 @@ export default function TarjetaReserva({solicitud:s,ocupado,operar}: Props) {
     {proveedor && s.estado === 'SERVICIO_CONFIRMADO' && (Date.parse(s.inicio) <= Date.now()
       ? <form className={styles.form} onSubmit={enviar('servicio/inicio')} aria-label="Registrar inicio del trabajo"><label className={styles.check}><input type="checkbox" required disabled={ocupado}/>Confirmo que empecé el trabajo acordado</label><button className="button primary" disabled={ocupado}>Registrar inicio del trabajo</button></form>
       : <p className={styles.hint}>Podrás registrar el inicio del trabajo desde la hora acordada.</p>)}
+    {proveedor && s.estado === 'APARTADO_PAGADO' && <form className={styles.form} onSubmit={enviar('entrega')} aria-label="Registrar entrega"><label className={styles.check}><input type="checkbox" required disabled={ocupado}/>Entregué la herramienta al cliente</label><button className="button primary" disabled={ocupado}>Registrar entrega</button></form>}
+    {proveedor && s.estado === 'SERVICIO_EN_CURSO' && pagos?.disponible && <form className={styles.form} onSubmit={enviar('servicio/cobro')} aria-label="Solicitar pago en línea"><label className={styles.check}><input type="checkbox" required disabled={ocupado}/>Terminé el trabajo y el cliente pagará en línea</label><button className="button outline" disabled={ocupado}>Solicitar pago en línea</button></form>}
+    {proveedor && s.estado === 'SERVICIO_POR_PAGAR' && acordada && <><p className={styles.hint}>El cliente debe pagar {dinero(acordada.importeCentimos)} en línea. Si prefiere efectivo, puedes registrarlo aquí.</p><form className={styles.form} onSubmit={enviar('servicio/termino')} aria-label="Declarar trabajo terminado"><label className={styles.check}><input type="checkbox" required disabled={ocupado}/>Recibí {dinero(acordada.importeCentimos)} en efectivo</label><button className="button outline" disabled={ocupado}>Registrar pago en efectivo</button></form></>}
+    {!proveedor && s.estado === 'SERVICIO_POR_PAGAR' && acordada && <>
+      <PagoEnLinea solicitud={s} importe={acordada.importeCentimos} config={pagos} ocupado={ocupado} alTerminar={recargar}/>
+      <details><summary>El trabajo aún no terminó</summary><form className={styles.form} onSubmit={enviar('servicio/rechazo',true)}><label>Motivo para rechazar el término<textarea name="motivo" required minLength={10} maxLength={500} disabled={ocupado}/></label><button className="button outline" disabled={ocupado}>Rechazar término</button></form></details>
+    </>}
     {proveedor && s.estado === 'SERVICIO_EN_CURSO' && acordada && <form className={styles.form} onSubmit={enviar('servicio/termino')} aria-label="Declarar trabajo terminado"><label className={styles.check}><input type="checkbox" required disabled={ocupado}/>Confirmo que terminé el trabajo y recibí {dinero(acordada.importeCentimos)} en efectivo</label><button className="button primary" disabled={ocupado}>Declarar trabajo terminado</button></form>}
     {!proveedor && s.estado === 'SERVICIO_EN_CURSO' && <p className={styles.hint}>El proveedor declarará el término al finalizar; podrás confirmarlo o rechazarlo aquí.</p>}
     {!proveedor && s.estado === 'SERVICIO_POR_CONFIRMAR' && <>
       <form className={styles.form} onSubmit={enviar('servicio/confirmacion')} aria-label="Confirmar trabajo y pago"><label className={styles.check}><input type="checkbox" required disabled={ocupado}/>Confirmo que el trabajo terminó y pagué {dinero(s.efectivoCentimos)} en efectivo</label><button className="button primary" disabled={ocupado}>Confirmar trabajo y pago</button></form>
       <details><summary>El trabajo aún no terminó</summary><form className={styles.form} onSubmit={enviar('servicio/rechazo',true)}><label>Motivo para rechazar el término<textarea name="motivo" required minLength={10} maxLength={500} disabled={ocupado}/></label><button className="button outline" disabled={ocupado}>Rechazar término</button></form></details>
     </>}
-    {((!proveedor && s.estado === 'PENDIENTE') || ['VISITA_ACORDADA','ACEPTADA','SERVICIO_CONFIRMADO'].includes(s.estado)) && <details><summary>Cancelar {s.estado === 'ACEPTADA' ? 'apartado' : s.estado === 'SERVICIO_CONFIRMADO' ? 'servicio' : 'solicitud'}</summary><form className={styles.form} onSubmit={enviar('cancelacion',true)}><label>Motivo de cancelación<textarea name="motivo" required minLength={10} maxLength={500} disabled={ocupado}/></label><button className="button outline" disabled={ocupado}>Confirmar cancelación</button></form></details>}
+    {((!proveedor && s.estado === 'PENDIENTE') || ['VISITA_ACORDADA','ACEPTADA','SERVICIO_CONFIRMADO','APARTADO_PAGADO'].includes(s.estado)) && <details><summary>Cancelar {['ACEPTADA','APARTADO_PAGADO'].includes(s.estado) ? 'apartado' : s.estado === 'SERVICIO_CONFIRMADO' ? 'servicio' : 'solicitud'}</summary><form className={styles.form} onSubmit={enviar('cancelacion',true)}><label>Motivo de cancelación<textarea name="motivo" required minLength={10} maxLength={500} disabled={ocupado}/></label>{s.estado === 'APARTADO_PAGADO' && <p className={styles.hint}>El pago quedará pendiente de reembolso, que se gestiona manualmente.</p>}<button className="button outline" disabled={ocupado}>Confirmar cancelación</button></form></details>}
   </article>;
 }
