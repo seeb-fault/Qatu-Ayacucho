@@ -6,12 +6,14 @@ import { CatalogoModule, ConsultaCatalogo } from '../catalogo';
 import { ProveedoresModule, ConsultaProveedores } from '../proveedores';
 import { Reservas } from './aplicacion/reservas';
 import { Avisos } from './aplicacion/avisos';
+import { Pagos } from './aplicacion/pagos';
 import { DespachadorEventos } from './aplicacion/despacho';
 import type { Notificador } from './dominio/puertos';
 import { PostgresReservas } from './infraestructura/postgres';
 import { AvisosNotificador, PostgresAvisos } from './infraestructura/postgres-avisos';
 import { PostgresDespacho } from './infraestructura/postgres-despacho';
-import { ReservasController, DisponibilidadController } from './presentacion/reservas.controller';
+import { crearProcesador } from './infraestructura/culqi';
+import { ReservasController, DisponibilidadController, PagosController } from './presentacion/reservas.controller';
 import { AvisosController } from './presentacion/avisos.controller';
 
 const DESPACHADOR = Symbol('DESPACHADOR_RESERVAS');
@@ -21,8 +23,12 @@ export function crearNotificador(pool: Pool): Notificador | null {
 }
 
 @Module({
-  imports: [UsuariosModule, CatalogoModule, ProveedoresModule], controllers: [ReservasController, DisponibilidadController, AvisosController],
+  imports: [UsuariosModule, CatalogoModule, ProveedoresModule], controllers: [ReservasController, DisponibilidadController, AvisosController, PagosController],
   providers: [
+    { provide: Pagos, inject: [Pool,IdentidadUsuarios], useFactory: (pool: Pool, identidad: IdentidadUsuarios) => {
+      const { procesador, llavePublica } = crearProcesador();
+      return new Pagos(new PostgresReservas(pool),identidad,procesador,llavePublica);
+    } },
     { provide: Avisos, inject: [Pool,IdentidadUsuarios], useFactory: (pool: Pool, identidad: IdentidadUsuarios) => new Avisos(new PostgresAvisos(pool),identidad) },
     { provide: Pool, useFactory: () => crearPool(5) },
     { provide: Reservas, inject: [Pool,IdentidadUsuarios,ConsultaCatalogo,ConsultaProveedores],
@@ -39,8 +45,10 @@ export class ReservasModule implements OnApplicationBootstrap, OnApplicationShut
   private venciendo = false;
   private relojDespacho?: ReturnType<typeof setInterval>;
   private despacho?: Promise<unknown>;
+  private relojConciliacion?: ReturnType<typeof setInterval>;
+  private conciliacion?: Promise<unknown>;
   constructor(@Inject(Pool) private readonly pool: Pool, @Inject(Reservas) private readonly reservas: Reservas,
-    @Inject(DESPACHADOR) private readonly despachador: DespachadorEventos | null) {}
+    @Inject(DESPACHADOR) private readonly despachador: DespachadorEventos | null, @Inject(Pagos) private readonly pagos: Pagos) {}
   private despachar() {
     if (this.despacho || !this.despachador) return;
     this.despacho = this.despachador.despachar().catch(() => console.error('No se pudieron despachar eventos de reservas.')).finally(() => { this.despacho = undefined; });
@@ -53,6 +61,11 @@ export class ReservasModule implements OnApplicationBootstrap, OnApplicationShut
       void this.reservas.vencer().catch(() => console.error('No se pudieron liberar apartados vencidos.')).finally(() => { this.venciendo = false; });
     },15000);
     this.reloj.unref();
+    this.relojConciliacion = setInterval(() => {
+      if (this.conciliacion) return;
+      this.conciliacion = this.pagos.conciliar().catch(() => console.error('No se pudieron conciliar pagos.')).finally(() => { this.conciliacion = undefined; });
+    },60000);
+    this.relojConciliacion.unref();
     if (this.despachador) {
       this.despachar();
       this.relojDespacho = setInterval(() => this.despachar(),5000);
@@ -62,7 +75,9 @@ export class ReservasModule implements OnApplicationBootstrap, OnApplicationShut
   async onApplicationShutdown() {
     if (this.reloj) clearInterval(this.reloj);
     if (this.relojDespacho) clearInterval(this.relojDespacho);
+    if (this.relojConciliacion) clearInterval(this.relojConciliacion);
     await this.despacho;
+    await this.conciliacion;
     await this.pool.end();
   }
 }

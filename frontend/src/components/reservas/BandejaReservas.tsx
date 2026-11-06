@@ -47,7 +47,7 @@ export default function BandejaReservas({ vistaInicial = 'cliente' }: { vistaIni
   return <section className={styles.panel} aria-labelledby="titulo-reservas">
     <span className="eyebrow">TUS PROYECTOS EN MARCHA</span><h1 id="titulo-reservas">Mis solicitudes</h1>
     <p>Consulta lo que has solicitado y las solicitudes que reciben tus ofertas.</p>
-    <p className={styles.hint}>Herramientas: apartado de 60 minutos y efectivo al recoger, confirmado por ambos participantes. Las visitas no bloquean. Los pagos en línea se habilitarán después.</p>
+    <p className={styles.hint}>Herramientas: apartado de 60 minutos y efectivo al recoger, confirmado por ambos participantes. Las visitas no bloquean. El pago en línea está en modo de prueba, sin cobros reales.</p>
     <div className={styles.toolbar} aria-label="Bandejas de solicitudes">
       <button className="button outline" aria-pressed={vista === 'cliente'} disabled={ocupado || cargando} onClick={() => cambiar('cliente')}>Enviadas</button>
       <button className="button outline" aria-pressed={vista === 'proveedor'} disabled={ocupado || cargando} onClick={() => cambiar('proveedor')}>Recibidas</button>
@@ -59,7 +59,7 @@ export default function BandejaReservas({ vistaInicial = 'cliente' }: { vistaIni
     {cargando && <p role="status">Cargando solicitudes…</p>}
     {!cargando && datos && <><p>{datos.total} {datos.total === 1 ? 'solicitud' : 'solicitudes'} {vista === 'cliente' ? (datos.total === 1 ? 'enviada' : 'enviadas') : (datos.total === 1 ? 'recibida' : 'recibidas')}.</p>
       {datos.items.length === 0 && <div className={styles.notice}><p>{vista === 'cliente' ? 'Todavía no hay solicitudes en esta página. Encuentra una oferta y elige las fechas que necesitas.' : 'No hay solicitudes recibidas en esta página.'}</p><Link href="/buscar">Explorar ofertas</Link></div>}
-      <div className={styles.list}>{datos.items.map(s => <TarjetaReserva key={s.id} solicitud={s} ocupado={ocupado} operar={operar}/>)}</div>
+      <div className={styles.list}>{datos.items.map(s => <TarjetaReserva key={s.id} solicitud={s} ocupado={ocupado} operar={operar} recargar={cargar}/>)}</div>
       <nav className={styles.toolbar} aria-label="Páginas de solicitudes"><button className="button outline" disabled={page === 1 || ocupado} onClick={() => setPage(page - 1)}>Anterior</button>
         <span>Página {page} de {Math.max(1, Math.ceil(datos.total / 20))}</span><button className="button outline" disabled={page * 20 >= datos.total || ocupado} onClick={() => setPage(page + 1)}>Siguiente</button></nav>
     </>}

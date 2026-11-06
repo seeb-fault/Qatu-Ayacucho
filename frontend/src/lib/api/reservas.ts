@@ -13,7 +13,7 @@ export interface SolicitudReserva {
   fin: string;
   descripcionTrabajo: string;
   snapshot: { titulo: string; tipo: 'herramienta' | 'servicio'; proveedor: string; recurso: string; tarifaReferenciaCentimos: number | null; unidad: string | null };
-  estado: 'PENDIENTE' | 'RECHAZADA' | 'VISITA_ACORDADA' | 'ACEPTADA' | 'VENCIDA' | 'CANCELADA' | 'ENTREGA_POR_CONFIRMAR' | 'EN_CURSO' | 'DEVOLUCION_PENDIENTE' | 'DEVUELTA' | 'SERVICIO_CONFIRMADO' | 'SERVICIO_EN_CURSO' | 'SERVICIO_POR_CONFIRMAR' | 'SERVICIO_CERRADO';
+  estado: 'PENDIENTE' | 'RECHAZADA' | 'VISITA_ACORDADA' | 'ACEPTADA' | 'VENCIDA' | 'CANCELADA' | 'ENTREGA_POR_CONFIRMAR' | 'EN_CURSO' | 'DEVOLUCION_PENDIENTE' | 'DEVUELTA' | 'SERVICIO_CONFIRMADO' | 'SERVICIO_EN_CURSO' | 'SERVICIO_POR_CONFIRMAR' | 'SERVICIO_CERRADO' | 'APARTADO_PAGADO' | 'SERVICIO_POR_PAGAR';
   motivoRechazo: string | null;
   version: number;
   creadoEn: string;
@@ -21,7 +21,9 @@ export interface SolicitudReserva {
   tipoSolicitud: 'alquiler' | 'visita';
   condiciones: { politica: string; tarifaCentimos: number; dias: number; importeCentimos: number; toleranciaMinutos: number; comisionCentimos: number; medioPago: 'efectivo' } | null;
   venceEn: string | null;
-  pagoEstado: 'PENDIENTE' | 'REGISTRADO_PROVEEDOR' | 'CONFIRMADO_PARTICIPANTES';
+  pagoEstado: 'PENDIENTE' | 'REGISTRADO_PROVEEDOR' | 'CONFIRMADO_PARTICIPANTES' | 'PAGADO_EN_LINEA';
+  pagadoEnLineaCentimos: number;
+  ultimoPago: { estado: 'PROCESANDO' | 'APROBADO' | 'RECHAZADO' | 'DESCONOCIDO'; codigo: string | null; reembolsoPendiente: boolean } | null;
   efectivoCentimos: number;
   entregadoEn: string | null;
   recibidoEn: string | null;

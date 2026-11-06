@@ -8,16 +8,17 @@ export interface CondicionesAlquiler {
 }
 export type EstadoReserva = 'PENDIENTE' | 'RECHAZADA' | 'VISITA_ACORDADA' | 'ACEPTADA' | 'VENCIDA' | 'CANCELADA'
   | 'ENTREGA_POR_CONFIRMAR' | 'EN_CURSO' | 'DEVOLUCION_PENDIENTE' | 'DEVUELTA' | 'SERVICIO_CONFIRMADO'
-  | 'SERVICIO_EN_CURSO' | 'SERVICIO_POR_CONFIRMAR' | 'SERVICIO_CERRADO';
+  | 'SERVICIO_EN_CURSO' | 'SERVICIO_POR_CONFIRMAR' | 'SERVICIO_CERRADO' | 'APARTADO_PAGADO' | 'SERVICIO_POR_PAGAR';
 export type AccionReserva = 'aceptacion' | 'visita' | 'ampliacion' | 'cancelacion' | 'efectivo' | 'recepcion'
   | 'devolucion/aviso' | 'devolucion/confirmacion' | 'devolucion/rechazo'
-  | 'servicio/inicio' | 'servicio/termino' | 'servicio/confirmacion' | 'servicio/rechazo';
+  | 'servicio/inicio' | 'servicio/termino' | 'servicio/confirmacion' | 'servicio/rechazo' | 'entrega' | 'servicio/cobro';
 export const eventos: Record<AccionReserva, string> = {
   aceptacion: 'SOLICITUD_ACEPTADA', visita: 'VISITA_ACORDADA', ampliacion: 'APARTADO_AMPLIADO', cancelacion: 'RESERVA_CANCELADA',
   efectivo: 'EFECTIVO_REGISTRADO', recepcion: 'RECEPCION_CONFIRMADA', 'devolucion/aviso': 'DEVOLUCION_INFORMADA',
   'devolucion/confirmacion': 'DEVOLUCION_CONFIRMADA', 'devolucion/rechazo': 'DEVOLUCION_RECHAZADA',
   'servicio/inicio': 'SERVICIO_INICIADO', 'servicio/termino': 'SERVICIO_TERMINADO',
   'servicio/confirmacion': 'SERVICIO_CERRADO', 'servicio/rechazo': 'TERMINO_RECHAZADO',
+  entrega: 'ENTREGA_REGISTRADA', 'servicio/cobro': 'COBRO_SOLICITADO',
 };
 export function condiciones(inicio: string, fin: string, tarifaCentimos: number): CondicionesAlquiler {
   const duracion = Date.parse(fin) - Date.parse(inicio), dias = Math.ceil(duracion / DIA);
@@ -63,7 +64,7 @@ export function transicion(actual: Solicitud, actorId: string, accion: AccionRes
       if (Date.parse(nuevoVencimiento()) <= Date.parse(s.venceEn!)) conflicto('El apartado ya dispone de ese tiempo.');
       s.venceEn = nuevoVencimiento(); break;
     case 'cancelacion':
-      estado('PENDIENTE', 'VISITA_ACORDADA', 'ACEPTADA', 'SERVICIO_CONFIRMADO');
+      estado('PENDIENTE', 'VISITA_ACORDADA', 'ACEPTADA', 'SERVICIO_CONFIRMADO', 'APARTADO_PAGADO');
       if (s.estado === 'ACEPTADA') vigente();
       s.estado = 'CANCELADA'; s.venceEn = null; break;
     case 'efectivo':
@@ -71,7 +72,7 @@ export function transicion(actual: Solicitud, actorId: string, accion: AccionRes
       s.estado = 'ENTREGA_POR_CONFIRMAR'; s.pagoEstado = 'REGISTRADO_PROVEEDOR';
       s.efectivoCentimos = s.condiciones!.importeCentimos; s.entregadoEn = new Date(ahora).toISOString(); s.venceEn = null; break;
     case 'recepcion':
-      estado('ENTREGA_POR_CONFIRMAR'); s.estado = 'EN_CURSO'; s.pagoEstado = 'CONFIRMADO_PARTICIPANTES'; s.recibidoEn = new Date(ahora).toISOString(); break;
+      estado('ENTREGA_POR_CONFIRMAR'); s.estado = 'EN_CURSO'; if (s.pagoEstado !== 'PAGADO_EN_LINEA') s.pagoEstado = 'CONFIRMADO_PARTICIPANTES'; s.recibidoEn = new Date(ahora).toISOString(); break;
     case 'devolucion/aviso':
       estado('EN_CURSO'); s.estado = 'DEVOLUCION_PENDIENTE'; s.devolucionInformadaEn = new Date(ahora).toISOString(); break;
     case 'devolucion/rechazo':
@@ -86,15 +87,21 @@ export function transicion(actual: Solicitud, actorId: string, accion: AccionRes
       estado('SERVICIO_CONFIRMADO');
       if (Date.parse(s.inicio) > ahora) conflicto('Podrás registrar el inicio desde la hora acordada.');
       s.estado = 'SERVICIO_EN_CURSO'; s.servicioIniciadoEn = new Date(ahora).toISOString(); break;
-    case 'servicio/termino': {
+    case 'entrega':
+      estado('APARTADO_PAGADO');
+      s.estado = 'ENTREGA_POR_CONFIRMAR'; s.entregadoEn = new Date(ahora).toISOString(); break;
+    case 'servicio/cobro':
       estado('SERVICIO_EN_CURSO');
+      s.estado = 'SERVICIO_POR_PAGAR'; s.servicioTerminadoEn = new Date(ahora).toISOString(); break;
+    case 'servicio/termino': {
+      estado('SERVICIO_EN_CURSO', 'SERVICIO_POR_PAGAR');
       const acordada = s.cotizaciones?.find(c => c.respuesta?.decision === 'ACEPTADA');
       if (!acordada) conflicto('El servicio no tiene una cotización aceptada.');
       s.estado = 'SERVICIO_POR_CONFIRMAR'; s.pagoEstado = 'REGISTRADO_PROVEEDOR';
-      s.efectivoCentimos = acordada!.importeCentimos; s.servicioTerminadoEn = new Date(ahora).toISOString(); break;
+      s.efectivoCentimos = acordada!.importeCentimos; s.servicioTerminadoEn ??= new Date(ahora).toISOString(); break;
     }
     case 'servicio/rechazo':
-      estado('SERVICIO_POR_CONFIRMAR');
+      estado('SERVICIO_POR_CONFIRMAR', 'SERVICIO_POR_PAGAR');
       s.estado = 'SERVICIO_EN_CURSO'; s.pagoEstado = 'PENDIENTE'; s.efectivoCentimos = 0; s.servicioTerminadoEn = null; break;
     case 'servicio/confirmacion':
       estado('SERVICIO_POR_CONFIRMAR');

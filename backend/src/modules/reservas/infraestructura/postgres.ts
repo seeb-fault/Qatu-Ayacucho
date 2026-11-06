@@ -4,6 +4,7 @@ import { ErrorReserva, type NuevaSolicitud, type Solicitud } from '../dominio/so
 import type { RepositorioReservas } from '../dominio/puertos';
 import { eventos, transicion, type AccionReserva } from '../dominio/alquiler';
 import { puedeCotizar, puedeConfirmarAgenda, type PropuestaCotizacion } from '../dominio/cotizacion';
+import { importeAPagar, type IntentoPago, type RepositorioPagos } from '../dominio/pagos';
 
 const columnas = `id, cliente_id AS "clienteId", propietario_id AS "propietarioId", proveedor_id AS "proveedorId",
   publicacion_id AS "publicacionId", recurso_id AS "recursoId", inicio, fin,
@@ -11,6 +12,8 @@ const columnas = `id, cliente_id AS "clienteId", propietario_id AS "propietarioI
   tipo_solicitud AS "tipoSolicitud", condiciones, vence_en AS "venceEn", pago_estado AS "pagoEstado", efectivo_centimos AS "efectivoCentimos",
   entregado_en AS "entregadoEn", recibido_en AS "recibidoEn", devolucion_informada_en AS "devolucionInformadaEn", devuelto_en AS "devueltoEn",
   importe_final_centimos AS "importeFinalCentimos", saldo_centimos AS "saldoCentimos", dias_extra AS "diasExtra", motivo_operacion AS "motivoOperacion",
+  pagado_en_linea_centimos AS "pagadoEnLineaCentimos",
+  (SELECT jsonb_build_object('estado',p.estado,'codigo',p.codigo,'reembolsoPendiente',p.reembolso_pendiente) FROM reservas_pagos p WHERE p.reserva_id=reservas.id ORDER BY p.creado_en DESC,p.id DESC LIMIT 1) AS "ultimoPago",
   servicio_iniciado_en AS "servicioIniciadoEn", servicio_terminado_en AS "servicioTerminadoEn", servicio_cerrado_en AS "servicioCerradoEn",
   COALESCE((SELECT jsonb_agg(jsonb_build_object('version',c.version,'alcance',c.alcance,'materiales',c.materiales,
     'importeCentimos',c.importe_centimos,'moneda',c.moneda,'vigenteHasta',c.vigente_hasta,'creadaEn',c.creada_en,
@@ -19,11 +22,14 @@ const columnas = `id, cliente_id AS "clienteId", propietario_id AS "propietarioI
 const convertir = (r: any): Solicitud => {
   const resultado = { ...r };
   for (const campo of ['inicio','fin','creadoEn','venceEn','entregadoEn','recibidoEn','devolucionInformadaEn','devueltoEn','servicioIniciadoEn','servicioTerminadoEn','servicioCerradoEn']) resultado[campo] = r[campo] == null ? null : new Date(r[campo]).toISOString();
-  for (const campo of ['efectivoCentimos','saldoCentimos','importeFinalCentimos']) resultado[campo] = r[campo] == null ? null : Number(r[campo]);
+  for (const campo of ['efectivoCentimos','saldoCentimos','importeFinalCentimos','pagadoEnLineaCentimos']) resultado[campo] = r[campo] == null ? null : Number(r[campo]);
   return resultado;
 };
 
-export class PostgresReservas implements RepositorioReservas {
+const columnasPago = `id,reserva_id AS "reservaId",importe_centimos AS "importeCentimos",moneda,estado,codigo,reembolso_pendiente AS "reembolsoPendiente",creado_en AS "creadoEn"`;
+const aPago = (p: any): IntentoPago => ({ ...p, importeCentimos: Number(p.importeCentimos), creadoEn: new Date(p.creadoEn).toISOString() });
+
+export class PostgresReservas implements RepositorioReservas, RepositorioPagos {
   constructor(private readonly pool: Pool) {}
 
   private async transaccion<T>(operacion: (client: PoolClient) => Promise<T>): Promise<T> {
@@ -36,6 +42,8 @@ export class PostgresReservas implements RepositorioReservas {
     } catch (error) {
       await client.query('ROLLBACK');
       if ((error as { code?: string }).code === '23P01') throw new ErrorReserva('RECURSO_OCUPADO',409,'La unidad o agenda ya está reservada para esas fechas. Coordina otro horario y envía una nueva solicitud.');
+      if ((error as { constraint?: string }).constraint === 'reservas_pagos_activo') throw new ErrorReserva('PAGO_EN_CURSO',409,'Ya hay un pago en proceso para esta reserva. Espera a que se confirme antes de volver a intentarlo.');
+      if ((error as { constraint?: string }).constraint === 'reservas_pagos_vigente') throw new ErrorReserva('PAGO_YA_REGISTRADO',409,'Esta reserva ya tiene un pago registrado.');
       if ((error as { constraint?: string }).constraint === 'reservas_posesion_unica') throw new ErrorReserva('HERRAMIENTA_SIN_DEVOLVER',409,'La unidad sigue en poder de otro cliente. Confirma su devolución antes de entregarla.');
       if ((error as { code?: string; constraint?: string }).code === '23505'
         && (error as { constraint?: string }).constraint === 'reservas_pendiente_duplicada') {
@@ -110,8 +118,12 @@ export class PostgresReservas implements RepositorioReservas {
       const ahora = (await client.query('SELECT clock_timestamp() AS ahora')).rows[0].ahora.getTime();
       const s = transicion(actual,actorId,accion,motivo,ahora);
       if (accion === 'aceptacion') await client.query('INSERT INTO reservas_bloqueos(reserva_id,recurso_id,inicio,fin) VALUES($1,$2,$3,$4)', [s.id,s.recursoId,s.inicio,s.fin]);
-      if (accion === 'efectivo') await client.query('UPDATE reservas_bloqueos SET inicio=LEAST(inicio,$2::timestamptz) WHERE reserva_id=$1', [s.id,s.entregadoEn]);
+      if (accion === 'efectivo' || accion === 'entrega') await client.query('UPDATE reservas_bloqueos SET inicio=LEAST(inicio,$2::timestamptz) WHERE reserva_id=$1', [s.id,s.entregadoEn]);
       if (['cancelacion','devolucion/confirmacion','servicio/confirmacion'].includes(accion)) await client.query('UPDATE reservas_bloqueos SET activo=false WHERE reserva_id=$1', [s.id]);
+      if (accion === 'cancelacion' && actual.pagoEstado === 'PAGADO_EN_LINEA') {
+        await client.query("UPDATE reservas_pagos SET reembolso_pendiente=true,reembolso_motivo='RESERVA_CANCELADA' WHERE reserva_id=$1 AND estado='APROBADO' AND NOT reembolso_pendiente", [s.id]);
+        await client.query('INSERT INTO reservas_outbox(id,agregado_id,tipo,payload) VALUES($1,$2,$3,$4)', [randomUUID(),s.id,'REEMBOLSO_PENDIENTE',JSON.stringify({reservaId:s.id,version:s.version,actorId})]);
+      }
       const r = await client.query(`UPDATE reservas SET estado=$2,version=$3,vence_en=$4,pago_estado=$5,efectivo_centimos=$6,
         entregado_en=$7,recibido_en=$8,devolucion_informada_en=$9,devuelto_en=$10,importe_final_centimos=$11,saldo_centimos=$12,dias_extra=$13,motivo_operacion=$14,
         servicio_iniciado_en=$15,servicio_terminado_en=$16,servicio_cerrado_en=$17
@@ -119,6 +131,97 @@ export class PostgresReservas implements RepositorioReservas {
       await client.query('INSERT INTO reservas_outbox(id,agregado_id,tipo,payload) VALUES($1,$2,$3,$4)', [randomUUID(),s.id,eventos[accion],JSON.stringify({reservaId:s.id,version:s.version,actorId,estado:s.estado,pagoEstado:s.pagoEstado,motivo,entregadoEn:s.entregadoEn,devolucionInformadaEn:actual.devolucionInformadaEn ?? s.devolucionInformadaEn,devueltoEn:s.devueltoEn})]);
       return convertir(r.rows[0]);
     });
+  }
+
+  async prepararPago(id: string, actorId: string, clave: string, huella: string) {
+    return this.transaccion(async client => {
+      const visible = await client.query('SELECT recurso_id FROM reservas WHERE id=$1 AND (cliente_id=$2 OR propietario_id=$2)', [id,actorId]);
+      if (!visible.rowCount) throw new ErrorReserva('RESERVA_NO_DISPONIBLE',404,'La solicitud no está disponible.');
+      await client.query('SELECT pg_advisory_xact_lock(hashtextextended($1,488005))', [visible.rows[0].recurso_id]);
+      await this.vencerEn(client,visible.rows[0].recurso_id);
+      await client.query('SELECT id FROM reservas WHERE id=$1 FOR UPDATE', [id]);
+      const s = convertir((await client.query(`SELECT ${columnas} FROM reservas WHERE id=$1`, [id])).rows[0]);
+      if (s.clienteId !== actorId) throw new ErrorReserva('SIN_PERMISO',403,'Solo el cliente puede pagar en línea.');
+      const previo = await client.query(`SELECT ${columnasPago},huella FROM reservas_pagos WHERE cliente_id=$1 AND clave=$2`, [actorId,clave]);
+      if (previo.rowCount) {
+        const { huella: guardada, ...p } = previo.rows[0];
+        if (guardada !== huella || p.reservaId !== id) throw new ErrorReserva('CLAVE_REUTILIZADA',409,'Esta clave ya se usó para otro pago. Recarga antes de continuar.');
+        return { intento: aPago(p), repetido: true, titulo: s.snapshot.titulo };
+      }
+      const ahora = (await client.query('SELECT clock_timestamp() AS ahora')).rows[0].ahora.getTime();
+      const importe = importeAPagar(s,ahora);
+      if (importe === null) throw new ErrorReserva('PAGO_NO_DISPONIBLE',409,'Esta reserva no se puede pagar en línea en su estado actual. Actualiza la bandeja.');
+      const r = await client.query(`INSERT INTO reservas_pagos(id,reserva_id,cliente_id,clave,huella,importe_centimos) VALUES($1,$2,$3,$4,$5,$6) RETURNING ${columnasPago}`, [randomUUID(),id,actorId,clave,huella,importe]);
+      return { intento: aPago(r.rows[0]), repetido: false, titulo: s.snapshot.titulo };
+    });
+  }
+
+  async rechazarPago(intentoId: string, codigo: string) {
+    const r = await this.pool.query(`UPDATE reservas_pagos SET estado='RECHAZADO',codigo=$2,resuelto_en=clock_timestamp()
+      WHERE id=$1 AND estado IN ('PROCESANDO','DESCONOCIDO') RETURNING ${columnasPago}`, [intentoId,codigo]);
+    return r.rows[0] ? aPago(r.rows[0]) : this.pagoPorId(intentoId);
+  }
+
+  async marcarPagoDesconocido(intentoId: string) {
+    const r = await this.pool.query(`UPDATE reservas_pagos SET estado='DESCONOCIDO' WHERE id=$1 AND estado='PROCESANDO' RETURNING ${columnasPago}`, [intentoId]);
+    return r.rows[0] ? aPago(r.rows[0]) : this.pagoPorId(intentoId);
+  }
+
+  /** Idempotente. Si la reserva ya no admite el pago, no se reactiva: el pago queda marcado para reembolso. */
+  async aprobarPago(intentoId: string, referencia: string) {
+    return this.transaccion(async client => {
+      const previo = await client.query('SELECT p.reserva_id,r.recurso_id FROM reservas_pagos p JOIN reservas r ON r.id=p.reserva_id WHERE p.id=$1', [intentoId]);
+      if (!previo.rowCount) return null;
+      const { reserva_id: id, recurso_id: recursoId } = previo.rows[0];
+      await client.query('SELECT pg_advisory_xact_lock(hashtextextended($1,488005))', [recursoId]);
+      await this.vencerEn(client,recursoId);
+      await client.query('SELECT id FROM reservas WHERE id=$1 FOR UPDATE', [id]);
+      const intento = (await client.query(`SELECT ${columnasPago} FROM reservas_pagos WHERE id=$1 FOR UPDATE`, [intentoId])).rows[0];
+      // Un cargo confirmado tras darlo por no localizado también se registra, para poder devolverlo.
+      const resoluble = ['PROCESANDO','DESCONOCIDO'].includes(intento.estado) || (intento.estado === 'RECHAZADO' && intento.codigo === 'SIN_CARGO_CONFIRMADO');
+      if (!resoluble) return aPago(intento);
+      const s = convertir((await client.query(`SELECT ${columnas} FROM reservas WHERE id=$1`, [id])).rows[0]);
+      const ahora = (await client.query('SELECT clock_timestamp() AS ahora')).rows[0].ahora.getTime();
+      const importe = Number(intento.importeCentimos);
+      const admite = importeAPagar(s,ahora) === importe;
+      const r = await client.query(`UPDATE reservas_pagos SET estado='APROBADO',referencia=$2,codigo=NULL,resuelto_en=clock_timestamp(),
+        reembolso_pendiente=$3,reembolso_motivo=$4 WHERE id=$1 RETURNING ${columnasPago}`, [intentoId,referencia,!admite,admite ? null : 'PAGO_TARDIO']);
+      if (admite && s.estado === 'ACEPTADA') {
+        await client.query(`UPDATE reservas SET estado='APARTADO_PAGADO',vence_en=NULL,pago_estado='PAGADO_EN_LINEA',pagado_en_linea_centimos=$2,version=version+1 WHERE id=$1`, [id,importe]);
+      } else if (admite) {
+        await client.query('UPDATE reservas_bloqueos SET activo=false WHERE reserva_id=$1', [id]);
+        await client.query(`UPDATE reservas SET estado='SERVICIO_CERRADO',pago_estado='PAGADO_EN_LINEA',pagado_en_linea_centimos=$2,importe_final_centimos=$2,servicio_cerrado_en=clock_timestamp(),version=version+1 WHERE id=$1`, [id,importe]);
+      }
+      await client.query('INSERT INTO reservas_outbox(id,agregado_id,tipo,payload) VALUES($1,$2,$3,$4)', [randomUUID(),id,admite ? 'PAGO_APROBADO' : 'REEMBOLSO_PENDIENTE',JSON.stringify({reservaId:id,intentoId,version:s.version+(admite ? 1 : 0)})]);
+      return aPago(r.rows[0]);
+    });
+  }
+
+  async pagosDe(id: string, actorId: string) {
+    const visible = await this.pool.query('SELECT 1 FROM reservas WHERE id=$1 AND (cliente_id=$2 OR propietario_id=$2)', [id,actorId]);
+    if (!visible.rowCount) return null;
+    const r = await this.pool.query(`SELECT ${columnasPago} FROM reservas_pagos WHERE reserva_id=$1 ORDER BY creado_en DESC,id DESC`, [id]);
+    return r.rows.map(aPago);
+  }
+
+  async pagoPorId(intentoId: string) {
+    const r = await this.pool.query(`SELECT ${columnasPago} FROM reservas_pagos WHERE id=$1`, [intentoId]);
+    return r.rows[0] ? aPago(r.rows[0]) : null;
+  }
+
+  async pagosPorConciliar(procesandoMs: number, limite: number) {
+    const r = await this.pool.query(`SELECT ${columnasPago} FROM reservas_pagos
+      WHERE estado='DESCONOCIDO' OR (estado='PROCESANDO' AND creado_en<=clock_timestamp()-($1*interval '1 millisecond'))
+      ORDER BY creado_en LIMIT $2`, [procesandoMs,limite]);
+    return r.rows.map(aPago);
+  }
+
+  async eventoPasarelaRegistrado(proveedor: string, eventoId: string) {
+    return Boolean((await this.pool.query('SELECT 1 FROM reservas_eventos_pasarela WHERE proveedor=$1 AND evento_id=$2', [proveedor,eventoId])).rowCount);
+  }
+
+  async registrarEventoPasarela(proveedor: string, eventoId: string) {
+    await this.pool.query('INSERT INTO reservas_eventos_pasarela(proveedor,evento_id) VALUES($1,$2) ON CONFLICT DO NOTHING', [proveedor,eventoId]);
   }
 
   private async cambiarCotizacion(id: string, actorId: string, versionActual: number, modo: 'publicar' | 'responder' | 'agenda',

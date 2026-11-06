@@ -40,6 +40,8 @@ export async function crearApp() {
     response.setHeader('Cache-Control', 'no-store');
     response.setHeader('X-Content-Type-Options', 'nosniff');
     if (!['GET', 'HEAD', 'OPTIONS'].includes(request.method)) {
+      // La pasarela no envía Origin. Su aviso solo indica qué cargo consultar por la API autenticada.
+      if (request.method === 'POST' && request.path === '/api/v1/pagos/webhooks/culqi') { next(); return; }
       const cargaDocumental = request.method === 'POST' && request.path === '/api/v1/proveedores/me/verificaciones' && request.is('multipart/form-data');
       if (request.headers.origin !== origin || (!request.is('application/json') && !cargaDocumental) || request.headers['sec-fetch-site'] === 'cross-site') {
         response.status(403).json({ code: 'ORIGEN_INVALIDO', mensaje: 'Solicitud no permitida.', correlationId: response.getHeader('X-Correlation-Id') });
