@@ -84,6 +84,10 @@ El apartado bloquea el recurso durante 60 min antes del registro de efectivo; la
 
 La aceptación de cotización reserva el intervalo exacto del recurso/agenda solicitado y cambia a SERVICIO_CONFIRMADO, sin anticipo ni vencimiento de 60 min. Un horario ocupado devuelve 409 sin cambios parciales. Los acuerdos históricos aceptados con 005.3 requieren confirmación expresa del cliente mediante `POST /api/v1/reservas/:id/agenda/confirmacion` con `{versionActual,versionCotizacion}`. La cancelación con motivo libera el horario conservando el acuerdo. No confirma ejecución, cierre ni pago del servicio; los eventos permanecen en outbox sin afirmar envío externo.
 
+### Incremento 005.8 — Pago en línea en modo de prueba
+
+`POST /api/v1/reservas/:id/pagos` (cliente, cabecera `Idempotency-Key`, JSON `{tokenId}` con un token `tkn_test_`) cobra el importe calculado por el servidor. Responde 201 con el intento aprobado o rechazado, y 202 si el resultado es incierto. `GET /api/v1/reservas/:id/pagos` lista los intentos a los participantes. `GET /api/v1/pagos/configuracion` indica si el pago está disponible. `POST /api/v1/pagos/webhooks/culqi` recibe avisos de la pasarela, que solo indican qué cargo consultar. Solo se admiten llaves y tokens de prueba. [DTO, permisos y errores](../../../specs/005-reservas-contratacion-pagos/contracts/api.md).
+
 ### Incremento 005.7 — Avisos dentro de la app
 
 `GET /api/v1/avisos` devuelve los avisos propios de 20 en 20, y `GET /api/v1/avisos/resumen` el total sin leer. `POST /api/v1/avisos/:id/lectura` marca uno y `POST /api/v1/avisos/lectura` todos los propios. Requieren sesión; el aviso de otra persona responde 404. [DTO, permisos y errores](../../../specs/005-reservas-contratacion-pagos/contracts/api.md).

@@ -167,3 +167,16 @@ test('005.7 exige migración, bandeja y pruebas de avisos',context=>{
 test('005.7 no puede declararse sin despacho',context=>{
   const root=prepararCotizaciones(context);writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2','005.3','005.4','005.5','005.7']}));assert.throws(()=>validarEntrega(root),/005.7 requiere/);
 });
+
+test('005.8 exige migración, adaptador y pruebas de pago',context=>{
+  const root=prepararCotizaciones(context);
+  writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2','005.3','005.4','005.5','005.6','005.7','005.8']}));
+  for(const nombre of ["backend/migrations/reservas/005-agenda-oficios.sql","backend/test/reservas/agenda.test.ts","frontend/tests/reservas/agenda.spec.ts","backend/migrations/reservas/006-ejecucion-oficios.sql","backend/test/reservas/ejecucion.test.ts","frontend/tests/reservas/ejecucion.spec.ts","backend/migrations/reservas/007-despacho-eventos.sql","backend/src/modules/reservas/aplicacion/despacho.ts","backend/test/reservas/despacho.test.ts","backend/migrations/reservas/008-avisos.sql","backend/src/modules/reservas/aplicacion/avisos.ts","backend/test/reservas/avisos.test.ts","frontend/src/app/avisos/page.tsx","frontend/tests/reservas/avisos.spec.ts","backend/migrations/reservas/009-pagos-en-linea.sql","backend/src/modules/reservas/aplicacion/pagos.ts","backend/src/modules/reservas/infraestructura/culqi.ts","backend/test/reservas/pagos.test.ts","frontend/tests/reservas/pagos.spec.ts"]) {
+    const target=join(root,nombre);mkdirSync(dirname(target),{recursive:true});writeFileSync(target,'');
+  }
+  assert.equal(validarEntrega(root).reservas,true);
+  rmSync(join(root,'backend/test/reservas/pagos.test.ts'));assert.throws(()=>validarEntrega(root),/pagos.test/);
+});
+test('005.8 no puede declararse sin avisos',context=>{
+  const root=prepararCotizaciones(context);writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2','005.3','005.4','005.5','005.6','005.8']}));assert.throws(()=>validarEntrega(root),/005.8 requiere/);
+});
