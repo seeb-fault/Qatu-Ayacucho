@@ -1,4 +1,4 @@
-<!-- Sync impact: 1.1.0, 2026-10-27. El usuario autoriza efectivo al recoger antes de integrar la pasarela. ADR-013 y 005/research documentan alcance y confirmación bilateral. -->
+<!-- Sync impact: 1.2.0, 2026-11-06. La docente indica separar Pagos de Reservas: siete módulos. ADR-014 documenta el límite y la transacción compartida. Anterior: 1.1.0, 2026-10-27, efectivo al recoger (ADR-013). -->
 # Constitución de Qatu
 
 ## Core Principles
@@ -7,9 +7,9 @@
 
 El MVP cubre alquiler de herramientas y contratación de oficios en Ayacucho. Todo cambio se vincula a HU/RF, restricciones, ADR y escenarios EQ vigentes en docs. Las especificaciones de implementación viven en specs. Una propuesta de interfaz o un doble de prueba no prueba integración real.
 
-### II. Seis módulos y dependencias hacia el dominio
+### II. Siete módulos y dependencias hacia el dominio
 
-La API es un monolito modular NestJS con usuarios, proveedores, catalogo, reservas, resenas y busqueda. Pagos y calendario pertenecen a Reservas; administración usa permisos; mapas, mensajes y archivos son soporte. Cada módulo conserva dominio, aplicación, infraestructura y presentación. El dominio no importa NestJS, ORM ni SDK. No se consultan tablas/repositories ajenos; se consumen fachadas/puertos con DTO. El grafo documentado de dependencias no admite ciclos.
+La API es un monolito modular NestJS con usuarios, proveedores, catalogo, reservas, pagos, resenas y busqueda. Calendario pertenece a Reservas; Pagos depende de Reservas y nunca al revés (ADR-014); administración usa permisos; mapas, mensajes y archivos son soporte. Cada módulo conserva dominio, aplicación, infraestructura y presentación. El dominio no importa NestJS, ORM ni SDK. No se consultan tablas/repositories ajenos; se consumen fachadas/puertos con DTO. El grafo documentado de dependencias no admite ciclos.
 
 ### III. Seguridad por identidad, rol y propiedad
 
@@ -43,4 +43,4 @@ Constitución → especificación → aclaraciones necesarias → plan → tarea
 
 La constitución recoge el diseño Qatu existente; no sustituye instrucciones del usuario. Ante contradicción entre docs/specs/código, registrar el hallazgo, resolverlo y actualizar trazabilidad. Cambios de alcance, límites de módulos o invariantes requieren decisión documentada y versión de esta constitución; no se introducen silenciosamente. Ninguna casilla de implementación se marca por redactar documentos. Commits y publicación quedan bajo control del usuario.
 
-**Version**: 1.1.0 | **Ratified**: 2026-10-15 | **Last Amended**: 2026-10-27
+**Version**: 1.2.0 | **Ratified**: 2026-10-15 | **Last Amended**: 2026-11-06

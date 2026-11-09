@@ -11,7 +11,7 @@ La solicitud/rechazo y el evento mínimo son atómicos; se prueba rollback ante 
 ## Cobertura
 
 - Ocho especificaciones con ocho artefactos cada una: 64 documentos de entrega.
-- Seis módulos conservados; 001 y 008 son transversales. Pagos dentro de 005; calendario pertenece a Reservas.
+- Siete módulos; 001 y 008 son transversales. Pagos es módulo propio (ADR-014) y se especifica en 005; calendario pertenece a Reservas.
 - Matriz global distribuye RF01–RF23 y HU01–HU20; EQ-01–EQ-10 tienen responsables.
 - Scripts oficiales de prerequisitos: PASS en las ocho carpetas; 196 tareas con formato Tnnn al crear la base documental; su avance se mantiene en tasks.md. Esto comprueba estructura, no semántica ni ejecución de pruebas.
 

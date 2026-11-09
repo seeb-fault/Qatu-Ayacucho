@@ -5159,7 +5159,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     <!-- Main Diagram -->
     <div class="diagram-container" data-detail-level="read"
          data-preset-badge-editorial-plate="ARCHIFY / LÁMINA 04">
-      <svg viewBox="0 0 1136 804" role="img" lang="es" aria-labelledby="archify-diagram-title archify-diagram-description" data-animation="trace" data-preset="classic" data-quality-profile="showcase" data-class-ui="" data-reader-fit="intrinsic-height" data-reader-min-text="7.5">
+      <svg viewBox="0 0 1164 864" role="img" lang="es" aria-labelledby="archify-diagram-title archify-diagram-description" data-animation="trace" data-preset="classic" data-quality-profile="showcase" data-class-ui="" data-reader-fit="intrinsic-height" data-reader-min-text="7.5">
         <title id="archify-diagram-title">Qatu · Nivel 4 · Confirmación del pago</title>
         <desc id="archify-diagram-description">Un diagrama de clases e interfaces generado por Archify.</desc>
         <!-- Definitions -->
@@ -5230,140 +5230,163 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         <rect width="100%" height="100%" fill="url(#grid)" />
 
         <!-- Relationships (before types for correct z-order) -->
-        <path data-edge-from="PagosWebhookController" data-edge-to="ConfirmarPagoCasoUso" data-edge-key="0" data-class-relationship="association" data-composition-points="577,104;577,234" d="M 577 104 L 577 234" class="a-default cl-relationship" data-animate="edge" style="--step:0" stroke-width="1.5" marker-end="url(#cl-open)"/>
-        <path data-edge-from="ConfirmarPagoCasoUso" data-edge-to="RepositorioReservas" data-edge-key="1" data-class-relationship="association" data-composition-points="432,282;311,282;311,458" d="M 432 282 L 319 282 Q 311 282 311 290 L 311 458" class="a-default cl-relationship" data-animate="edge" style="--step:1" stroke-width="1.5" marker-end="url(#cl-open)"/>
-        <path data-edge-from="ConfirmarPagoCasoUso" data-edge-to="UnidadTrabajoReservas" data-edge-key="2" data-class-relationship="association" data-composition-points="577,298;577,468" d="M 577 298 L 577 468" class="a-default cl-relationship" data-animate="edge" style="--step:2" stroke-width="1.5" marker-end="url(#cl-open)"/>
-        <path data-edge-from="ConfirmarPagoCasoUso" data-edge-to="Reserva" data-edge-key="3" data-class-relationship="dependency" data-composition-points="722,282;838,282;838,428" d="M 722 282 L 830 282 Q 838 282 838 290 L 838 428" class="a-default cl-relationship cl-dashed" data-animate="edge" style="--step:3" stroke-width="1.5" marker-end="url(#cl-open)"/>
-        <path data-edge-from="PostgresReservasRepository" data-edge-to="RepositorioReservas" data-edge-key="4" data-class-relationship="realization" data-composition-points="182,712;182,552" d="M 182 712 L 182 552" class="a-default cl-relationship cl-dashed" data-animate="edge" style="--step:4" stroke-width="1.5" marker-end="url(#cl-triangle)"/>
-        <path data-edge-from="PostgresUnidadTrabajo" data-edge-to="UnidadTrabajoReservas" data-edge-key="5" data-class-relationship="realization" data-composition-points="577,712;577,542" d="M 577 712 L 577 542" class="a-default cl-relationship cl-dashed" data-animate="edge" style="--step:5" stroke-width="1.5" marker-end="url(#cl-triangle)"/>
+        <path data-edge-from="PagosController" data-edge-to="Pagos" data-edge-key="0" data-class-relationship="association" data-composition-points="586,124;586,254" d="M 586 124 L 586 254" class="a-default cl-relationship" data-animate="edge" style="--step:0" stroke-width="1.5" marker-end="url(#cl-open)"/>
+        <path data-edge-from="Pagos" data-edge-to="ProcesadorPagos" data-edge-key="1" data-class-relationship="association" data-composition-points="441,322;306,322;306,483" d="M 441 322 L 314 322 Q 306 322 306 330 L 306 483" class="a-default cl-relationship" data-animate="edge" style="--step:1" stroke-width="1.5" marker-end="url(#cl-open)"/>
+        <path data-edge-from="Pagos" data-edge-to="RepositorioPagos" data-edge-key="2" data-class-relationship="association" data-composition-points="586,338;586,483" d="M 586 338 L 586 483" class="a-default cl-relationship" data-animate="edge" style="--step:2" stroke-width="1.5" marker-end="url(#cl-open)"/>
+        <path data-edge-from="ProcesadorCulqi" data-edge-to="ProcesadorPagos" data-edge-key="3" data-class-relationship="realization" data-composition-points="177,757;177,597" d="M 177 757 L 177 597" class="a-default cl-relationship cl-dashed" data-animate="edge" style="--step:3" stroke-width="1.5" marker-end="url(#cl-triangle)"/>
+        <path data-edge-from="PostgresPagos" data-edge-to="RepositorioPagos" data-edge-key="4" data-class-relationship="realization" data-composition-points="586,757;586,597" d="M 586 757 L 586 597" class="a-default cl-relationship cl-dashed" data-animate="edge" style="--step:4" stroke-width="1.5" marker-end="url(#cl-triangle)"/>
+        <path data-edge-from="PostgresPagos" data-edge-to="OperacionesPago" data-edge-key="5" data-class-relationship="association" data-composition-points="731,774;850,774" d="M 731 774 L 850 774" class="a-default cl-relationship" data-animate="edge" style="--step:5" stroke-width="1.5" marker-end="url(#cl-open)"/>
+        <path data-edge-from="OperacionesPago" data-edge-to="ReservaEnPago" data-edge-key="6" data-class-relationship="dependency" data-composition-points="995,742;995,612" d="M 995 742 L 995 612" class="a-default cl-relationship cl-dashed" data-animate="edge" style="--step:6" stroke-width="1.5" marker-end="url(#cl-open)"/>
 
         <!-- Types -->
-        <g id="node-PagosWebhookController" data-node-id="PagosWebhookController" data-node-label="PagosWebhookController" tabindex="0" role="button" aria-label="Enfocar PagosWebhookController, Clase" aria-pressed="false" data-node-kind="class" data-node-context="Clase" data-class-kind="class" class="cl-hue-backend">
-          <title>PagosWebhookController · Clase</title>
-          <rect x="432" y="40" width="290" height="64" rx="8" class="c-mask"/>
-          <rect x="432" y="40" width="290" height="64" rx="8" class="c-backend cl-type" data-animate="node" style="--step:1" stroke-width="1.2"/>
-          <path class="cl-header c-backend" stroke="none" d="M 440 40 H 714 A 8 8 0 0 1 722 48 V 74 H 432 V 48 A 8 8 0 0 1 440 40 Z"/>
-          <path class="cl-cap" d="M 444 41.4 H 710" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+        <g id="node-PagosController" data-node-id="PagosController" data-node-label="PagosController" tabindex="0" role="button" aria-label="Enfocar PagosController, Clase" aria-pressed="false" data-node-kind="class" data-node-context="Clase" data-class-kind="class" class="cl-hue-backend">
+          <title>PagosController · Clase</title>
+          <rect x="441" y="40" width="290" height="84" rx="8" class="c-mask"/>
+          <rect x="441" y="40" width="290" height="84" rx="8" class="c-backend cl-type" data-animate="node" style="--step:1" stroke-width="1.2"/>
+          <path class="cl-header c-backend" stroke="none" d="M 449 40 H 723 A 8 8 0 0 1 731 48 V 74 H 441 V 48 A 8 8 0 0 1 449 40 Z"/>
+          <path class="cl-cap" d="M 453 41.4 H 719" stroke-width="2.6" stroke-linecap="round" fill="none"/>
           <g aria-hidden="true" class="cl-badge">
-            <rect x="444" y="49" width="16" height="16" rx="4.8" class="cl-badge-chip"/>
-            <text x="452" y="60.5" class="t-backend cl-badge-letter" font-size="10" font-weight="800" text-anchor="middle">C</text>
+            <rect x="453" y="49" width="16" height="16" rx="4.8" class="cl-badge-chip"/>
+            <text x="461" y="60.5" class="t-backend cl-badge-letter" font-size="10" font-weight="800" text-anchor="middle">C</text>
           </g>
           
-          <text data-node-label="" x="577" y="62" class="t-primary" font-size="13.5" font-weight="700" text-anchor="middle">PagosWebhookController</text>
+          <text data-node-label="" x="586" y="62" class="t-primary" font-size="13.5" font-weight="700" text-anchor="middle">PagosController</text>
           <g data-detail="context" data-class-compartment="methods">
-            <line x1="432" y1="74" x2="722" y2="74" class="cl-rule" stroke-width="1"/>
-            <rect x="444" y="83.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="451" y="94" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="methods" x="464" y="94" class="t-primary cl-member" font-size="11">recibir<tspan class="t-muted cl-punct">(</tspan><tspan class="cl-param">payload</tspan><tspan class="t-muted cl-punct">)</tspan></text>
+            <line x1="441" y1="74" x2="731" y2="74" class="cl-rule" stroke-width="1"/>
+            <rect x="453" y="83.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="460" y="94" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="methods" x="473" y="94" class="t-primary cl-member" font-size="11">webhook<tspan class="t-muted cl-punct">(</tspan><tspan class="cl-param">cuerpo</tspan><tspan class="t-muted cl-punct">)</tspan></text>
+            <rect x="445" y="100" width="282" height="18" rx="4" class="cl-zebra"/><rect x="453" y="103.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="460" y="114" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="methods" x="473" y="114" class="t-primary cl-member" font-size="11">configuracion<tspan class="t-muted cl-punct">(</tspan><tspan class="t-muted cl-punct">)</tspan></text>
           </g>
         </g>
 
-        <g id="node-ConfirmarPagoCasoUso" data-node-id="ConfirmarPagoCasoUso" data-node-label="ConfirmarPagoCasoUso" tabindex="0" role="button" aria-label="Enfocar ConfirmarPagoCasoUso, Clase" aria-pressed="false" data-node-kind="class" data-node-context="Clase" data-class-kind="class" class="cl-hue-backend">
-          <title>ConfirmarPagoCasoUso · Clase</title>
-          <rect x="432" y="234" width="290" height="64" rx="8" class="c-mask"/>
-          <rect x="432" y="234" width="290" height="64" rx="8" class="c-backend cl-type" data-animate="node" style="--step:0" stroke-width="1.2"/>
-          <path class="cl-header c-backend" stroke="none" d="M 440 234 H 714 A 8 8 0 0 1 722 242 V 268 H 432 V 242 A 8 8 0 0 1 440 234 Z"/>
-          <path class="cl-cap" d="M 444 235.4 H 710" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+        <g id="node-Pagos" data-node-id="Pagos" data-node-label="Pagos" tabindex="0" role="button" aria-label="Enfocar Pagos, Clase" aria-pressed="false" data-node-kind="class" data-node-context="Clase" data-class-kind="class" class="cl-hue-backend">
+          <title>Pagos · Clase</title>
+          <rect x="441" y="254" width="290" height="84" rx="8" class="c-mask"/>
+          <rect x="441" y="254" width="290" height="84" rx="8" class="c-backend cl-type" data-animate="node" style="--step:0" stroke-width="1.2"/>
+          <path class="cl-header c-backend" stroke="none" d="M 449 254 H 723 A 8 8 0 0 1 731 262 V 288 H 441 V 262 A 8 8 0 0 1 449 254 Z"/>
+          <path class="cl-cap" d="M 453 255.4 H 719" stroke-width="2.6" stroke-linecap="round" fill="none"/>
           <g aria-hidden="true" class="cl-badge">
-            <rect x="444" y="243" width="16" height="16" rx="4.8" class="cl-badge-chip"/>
-            <text x="452" y="254.5" class="t-backend cl-badge-letter" font-size="10" font-weight="800" text-anchor="middle">C</text>
+            <rect x="453" y="263" width="16" height="16" rx="4.8" class="cl-badge-chip"/>
+            <text x="461" y="274.5" class="t-backend cl-badge-letter" font-size="10" font-weight="800" text-anchor="middle">C</text>
           </g>
           
-          <text data-node-label="" x="577" y="256" class="t-primary" font-size="13.5" font-weight="700" text-anchor="middle">ConfirmarPagoCasoUso</text>
+          <text data-node-label="" x="586" y="276" class="t-primary" font-size="13.5" font-weight="700" text-anchor="middle">Pagos</text>
           <g data-detail="context" data-class-compartment="methods">
-            <line x1="432" y1="268" x2="722" y2="268" class="cl-rule" stroke-width="1"/>
-            <rect x="444" y="277.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="451" y="288" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="methods" x="464" y="288" class="t-primary cl-member" font-size="11">ejecutar<tspan class="t-muted cl-punct">(</tspan><tspan class="cl-param">eventoVerificado</tspan><tspan class="t-muted cl-punct">)</tspan></text>
+            <line x1="441" y1="288" x2="731" y2="288" class="cl-rule" stroke-width="1"/>
+            <rect x="453" y="297.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="460" y="308" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="methods" x="473" y="308" class="t-primary cl-member" font-size="11">webhook<tspan class="t-muted cl-punct">(</tspan><tspan class="cl-param">cuerpo</tspan><tspan class="t-muted cl-punct">)</tspan></text>
+            <rect x="445" y="314" width="282" height="18" rx="4" class="cl-zebra"/><rect x="453" y="317.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="460" y="328" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="methods" x="473" y="328" class="t-primary cl-member" font-size="11">conciliar<tspan class="t-muted cl-punct">(</tspan><tspan class="cl-param">limite</tspan><tspan class="t-muted cl-punct">)</tspan></text>
           </g>
         </g>
 
-        <g id="node-RepositorioReservas" data-node-id="RepositorioReservas" data-node-label="RepositorioReservas" tabindex="0" role="button" aria-label="Enfocar RepositorioReservas, Interfaz" aria-pressed="false" data-node-kind="interface" data-node-context="Interfaz" data-class-kind="interface" class="cl-hue-frontend">
-          <title>RepositorioReservas · Interfaz</title>
-          <rect x="37" y="458" width="290" height="94" rx="8" class="c-mask"/>
-          <rect x="37" y="458" width="290" height="94" rx="8" class="c-frontend cl-type" data-animate="node" style="--step:1" stroke-width="1.2"/>
-          <path class="cl-header c-frontend" stroke="none" d="M 45 458 H 319 A 8 8 0 0 1 327 466 V 502 H 37 V 466 A 8 8 0 0 1 45 458 Z"/>
-          <path class="cl-cap" d="M 49 459.4 H 315" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+        <g id="node-ProcesadorPagos" data-node-id="ProcesadorPagos" data-node-label="ProcesadorPagos" tabindex="0" role="button" aria-label="Enfocar ProcesadorPagos, Interfaz" aria-pressed="false" data-node-kind="interface" data-node-context="Interfaz" data-class-kind="interface" class="cl-hue-frontend">
+          <title>ProcesadorPagos · Interfaz</title>
+          <rect x="32" y="483" width="290" height="114" rx="8" class="c-mask"/>
+          <rect x="32" y="483" width="290" height="114" rx="8" class="c-frontend cl-type" data-animate="node" style="--step:1" stroke-width="1.2"/>
+          <path class="cl-header c-frontend" stroke="none" d="M 40 483 H 314 A 8 8 0 0 1 322 491 V 527 H 32 V 491 A 8 8 0 0 1 40 483 Z"/>
+          <path class="cl-cap" d="M 44 484.4 H 310" stroke-width="2.6" stroke-linecap="round" fill="none"/>
           <g aria-hidden="true" class="cl-badge">
-            <rect x="49" y="472" width="16" height="16" rx="4.8" class="cl-badge-chip"/>
-            <text x="57" y="483.5" class="t-frontend cl-badge-letter" font-size="10" font-weight="800" text-anchor="middle">I</text>
+            <rect x="44" y="497" width="16" height="16" rx="4.8" class="cl-badge-chip"/>
+            <text x="52" y="508.5" class="t-frontend cl-badge-letter" font-size="10" font-weight="800" text-anchor="middle">I</text>
           </g>
-          <text x="182" y="474" class="t-muted cl-stereotype" font-size="9.5" text-anchor="middle">«interface»</text>
-          <text data-node-label="" x="182" y="492" class="t-primary" font-size="13.5" font-weight="700" text-anchor="middle">RepositorioReservas</text>
+          <text x="177" y="499" class="t-muted cl-stereotype" font-size="9.5" text-anchor="middle">«interface»</text>
+          <text data-node-label="" x="177" y="517" class="t-primary" font-size="13.5" font-weight="700" text-anchor="middle">ProcesadorPagos</text>
           <g data-detail="context" data-class-compartment="methods">
-            <line x1="37" y1="502" x2="327" y2="502" class="cl-rule" stroke-width="1"/>
-            <rect x="49" y="511.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="56" y="522" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="methods" x="69" y="522" class="t-primary cl-member" font-size="11">buscarParaActualizar<tspan class="t-muted cl-punct">(</tspan><tspan class="cl-param">id</tspan><tspan class="t-muted cl-punct">)</tspan></text>
-            <rect x="41" y="528" width="282" height="18" rx="4" class="cl-zebra"/><rect x="49" y="531.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="56" y="542" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="methods" x="69" y="542" class="t-primary cl-member" font-size="11">guardar<tspan class="t-muted cl-punct">(</tspan><tspan class="cl-param">reserva</tspan><tspan class="t-muted cl-punct">)</tspan></text>
+            <line x1="32" y1="527" x2="322" y2="527" class="cl-rule" stroke-width="1"/>
+            <rect x="44" y="536.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="51" y="547" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="methods" x="64" y="547" class="t-primary cl-member" font-size="11">cobrar<tspan class="t-muted cl-punct">(</tspan><tspan class="cl-param">cobro</tspan><tspan class="t-muted cl-punct">)</tspan></text>
+            <rect x="36" y="553" width="282" height="18" rx="4" class="cl-zebra"/><rect x="44" y="556.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="51" y="567" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="methods" x="64" y="567" class="t-primary cl-member" font-size="11">consultar<tspan class="t-muted cl-punct">(</tspan><tspan class="cl-param">referencia</tspan><tspan class="t-muted cl-punct">)</tspan></text>
+            <rect x="44" y="576.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="51" y="587" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="methods" x="64" y="587" class="t-primary cl-member" font-size="11">buscarPorIntento<tspan class="t-muted cl-punct">(</tspan><tspan class="cl-param">intento</tspan><tspan class="t-muted cl-punct">)</tspan></text>
           </g>
         </g>
 
-        <g id="node-UnidadTrabajoReservas" data-node-id="UnidadTrabajoReservas" data-node-label="UnidadTrabajoReservas" tabindex="0" role="button" aria-label="Enfocar UnidadTrabajoReservas, Interfaz" aria-pressed="false" data-node-kind="interface" data-node-context="Interfaz" data-class-kind="interface" class="cl-hue-frontend">
-          <title>UnidadTrabajoReservas · Interfaz</title>
-          <rect x="432" y="468" width="290" height="74" rx="8" class="c-mask"/>
-          <rect x="432" y="468" width="290" height="74" rx="8" class="c-frontend cl-type" data-animate="node" style="--step:2" stroke-width="1.2"/>
-          <path class="cl-header c-frontend" stroke="none" d="M 440 468 H 714 A 8 8 0 0 1 722 476 V 512 H 432 V 476 A 8 8 0 0 1 440 468 Z"/>
-          <path class="cl-cap" d="M 444 469.4 H 710" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+        <g id="node-RepositorioPagos" data-node-id="RepositorioPagos" data-node-label="RepositorioPagos" tabindex="0" role="button" aria-label="Enfocar RepositorioPagos, Interfaz" aria-pressed="false" data-node-kind="interface" data-node-context="Interfaz" data-class-kind="interface" class="cl-hue-frontend">
+          <title>RepositorioPagos · Interfaz</title>
+          <rect x="422" y="483" width="328" height="114" rx="8" class="c-mask"/>
+          <rect x="422" y="483" width="328" height="114" rx="8" class="c-frontend cl-type" data-animate="node" style="--step:2" stroke-width="1.2"/>
+          <path class="cl-header c-frontend" stroke="none" d="M 430 483 H 742 A 8 8 0 0 1 750 491 V 527 H 422 V 491 A 8 8 0 0 1 430 483 Z"/>
+          <path class="cl-cap" d="M 434 484.4 H 738" stroke-width="2.6" stroke-linecap="round" fill="none"/>
           <g aria-hidden="true" class="cl-badge">
-            <rect x="444" y="482" width="16" height="16" rx="4.8" class="cl-badge-chip"/>
-            <text x="452" y="493.5" class="t-frontend cl-badge-letter" font-size="10" font-weight="800" text-anchor="middle">I</text>
+            <rect x="434" y="497" width="16" height="16" rx="4.8" class="cl-badge-chip"/>
+            <text x="442" y="508.5" class="t-frontend cl-badge-letter" font-size="10" font-weight="800" text-anchor="middle">I</text>
           </g>
-          <text x="577" y="484" class="t-muted cl-stereotype" font-size="9.5" text-anchor="middle">«interface»</text>
-          <text data-node-label="" x="577" y="502" class="t-primary" font-size="13.5" font-weight="700" text-anchor="middle">UnidadTrabajoReservas</text>
+          <text x="586" y="499" class="t-muted cl-stereotype" font-size="9.5" text-anchor="middle">«interface»</text>
+          <text data-node-label="" x="586" y="517" class="t-primary" font-size="13.5" font-weight="700" text-anchor="middle">RepositorioPagos</text>
           <g data-detail="context" data-class-compartment="methods">
-            <line x1="432" y1="512" x2="722" y2="512" class="cl-rule" stroke-width="1"/>
-            <rect x="444" y="521.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="451" y="532" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="methods" x="464" y="532" class="t-primary cl-member" font-size="11">ejecutar<tspan class="t-muted cl-punct">(</tspan><tspan class="cl-param">operacion</tspan><tspan class="t-muted cl-punct">)</tspan></text>
+            <line x1="422" y1="527" x2="750" y2="527" class="cl-rule" stroke-width="1"/>
+            <rect x="434" y="536.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="441" y="547" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="methods" x="454" y="547" class="t-primary cl-member" font-size="11">aprobarPago<tspan class="t-muted cl-punct">(</tspan><tspan class="cl-param">intento</tspan><tspan class="t-muted cl-punct">,</tspan> <tspan class="cl-param">referencia</tspan><tspan class="t-muted cl-punct">)</tspan></text>
+            <rect x="426" y="553" width="320" height="18" rx="4" class="cl-zebra"/><rect x="434" y="556.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="441" y="567" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="methods" x="454" y="567" class="t-primary cl-member" font-size="11">eventoPasarelaRegistrado<tspan class="t-muted cl-punct">(</tspan><tspan class="cl-param">proveedor</tspan><tspan class="t-muted cl-punct">,</tspan> <tspan class="cl-param">evento</tspan><tspan class="t-muted cl-punct">)</tspan></text>
+            <rect x="434" y="576.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="441" y="587" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="methods" x="454" y="587" class="t-primary cl-member" font-size="11">registrarEventoPasarela<tspan class="t-muted cl-punct">(</tspan><tspan class="cl-param">proveedor</tspan><tspan class="t-muted cl-punct">,</tspan> <tspan class="cl-param">evento</tspan><tspan class="t-muted cl-punct">)</tspan></text>
           </g>
         </g>
 
-        <g id="node-Reserva" data-node-id="Reserva" data-node-label="Reserva" tabindex="0" role="button" aria-label="Enfocar Reserva, Clase" aria-pressed="false" data-node-kind="class" data-node-context="Clase" data-class-kind="class" class="cl-hue-backend">
-          <title>Reserva · Clase</title>
-          <rect x="822" y="428" width="290" height="154" rx="8" class="c-mask"/>
-          <rect x="822" y="428" width="290" height="154" rx="8" class="c-backend cl-type" data-animate="node" style="--step:3" stroke-width="1.2"/>
-          <path class="cl-header c-backend" stroke="none" d="M 830 428 H 1104 A 8 8 0 0 1 1112 436 V 462 H 822 V 436 A 8 8 0 0 1 830 428 Z"/>
-          <path class="cl-cap" d="M 834 429.4 H 1100" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+        <g id="node-ReservaEnPago" data-node-id="ReservaEnPago" data-node-label="ReservaEnPago" tabindex="0" role="button" aria-label="Enfocar ReservaEnPago, Interfaz" aria-pressed="false" data-node-kind="interface" data-node-context="Interfaz" data-class-kind="interface" class="cl-hue-frontend">
+          <title>ReservaEnPago · Interfaz</title>
+          <rect x="850" y="468" width="290" height="144" rx="8" class="c-mask"/>
+          <rect x="850" y="468" width="290" height="144" rx="8" class="c-frontend cl-type" data-animate="node" style="--step:6" stroke-width="1.2"/>
+          <path class="cl-header c-frontend" stroke="none" d="M 858 468 H 1132 A 8 8 0 0 1 1140 476 V 512 H 850 V 476 A 8 8 0 0 1 858 468 Z"/>
+          <path class="cl-cap" d="M 862 469.4 H 1128" stroke-width="2.6" stroke-linecap="round" fill="none"/>
           <g aria-hidden="true" class="cl-badge">
-            <rect x="834" y="437" width="16" height="16" rx="4.8" class="cl-badge-chip"/>
-            <text x="842" y="448.5" class="t-backend cl-badge-letter" font-size="10" font-weight="800" text-anchor="middle">C</text>
+            <rect x="862" y="482" width="16" height="16" rx="4.8" class="cl-badge-chip"/>
+            <text x="870" y="493.5" class="t-frontend cl-badge-letter" font-size="10" font-weight="800" text-anchor="middle">I</text>
           </g>
-          
-          <text data-node-label="" x="967" y="450" class="t-primary" font-size="13.5" font-weight="700" text-anchor="middle">Reserva</text>
+          <text x="995" y="484" class="t-muted cl-stereotype" font-size="9.5" text-anchor="middle">«interface»</text>
+          <text data-node-label="" x="995" y="502" class="t-primary" font-size="13.5" font-weight="700" text-anchor="middle">ReservaEnPago</text>
           <g data-detail="context" data-class-compartment="attributes">
-            <line x1="822" y1="462" x2="1112" y2="462" class="cl-rule" stroke-width="1"/>
-            <rect x="834" y="471.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-private"/><text x="841" y="482" class="t-muted cl-vis cl-vis-private" font-size="11" text-anchor="middle">-</text><text data-detail="context" data-class-member="attributes" x="854" y="482" class="t-primary cl-member" font-size="11">estado</text>
+            <line x1="850" y1="512" x2="1140" y2="512" class="cl-rule" stroke-width="1"/>
+            <rect x="862" y="521.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="869" y="532" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="attributes" x="882" y="532" class="t-primary cl-member" font-size="11">tx</text>
+            <rect x="854" y="538" width="282" height="18" rx="4" class="cl-zebra"/><rect x="862" y="541.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="869" y="552" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="attributes" x="882" y="552" class="t-primary cl-member" font-size="11">importePagable</text>
           </g>
           <g data-detail="context" data-class-compartment="methods">
-            <line x1="822" y1="492" x2="1112" y2="492" class="cl-rule" stroke-width="1"/>
-            <rect x="826" y="498" width="282" height="18" rx="4" class="cl-zebra"/><rect x="834" y="501.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="841" y="512" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="methods" x="854" y="512" class="t-primary cl-member" font-size="11">aceptar<tspan class="t-muted cl-punct">(</tspan><tspan class="cl-param">vencimiento</tspan><tspan class="t-muted cl-punct">)</tspan></text>
-            <rect x="834" y="521.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="841" y="532" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="methods" x="854" y="532" class="t-primary cl-member" font-size="11">confirmar<tspan class="t-muted cl-punct">(</tspan><tspan class="cl-param">referencia</tspan><tspan class="t-muted cl-punct">)</tspan></text>
-            <rect x="826" y="538" width="282" height="18" rx="4" class="cl-zebra"/><rect x="834" y="541.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="841" y="552" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="methods" x="854" y="552" class="t-primary cl-member" font-size="11">iniciar<tspan class="t-muted cl-punct">(</tspan><tspan class="t-muted cl-punct">)</tspan></text>
-            <rect x="834" y="561.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="841" y="572" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="methods" x="854" y="572" class="t-primary cl-member" font-size="11">finalizar<tspan class="t-muted cl-punct">(</tspan><tspan class="t-muted cl-punct">)</tspan></text>
+            <line x1="850" y1="562" x2="1140" y2="562" class="cl-rule" stroke-width="1"/>
+            <rect x="862" y="571.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="869" y="582" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="methods" x="882" y="582" class="t-primary cl-member" font-size="11">registrarPago<tspan class="t-muted cl-punct">(</tspan><tspan class="cl-param">intento</tspan><tspan class="t-muted cl-punct">,</tspan> <tspan class="cl-param">importe</tspan><tspan class="t-muted cl-punct">)</tspan></text>
+            <rect x="854" y="588" width="282" height="18" rx="4" class="cl-zebra"/><rect x="862" y="591.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="869" y="602" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="methods" x="882" y="602" class="t-primary cl-member" font-size="11">registrarPagoTardio<tspan class="t-muted cl-punct">(</tspan><tspan class="cl-param">intento</tspan><tspan class="t-muted cl-punct">)</tspan></text>
           </g>
         </g>
 
-        <g id="node-PostgresReservasRepository" data-node-id="PostgresReservasRepository" data-node-label="PostgresReservasRepository" tabindex="0" role="button" aria-label="Enfocar PostgresReservasRepository, Clase" aria-pressed="false" data-node-kind="class" data-node-context="Clase" data-class-kind="class" class="cl-hue-backend">
-          <title>PostgresReservasRepository · Clase</title>
-          <rect x="32" y="712" width="300" height="34" rx="8" class="c-mask"/>
-          <rect x="32" y="712" width="300" height="34" rx="8" class="c-backend cl-type" data-animate="node" style="--step:5" stroke-width="1.2"/>
-          <path class="cl-header c-backend" stroke="none" d="M 40 712 H 324 A 8 8 0 0 1 332 720 V 746 H 32 V 720 A 8 8 0 0 1 40 712 Z"/>
-          <path class="cl-cap" d="M 44 713.4 H 320" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+        <g id="node-ProcesadorCulqi" data-node-id="ProcesadorCulqi" data-node-label="ProcesadorCulqi" tabindex="0" role="button" aria-label="Enfocar ProcesadorCulqi, Clase" aria-pressed="false" data-node-kind="class" data-node-context="Clase" data-class-kind="class" class="cl-hue-backend">
+          <title>ProcesadorCulqi · Clase</title>
+          <rect x="32" y="757" width="290" height="34" rx="8" class="c-mask"/>
+          <rect x="32" y="757" width="290" height="34" rx="8" class="c-backend cl-type" data-animate="node" style="--step:4" stroke-width="1.2"/>
+          <path class="cl-header c-backend" stroke="none" d="M 40 757 H 314 A 8 8 0 0 1 322 765 V 791 H 32 V 765 A 8 8 0 0 1 40 757 Z"/>
+          <path class="cl-cap" d="M 44 758.4 H 310" stroke-width="2.6" stroke-linecap="round" fill="none"/>
           <g aria-hidden="true" class="cl-badge">
-            <rect x="44" y="721" width="16" height="16" rx="4.8" class="cl-badge-chip"/>
-            <text x="52" y="732.5" class="t-backend cl-badge-letter" font-size="10" font-weight="800" text-anchor="middle">C</text>
+            <rect x="44" y="766" width="16" height="16" rx="4.8" class="cl-badge-chip"/>
+            <text x="52" y="777.5" class="t-backend cl-badge-letter" font-size="10" font-weight="800" text-anchor="middle">C</text>
           </g>
           
-          <text data-node-label="" x="182" y="734" class="t-primary" font-size="13.5" font-weight="700" text-anchor="middle">PostgresReservasRepository</text>
+          <text data-node-label="" x="177" y="779" class="t-primary" font-size="13.5" font-weight="700" text-anchor="middle">ProcesadorCulqi</text>
 
         </g>
 
-        <g id="node-PostgresUnidadTrabajo" data-node-id="PostgresUnidadTrabajo" data-node-label="PostgresUnidadTrabajo" tabindex="0" role="button" aria-label="Enfocar PostgresUnidadTrabajo, Clase" aria-pressed="false" data-node-kind="class" data-node-context="Clase" data-class-kind="class" class="cl-hue-backend">
-          <title>PostgresUnidadTrabajo · Clase</title>
-          <rect x="432" y="712" width="290" height="34" rx="8" class="c-mask"/>
-          <rect x="432" y="712" width="290" height="34" rx="8" class="c-backend cl-type" data-animate="node" style="--step:6" stroke-width="1.2"/>
-          <path class="cl-header c-backend" stroke="none" d="M 440 712 H 714 A 8 8 0 0 1 722 720 V 746 H 432 V 720 A 8 8 0 0 1 440 712 Z"/>
-          <path class="cl-cap" d="M 444 713.4 H 710" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+        <g id="node-PostgresPagos" data-node-id="PostgresPagos" data-node-label="PostgresPagos" tabindex="0" role="button" aria-label="Enfocar PostgresPagos, Clase" aria-pressed="false" data-node-kind="class" data-node-context="Clase" data-class-kind="class" class="cl-hue-backend">
+          <title>PostgresPagos · Clase</title>
+          <rect x="441" y="757" width="290" height="34" rx="8" class="c-mask"/>
+          <rect x="441" y="757" width="290" height="34" rx="8" class="c-backend cl-type" data-animate="node" style="--step:5" stroke-width="1.2"/>
+          <path class="cl-header c-backend" stroke="none" d="M 449 757 H 723 A 8 8 0 0 1 731 765 V 791 H 441 V 765 A 8 8 0 0 1 449 757 Z"/>
+          <path class="cl-cap" d="M 453 758.4 H 719" stroke-width="2.6" stroke-linecap="round" fill="none"/>
           <g aria-hidden="true" class="cl-badge">
-            <rect x="444" y="721" width="16" height="16" rx="4.8" class="cl-badge-chip"/>
-            <text x="452" y="732.5" class="t-backend cl-badge-letter" font-size="10" font-weight="800" text-anchor="middle">C</text>
+            <rect x="453" y="766" width="16" height="16" rx="4.8" class="cl-badge-chip"/>
+            <text x="461" y="777.5" class="t-backend cl-badge-letter" font-size="10" font-weight="800" text-anchor="middle">C</text>
           </g>
           
-          <text data-node-label="" x="577" y="734" class="t-primary" font-size="13.5" font-weight="700" text-anchor="middle">PostgresUnidadTrabajo</text>
+          <text data-node-label="" x="586" y="779" class="t-primary" font-size="13.5" font-weight="700" text-anchor="middle">PostgresPagos</text>
 
+        </g>
+
+        <g id="node-OperacionesPago" data-node-id="OperacionesPago" data-node-label="OperacionesPago" tabindex="0" role="button" aria-label="Enfocar OperacionesPago, Clase" aria-pressed="false" data-node-kind="class" data-node-context="Clase" data-class-kind="class" class="cl-hue-backend">
+          <title>OperacionesPago · Clase</title>
+          <rect x="850" y="742" width="290" height="64" rx="8" class="c-mask"/>
+          <rect x="850" y="742" width="290" height="64" rx="8" class="c-backend cl-type" data-animate="node" style="--step:5" stroke-width="1.2"/>
+          <path class="cl-header c-backend" stroke="none" d="M 858 742 H 1132 A 8 8 0 0 1 1140 750 V 776 H 850 V 750 A 8 8 0 0 1 858 742 Z"/>
+          <path class="cl-cap" d="M 862 743.4 H 1128" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+          <g aria-hidden="true" class="cl-badge">
+            <rect x="862" y="751" width="16" height="16" rx="4.8" class="cl-badge-chip"/>
+            <text x="870" y="762.5" class="t-backend cl-badge-letter" font-size="10" font-weight="800" text-anchor="middle">C</text>
+          </g>
+          
+          <text data-node-label="" x="995" y="764" class="t-primary" font-size="13.5" font-weight="700" text-anchor="middle">OperacionesPago</text>
+          <g data-detail="context" data-class-compartment="methods">
+            <line x1="850" y1="776" x2="1140" y2="776" class="cl-rule" stroke-width="1"/>
+            <rect x="862" y="785.5" width="14" height="14" rx="4" class="cl-vis-chip cl-vis-public"/><text x="869" y="796" class="t-muted cl-vis cl-vis-public" font-size="11" text-anchor="middle">+</text><text data-detail="context" data-class-member="methods" x="882" y="796" class="t-primary cl-member" font-size="11">conReserva<tspan class="t-muted cl-punct">(</tspan><tspan class="cl-param">id</tspan><tspan class="t-muted cl-punct">,</tspan> <tspan class="cl-param">actor</tspan><tspan class="t-muted cl-punct">,</tspan> <tspan class="cl-param">operar</tspan><tspan class="t-muted cl-punct">)</tspan></text>
+          </g>
         </g>
 
         <!-- Relationship labels -->
@@ -5371,18 +5394,18 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
         <!-- Legend -->
         <g data-legend="">
-          <text x="24" y="768" class="t-primary" font-size="12" font-weight="650">Leyenda</text>
-          <g data-legend-semantic-kind="dependency" data-legend-x="24" data-legend-baseline="788" data-legend-width="117">
-            <rect class="cl-legend-hit" tabindex="0" role="img" aria-label="Depende de" x="18" y="773" width="129" height="22" rx="11"/><path d="M 26 784 L 56 784" class="a-default cl-relationship cl-dashed" stroke-width="1.5" marker-end="url(#cl-open)"/>
-            <text x="66" y="788" class="t-muted" font-size="12" font-weight="500">Depende de</text>
+          <text x="24" y="828" class="t-primary" font-size="12" font-weight="650">Leyenda</text>
+          <g data-legend-semantic-kind="dependency" data-legend-x="24" data-legend-baseline="848" data-legend-width="117">
+            <rect class="cl-legend-hit" tabindex="0" role="img" aria-label="Depende de" x="18" y="833" width="129" height="22" rx="11"/><path d="M 26 844 L 56 844" class="a-default cl-relationship cl-dashed" stroke-width="1.5" marker-end="url(#cl-open)"/>
+            <text x="66" y="848" class="t-muted" font-size="12" font-weight="500">Depende de</text>
           </g>
-          <g data-legend-semantic-kind="association" data-legend-x="163" data-legend-baseline="788" data-legend-width="117">
-            <rect class="cl-legend-hit" tabindex="0" role="img" aria-label="Asociación" x="157" y="773" width="129" height="22" rx="11"/><path d="M 165 784 L 195 784" class="a-default cl-relationship" stroke-width="1.5" marker-end="url(#cl-open)"/>
-            <text x="205" y="788" class="t-muted" font-size="12" font-weight="500">Asociación</text>
+          <g data-legend-semantic-kind="association" data-legend-x="163" data-legend-baseline="848" data-legend-width="117">
+            <rect class="cl-legend-hit" tabindex="0" role="img" aria-label="Asociación" x="157" y="833" width="129" height="22" rx="11"/><path d="M 165 844 L 195 844" class="a-default cl-relationship" stroke-width="1.5" marker-end="url(#cl-open)"/>
+            <text x="205" y="848" class="t-muted" font-size="12" font-weight="500">Asociación</text>
           </g>
-          <g data-legend-semantic-kind="realization" data-legend-x="302" data-legend-baseline="788" data-legend-width="117">
-            <rect class="cl-legend-hit" tabindex="0" role="img" aria-label="Implementa" x="296" y="773" width="129" height="22" rx="11"/><path d="M 304 784 L 334 784" class="a-default cl-relationship cl-dashed" stroke-width="1.5" marker-end="url(#cl-triangle)"/>
-            <text x="344" y="788" class="t-muted" font-size="12" font-weight="500">Implementa</text>
+          <g data-legend-semantic-kind="realization" data-legend-x="302" data-legend-baseline="848" data-legend-width="117">
+            <rect class="cl-legend-hit" tabindex="0" role="img" aria-label="Implementa" x="296" y="833" width="129" height="22" rx="11"/><path d="M 304 844 L 334 844" class="a-default cl-relationship cl-dashed" stroke-width="1.5" marker-end="url(#cl-triangle)"/>
+            <text x="344" y="848" class="t-muted" font-size="12" font-weight="500">Implementa</text>
           </g>
         </g>
       </svg>
@@ -5568,9 +5591,9 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <h3>Responsabilidad</h3>
         </div>
         <ul>
-          <li>Vista parcial del mismo módulo Reservas; los tipos compartidos son los mismos.</li>
-          <li>Puertos definidos por el negocio; adaptadores implementan interfaces.</li>
-          <li>Unidad de trabajo: Reserva, IntentoPago, Inbox y Outbox.</li>
+          <li>Clases reales del módulo Pagos; el aviso de la pasarela no se da por cierto: se consulta el cargo.</li>
+          <li>Reservas abre la transacción y cambia su estado; Pagos escribe en ella solo sus tablas.</li>
+          <li>La misma transacción guarda intento, reserva y outbox.</li>
         </ul>
       </div>
     </div>

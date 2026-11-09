@@ -40,7 +40,7 @@
       "id": "api",
       "type": "backend",
       "label": "API NestJS",
-      "sublabel": "Monolito · 6 módulos",
+      "sublabel": "Monolito · 7 módulos",
       "pos": [
         370,
         580
@@ -96,7 +96,7 @@
       "id": "culqi",
       "type": "external",
       "label": "Culqi",
-      "sublabel": "Checkout y cobros",
+      "sublabel": "Pasarela · módulo Pagos",
       "pos": [
         970,
         60
@@ -187,14 +187,14 @@
     {
       "from": "api",
       "to": "culqi",
-      "label": "Cobro / consulta",
+      "label": "Pagos: cobro / consulta",
       "fromSide": "top",
       "toSide": "left"
     },
     {
       "from": "culqi",
       "to": "api",
-      "label": "Webhook verificado",
+      "label": "Aviso: Pagos lo verifica",
       "variant": "dashed",
       "fromSide": "bottom",
       "toSide": "top"

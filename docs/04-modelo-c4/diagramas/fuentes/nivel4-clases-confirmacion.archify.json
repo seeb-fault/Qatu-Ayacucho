@@ -16,108 +16,127 @@
   },
   "types": [
     {
-      "id": "PagosWebhookController",
-      "label": "PagosWebhookController",
+      "id": "PagosController",
+      "label": "PagosController",
       "row": 0,
       "col": 1,
       "kind": "class",
       "methods": [
         {
-          "name": "recibir",
-          "parameters": "payload",
+          "name": "webhook",
+          "parameters": "cuerpo",
+          "visibility": "public"
+        },
+        {
+          "name": "configuracion",
+          "parameters": "",
           "visibility": "public"
         }
       ],
       "attributes": []
     },
     {
-      "id": "ConfirmarPagoCasoUso",
-      "label": "ConfirmarPagoCasoUso",
+      "id": "Pagos",
+      "label": "Pagos",
       "row": 1,
       "col": 1,
       "kind": "class",
       "methods": [
         {
-          "name": "ejecutar",
-          "parameters": "eventoVerificado",
+          "name": "webhook",
+          "parameters": "cuerpo",
+          "visibility": "public"
+        },
+        {
+          "name": "conciliar",
+          "parameters": "limite",
           "visibility": "public"
         }
       ],
       "attributes": []
     },
     {
-      "id": "RepositorioReservas",
-      "label": "RepositorioReservas",
+      "id": "ProcesadorPagos",
+      "label": "ProcesadorPagos",
       "row": 2,
       "col": 0,
       "kind": "interface",
       "methods": [
         {
-          "name": "buscarParaActualizar",
-          "parameters": "id",
+          "name": "cobrar",
+          "parameters": "cobro",
           "visibility": "public"
         },
         {
-          "name": "guardar",
-          "parameters": "reserva",
+          "name": "consultar",
+          "parameters": "referencia",
+          "visibility": "public"
+        },
+        {
+          "name": "buscarPorIntento",
+          "parameters": "intento",
           "visibility": "public"
         }
       ],
       "attributes": []
     },
     {
-      "id": "UnidadTrabajoReservas",
-      "label": "UnidadTrabajoReservas",
+      "id": "RepositorioPagos",
+      "label": "RepositorioPagos",
       "row": 2,
       "col": 1,
       "kind": "interface",
       "methods": [
         {
-          "name": "ejecutar",
-          "parameters": "operacion",
+          "name": "aprobarPago",
+          "parameters": "intento, referencia",
+          "visibility": "public"
+        },
+        {
+          "name": "eventoPasarelaRegistrado",
+          "parameters": "proveedor, evento",
+          "visibility": "public"
+        },
+        {
+          "name": "registrarEventoPasarela",
+          "parameters": "proveedor, evento",
           "visibility": "public"
         }
       ],
       "attributes": []
     },
     {
-      "id": "Reserva",
-      "label": "Reserva",
+      "id": "ReservaEnPago",
+      "label": "ReservaEnPago",
       "row": 2,
       "col": 2,
-      "kind": "class",
+      "kind": "interface",
       "methods": [
         {
-          "name": "aceptar",
-          "parameters": "vencimiento",
+          "name": "registrarPago",
+          "parameters": "intento, importe",
           "visibility": "public"
         },
         {
-          "name": "confirmar",
-          "parameters": "referencia",
-          "visibility": "public"
-        },
-        {
-          "name": "iniciar",
-          "parameters": "",
-          "visibility": "public"
-        },
-        {
-          "name": "finalizar",
-          "parameters": "",
+          "name": "registrarPagoTardio",
+          "parameters": "intento",
           "visibility": "public"
         }
       ],
       "attributes": [
         {
-          "name": "estado",
-          "visibility": "private"
+          "name": "tx",
+          "visibility": "public"
+        },
+        {
+          "name": "importePagable",
+          "visibility": "public"
         }
       ]
     },
     {
-      "id": "PostgresReservasRepository",
-      "label": "PostgresReservasRepository",
+      "id": "ProcesadorCulqi",
+      "label": "ProcesadorCulqi",
       "row": 3,
       "col": 0,
       "kind": "class",
@@ -125,45 +144,65 @@
       "attributes": []
     },
     {
-      "id": "PostgresUnidadTrabajo",
-      "label": "PostgresUnidadTrabajo",
+      "id": "PostgresPagos",
+      "label": "PostgresPagos",
       "row": 3,
       "col": 1,
       "kind": "class",
       "methods": [],
       "attributes": []
+    },
+    {
+      "id": "OperacionesPago",
+      "label": "OperacionesPago",
+      "row": 3,
+      "col": 2,
+      "kind": "class",
+      "methods": [
+        {
+          "name": "conReserva",
+          "parameters": "id, actor, operar",
+          "visibility": "public"
+        }
+      ],
+      "attributes": []
     }
   ],
   "relationships": [
     {
-      "from": "PagosWebhookController",
-      "to": "ConfirmarPagoCasoUso",
+      "from": "PagosController",
+      "to": "Pagos",
       "kind": "association"
     },
     {
-      "from": "ConfirmarPagoCasoUso",
-      "to": "RepositorioReservas",
+      "from": "Pagos",
+      "to": "ProcesadorPagos",
       "kind": "association"
     },
     {
-      "from": "ConfirmarPagoCasoUso",
-      "to": "UnidadTrabajoReservas",
+      "from": "Pagos",
+      "to": "RepositorioPagos",
       "kind": "association"
     },
     {
-      "from": "ConfirmarPagoCasoUso",
-      "to": "Reserva",
+      "from": "ProcesadorCulqi",
+      "to": "ProcesadorPagos",
+      "kind": "realization"
+    },
+    {
+      "from": "PostgresPagos",
+      "to": "RepositorioPagos",
+      "kind": "realization"
+    },
+    {
+      "from": "PostgresPagos",
+      "to": "OperacionesPago",
+      "kind": "association"
+    },
+    {
+      "from": "OperacionesPago",
+      "to": "ReservaEnPago",
       "kind": "dependency"
-    },
-    {
-      "from": "PostgresReservasRepository",
-      "to": "RepositorioReservas",
-      "kind": "realization"
-    },
-    {
-      "from": "PostgresUnidadTrabajo",
-      "to": "UnidadTrabajoReservas",
-      "kind": "realization"
     }
   ],
   "cards": [
@@ -171,9 +210,9 @@
       "dot": "cyan",
       "title": "Responsabilidad",
       "items": [
-        "Vista parcial del mismo módulo Reservas; los tipos compartidos son los mismos.",
-        "Puertos definidos por el negocio; adaptadores implementan interfaces.",
-        "Unidad de trabajo: Reserva, IntentoPago, Inbox y Outbox."
+        "Clases reales del módulo Pagos; el aviso de la pasarela no se da por cierto: se consulta el cargo.",
+        "Reservas abre la transacción y cambia su estado; Pagos escribe en ella solo sus tablas.",
+        "La misma transacción guarda intento, reserva y outbox."
       ]
     }
   ]

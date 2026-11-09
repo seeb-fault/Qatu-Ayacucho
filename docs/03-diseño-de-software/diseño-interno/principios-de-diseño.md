@@ -33,7 +33,7 @@ Las flechas son imports, no el recorrido de una petición. En ejecución el caso
 - Alta cohesión: Reservas concentra calendario, ciclo de operación y coordinación de pagos.
 - Bajo acoplamiento: módulos publican contratos por su API pública; no comparten repositorios ni entidades ORM.
 - DRY: servidor calcula una cotización autorizada; frontend presenta esa cotización.
-- KISS: seis módulos en un backend, búsqueda estructurada antes de motores vectoriales.
+- KISS: siete módulos en un backend, búsqueda estructurada antes de motores vectoriales.
 - YAGNI: compraventa, ERP, aplicación móvil nativa y custodia propia quedan fuera del MVP.
 - Privilegio mínimo: verificar rol y propietario.
 - Fuente confiable: IDs, importes y disponibilidad proceden del sistema; no de IA o del cliente.

@@ -5,7 +5,7 @@ import type { FormEvent } from 'react';
 import { dinero, fechaReserva, type SolicitudReserva } from '@/lib/api/reservas';
 import styles from './reservas.module.css';
 import CotizacionesServicio from './CotizacionesServicio';
-import PagoEnLinea, { EstadoPago, useConfiguracionPagos } from './PagoEnLinea';
+import PagoEnLinea, { EstadoPago, useConfiguracionPagos } from '../pagos/PagoEnLinea';
 
 const estados: Record<SolicitudReserva['estado'], string> = {
   PENDIENTE:'Pendiente de respuesta',RECHAZADA:'Rechazada',VISITA_ACORDADA:'Visita acordada',ACEPTADA:'Herramienta apartada',

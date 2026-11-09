@@ -1,10 +1,10 @@
-# Nivel 4 - Código de Reservas y Búsqueda inteligente
+# Nivel 4 - Código de Reservas, Pagos y Búsqueda inteligente
 
 Diagramas de diseño propuesto generados con Archify. Las imágenes PNG se pueden ampliar; los enlaces incluyen el visor HTML y la fuente JSON editable.
 
 ## Objetivo y estado
 
-Detallar clases e interfaces de los componentes críticos del nivel 3. Notación UML generada con Archify y publicada en PNG. Es código diseñado, todavía no implementado. Pagos es un componente interno de Reservas.
+Detallar clases e interfaces de los componentes críticos del nivel 3. Notación UML generada con Archify y publicada en PNG. Los diagramas de inicio y confirmación del pago muestran las clases reales de `backend/src/modules/pagos/`, separado de Reservas por [ADR-014](../01-analisis-de-sistema/07-desision-arquitectonica.md). Los de aceptación y búsqueda son diseño de referencia.
 
 ## Clases de Reservas y pagos
 
@@ -26,7 +26,7 @@ Detallar clases e interfaces de los componentes críticos del nivel 3. Notación
 
 [Abrir PNG](./diagramas/png/nivel4-clases-confirmacion.png) · [Visor Archify](./diagramas/html/nivel4-clases-confirmacion.html) · [Fuente editable](./diagramas/fuentes/nivel4-clases-confirmacion.archify.json)
 
-Asociación: -->; dependencia: ..>; realización: ..|>; composición: *--. Puerto de pagos y repositorio no importan sus implementaciones. Unidad de trabajo conecta repositorios transaccionales de Reserva, IntentoPago, Inbox y Outbox; no se omiten del diseño financiero aunque no se dibujen todas las clases auxiliares.
+Asociación: -->; dependencia: ..>; realización: ..|>; composición: *--. Puerto de pagos y repositorio no importan sus implementaciones. Reservas abre la transacción y Pagos escribe en ella solo sus tablas: intento, reserva y outbox se confirman juntos; no se omiten del diseño financiero aunque no se dibujen todas las clases auxiliares.
 
 ## Secuencia: aceptar y pagar
 

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { apiJson } from '@/lib/api/http';
 import { dinero, type SolicitudReserva } from '@/lib/api/reservas';
-import styles from './reservas.module.css';
+import styles from '../reservas/reservas.module.css';
 
 const SCRIPT = 'https://js.culqi.com/checkout-js';
 interface Checkout { open(): void; close(): void; culqi?: () => void; token?: { id: string }; error?: unknown }

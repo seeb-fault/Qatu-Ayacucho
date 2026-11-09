@@ -4,14 +4,15 @@
 
 ## 1. Propósito y módulos
 
-Definir estructura, contratos, propiedad de datos y flujos de los seis módulos. Pagos es un componente de Reservas; administración es una interfaz con permisos sobre los módulos.
+Definir estructura, contratos, propiedad de datos y flujos de los siete módulos. Pagos depende de Reservas y nunca al revés (ADR-014); administración es una interfaz con permisos sobre los módulos.
 
 | Módulo | Datos propios | API pública prevista |
 |---|---|---|
 | usuarios | usuarios, roles_usuario | IdentidadUsuarios: identidad y permisos |
 | proveedores | proveedores, verificaciones | ConsultaProveedores: perfil y estado |
 | catalogo | publicaciones, categorias, recursos, tarifas | ConsultaCatalogo: ofertas activas y cotización |
-| reservas | reservas, bloqueos, intentos_pago, eventos_pasarela, outbox_eventos | ConsultaDisponibilidad y casos de uso de reserva/pago |
+| reservas | reservas, bloqueos, cotizaciones, outbox_eventos | ConsultaDisponibilidad y OperacionesPago: reserva bloqueada para cobrar en su transacción |
+| pagos | pagos_intentos, pagos_eventos_pasarela | Rutas de pago; implementa el puerto PagosDeReserva que Reservas declara |
 | resenas | resenas, garantias_documentadas, evidencias, incidencias | RegistroConfianza: evidencia y reseña |
 | busqueda | métricas agregadas y configuración de consumo; sin copia autoritativa del catálogo | BuscarEnLenguajeNatural y filtros convencionales |
 
@@ -33,28 +34,28 @@ backend/src/modules/
 │   ├── presentacion/busqueda.controller.ts
 │   ├── busqueda.module.ts
 │   └── index.ts
+├── pagos/
+│   ├── dominio/pagos.ts
+│   ├── aplicacion/pagos.ts
+│   ├── infraestructura/culqi.ts
+│   ├── infraestructura/postgres.ts
+│   ├── presentacion/pagos.controller.ts
+│   ├── pagos.module.ts
+│   └── index.ts
 └── reservas/
     ├── dominio/
     │   ├── reserva.ts
     │   ├── rango-fechas.ts
     │   ├── dinero.ts
     │   ├── repositorio-reservas.ts
-    │   ├── unidad-trabajo-reservas.ts
-    │   └── pagos/
-    │       ├── intento-pago.ts
-    │       ├── procesador-pagos.ts
-    │       └── resultado-pago.ts
+    │   └── unidad-trabajo-reservas.ts
     ├── aplicacion/
     │   ├── solicitar-reserva.caso-uso.ts
     │   ├── aceptar-reserva.caso-uso.ts
-    │   ├── iniciar-pago.caso-uso.ts
-    │   ├── confirmar-pago.caso-uso.ts
-    │   ├── vencer-reserva.caso-uso.ts
-    │   └── conciliar-pago.caso-uso.ts
+    │   └── vencer-reserva.caso-uso.ts
     ├── infraestructura/
     │   ├── postgres-reservas.repository.ts
     │   ├── postgres-unidad-trabajo.ts
-    │   ├── culqi-pago.adapter.ts
     │   └── publicador-outbox.ts
     ├── presentacion/
     │   ├── reservas.controller.ts

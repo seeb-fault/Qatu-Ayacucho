@@ -26,11 +26,6 @@
           "name": "aceptar",
           "parameters": "id",
           "visibility": "public"
-        },
-        {
-          "name": "iniciarPago",
-          "parameters": "id",
-          "visibility": "public"
         }
       ],
       "attributes": []
@@ -206,9 +201,9 @@
       "dot": "cyan",
       "title": "Responsabilidad",
       "items": [
-        "Vista parcial del mismo módulo Reservas; los tipos compartidos son los mismos.",
+        "Vista parcial del módulo Reservas; los tipos compartidos son los mismos.",
         "Puertos definidos por el negocio; adaptadores implementan interfaces.",
-        "Unidad de trabajo: Reserva, IntentoPago, Inbox y Outbox."
+        "Unidad de trabajo: Reserva, bloqueo y outbox."
       ]
     }
   ]

@@ -8,7 +8,7 @@ Diseño propuesto para el MVP académico de noviembre de 2026; implementación y
 
 | ID | Decisión | Drivers |
 |---|---|---|
-| ADR-001 | Monolito modular de seis módulos | DA01, DA07 |
+| ADR-001 | Monolito modular de siete módulos (modificada por ADR-014) | DA01, DA07 |
 | ADR-002 | Clean Architecture por módulo | DA07 |
 | ADR-003 | Búsqueda e índices antes de caché opcional | DA02 |
 | ADR-004 | Pasarela de pago obligatoria mediante adapter | DA04, DA12 |
@@ -20,11 +20,12 @@ Diseño propuesto para el MVP académico de noviembre de 2026; implementación y
 | ADR-010 | Despliegue único en VPS y recuperación | DA11, DA01 |
 | ADR-011 | Intentos persistidos, inbox/outbox y conciliación | DA12, DA04 |
 | ADR-012 | Evidencias privadas y garantía documental | DA13, DA03, DA11 |
+| ADR-014 | Pagos como módulo propio | DA07, DA04, DA12 |
 
-## ADR-001 - Monolito modular de seis módulos
+## ADR-001 - Monolito modular de siete módulos
 
 - **Contexto:** Equipo pequeño, fecha de entrega y VPS económico.
-- **Decisión:** Usuarios, Proveedores, Catálogo, Reservas, Reputación/confianza (resenas) y Búsqueda inteligente (busqueda) en una API NestJS; pagos dentro de Reservas.
+- **Decisión:** Usuarios, Proveedores, Catálogo, Reservas, Pagos, Reputación/confianza (resenas) y Búsqueda inteligente (busqueda) en una API NestJS. Pagos estaba dentro de Reservas hasta ADR-014.
 - **Alternativa descartada:** Microservicios desde el inicio.
 - **Consecuencias:** Menor operación; módulos comparten proceso y recursos. Extracción futura requiere trabajo y evidencia.
 
@@ -112,6 +113,13 @@ Diseño propuesto para el MVP académico de noviembre de 2026; implementación y
 - **Contexto:** El usuario quiere ver la herramienta, coordinar por WhatsApp y pagar en efectivo al recoger. Aprobó implementar este recorrido antes de la pasarela.
 - **Decisión:** Herramientas con tarifa diaria fija, bloques iniciados de 24 h, apartado de 60 min con ampliación expresa, visitas sin bloqueo y tolerancia de devolución de 30 min. Registro de efectivo/entrega por proveedor y confirmación por cliente; devolución informada por cliente y confirmada por proveedor. No hay comisión ni custodia de plataforma en esta etapa. Snapshot de condiciones aceptadas, control de versión y outbox atómicos; exclusión de rangos y posesión única por recurso.
 - **Consecuencias:** Constitución 1.1.0 admite efectivo. Pasarela, comisiones/reembolsos online, cotizaciones variables y evidencias fotográficas permanecen pendientes. WhatsApp comparte un resumen mediante elección manual del destinatario; no confirma pagos ni estados. El saldo por retraso no se declara cobrado automáticamente.
+
+### ADR-014 — Pagos como módulo propio (2026-11-06)
+
+- **Contexto:** La docente indicó que Reservas y Pagos sean módulos diferentes, siete en total. Pagos ya tenía reglas, pasarela, tablas y conciliación propias, pero Reservas leía y modificaba su tabla.
+- **Decisión:** Módulo `pagos` con sus cuatro capas, dueño de `pagos_intentos`, `pagos_eventos_pasarela`, del adaptador Culqi y de la conciliación. Depende de Reservas por la fachada `OperacionesPago`. Reservas no lo importa: declara el puerto `PagosDeReserva` y Pagos se conecta a él mediante `EnlacePagos`. Reservas abre la transacción y fija el orden de bloqueos; Pagos escribe en ella solo sus tablas.
+- **Alternativas descartadas:** Consistencia eventual por outbox, porque un pago aprobado podría quedar sin reflejarse en la reserva o una cancelación sin su reembolso. Dependencia mutua entre módulos, porque el grafo documentado no admite ciclos.
+- **Consecuencias:** Las rutas HTTP no cambian. Las columnas `pago_estado` y `pagado_en_linea_centimos` siguen en `reservas`, como estado de la operación. El efectivo sigue en Reservas porque se registra junto con la entrega física y su confirmación bilateral. La clave foránea `pagos_intentos.reserva_id` se conserva como integridad, no como lectura. `backend/test/pagos/limites.test.ts` comprueba estos límites. Sin Pagos conectado, una reserva pagada no se puede cancelar: un reembolso no debe perderse.
 
 [Escenarios EQ-01 a EQ-10](./08-escenarios-atributos-calidad.md) y [plan de validación](../03-diseño-de-software/validacion-del-diseno.md).
 

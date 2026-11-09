@@ -5,7 +5,8 @@ flowchart TB
         U["Usuarios y acceso<br/>Identidad y permisos"]
         P["Proveedores<br/>Perfiles y verificación"]
         C["Catálogo<br/>Publicaciones y cotización"]
-        R["Reservas y contratación<br/>Calendario, estados y componente de pagos"]
+        R["Reservas y contratación<br/>Calendario, estados y efectivo"]
+        G["Pagos<br/>Intentos, conciliación y reembolsos pendientes"]
         E["Reputación y confianza<br/>Reseñas, garantías documentales e incidencias"]
         B["Búsqueda inteligente<br/>Intención validada y consulta"]
         O["Publicador outbox<br/>Avisos durables y reintentos"]
@@ -22,17 +23,21 @@ flowchart TB
     H --> P
     H --> C
     H --> R
+    H --> G
     H --> E
     H --> B
     P -->|IdentidadUsuarios| U
     C -->|ConsultaProveedores| P
     R -->|ConsultaCatalogo| C
     R -->|IdentidadUsuarios| U
+    G -->|OperacionesPago| R
+    G -->|IdentidadUsuarios| U
+    G -.->|Implementa PagosDeReserva| R
     E -->|ConsultaReservaFinalizada| R
     E -->|IdentidadUsuarios| U
     B -->|ConsultaCatalogo| C
     B -->|ConsultaDisponibilidad| R
-    U & P & C & R & E & B -->|Puertos implementados| I
+    U & P & C & R & G & E & B -->|Puertos implementados| I
     I -->|SQL: tablas propias| DB
     I -->|Pagos HTTPS| PAY
     I -->|Intención HTTPS| IA

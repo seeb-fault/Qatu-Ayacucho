@@ -51,7 +51,7 @@ function heading(graphic, number, title, subtitle) {
 }
 
 function styleDiagram() {
-  const graphic = graph('estilo-arquitectonico-qatu', 'Qatu Ayacucho — estilo arquitectónico', 'Cliente-servidor + monolito modular en capas', 2160, 1750);
+  const graphic = graph('estilo-arquitectonico-qatu', 'Qatu Ayacucho — estilo arquitectónico', 'Cliente-servidor + monolito modular en capas', 2405, 1750);
   heading(graphic, '04', 'QATU AYACUCHO · ESTILO ARQUITECTÓNICO', 'Estructura global · arquitectura objetivo con estado de implementación explícito');
   ['Visitante', 'Cliente', 'Proveedor', 'Administrador'].forEach((role, index) => {
     const position = 315 + index * 300;
@@ -60,15 +60,15 @@ function styleDiagram() {
   });
   edge(graphic, 'actor-bus', [[430, 210], [1330, 210]], { arrow: false });
   edge(graphic, 'actors-web', [[880, 210], [880, 245]]);
-  card(graphic, 'web', 540, 245, 680, 110, 'Aplicación web · Next.js / React / TypeScript', ['Navegador + servidor Next.js · interfaz y cliente HTTP', 'Descubrimiento actual: datos sintéticos; usuarios y proveedores: API'], { fill: colors.presentation, lineSize: 19 });
+  card(graphic, 'web', 540, 245, 680, 110, 'Aplicación web · Next.js / React / TypeScript', ['Navegador + servidor Next.js · interfaz y cliente HTTP', 'Cuentas, proveedores, catálogo, reservas y pagos por API'], { fill: colors.presentation, lineSize: 19 });
   edge(graphic, 'web-api', [[880, 355], [880, 480]]);
   text(graphic, 'http-label', 905, 391, 'HTTP / JSON · /api/v1 · HTTPS en producción', 20, { width: 770 });
 
-  panel(graphic, 'api', 40, 420, 1720, 940, colors.paper, 'API Qatu · NestJS / TypeScript · un proceso y un despliegue backend', { dashed: true, stroke: colors.green });
-  card(graphic, 'cross-cutting', 240, 480, 1490, 70, 'Entrada HTTP y controles transversales', ['Sesión JWT / cookie HttpOnly · autorización · validación · errores'], { fill: '#e1eee8', titleSize: 22, lineSize: 19, lineHeight: 23 });
-  panel(graphic, 'presentation-band', 60, 575, 1680, 175, colors.presentation, '');
-  panel(graphic, 'business-band', 60, 750, 1680, 285, colors.application, '');
-  panel(graphic, 'infra-band', 60, 1035, 1680, 295, colors.infrastructure, '');
+  panel(graphic, 'api', 40, 420, 1965, 940, colors.paper, 'API Qatu · NestJS / TypeScript · un proceso y un despliegue backend', { dashed: true, stroke: colors.green });
+  card(graphic, 'cross-cutting', 240, 480, 1735, 70, 'Entrada HTTP y controles transversales', ['Sesión JWT / cookie HttpOnly · autorización · validación · errores'], { fill: '#e1eee8', titleSize: 22, lineSize: 19, lineHeight: 23 });
+  panel(graphic, 'presentation-band', 60, 575, 1925, 175, colors.presentation, '');
+  panel(graphic, 'business-band', 60, 750, 1925, 285, colors.application, '');
+  panel(graphic, 'infra-band', 60, 1035, 1925, 295, colors.infrastructure, '');
   const labels = [
     ['presentation', 620, ['1. PRESENTACIÓN', 'HTTP y DTO', 'Controladores']],
     ['business', 805, ['2. NEGOCIO', 'Aplicación', '+ Dominio']],
@@ -79,16 +79,17 @@ function styleDiagram() {
   const modules = [
     { id: 'usuarios', title: 'Usuarios', actual: true, controller: 'UsuariosController', use: ['Registro · login', 'Perfil · administración'], domain: ['Cuenta y roles', 'Sesiones y permisos'], repo: ['PostgresUsuarios', 'scrypt / JWT'] },
     { id: 'proveedores', title: 'Proveedores', actual: true, controller: 'ProveedoresController', use: ['Perfil y zona', 'Verificación documental'], domain: ['Proveedor', 'Reglas de verificación'], repo: ['PostgresProveedores', 'Documentos cifrados'] },
-    { id: 'catalogo', title: 'Catálogo', actual: false, controller: 'Publicaciones / filtros', use: ['Publicar y consultar', 'Herramientas / oficios'], domain: ['Publicación / recurso', 'Tarifas y categorías'], repo: ['Repositorio propio', 'Fotos controladas'] },
-    { id: 'reservas', title: 'Reservas', actual: false, controller: 'Solicitudes / pagos', use: ['Aceptar / cancelar', 'Iniciar / confirmar pago'], domain: ['Reserva y bloqueo', 'Estados e idempotencia'], repo: ['Repositorio propio', 'Adaptador de pagos'] },
-    { id: 'resenas', title: 'Reseñas y confianza', actual: false, controller: 'Reseñas / casos', use: ['Registrar reseña', 'Gestionar evidencias'], domain: ['Confianza y reseñas', 'Garantía documental'], repo: ['Repositorio propio', 'Evidencias privadas'] },
+    { id: 'catalogo', title: 'Catálogo', actual: true, controller: 'Publicaciones / filtros', use: ['Publicar y consultar', 'Herramientas / oficios'], domain: ['Publicación / recurso', 'Tarifas y categorías'], repo: ['Repositorio propio', 'Fotos controladas'] },
     { id: 'busqueda', title: 'Búsqueda', actual: false, controller: 'Intención / filtros', use: ['Interpretar consulta', 'Validar filtros / fallback'], domain: ['Criterios validados', 'Sin escrituras por IA'], repo: ['Cuotas y métricas', 'Adaptador de IA'] },
+    { id: 'resenas', title: 'Reseñas y confianza', actual: false, controller: 'Reseñas / casos', use: ['Registrar reseña', 'Gestionar evidencias'], domain: ['Confianza y reseñas', 'Garantía documental'], repo: ['Repositorio propio', 'Evidencias privadas'] },
+    { id: 'reservas', title: 'Reservas', actual: true, controller: 'Solicitudes / entrega', use: ['Aceptar / cancelar', 'Cotizar / devolver'], domain: ['Reserva y bloqueo', 'Estados y efectivo'], repo: ['PostgresReservas', 'Outbox y avisos'] },
+    { id: 'pagos', title: 'Pagos', actual: true, status: 'CON SIMULADOR', controller: 'Pagos / webhook', use: ['Iniciar pago', 'Conciliar / verificar'], domain: ['Intento de pago', 'Idempotencia'], repo: ['PostgresPagos', 'Adaptador Culqi'] },
   ];
   modules.forEach((module, index) => {
     const position = 240 + index * 245;
     rectangle(graphic, `module-${module.id}`, position, 590, 230, 615, 'none', { background: true, dashed: true, stroke: module.actual ? colors.green : colors.border, radius: 0 });
     text(graphic, `${module.id}-name`, position + 115, 619, module.title, 22, { bold: true, anchor: 'middle', width: 218 });
-    text(graphic, `${module.id}-status`, position + 115, 644, module.actual ? 'IMPLEMENTADO' : 'DISEÑADO · PENDIENTE', 16, { bold: true, anchor: 'middle', color: module.actual ? colors.green : colors.muted, width: 218 });
+    text(graphic, `${module.id}-status`, position + 115, 644, module.status ?? (module.actual ? 'IMPLEMENTADO' : 'DISEÑADO · PENDIENTE'), 16, { bold: true, anchor: 'middle', color: module.actual ? colors.green : colors.muted, width: 218 });
     card(graphic, `${module.id}-controller`, position + 10, 665, 210, 64, module.controller, [], { fill: colors.paper, titleSize: module.actual ? 17 : 18 });
     card(graphic, `${module.id}-application`, position + 10, 800, 210, 100, 'Casos de uso', module.use, { fill: colors.paper, titleSize: 20, lineSize: 17 });
     card(graphic, `${module.id}-domain`, position + 10, 935, 210, 85, 'Reglas y contratos', module.domain, { fill: colors.domain, titleSize: 18, lineSize: 17, lineHeight: 22 });
@@ -99,25 +100,27 @@ function styleDiagram() {
     edge(graphic, `${module.id}-io`, [[position + 115, 1020], [position + 115, 1090]]);
     edge(graphic, `${module.id}-storage`, [[position + 115, 1190], [position + 115, 1235]]);
   });
-  card(graphic, 'module-io', 240, 1235, 1490, 85, 'Repositorios PostgreSQL y adaptadores por módulo · driver pg / contratos externos', ['Una misma base de datos; cada módulo es propietario de sus tablas y de sus integraciones.'], { fill: '#e8e0f4', lineSize: 20 });
+  card(graphic, 'module-io', 240, 1235, 1735, 85, 'Repositorios PostgreSQL y adaptadores por módulo · driver pg / contratos externos', ['Una misma base de datos; cada módulo es propietario de sus tablas y de sus integraciones.'], { fill: '#e8e0f4', lineSize: 20 });
 
-  panel(graphic, 'scope', 1820, 420, 300, 430, colors.gray, 'Cómo leer esta vista');
-  const scopeLines = ['6 módulos de negocio', '2 implementados en API', '4 pendientes de construir', '', 'Pagos pertenece a Reservas.', 'No son microservicios.', 'Comparten proceso y fallos.', '', 'Redis no está implementado.', 'Mapas / IA / pagos externos:', 'integraciones pendientes.'];
-  scopeLines.forEach((line, index) => text(graphic, `scope-${index}`, 1840, 490 + index * 30, line, 19, { width: 260 }));
-  card(graphic, 'payments', 1840, 925, 280, 110, 'Pasarela de pagos', ['Culqi: candidata', 'HTTPS · módulo Reservas'], { fill: colors.gray, titleSize: 22, lineSize: 19 });
-  card(graphic, 'ai', 1840, 1085, 280, 110, 'Proveedor de IA', ['Modelo por seleccionar', 'HTTPS · módulo Búsqueda'], { fill: colors.gray, titleSize: 22, lineSize: 19 });
-  card(graphic, 'maps', 1840, 1245, 280, 110, 'Mapas / mensajería', ['Proveedores por definir', 'Zona manual disponible'], { fill: colors.gray, titleSize: 21, lineSize: 19 });
-  edge(graphic, 'payments-call', [[1730, 1255], [1780, 1255], [1780, 980], [1840, 980]], { dashed: true });
-  edge(graphic, 'ai-call', [[1730, 1280], [1800, 1280], [1800, 1140], [1840, 1140]], { dashed: true });
-  edge(graphic, 'maps-call', [[1730, 1305], [1840, 1305]], { dashed: true });
+  edge(graphic, 'pagos-reservas', [[1720, 850], [1685, 850]]);
+
+  panel(graphic, 'scope', 2065, 420, 300, 430, colors.gray, 'Cómo leer esta vista');
+  const scopeLines = ['7 módulos de negocio', '4 implementados en API', '1 con simulador: Pagos', '2 pendientes de construir', '', 'Pagos depende de Reservas.', 'No son microservicios.', 'Comparten proceso y fallos.', '', 'Redis no está implementado.', 'Mapas / IA: pendientes.'];
+  scopeLines.forEach((line, index) => text(graphic, `scope-${index}`, 2085, 490 + index * 30, line, 19, { width: 260 }));
+  card(graphic, 'payments', 2085, 925, 280, 110, 'Pasarela de pagos', ['Culqi · modo de prueba', 'HTTPS · módulo Pagos'], { fill: colors.gray, titleSize: 22, lineSize: 19 });
+  card(graphic, 'ai', 2085, 1085, 280, 110, 'Proveedor de IA', ['Modelo por seleccionar', 'HTTPS · módulo Búsqueda'], { fill: colors.gray, titleSize: 22, lineSize: 19 });
+  card(graphic, 'maps', 2085, 1245, 280, 110, 'Mapas / mensajería', ['Proveedores por definir', 'Zona manual disponible'], { fill: colors.gray, titleSize: 21, lineSize: 19 });
+  edge(graphic, 'payments-call', [[1930, 1115], [2030, 1115], [2030, 980], [2085, 980]], { dashed: true });
+  edge(graphic, 'ai-call', [[1975, 1280], [2045, 1280], [2045, 1165], [2085, 1165]], { dashed: true });
+  edge(graphic, 'maps-call', [[1975, 1305], [2085, 1305]], { dashed: true });
   edge(graphic, 'database-call', [[830, 1320], [830, 1450]]);
   text(graphic, 'sql-label', 855, 1400, 'SQL · repositorios propios', 21, { width: 600 });
-  card(graphic, 'database', 420, 1450, 820, 110, 'PostgreSQL 17 + PostGIS 3.5', ['Docker local · volumen persistente · sin exposición pública en producción', 'Actual: cuentas, sesiones, proveedores y documentos cifrados'], { fill: '#e3f0e9', lineSize: 20 });
+  card(graphic, 'database', 420, 1450, 820, 110, 'PostgreSQL 17 + PostGIS 3.5', ['Docker local · volumen persistente · sin exposición pública en producción', 'Actual: cuentas, proveedores, catálogo, reservas y pagos'], { fill: '#e3f0e9', lineSize: 20 });
 
   panel(graphic, 'legend', 40, 1600, 1040, 115, colors.gray, 'Leyenda y alcance');
-  text(graphic, 'legend-1', 60, 1664, 'Flecha continua: ejecución interna / conexión actual; discontinua: integración futura.', 20, { width: 1000 });
+  text(graphic, 'legend-1', 60, 1664, 'Flecha continua: ejecución interna / conexión actual; discontinua: integración aún no probada.', 20, { width: 1000 });
   text(graphic, 'legend-2', 60, 1694, 'Los estados de cada columna distinguen implementación actual y arquitectura objetivo.', 20, { width: 1000 });
-  panel(graphic, 'rules', 1110, 1600, 1010, 115, colors.gray, 'Límite de esta vista');
+  panel(graphic, 'rules', 1110, 1600, 1255, 115, colors.gray, 'Límite de esta vista');
   text(graphic, 'rules-1', 1130, 1664, 'Entre módulos: contratos públicos; nunca repositorios ni consultas a tablas ajenas.', 20, { width: 970 });
   text(graphic, 'rules-2', 1130, 1694, 'Negocio = Aplicación + Dominio; los imports se explican en Clean Architecture.', 20, { width: 970 });
   return graphic;

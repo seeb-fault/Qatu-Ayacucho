@@ -8,7 +8,7 @@ API NestJS/TypeScript, PostgreSQL/PostGIS y web Next.js/TypeScript; versiones so
 
 ## Constitution Check
 
-- [x] El plan conserva el módulo reservas, los puertos y la propiedad de datos descritos en docs.
+- [x] El plan conserva los módulos reservas y pagos (ADR-014), los puertos y la propiedad de datos descritos en docs.
 - [x] Las dependencias externas se ubican en infraestructura.
 - [x] Las decisiones pendientes y las pruebas de aceptación están registradas.
 - [ ] Verificar estas condiciones en el código antes de cerrar la entrega.

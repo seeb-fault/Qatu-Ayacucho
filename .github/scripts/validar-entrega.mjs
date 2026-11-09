@@ -83,8 +83,9 @@ export function validarEntrega(root) {
     for (const relative of ['backend/migrations/reservas/008-avisos.sql','backend/src/modules/reservas/aplicacion/avisos.ts','backend/test/reservas/avisos.test.ts','frontend/src/app/avisos/page.tsx','frontend/tests/reservas/avisos.spec.ts']) requerir(relative);
   } else ausente('backend/migrations/reservas/008-avisos.sql');
   if (pagos) {
-    for (const relative of ['backend/migrations/reservas/009-pagos-en-linea.sql','backend/src/modules/reservas/aplicacion/pagos.ts','backend/src/modules/reservas/infraestructura/culqi.ts','backend/test/reservas/pagos.test.ts','frontend/tests/reservas/pagos.spec.ts']) requerir(relative);
-  } else ausente('backend/migrations/reservas/009-pagos-en-linea.sql');
+    for (const relative of ['backend/migrations/reservas/009-pagos-en-linea.sql','backend/migrations/pagos/001-tablas-propias.sql','backend/src/modules/pagos/pagos.module.ts','backend/src/modules/pagos/aplicacion/pagos.ts','backend/src/modules/pagos/infraestructura/culqi.ts','backend/test/pagos/pagos.test.ts','backend/test/pagos/limites.test.ts','frontend/playwright.pagos.config.ts','frontend/tests/pagos/pagos.spec.ts']) requerir(relative);
+    scripts('frontend/package.json',['test:pagos']);
+  } else { ausente('backend/migrations/reservas/009-pagos-en-linea.sql'); ausente('backend/src/modules/pagos'); }
   return {
     entrega: manifest.ultimaEntrega,
     frontend: indice >= 1,

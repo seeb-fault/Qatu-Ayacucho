@@ -30,7 +30,7 @@ Investigación realizada el 15 de octubre de 2026 (America/Lima) mediante REA 6.
 
 Observación: captura o cambio ejecutado por REA. Inferencia: explicación tentativa, marcada explícitamente. Propuesta: decisión para Qatu, todavía sin implementación. El registro no convierte mensajes promocionales de terceros en garantías del producto Qatu.
 
-Se mantienen los seis módulos actuales, NestJS, Next.js, PostgreSQL, IA de búsqueda y pasarela Culqi/Yape como diseño propio. [Arquitectura vigente](../../README.md#arquitectura-de-software).
+Se mantienen los siete módulos actuales, NestJS, Next.js, PostgreSQL, IA de búsqueda y pasarela Culqi/Yape como diseño propio. [Arquitectura vigente](../../README.md#arquitectura-de-software).
 
 ## Especificaciones separadas
 

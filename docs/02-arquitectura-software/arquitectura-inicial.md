@@ -2,7 +2,7 @@
 
 ## Diagrama general de arquitectura
 
-Vista del sistema completo: actores, presentación, seis módulos, persistencia e integraciones.
+Vista del sistema completo: actores, presentación, siete módulos, persistencia e integraciones.
 
 ![Diagrama de diagrama general de arquitectura de Qatu](./diagramas/png/arquitectura-inicial-qatu.png)
 
@@ -12,7 +12,7 @@ Para editar: diagrams.net → Archivo → Abrir desde → Dispositivo. Seleccion
 
 ## Alcance y estado
 
-MVP de alquiler de herramientas y contratación de oficios en Ayacucho, con pasarela de pago y búsqueda natural. Diseño actualizado a seis módulos; backend e integraciones pendientes de implementación. El prototipo web 001, disponible localmente en frontend/, ya permite explorar datos sintéticos. La propuesta de ecosistema con compraventa es evolución futura.
+MVP de alquiler de herramientas y contratación de oficios en Ayacucho, con pasarela de pago y búsqueda natural. Diseño actualizado a siete módulos; backend e integraciones pendientes de implementación. El prototipo web 001, disponible localmente en frontend/, ya permite explorar datos sintéticos. La propuesta de ecosistema con compraventa es evolución futura.
 
 ## Estructura general
 
@@ -22,26 +22,28 @@ Cliente-servidor con web Next.js y API NestJS como monolito modular. Vista resum
 flowchart TB
     ACT[Cliente, Proveedor y Administrador] --> WEB[Web Next.js móvil]
     WEB -->|HTTPS y JSON| API[API REST /api/v1]
-    subgraph NEG[Seis módulos en API NestJS]
+    subgraph NEG[Siete módulos en API NestJS]
         U[Usuarios y acceso]
         P[Proveedores]
         C[Catálogo]
-        R[Reservas y contratación: pagos y calendario]
+        R[Reservas y contratación: calendario]
+        G[Pagos: intentos y conciliación]
         E[Reputación y confianza: resenas]
         B[Búsqueda inteligente: busqueda]
     end
-    API --> U & P & C & R & E & B
+    API --> U & P & C & R & G & E & B
     P -->|Identidad| U
     C -->|Proveedor verificado| P
     R -->|Oferta y cotización| C
+    G -->|Reserva por pagar| R
     E -->|Reserva finalizada| R
     B -->|Ofertas reales| C
     B -->|Disponibilidad| R
     DB[(PostgreSQL y PostGIS)]
     F[(Fotos y evidencias privadas)]
-    U & P & C & R & E & B -->|Repositorios propios| DB
+    U & P & C & R & G & E & B -->|Repositorios propios| DB
     C & E -->|Adapter de archivos| F
-    R -->|Adapter de pagos| PAY[Culqi: Yape como medio habilitado]
+    G -->|Adapter de pagos| PAY[Culqi: Yape como medio habilitado]
     B -->|Adapter de intención| IA[Proveedor externo de IA]
     R -.->|Outbox y reintentos| MSG[Mensajería]
     C & P -->|Adapter compartido| MAP[Mapas]
@@ -54,7 +56,8 @@ flowchart TB
 | Usuarios | Identidad, perfiles, varios roles y permisos |
 | Proveedores | Oferta, zona, perfil y verificación |
 | Catálogo | Publicaciones, recursos y tarifas; no decide aceptación |
-| Reservas | Solicitudes, disponibilidad, estados, cotización y pagos |
+| Reservas | Solicitudes, disponibilidad, estados, cotización y efectivo al recoger |
+| Pagos | Pago en línea, pasarela, conciliación y reembolsos pendientes |
 | Reputación/confianza | Reseñas, entrega/devolución documentada e incidencias |
 | Búsqueda inteligente | Texto → filtros validados → ofertas reales y fechas consultadas |
 

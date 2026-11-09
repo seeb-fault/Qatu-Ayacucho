@@ -1,13 +1,12 @@
-import { Body, Controller, Get, Headers, HttpCode, Inject, Param, Post, Query, Req, Res } from '@nestjs/common';
-import type { Request, Response } from 'express';
+import { Body, Controller, Get, Inject, Param, Post, Query, Req } from '@nestjs/common';
+import type { Request } from 'express';
 import { Reservas } from '../aplicacion/reservas';
-import { Pagos } from '../aplicacion/pagos';
 
 const token = (r: Request) => r.headers.cookie?.split(';').map(v => v.trim()).find(v => v.startsWith('qatu_sesion='))?.slice('qatu_sesion='.length) ?? '';
 
 @Controller('reservas')
 export class ReservasController {
-  constructor(@Inject(Reservas) private readonly reservas: Reservas, @Inject(Pagos) private readonly pagos: Pagos) {}
+  constructor(@Inject(Reservas) private readonly reservas: Reservas) {}
   @Post() solicitar(@Req() r: Request, @Body() d: unknown) { return this.reservas.solicitar(token(r), d); }
   @Get() listar(@Req() r: Request, @Query() q: unknown) { return this.reservas.listar(token(r), q); }
   @Get(':id') consultar(@Req() r: Request, @Param('id') id: string) { return this.reservas.consultar(token(r), id); }
@@ -27,24 +26,10 @@ export class ReservasController {
   @Post(':id/devolucion/rechazo') rechazarDevolucion(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'devolucion/rechazo',d); }
   @Post(':id/entrega') entregar(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'entrega',d); }
   @Post(':id/servicio/cobro') solicitarCobro(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'servicio/cobro',d); }
-  @Get(':id/pagos') listarPagos(@Req() r: Request, @Param('id') id: string) { return this.pagos.listar(token(r),id); }
-  @Post(':id/pagos') async pagar(@Req() r: Request, @Res({ passthrough: true }) res: Response, @Param('id') id: string, @Headers('idempotency-key') clave: string, @Body() d: unknown) {
-    const intento = await this.pagos.iniciar(token(r),id,clave,d);
-    // Un resultado incierto no es un fallo ni un pago: se informa como 202 y se concilia.
-    if (['PROCESANDO','DESCONOCIDO'].includes(intento.estado)) res.status(202);
-    return intento;
-  }
   @Post(':id/servicio/inicio') iniciarServicio(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'servicio/inicio',d); }
   @Post(':id/servicio/termino') terminarServicio(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'servicio/termino',d); }
   @Post(':id/servicio/confirmacion') confirmarServicio(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'servicio/confirmacion',d); }
   @Post(':id/servicio/rechazo') rechazarTermino(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'servicio/rechazo',d); }
-}
-
-@Controller('pagos')
-export class PagosController {
-  constructor(@Inject(Pagos) private readonly pagos: Pagos) {}
-  @Get('configuracion') configuracion() { return this.pagos.configuracion(); }
-  @Post('webhooks/culqi') @HttpCode(200) webhook(@Body() d: unknown) { return this.pagos.webhook(d); }
 }
 
 @Controller('recursos')

@@ -1,16 +1,19 @@
 import { entradaSolicitud, entradaRechazo, filtros, uuid, texto, objeto, instante, invalida, ErrorReserva, type Solicitud } from '../dominio/solicitud';
 import { condiciones, entradaAccion, type AccionReserva } from '../dominio/alquiler';
 import { entradaCotizacion, entradaRespuestaCotizacion } from '../dominio/cotizacion';
-import type { CatalogoReservas, IdentidadReservas, ProveedoresReservas, RepositorioReservas } from '../dominio/puertos';
+import type { CatalogoReservas, IdentidadReservas, PagosDeReserva, ProveedoresReservas, RepositorioReservas, UltimoPago } from '../dominio/puertos';
 
 export class Reservas {
   constructor(private readonly repo: RepositorioReservas, private readonly identidad: IdentidadReservas,
     private readonly catalogo: CatalogoReservas, private readonly proveedores: ProveedoresReservas,
-    private readonly ahora = () => Date.now()) {}
+    private readonly pagos: Pick<PagosDeReserva,'ultimos'>, private readonly ahora = () => Date.now()) {}
 
-  private presentar(s: Solicitud, actorId: string) {
+  private formar(s: Solicitud, actorId: string, ultimoPago: UltimoPago | null) {
     const { clienteId, propietarioId, ...datos } = s;
-    return { ...datos, participacion: clienteId === actorId ? 'cliente' as const : 'proveedor' as const };
+    return { ...datos, ultimoPago, participacion: clienteId === actorId ? 'cliente' as const : 'proveedor' as const };
+  }
+  private async presentar(s: Solicitud, actorId: string) {
+    return this.formar(s, actorId, (await this.pagos.ultimos([s.id])).get(s.id) ?? null);
   }
   async solicitar(token: string, value: unknown) {
     const actor = await this.identidad.resolver(token);
@@ -36,7 +39,8 @@ export class Reservas {
     const actor = await this.identidad.resolver(token), f = filtros(value);
     await this.repo.vencer();
     const pagina = await this.repo.listar(actor.id, f.vista, f.page);
-    return { ...pagina, items: pagina.items.map(s => this.presentar(s, actor.id)), ...f };
+    const ultimos = await this.pagos.ultimos(pagina.items.map(s => s.id));
+    return { ...pagina, items: pagina.items.map(s => this.formar(s, actor.id, ultimos.get(s.id) ?? null)), ...f };
   }
   async consultar(token: string, id: string) {
     const actor = await this.identidad.resolver(token);

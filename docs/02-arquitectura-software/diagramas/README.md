@@ -13,11 +13,11 @@ En diagrams.net: Archivo → Abrir desde → Dispositivo. Los elementos, textos 
 
 ## Orden de explicación
 
-1. Estilo: actores → web Next.js → API NestJS → módulos → PostgreSQL e integraciones. Seis módulos diseñados, solo Usuarios y Proveedores implementados en la API. Pagos pertenece a Reservas. Consumo de una API externa no equivale a microservicios.
+1. Estilo: actores → web Next.js → API NestJS → módulos → PostgreSQL e integraciones. Son siete módulos; Pagos está separado de Reservas ([ADR-014](../../01-analisis-de-sistema/07-desision-arquitectonica.md)) y es el único conectado a la pasarela de pago. Consumo de una API externa no equivale a microservicios.
 2. Enfoque: abrir Usuarios como ejemplo real. Presentación invoca Aplicación; Aplicación depende de reglas y contratos; Infraestructura implementa esos contratos; Composición selecciona los adaptadores.
 3. Diferencia: la primera vista muestra ejecución y estructura global; la segunda muestra dependencias de código e inversión de dependencias. No interpretar las flechas como si ambas vistas fueran iguales.
 
-Las integraciones de IA/pasarela/mapas/mensajería y cuatro módulos restantes siguen pendientes. PostGIS disponible no implica mapas integrados. Redis no está implementado. Docker local ejecuta la base de datos, no necesariamente toda la aplicación.
+Reseñas y Búsqueda siguen pendientes, igual que las integraciones de IA, mapas y mensajería. La pasarela solo se ha probado con simulador. PostGIS disponible no implica mapas integrados. Redis no está implementado. Docker local ejecuta la base de datos, no necesariamente toda la aplicación.
 
 ## Regeneración
 
@@ -52,4 +52,4 @@ node docs/02-arquitectura-software/diagramas/scripts/generar-estilo-enfoque.mjs 
 
 `--check --png` añade la comprobación visual de anchos y XML y verifica la firma del PNG existente; no compara píxeles ni sustituye la revisión visual. Las verificaciones del generador no son pruebas de rendimiento ni aceptación funcional del sistema.
 
-El renderizador `scripts/render-arquitectura.ps1` conserva la generación de arquitectura inicial y delega estas dos vistas al nuevo generador. Los diagramas de componentes y C4 no se reemplazan en este cambio.
+El renderizador `scripts/render-arquitectura.ps1` conserva la generación de arquitectura inicial y delega estas dos vistas al nuevo generador. La vista general y la de componentes guardan su modelo en `fuentes/*.json`; `scripts/exportar-vectores.mjs` genera su SVG y su archivo de diagrams.net.

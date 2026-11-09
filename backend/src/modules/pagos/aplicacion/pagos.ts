@@ -1,7 +1,5 @@
 import { createHash } from 'node:crypto';
-import { claveIdempotencia, entradaPago, type CargoExterno, type IntentoPago, type ProcesadorPagos, type RepositorioPagos } from '../dominio/pagos';
-import type { IdentidadReservas } from '../dominio/puertos';
-import { ErrorReserva, uuid } from '../dominio/solicitud';
+import { claveIdempotencia, entradaPago, ErrorPago, uuid, type CargoExterno, type IdentidadPagos, type IntentoPago, type ProcesadorPagos, type RepositorioPagos } from '../dominio/pagos';
 import { describirError } from '../../../shared/infraestructura/base-datos';
 
 const huella = (v: string) => createHash('sha256').update(v).digest('hex');
@@ -10,14 +8,14 @@ const PROCESANDO_MS = 2 * 60_000;
 const SIN_CARGO_MS = 60 * 60_000;
 
 export class Pagos {
-  constructor(private readonly repo: RepositorioPagos, private readonly identidad: IdentidadReservas,
+  constructor(private readonly repo: RepositorioPagos, private readonly identidad: IdentidadPagos,
     private readonly procesador: ProcesadorPagos | null, private readonly llavePublica: string | null,
     private readonly ahora = () => Date.now()) {}
 
   configuracion() { return { disponible: Boolean(this.procesador && this.llavePublica), llavePublica: this.llavePublica, modo: 'prueba' as const }; }
 
   private disponible(): ProcesadorPagos {
-    if (!this.procesador) throw new ErrorReserva('PAGOS_NO_DISPONIBLES', 503, 'El pago en línea no está disponible. Puedes coordinar el pago en efectivo.');
+    if (!this.procesador) throw new ErrorPago('PAGOS_NO_DISPONIBLES', 503, 'El pago en línea no está disponible. Puedes coordinar el pago en efectivo.');
     return this.procesador;
   }
 
@@ -42,7 +40,7 @@ export class Pagos {
 
   async listar(token: string, id: string) {
     const actor = await this.identidad.resolver(token), pagos = await this.repo.pagosDe(uuid(id), actor.id);
-    if (!pagos) throw new ErrorReserva('RESERVA_NO_DISPONIBLE', 404, 'La solicitud no está disponible.');
+    if (!pagos) throw new ErrorPago('RESERVA_NO_DISPONIBLE', 404, 'La solicitud no está disponible.');
     return { items: pagos };
   }
 

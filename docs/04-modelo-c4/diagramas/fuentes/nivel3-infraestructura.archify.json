@@ -11,7 +11,7 @@
     {
       "id": "mod",
       "type": "backend",
-      "label": "Seis módulos",
+      "label": "Siete módulos",
       "sublabel": "Cada uno define sus puertos",
       "pos": [
         40,
@@ -81,8 +81,8 @@
     {
       "id": "culqi",
       "type": "external",
-      "label": "Culqi",
-      "sublabel": "Adaptador de Reservas",
+      "label": "Pasarela Culqi",
+      "sublabel": "Adaptador del módulo Pagos",
       "pos": [
         850,
         40
@@ -187,9 +187,9 @@
       "dot": "cyan",
       "title": "Propiedad",
       "items": [
-        "La caja «Seis módulos» agrupa los puertos propios de cada módulo.",
-        "Reservas guarda outbox junto a sus cambios; el publicador actúa después del commit.",
-        "Culqi pertenece a Reservas; IA a Búsqueda; archivos requieren autorización."
+        "La caja «Siete módulos» agrupa los puertos propios de cada módulo.",
+        "Reservas guarda outbox junto a sus cambios, también al registrar un pago; el publicador actúa después del commit.",
+        "Culqi pertenece a Pagos; IA a Búsqueda; archivos requieren autorización."
       ]
     }
   ]
