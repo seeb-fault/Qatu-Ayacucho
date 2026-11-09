@@ -79,7 +79,7 @@ Texto sin coincidencias; texto vacío con filtros; distrito sin ofertas; categor
 1. El recorrido inicio → resultados → detalle se verifica con ofertas de ambos tipos.
 2. Los escenarios anteriores se comprueban en escritorio y a 360/390 px, incluyendo teclado, vacío y error.
 3. Se registra qué se verificó con datos sintéticos y qué con backend/base de datos; el prototipo por sí solo no cierra la entrega funcional.
-4. La implementación preserva los límites de los seis módulos y los contratos vigentes o documenta su revisión.
+4. La implementación preserva los límites de los siete módulos y los contratos vigentes o documenta su revisión.
 5. El plan y las tareas vinculan los requisitos E001 con la evidencia de validación. Ninguna casilla se marca por haber escrito la especificación.
 
 ## Dependencias y decisiones pendientes

@@ -27,28 +27,28 @@
       "sublabel": "HTTP / webhook"
     },
     {
+      "id": "pay",
+      "type": "backend",
+      "label": "Pagos",
+      "sublabel": "Módulo · adaptador Culqi"
+    },
+    {
       "id": "res",
       "type": "backend",
       "label": "Reservas",
-      "sublabel": "Casos de uso"
+      "sublabel": "Abre la transacción"
     },
     {
       "id": "db",
       "type": "database",
       "label": "PostgreSQL",
-      "sublabel": "Estado + inbox/outbox"
-    },
-    {
-      "id": "pay",
-      "type": "backend",
-      "label": "Adaptador",
-      "sublabel": "Culqi"
+      "sublabel": "Estado + outbox"
     },
     {
       "id": "culqi",
       "type": "external",
-      "label": "Culqi",
-      "sublabel": "Pasarela"
+      "label": "Pasarela Culqi",
+      "sublabel": "Cobros"
     }
   ],
   "messages": [
@@ -62,7 +62,7 @@
     {
       "from": "api",
       "to": "res",
-      "label": "AceptarReservaCasoUso",
+      "label": "Reservas.operar: aceptación",
       "y": 241,
       "variant": "default"
     },
@@ -96,135 +96,142 @@
     },
     {
       "from": "api",
-      "to": "res",
-      "label": "IniciarPagoCasoUso",
+      "to": "pay",
+      "label": "Pagos.iniciar",
       "y": 571,
       "variant": "default"
     },
     {
-      "from": "res",
-      "to": "db",
-      "label": "Guardar intento + importe autoritativo; COMMIT",
+      "from": "pay",
+      "to": "res",
+      "label": "conReserva: bloquea y da el importe del servidor",
       "y": 637,
       "variant": "default"
     },
     {
       "from": "res",
-      "to": "pay",
-      "label": "Iniciar intento persistido",
+      "to": "db",
+      "label": "TX: vence plazos y bloquea la reserva",
       "y": 703,
+      "variant": "default"
+    },
+    {
+      "from": "pay",
+      "to": "db",
+      "label": "En esa TX: guardar intento; COMMIT",
+      "y": 769,
       "variant": "default"
     },
     {
       "from": "pay",
       "to": "culqi",
       "label": "Solicitar cobro sin TX SQL abierta",
-      "y": 769,
+      "y": 835,
       "variant": "default"
     },
     {
       "from": "culqi",
       "to": "pay",
       "label": "Si verificable: referencia y estado",
-      "y": 835,
+      "y": 901,
       "variant": "return"
     },
     {
       "from": "pay",
       "to": "res",
-      "label": "Resultado normalizado o timeout / pendiente",
-      "y": 901,
-      "variant": "return"
-    },
-    {
-      "from": "res",
-      "to": "db",
-      "label": "Verificado: confirmar; incierto: conciliar",
+      "label": "Aprobado: conReserva + registrarPago",
       "y": 967,
       "variant": "default"
     },
     {
       "from": "res",
-      "to": "api",
-      "label": "Incierto: 202 y consulta de estado",
+      "to": "db",
+      "label": "TX: intento + reserva + outbox",
       "y": 1033,
       "variant": "default"
     },
     {
+      "from": "pay",
+      "to": "api",
+      "label": "Incierto: 202; se concilia sin volver a cobrar",
+      "y": 1099,
+      "variant": "return"
+    },
+    {
       "from": "culqi",
       "to": "api",
-      "label": "Webhook del pago",
-      "y": 1099,
+      "label": "Aviso de la pasarela",
+      "y": 1165,
       "variant": "return"
     },
     {
       "from": "api",
       "to": "pay",
-      "label": "Verificar evento",
-      "y": 1165,
+      "label": "Pagos.webhook: solo indica qué cargo consultar",
+      "y": 1231,
+      "variant": "default"
+    },
+    {
+      "from": "pay",
+      "to": "db",
+      "label": "Aviso repetido: sin efecto",
+      "y": 1297,
       "variant": "default"
     },
     {
       "from": "pay",
       "to": "culqi",
-      "label": "Si hace falta: consulta privada",
-      "y": 1231,
+      "label": "Consulta privada del cargo",
+      "y": 1363,
       "variant": "default"
     },
     {
       "from": "culqi",
       "to": "pay",
-      "label": "Estado + monto + moneda + referencia",
-      "y": 1297,
+      "label": "Estado + monto + moneda + intento",
+      "y": 1429,
       "variant": "return"
     },
     {
       "from": "pay",
-      "to": "api",
-      "label": "Evento verificado",
-      "y": 1363,
-      "variant": "return"
-    },
-    {
-      "from": "api",
       "to": "res",
-      "label": "ConfirmarPagoCasoUso idempotente",
-      "y": 1429,
+      "label": "Si coincide: aprobarPago dentro de conReserva",
+      "y": 1495,
       "variant": "default"
     },
     {
       "from": "res",
       "to": "db",
-      "label": "TX: inbox único + intento + reserva + outbox",
-      "y": 1495,
+      "label": "TX: intento + reserva + outbox",
+      "y": 1561,
       "variant": "default"
     },
     {
       "from": "db",
       "to": "res",
-      "label": "Duplicado: sin efecto; válido y vigente: CONFIRMADA",
-      "y": 1561,
-      "variant": "return"
-    },
-    {
-      "from": "db",
-      "to": "res",
-      "label": "Vencido / importe inválido: registrar y conciliar",
+      "label": "Válido y vigente: APARTADO_PAGADO",
       "y": 1627,
       "variant": "return"
     },
     {
-      "from": "res",
-      "to": "api",
-      "label": "Resultado persistido",
+      "from": "db",
+      "to": "res",
+      "label": "Vencida: queda reembolso pendiente",
       "y": 1693,
-      "variant": "default"
+      "variant": "return"
+    },
+    {
+      "from": "pay",
+      "to": "api",
+      "label": "Aviso registrado",
+      "y": 1759,
+      "variant": "return"
     },
     {
       "from": "api",
       "to": "culqi",
       "label": "Acuse solo después de persistir",
-      "y": 1759,
+      "y": 1825,
       "variant": "default"
     }
   ],
@@ -236,13 +243,13 @@
     },
     {
       "from": 500,
-      "to": 1080,
+      "to": 1146,
       "label": "2 · Cobro · intento persistido antes de la llamada"
     },
     {
-      "from": 1090,
-      "to": 1810,
-      "label": "3 · Notificación · verificación y deduplicación"
+      "from": 1156,
+      "to": 1876,
+      "label": "3 · Aviso · verificación y deduplicación"
     }
   ],
   "cards": [
@@ -251,8 +258,8 @@
       "title": "Condiciones",
       "items": [
         "Los mensajes «si» describen alternativas; no se ejecutan todas las ramas.",
-        "Respuesta aprobada y webhook usan la misma confirmación idempotente.",
-        "Un pago tardío no reactiva ni vuelve a bloquear fechas: requiere ajuste/reembolso."
+        "Respuesta aprobada, conciliación y aviso usan la misma aprobación idempotente.",
+        "Un pago tardío no reactiva ni vuelve a bloquear fechas: queda reembolso pendiente."
       ]
     },
     {

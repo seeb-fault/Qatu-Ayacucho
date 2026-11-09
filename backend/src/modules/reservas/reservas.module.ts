@@ -6,14 +6,14 @@ import { CatalogoModule, ConsultaCatalogo } from '../catalogo';
 import { ProveedoresModule, ConsultaProveedores } from '../proveedores';
 import { Reservas } from './aplicacion/reservas';
 import { Avisos } from './aplicacion/avisos';
-import { Pagos } from './aplicacion/pagos';
+import { EnlacePagos } from './aplicacion/enlace-pagos';
+import { OperacionesPago } from './aplicacion/operaciones-pago';
 import { DespachadorEventos } from './aplicacion/despacho';
 import type { Notificador } from './dominio/puertos';
 import { PostgresReservas } from './infraestructura/postgres';
 import { AvisosNotificador, PostgresAvisos } from './infraestructura/postgres-avisos';
 import { PostgresDespacho } from './infraestructura/postgres-despacho';
-import { crearProcesador } from './infraestructura/culqi';
-import { ReservasController, DisponibilidadController, PagosController } from './presentacion/reservas.controller';
+import { ReservasController, DisponibilidadController } from './presentacion/reservas.controller';
 import { AvisosController } from './presentacion/avisos.controller';
 
 const DESPACHADOR = Symbol('DESPACHADOR_RESERVAS');
@@ -23,32 +23,29 @@ export function crearNotificador(pool: Pool): Notificador | null {
 }
 
 @Module({
-  imports: [UsuariosModule, CatalogoModule, ProveedoresModule], controllers: [ReservasController, DisponibilidadController, AvisosController, PagosController],
+  imports: [UsuariosModule, CatalogoModule, ProveedoresModule], controllers: [ReservasController, DisponibilidadController, AvisosController],
   providers: [
-    { provide: Pagos, inject: [Pool,IdentidadUsuarios], useFactory: (pool: Pool, identidad: IdentidadUsuarios) => {
-      const { procesador, llavePublica } = crearProcesador();
-      return new Pagos(new PostgresReservas(pool),identidad,procesador,llavePublica);
-    } },
+    { provide: EnlacePagos, useFactory: () => new EnlacePagos() },
+    { provide: OperacionesPago, inject: [Pool,EnlacePagos], useFactory: (pool: Pool, enlace: EnlacePagos) => new OperacionesPago(new PostgresReservas(pool,enlace)) },
     { provide: Avisos, inject: [Pool,IdentidadUsuarios], useFactory: (pool: Pool, identidad: IdentidadUsuarios) => new Avisos(new PostgresAvisos(pool),identidad) },
     { provide: Pool, useFactory: () => crearPool(5) },
-    { provide: Reservas, inject: [Pool,IdentidadUsuarios,ConsultaCatalogo,ConsultaProveedores],
-      useFactory: (pool: Pool, identidad: IdentidadUsuarios, catalogo: ConsultaCatalogo, proveedores: ConsultaProveedores) =>
-        new Reservas(new PostgresReservas(pool),identidad,catalogo,proveedores) },
+    { provide: Reservas, inject: [Pool,IdentidadUsuarios,ConsultaCatalogo,ConsultaProveedores,EnlacePagos],
+      useFactory: (pool: Pool, identidad: IdentidadUsuarios, catalogo: ConsultaCatalogo, proveedores: ConsultaProveedores, enlace: EnlacePagos) =>
+        new Reservas(new PostgresReservas(pool,enlace),identidad,catalogo,proveedores,enlace) },
     { provide: DESPACHADOR, inject: [Pool], useFactory: (pool: Pool) => {
       const notificador = crearNotificador(pool);
       return notificador ? new DespachadorEventos(new PostgresDespacho(pool),notificador) : null;
     } },
   ],
+  exports: [EnlacePagos, OperacionesPago],
 })
 export class ReservasModule implements OnApplicationBootstrap, OnApplicationShutdown {
   private reloj?: ReturnType<typeof setInterval>;
   private venciendo = false;
   private relojDespacho?: ReturnType<typeof setInterval>;
   private despacho?: Promise<unknown>;
-  private relojConciliacion?: ReturnType<typeof setInterval>;
-  private conciliacion?: Promise<unknown>;
   constructor(@Inject(Pool) private readonly pool: Pool, @Inject(Reservas) private readonly reservas: Reservas,
-    @Inject(DESPACHADOR) private readonly despachador: DespachadorEventos | null, @Inject(Pagos) private readonly pagos: Pagos) {}
+    @Inject(DESPACHADOR) private readonly despachador: DespachadorEventos | null) {}
   private despachar() {
     if (this.despacho || !this.despachador) return;
     this.despacho = this.despachador.despachar().catch(() => console.error('No se pudieron despachar eventos de reservas.')).finally(() => { this.despacho = undefined; });
@@ -61,11 +58,6 @@ export class ReservasModule implements OnApplicationBootstrap, OnApplicationShut
       void this.reservas.vencer().catch(() => console.error('No se pudieron liberar apartados vencidos.')).finally(() => { this.venciendo = false; });
     },15000);
     this.reloj.unref();
-    this.relojConciliacion = setInterval(() => {
-      if (this.conciliacion) return;
-      this.conciliacion = this.pagos.conciliar().catch(() => console.error('No se pudieron conciliar pagos.')).finally(() => { this.conciliacion = undefined; });
-    },60000);
-    this.relojConciliacion.unref();
     if (this.despachador) {
       this.despachar();
       this.relojDespacho = setInterval(() => this.despachar(),5000);
@@ -75,9 +67,7 @@ export class ReservasModule implements OnApplicationBootstrap, OnApplicationShut
   async onApplicationShutdown() {
     if (this.reloj) clearInterval(this.reloj);
     if (this.relojDespacho) clearInterval(this.relojDespacho);
-    if (this.relojConciliacion) clearInterval(this.relojConciliacion);
     await this.despacho;
-    await this.conciliacion;
     await this.pool.end();
   }
 }

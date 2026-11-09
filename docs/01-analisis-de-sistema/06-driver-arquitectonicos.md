@@ -54,7 +54,7 @@ Las notificaciones y la geolocalización dependen de servicios externos, por lo 
 
 ### DA07 - Modularidad y mantenibilidad
 
-Los seis módulos (usuarios, proveedores, catálogo, reservas, reseñas y búsqueda inteligente) deben estar separados para evolucionar de forma independiente.
+Los siete módulos (usuarios, proveedores, catálogo, reservas, pagos, reseñas y búsqueda inteligente) deben estar separados para evolucionar de forma independiente.
 
 ### DA08 - Consistencia en las reservas
 

@@ -4,7 +4,7 @@
 
 Adaptación a Qatu Ayacucho del esquema de monolito modular en capas utilizado en clase. Esta vista explica la estructura global y las llamadas en ejecución, no la dirección de los imports. Las dependencias de código se explican en [Clean Architecture](./enfoque-arquitectonico.md).
 
-![Qatu Ayacucho: actores, web Next.js, API NestJS con seis módulos, PostgreSQL e integraciones pendientes](./diagramas/png/estilo-arquitectonico-qatu.png)
+![Qatu Ayacucho: actores, web Next.js, API NestJS con siete módulos, pasarela de pagos conectada al módulo Pagos, PostgreSQL e integraciones](./diagramas/png/estilo-arquitectonico-qatu.png)
 
 [PNG](./diagramas/png/estilo-arquitectonico-qatu.png) · [SVG vectorial](./diagramas/svg/estilo-arquitectonico-qatu.svg) · [Editable en diagrams.net](./diagramas/fuentes/estilo-arquitectonico-qatu.drawio).
 
@@ -12,19 +12,21 @@ Para ampliar, abrir el SVG o PNG. Para editar, usar diagrams.net → Archivo →
 
 ## Alcance: diseñado frente a implementado
 
-La figura representa la arquitectura objetivo, no seis módulos ya construidos. Usuarios y Proveedores están implementados en la API; Catálogo, Reservas, Reseñas y Búsqueda están diseñados y pendientes de implementación. La entrega 001 permite descubrir ofertas sintéticas en el frontend y no equivale al módulo Catálogo persistente.
+La figura representa la arquitectura objetivo, no siete módulos ya construidos. Usuarios, Proveedores, Catálogo y Reservas están implementados en la API; Pagos está implementado y probado solo con simulador; Reseñas y Búsqueda están diseñados y pendientes de implementación. La entrega 001 permite descubrir ofertas sintéticas en el frontend y no equivale al módulo Catálogo persistente.
 
 | Elemento de la figura | Responsabilidad | Estado |
 |---|---|---|
-| Web Next.js | Interfaz para visitante, cliente, proveedor y administrador | Descubrimiento sintético, acceso y proveedores implementados |
+| Web Next.js | Interfaz para visitante, cliente, proveedor y administrador | Cuentas, proveedores, catálogo, reservas y pagos por API |
 | Usuarios | Cuentas, roles, sesiones y administración | Implementado |
 | Proveedores | Perfil, zona, consulta pública y verificación privada | Implementado |
-| Catálogo | Publicaciones, recursos, filtros y tarifas | Diseñado; entrega 004 pendiente |
-| Reservas | Solicitudes, bloqueos, estados y pagos | Diseñado; pagos es componente de este módulo |
+| Catálogo | Publicaciones, recursos, filtros y tarifas | Implementado en la entrega 004 |
+| Reservas | Solicitudes, bloqueos, estados y efectivo al recoger | Implementado por incrementos en 005 |
+| Pagos | Pago en línea, pasarela y conciliación | Implementado con simulador; falta probar con Culqi sandbox real |
 | Reseñas y confianza | Reseñas, incidencias y evidencias | Diseñado |
 | Búsqueda | Interpretación de intención y filtros validados | Diseñado; proveedor de IA pendiente de selección |
-| PostgreSQL 17 + PostGIS 3.5 | Persistencia relacional y restricciones | Base local en Docker; tablas de Usuarios y Proveedores implementadas |
-| Pasarela, IA, mapas y mensajería | Capacidades externas mediante adaptadores | Integraciones pendientes; Culqi es candidata, no integración activa |
+| PostgreSQL 17 + PostGIS 3.5 | Persistencia relacional y restricciones | Base local en Docker; tablas de los cinco módulos implementados |
+| Pasarela de pagos | Cobro y consulta; solo el módulo Pagos habla con ella | Adaptador Culqi implementado; probado solo con simulador |
+| IA, mapas y mensajería | Capacidades externas mediante adaptadores | Integraciones pendientes |
 
 Redis no está implementado ni es un requisito para arrancar esta solución. Localmente solo la base de datos corre en Docker; web y API se ejecutan con npm. El VPS, HTTPS y el despliegue completo mediante Compose siguen siendo diseño de producción, no infraestructura ya publicada.
 
@@ -35,13 +37,13 @@ Redis no está implementado ni es un requisito para arrancar esta solución. Loc
 3. Las columnas son módulos de negocio, no servidores independientes. La fila de negocio agrupa Aplicación y Dominio para simplificar la vista global.
 4. Cada módulo usa contratos internos para persistencia e integraciones. Una llamada en ejecución hacia infraestructura no significa que el dominio importe esa implementación.
 5. Los módulos comparten PostgreSQL, pero conservan repositorios y propiedad de tablas. La comunicación interna se hace mediante contratos públicos, sin HTTP entre módulos del mismo proceso.
-6. Las integraciones externas discontinuas son futuras. Búsqueda será quien interprete consultas mediante IA; Reservas será quien coordine la pasarela. No hay carrito, courier ni un módulo de pagos independiente heredado del ejemplo Marketplace.
+6. Las integraciones externas discontinuas aún no se han probado de verdad. Búsqueda será quien interprete consultas mediante IA; Pagos es quien coordina la pasarela y depende de Reservas para confirmar cada cobro en la misma transacción. No hay carrito ni courier heredados del ejemplo Marketplace.
 
 Las flechas verticales muestran un recorrido representativo; no significan que toda consulta invoque una pasarela o que el dominio ejecute SQL. El diagrama de enfoque aclara la inversión de dependencias.
 
 ## Selección
 
-Cliente-servidor + monolito modular. Frontend Next.js y API NestJS son aplicaciones separadas; en la arquitectura objetivo los seis módulos backend se publican juntos. Capas son organización lógica y contenedores C4 son aplicaciones/almacenes, no equivalentes a módulos ni necesariamente a contenedores Docker. Una clase llamada servicio no convierte el sistema en SOA o microservicios.
+Cliente-servidor + monolito modular. Frontend Next.js y API NestJS son aplicaciones separadas; en la arquitectura objetivo los siete módulos backend se publican juntos. Capas son organización lógica y contenedores C4 son aplicaciones/almacenes, no equivalentes a módulos ni necesariamente a contenedores Docker. Una clase llamada servicio no convierte el sistema en SOA o microservicios.
 
 ## Justificación
 
@@ -50,10 +52,10 @@ Cliente-servidor + monolito modular. Frontend Next.js y API NestJS son aplicacio
 | DA01/DA11 | Backend único económico; optimización y dimensionamiento medidos antes de réplicas |
 | DA02 | PostgreSQL indexado y paginación; caché opcional |
 | DA03 | Autenticación, roles, propiedad, HTTPS y datos privados |
-| DA04/DA12 | Componente de pagos dentro de Reservas, adapter y confirmación fiable |
+| DA04/DA12 | Módulo Pagos, adapter y confirmación fiable en la transacción de la reserva |
 | DA05 | Contrato REST /api/v1 entre web/API |
 | DA06 | Integraciones por puertos, avisos durables y degradación controlada |
-| DA07 | Seis módulos con API pública y Clean Architecture interna |
+| DA07 | Siete módulos con API pública y Clean Architecture interna |
 | DA08 | Transacciones y exclusión por recurso/rango |
 | DA09 | Interfaz móvil, imágenes optimizadas y filtros editables |
 | DA10 | Búsqueda depende de lectura de Catálogo/Reservas; operaciones no dependen de IA |
@@ -79,4 +81,4 @@ Microservicios implican redes, despliegues, observabilidad y consistencia distri
 
 ## Resumen para exposición
 
-> Qatu sigue cliente-servidor con un backend monolítico modular. Los módulos separan responsabilidades, pero comparten proceso y despliegue. Elegimos esta estructura para mantener bajo el costo operativo y evitar la complejidad distribuida mientras no exista una necesidad medida. Clean Architecture organiza las dependencias dentro de los módulos; no reemplaza este estilo global.
+> Qatu sigue cliente-servidor con un backend monolítico modular de siete módulos. Los módulos separan responsabilidades, pero comparten proceso y despliegue. Elegimos esta estructura para mantener bajo el costo operativo y evitar la complejidad distribuida mientras no exista una necesidad medida. Clean Architecture organiza las dependencias dentro de los módulos; no reemplaza este estilo global.

@@ -32,7 +32,6 @@ export interface Solicitud {
   venceEn: string | null;
   pagoEstado: 'PENDIENTE' | 'REGISTRADO_PROVEEDOR' | 'CONFIRMADO_PARTICIPANTES' | 'PAGADO_EN_LINEA';
   pagadoEnLineaCentimos: number;
-  ultimoPago: { estado: string; codigo: string | null; reembolsoPendiente: boolean } | null;
   efectivoCentimos: number;
   entregadoEn: string | null;
   recibidoEn: string | null;

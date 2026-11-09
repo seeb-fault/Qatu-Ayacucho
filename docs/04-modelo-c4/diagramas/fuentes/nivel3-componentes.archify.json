@@ -14,7 +14,7 @@
       "label": "Búsqueda",
       "sublabel": "Intención + consultas",
       "pos": [
-        40,
+        420,
         40
       ],
       "size": [
@@ -28,8 +28,8 @@
       "label": "Reputación",
       "sublabel": "Reseñas e incidencias",
       "pos": [
-        800,
-        40
+        40,
+        260
       ],
       "size": [
         190,
@@ -40,7 +40,7 @@
       "id": "reservas",
       "type": "backend",
       "label": "Reservas",
-      "sublabel": "Calendario y pagos",
+      "sublabel": "Calendario y efectivo",
       "pos": [
         420,
         260
@@ -91,6 +91,34 @@
         240,
         76
       ]
+    },
+    {
+      "id": "pagos",
+      "type": "backend",
+      "label": "Pagos",
+      "sublabel": "Intentos y conciliación",
+      "pos": [
+        800,
+        260
+      ],
+      "size": [
+        240,
+        76
+      ]
+    },
+    {
+      "id": "culqi",
+      "type": "external",
+      "label": "Pasarela Culqi",
+      "sublabel": "Cobros · modo de prueba",
+      "pos": [
+        800,
+        1120
+      ],
+      "size": [
+        240,
+        76
+      ]
     }
   ],
   "boundaries": [
@@ -103,7 +131,8 @@
         "reservas",
         "catalogo",
         "proveedores",
-        "usuarios"
+        "usuarios",
+        "pagos"
       ]
     }
   ],
@@ -147,6 +176,21 @@
       "from": "proveedores",
       "to": "usuarios",
       "label": "Identidad"
+    },
+    {
+      "from": "pagos",
+      "to": "reservas",
+      "label": "OperacionesPago"
+    },
+    {
+      "from": "pagos",
+      "to": "usuarios",
+      "label": "Identidad"
+    },
+    {
+      "from": "pagos",
+      "to": "culqi",
+      "label": "Cobro / consulta"
     }
   ],
   "cards": [
@@ -156,7 +200,8 @@
       "items": [
         "Las flechas indican dependencia de lectura / identidad entre módulos.",
         "Cada módulo conserva sus tablas; no hay REST interno.",
-        "Reservas no depende de Búsqueda ni de IA."
+        "Reservas no depende de Búsqueda ni de IA.",
+        "Pagos depende de Reservas; Reservas solo declara el puerto PagosDeReserva."
       ]
     }
   ]

@@ -2,7 +2,7 @@
   "schema_version": 1,
   "diagram_type": "architecture",
   "meta": {
-    "title": "Qatu · Nivel 3 · Entrada HTTP y seis módulos",
+    "title": "Qatu · Nivel 3 · Entrada HTTP y siete módulos",
     "output": "docs/04-modelo-c4/diagramas/html/nivel3-entrada-http.html",
     "locale": "es",
     "quality_profile": "showcase"
@@ -68,7 +68,7 @@
       "id": "reservas",
       "type": "backend",
       "label": "Reservas",
-      "sublabel": "Calendario y pagos",
+      "sublabel": "Calendario y efectivo",
       "pos": [
         800,
         560
@@ -119,6 +119,34 @@
         240,
         76
       ]
+    },
+    {
+      "id": "pagos",
+      "type": "backend",
+      "label": "Pagos",
+      "sublabel": "Intentos y conciliación",
+      "pos": [
+        800,
+        1080
+      ],
+      "size": [
+        240,
+        76
+      ]
+    },
+    {
+      "id": "culqi",
+      "type": "external",
+      "label": "Pasarela Culqi",
+      "sublabel": "Cobros · modo de prueba",
+      "pos": [
+        800,
+        1320
+      ],
+      "size": [
+        240,
+        76
+      ]
     }
   ],
   "boundaries": [
@@ -132,7 +160,8 @@
         "reservas",
         "catalogo",
         "proveedores",
-        "usuarios"
+        "usuarios",
+        "pagos"
       ]
     }
   ],
@@ -165,6 +194,15 @@
     {
       "from": "http",
       "to": "usuarios"
+    },
+    {
+      "from": "http",
+      "to": "pagos"
+    },
+    {
+      "from": "pagos",
+      "to": "culqi",
+      "label": "HTTPS"
     }
   ],
   "cards": [
@@ -172,8 +210,9 @@
       "dot": "cyan",
       "title": "Límite de despliegue",
       "items": [
-        "Los seis módulos se ejecutan en el mismo proceso NestJS.",
-        "Los permisos de administrador no crean un séptimo módulo."
+        "Los siete módulos se ejecutan en el mismo proceso NestJS.",
+        "Los permisos de administrador no crean un octavo módulo.",
+        "Solo Pagos habla con la pasarela de pago."
       ]
     }
   ]

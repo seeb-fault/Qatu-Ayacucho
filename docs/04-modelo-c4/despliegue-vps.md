@@ -4,7 +4,7 @@ Diagramas de diseño propuesto generados con Archify. Las imágenes PNG se puede
 
 ## Alcance
 
-Vista de despliegue complementaria a C4. Un VPS Linux con Docker Compose; seis módulos en una API NestJS, web Next.js y PostgreSQL. Redis opcional. Configuración operativa propuesta; no es un despliegue realizado.
+Vista de despliegue complementaria a C4. Un VPS Linux con Docker Compose; siete módulos en una API NestJS, web Next.js y PostgreSQL. Redis opcional. Configuración operativa propuesta; no es un despliegue realizado.
 
 ![Qatu · Despliegue propuesto · VPS](./diagramas/png/despliegue-vps.png)
 

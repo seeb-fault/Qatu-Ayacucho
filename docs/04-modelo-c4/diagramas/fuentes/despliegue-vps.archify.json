@@ -54,7 +54,7 @@
       "id": "api",
       "type": "backend",
       "label": "API NestJS",
-      "sublabel": "6 módulos + outbox",
+      "sublabel": "7 módulos + outbox",
       "pos": [
         380,
         530

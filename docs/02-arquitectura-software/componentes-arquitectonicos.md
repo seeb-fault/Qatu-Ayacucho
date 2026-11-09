@@ -13,20 +13,21 @@ Vista C4 de nivel 3 adaptada al MVP de alquiler de herramientas y contratación 
 - [Archivo editable diagrams.net](./diagramas/fuentes/componentes-qatu.drawio): abrir en diagrams.net mediante Archivo → Abrir desde → Dispositivo.
 - [Datos del diagrama](./diagramas/fuentes/componentes-qatu.json) y [renderizador PNG](./diagramas/scripts/render-componentes.ps1): fuentes reproducibles de la imagen.
 
-## Seis módulos de negocio
+## Siete módulos de negocio
 
 | Componente | Responsabilidad |
 |---|---|
 | Usuarios y acceso | Registro, identidad, roles y autorización por propiedad |
 | Proveedores | Perfil, verificación y zonas de atención |
 | Catálogo | Publicaciones, recursos físicos, categorías y tarifas |
-| Reservas y contratación | Solicitudes, calendario, cotización, estados y coordinación del pago |
+| Reservas y contratación | Solicitudes, calendario, cotización, estados y efectivo al recoger |
+| Pagos | Pago en línea: intentos, pasarela, conciliación, avisos de la pasarela y reembolsos pendientes |
 | Reputación y confianza | Reseñas verificadas, evidencias, garantías documentales e incidencias |
 | Búsqueda inteligente | Interpretar lenguaje natural, validar filtros y consultar ofertas/disponibilidad reales |
 
 ## Soporte e integraciones
 
-Pagos es un componente interno de Reservas, no un séptimo módulo. Culqi procesa el pago y Yape es un medio sujeto a habilitación y pruebas de integración. El backend verifica importe, referencia y estado; gestiona intentos, eventos repetidos y conciliación.
+Pagos es el séptimo módulo y depende de Reservas, nunca al revés. Culqi procesa el pago y Yape es un medio sujeto a habilitación y pruebas de integración. El backend verifica importe, referencia y estado; gestiona intentos, eventos repetidos y conciliación.
 
 Notificaciones/outbox publica eventos durables después del commit y reintenta entregas. Mapas utiliza un adaptador compartido. PostgreSQL almacena datos propios por módulo; cada módulo usa su repositorio y llama a otro mediante su API pública. Las fotografías y evidencias se almacenan con acceso autorizado; la garantía es documental, sin custodia propia en el MVP. Redis es opcional tras medir rendimiento.
 

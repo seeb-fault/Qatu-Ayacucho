@@ -24,7 +24,7 @@ Las invocaciones de esta versión usan guion y se escriben en el chat del agente
 
 ```text
 /speckit-clarify Revisa la especificación seleccionada contra docs y resuelve sus decisiones pendientes antes de la operación afectada.
-/speckit-plan Conserva los seis módulos y los contratos Qatu; completa el plan seleccionado sin cambiar el alcance.
+/speckit-plan Conserva los siete módulos y los contratos Qatu; completa el plan seleccionado sin cambiar el alcance.
 /speckit-tasks Organiza las tareas por historias y conserva trazabilidad RF/HU/EQ.
 /speckit-analyze Comprueba constitución, cobertura y coherencia de los artefactos seleccionados.
 ```

@@ -4,9 +4,11 @@ import { execFileSync } from 'node:child_process';
 import { test } from 'node:test';
 import { Pool } from 'pg';
 import { crearApp } from '../../src/app';
-import { Pagos } from '../../src/modules/reservas/aplicacion/pagos';
-import { entradaPago, type CargoExterno, type ProcesadorPagos, type ResultadoPago, type SolicitudCobro } from '../../src/modules/reservas/dominio/pagos';
-import { crearProcesador, ProcesadorCulqi, ProcesadorDoble } from '../../src/modules/reservas/infraestructura/culqi';
+import { Pagos } from '../../src/modules/pagos/aplicacion/pagos';
+import { entradaPago, type CargoExterno, type ProcesadorPagos, type ResultadoPago, type SolicitudCobro } from '../../src/modules/pagos/dominio/pagos';
+import { crearProcesador, ProcesadorCulqi, ProcesadorDoble } from '../../src/modules/pagos/infraestructura/culqi';
+import { PostgresPagos } from '../../src/modules/pagos/infraestructura/postgres';
+import { EnlacePagos } from '../../src/modules/reservas/aplicacion/enlace-pagos';
 import { PostgresReservas } from '../../src/modules/reservas/infraestructura/postgres';
 import { PostgresUsuarios } from '../../src/modules/usuarios/infraestructura/postgres';
 import { ScryptPasswords } from '../../src/modules/usuarios/infraestructura/passwords';
@@ -94,10 +96,11 @@ test('pagos reales en PostgreSQL: herramienta, oficio, idempotencia, incertidumb
     const pagar=(s:any,token:string,cookie=clienteH,clave:string=randomUUID())=>pedir('/reservas/'+s.id+'/pagos','POST',{tokenId:token},cookie,{'Idempotency-Key':clave});
     const leer=async(id:string,cookie:string)=>(await pedir('/reservas/'+id,'GET',undefined,cookie)).json();
     const bloqueo=async(id:string)=>(await pool.query('SELECT activo FROM reservas_bloqueos WHERE reserva_id=$1',[id])).rows[0]?.activo;
-    const fila=async(id:string)=>(await pool.query('SELECT * FROM reservas_pagos WHERE reserva_id=$1 ORDER BY creado_en',[id])).rows;
+    const fila=async(id:string)=>(await pool.query('SELECT * FROM pagos_intentos WHERE reserva_id=$1 ORDER BY creado_en',[id])).rows;
     const eventos=async(id:string,tipo:string)=>(await pool.query('SELECT count(*)::integer AS n FROM reservas_outbox WHERE agregado_id=$1 AND tipo=$2',[id,tipo])).rows[0].n;
+    const reservasDirectas=new PostgresReservas(pool,new EnlacePagos()),pagosDirectos=new PostgresPagos(pool,reservasDirectas);
     // Procesador propio para simular a la pasarela sin depender del de la app.
-    const directo=(procesador:ProcesadorPagos,ahora?:()=>number)=>new Pagos(new PostgresReservas(pool),{resolver:async()=>{throw new Error('sin uso');}},procesador,'pk_test_x',ahora);
+    const directo=(procesador:ProcesadorPagos,ahora?:()=>number)=>new Pagos(pagosDirectos,{resolver:async()=>{throw new Error('sin uso');}},procesador,'pk_test_x',ahora);
 
     await context.test('la configuración es pública y solo expone la llave de prueba',async()=>{
       assert.deepEqual(await (await pedir('/pagos/configuracion')).json(),{disponible:true,llavePublica:'pk_test_doble',modo:'prueba'});
@@ -155,6 +158,14 @@ test('pagos reales en PostgreSQL: herramienta, oficio, idempotencia, incertidumb
       const c=await paso(await leer(s.id,clienteH),'cancelacion',clienteH,{motivo:'Cambié de planes para este trabajo.'});assert.equal(c.pagoEstado,'PAGADO_EN_LINEA');
     });
 
+    await context.test('sin poder marcar el reembolso, la cancelación de una reserva pagada se revierte entera',async()=>{
+      const s=await apartada();assert.equal((await pagar(s,'tkn_test_bueno')).status,201);
+      const a=await leer(s.id,clienteH),clienteId=(await pool.query('SELECT cliente_id FROM reservas WHERE id=$1',[s.id])).rows[0].cliente_id;
+      await assert.rejects(reservasDirectas.ejecutar(s.id,clienteId,a.version,'cancelacion','Ya no necesito la herramienta.'),/no está conectado/);
+      const d=await leer(s.id,clienteH);assert.equal(d.estado,'APARTADO_PAGADO');assert.equal(d.version,a.version);assert.equal(d.ultimoPago.reembolsoPendiente,false);
+      assert.equal(await bloqueo(s.id),true);assert.equal(await eventos(s.id,'RESERVA_CANCELADA'),0);assert.equal(await eventos(s.id,'REEMBOLSO_PENDIENTE'),0);
+    });
+
     await context.test('cancelar tras pagar libera la unidad y deja el reembolso pendiente, sin devolver solo',async()=>{
       const s=await apartada();assert.equal((await pagar(s,'tkn_test_cancela')).status,201);
       const c=await paso(await leer(s.id,clienteH),'cancelacion',clienteH,{motivo:'Encontré otra solución para el trabajo.'});
@@ -180,7 +191,7 @@ test('pagos reales en PostgreSQL: herramienta, oficio, idempotencia, incertidumb
       await directo(vacia,()=>Date.now()+61*60000).conciliar(50);const [p]=await fila(s.id);assert.equal(p.estado,'RECHAZADO');assert.equal(p.codigo,'SIN_CARGO_CONFIRMADO');
       assert.equal((await leer(s.id,clienteH)).estado,'ACEPTADA');
       const cargo:CargoExterno={referencia:'chr_test_'+randomUUID().replace(/-/g,''),intentoId:i.id,importeCentimos:i.importeCentimos,moneda:'PEN',exitoso:true};
-      assert.equal((await new PostgresReservas(pool).aprobarPago(i.id,cargo.referencia))?.estado,'APROBADO','un cargo que aparece tarde también se registra');
+      assert.equal((await pagosDirectos.aprobarPago(i.id,cargo.referencia))?.estado,'APROBADO','un cargo que aparece tarde también se registra');
       const a=await leer(s.id,clienteH);assert.equal(a.estado,'APARTADO_PAGADO');
       await paso(a,'cancelacion',clienteH,{motivo:'Cancelo tras localizar el cargo tardío.'});
     });
@@ -188,8 +199,8 @@ test('pagos reales en PostgreSQL: herramienta, oficio, idempotencia, incertidumb
     await context.test('pago tardío: no reactiva la reserva vencida ni quita la unidad a otra persona',async()=>{
       const s=await apartada(),r=await pagar(s,'tkn_test_timeout_tardio');assert.equal(r.status,202);const i=await r.json();
       await pool.query("UPDATE reservas SET vence_en=clock_timestamp()-interval '1 second' WHERE id=$1",[s.id]);
-      await new PostgresReservas(pool).vencer();assert.equal((await leer(s.id,clienteH)).estado,'VENCIDA');assert.equal(await bloqueo(s.id),false);
-      const aprobado=await new PostgresReservas(pool).aprobarPago(i.id,'chr_test_'+randomUUID().replace(/-/g,''));
+      await reservasDirectas.vencer();assert.equal((await leer(s.id,clienteH)).estado,'VENCIDA');assert.equal(await bloqueo(s.id),false);
+      const aprobado=await pagosDirectos.aprobarPago(i.id,'chr_test_'+randomUUID().replace(/-/g,''));
       assert.equal(aprobado?.reembolsoPendiente,true);
       const a=await leer(s.id,clienteH);assert.equal(a.estado,'VENCIDA');assert.equal(a.pagoEstado,'PENDIENTE');assert.equal(a.pagadoEnLineaCentimos,0);assert.equal(await bloqueo(s.id),false);
       assert.equal((await fila(s.id))[0].reembolso_motivo,'PAGO_TARDIO');assert.equal(await eventos(s.id,'REEMBOLSO_PENDIENTE'),1);assert.equal(await eventos(s.id,'PAGO_APROBADO'),0);
@@ -235,8 +246,8 @@ test('pagos reales en PostgreSQL: herramienta, oficio, idempotencia, incertidumb
       const s=await oficioPorPagar();
       await assert.rejects(()=>pool.query("UPDATE reservas SET estado='SERVICIO_CERRADO',pago_estado='PAGADO_EN_LINEA',pagado_en_linea_centimos=1,importe_final_centimos=1,servicio_cerrado_en=clock_timestamp() WHERE id=$1",[s.id]),(e:any)=>e.code==='23514');
       await assert.rejects(()=>pool.query("UPDATE reservas SET pagado_en_linea_centimos=5 WHERE id=$1",[s.id]),(e:any)=>e.code==='23514');
-      const clienteId=(await pool.query('SELECT cliente_id FROM reservas WHERE id=$1',[s.id])).rows[0].cliente_id,insertar=()=>pool.query('INSERT INTO reservas_pagos(id,reserva_id,cliente_id,clave,huella,importe_centimos) VALUES($1,$2,$3,$4,$5,1)',[randomUUID(),s.id,clienteId,randomUUID(),'a'.repeat(64)]);
-      await insertar();await assert.rejects(insertar,(e:any)=>e.constraint==='reservas_pagos_activo');
+      const clienteId=(await pool.query('SELECT cliente_id FROM reservas WHERE id=$1',[s.id])).rows[0].cliente_id,insertar=()=>pool.query('INSERT INTO pagos_intentos(id,reserva_id,cliente_id,clave,huella,importe_centimos) VALUES($1,$2,$3,$4,$5,1)',[randomUUID(),s.id,clienteId,randomUUID(),'a'.repeat(64)]);
+      await insertar();await assert.rejects(insertar,(e:any)=>e.constraint==='pagos_intentos_activo');
     });
   } finally {await app.close();await pool.end();}
 });

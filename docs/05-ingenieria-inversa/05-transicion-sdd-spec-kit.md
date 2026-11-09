@@ -19,7 +19,7 @@ La evidencia externa informa el diseño; los requisitos Qatu y las decisiones ar
 
 ## Principios que proponemos trasladar a la constitución
 
-- Monolito modular con seis módulos: Usuarios, Proveedores, Catálogo, Reservas, Reputación y Búsqueda; pagos dentro de Reservas.
+- Monolito modular con siete módulos: Usuarios, Proveedores, Catálogo, Reservas, Pagos, Reputación y Búsqueda (ADR-014).
 - Next.js/TypeScript, NestJS/TypeScript y PostgreSQL/PostGIS conforme a la arquitectura vigente; despliegue inicial Docker Compose en VPS.
 - Reserva, pago y garantía mantienen estados distintos. El backend autoriza acciones y calcula importes.
 - Aceptación y bloqueo de recurso/agenda son transaccionales; una solicitud pendiente no asegura disponibilidad.
@@ -46,7 +46,7 @@ Antes de escribir código: definir la especificación de esta entrega, sus crite
 
 ## Organización vigente de especificaciones
 
-Se conserva el recorrido web 001; se detallan los seis módulos en 002–007 y el despliegue en 008. La numeración y el orden de trabajo están en [el índice de specs](../../specs/README.md). Pagos continúa dentro de Reservas; administración sigue siendo una interfaz por permisos.
+Se conserva el recorrido web 001; se detallan los siete módulos en 002–007 y el despliegue en 008. La numeración y el orden de trabajo están en [el índice de specs](../../specs/README.md). Pagos se especifica en 005 y es un módulo propio; administración sigue siendo una interfaz por permisos.
 
 ## Decisiones que se deben aclarar en su entrega
 

@@ -142,3 +142,11 @@ La tabla siguiente conserva los pendientes de aceptación del módulo completo, 
 | Limitaciones y fallos | Pendiente |
 
 [Escenarios fuente](../../docs/01-analisis-de-sistema/08-escenarios-atributos-calidad.md) · [Plan](./plan.md).
+
+### Validación local de la separación del módulo de pagos — ADR-014 (2026-11-06)
+
+- Entorno: Windows y PostgreSQL/PostGIS local en Docker, en bases nuevas con sufijo `_test` y variables configuradas en el proceso. No se modificó `.env`. Validación sobre el árbol de trabajo, antes del commit.
+- Backend: `npm test` aprobó 143 pruebas sin omisiones. Incluye el paso de `test/pagos/pagos.test.ts` al módulo nuevo, `limites.test.ts` (Reservas no conoce a Pagos; Pagos no toca tablas de Reservas) y la reversión completa de una cancelación pagada si no se puede marcar el reembolso.
+- Navegador: `test:reservas` aprobó 8 recorridos y `test:pagos` 2. Son los mismos 10 de antes de separar, ahora en dos suites.
+- Migración `pagos/001-tablas-propias`: aplicada, revertida y reaplicada en una base de prueba; renombra tablas, restricciones e índices.
+- Detector: 25 pruebas aprobadas. Sigue pendiente T071: los pagos solo se han probado con el simulador, no con Culqi sandbox real. Las imágenes de arquitectura aún muestran seis módulos.

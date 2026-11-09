@@ -1,6 +1,7 @@
 import type { NuevaSolicitud, Solicitud } from './solicitud';
 import type { AccionReserva } from './alquiler';
 import type { PropuestaCotizacion } from './cotizacion';
+import type { Transaccion } from '../../../shared/dominio/transaccion';
 
 export interface EventoReserva {
   id: string; tipo: string; reservaId: string; clienteId: string; propietarioId: string;
@@ -31,6 +32,19 @@ export interface CatalogoReservas {
   }>;
 }
 export interface ProveedoresReservas { titular(id: string): Promise<{ usuarioId: string }> }
+export interface UltimoPago { estado: string; codigo: string | null; reembolsoPendiente: boolean }
+/** Lo que Reservas necesita de los pagos. Lo implementa el módulo Pagos; Reservas no lo importa. */
+export interface PagosDeReserva {
+  ultimos(reservaIds: string[]): Promise<Map<string, UltimoPago>>;
+  /** Corre dentro de la transacción de la cancelación: si falla, la reserva no se cancela. */
+  marcarReembolso(tx: Transaccion, reservaId: string): Promise<void>;
+}
+/** Reserva bloqueada que se entrega a quien cobra, junto con la transacción que la protege. */
+export interface ReservaParaPago {
+  tx: Transaccion; id: string; clienteId: string; titulo: string; importePagable: number | null;
+  registrarPago(intentoId: string, importeCentimos: number): Promise<void>;
+  registrarPagoTardio(intentoId: string): Promise<void>;
+}
 export interface RepositorioReservas {
   cotizar(id: string, actorId: string, versionActual: number, propuesta: PropuestaCotizacion): Promise<Solicitud>;
   responderCotizacion(id: string, actorId: string, versionActual: number, versionCotizacion: number, decision: 'ACEPTADA' | 'RECHAZADA', motivo: string | null): Promise<Solicitud>;
@@ -42,4 +56,6 @@ export interface RepositorioReservas {
   vencer(): Promise<number>;
   ejecutar(id: string, actorId: string, versionActual: number, accion: AccionReserva, motivo: string | null): Promise<Solicitud>;
   disponibilidad(recursoId: string, inicio: string, fin: string): Promise<{franjas: {inicio: string; fin: string}[]; enUso: boolean}>;
+  conReserva<T>(id: string, actorId: string | null, operar: (reserva: ReservaParaPago) => Promise<T>): Promise<T>;
+  visible(id: string, actorId: string): Promise<boolean>;
 }

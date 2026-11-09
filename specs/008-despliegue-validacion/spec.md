@@ -1,6 +1,6 @@
 # 008 — Despliegue y validación del MVP
 
-**Estado:** diseño operativo; ningún VPS publicado ni ensayo ejecutado. Entrega transversal de los seis módulos, sin módulo nuevo.
+**Estado:** diseño operativo; ningún VPS publicado ni ensayo ejecutado. Entrega transversal de los siete módulos, sin módulo nuevo.
 
 ## Objetivo
 

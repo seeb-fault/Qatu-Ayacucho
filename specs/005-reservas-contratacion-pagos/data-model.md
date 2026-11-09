@@ -2,6 +2,8 @@
 
 **Fuente:** [modelo lógico Qatu](../../docs/03-diseño-de-software/modelo-de-datos.md). Esta vista pertenece a Reservas; distingue el esquema de 005.1/005.2/005.3 del modelo completo todavía propuesto.
 
+> Desde ADR-014, `reservas_pagos` y `reservas_eventos_pasarela` se llaman `pagos_intentos` y `pagos_eventos_pasarela` y pertenecen al módulo Pagos (migración `pagos/001-tablas-propias`). Las secciones siguientes conservan el nombre con el que se creó cada tabla.
+
 ## Esquema del incremento 005.1
 
 La migración `backend/migrations/reservas/001-solicitudes.sql` crea `reservas` y `reservas_outbox`. `reservas` registra IDs lógicos de cliente, usuario titular del proveedor, proveedor, publicación y recurso; intervalo UTC, descripción, snapshot de referencia, estado PENDIENTE/RECHAZADA, motivo, versión y creación. Comprueba intervalo finito no vacío, cliente distinto del titular y coherencia del motivo. Un índice parcial impide duplicados exactos pendientes del mismo cliente/recurso/rango; no excluye solapamientos entre solicitudes. Los índices de cliente/titular soportan sus bandejas.

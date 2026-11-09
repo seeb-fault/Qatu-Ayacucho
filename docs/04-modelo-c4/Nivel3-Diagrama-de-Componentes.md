@@ -4,7 +4,7 @@ Diagramas de diseño propuesto generados con Archify. Las imágenes PNG se puede
 
 ## Objetivo
 
-Detallar exclusivamente el contenedor API del nivel 2. Los seis módulos se ejecutan juntos; componentes técnicos transversales no se cuentan como módulos de negocio adicionales.
+Detallar exclusivamente el contenedor API del nivel 2. Los siete módulos se ejecutan juntos; componentes técnicos transversales no se cuentan como módulos de negocio adicionales.
 
 ## Entrada de solicitudes
 
@@ -31,11 +31,12 @@ Detallar exclusivamente el contenedor API del nivel 2. Los seis módulos se ejec
 | usuarios | IdentidadUsuarios | Cuentas, roles y permisos |
 | proveedores | ConsultaProveedores | Perfiles, verificación y zona |
 | catalogo | ConsultaCatalogo | Publicaciones, recursos físicos y tarifa |
-| reservas | ConsultaDisponibilidad; casos de uso de solicitudes/pagos | Bloqueos, operaciones, intentos y eventos de pago |
+| reservas | ConsultaDisponibilidad; OperacionesPago | Bloqueos, operaciones, cotizaciones y eventos |
+| pagos | Implementa PagosDeReserva | Intentos de pago y avisos de la pasarela |
 | resenas | RegistroConfianza | Evidencias, garantías documentales, incidencias y reseñas |
 | busqueda | BuscarEnLenguajeNatural | Criterios interpretados y métricas de consumo |
 
-El componente de pagos pertenece a reservas y es único responsable de Culqi. InterpreteIntencion pertenece a busqueda. El adaptador de mapas es compartido como infraestructura, con un único puerto; no duplica lógica por módulo. Catálogo y confianza usan AlmacenEvidencias con políticas distintas de acceso.
+El módulo pagos es único responsable de Culqi. InterpreteIntencion pertenece a busqueda. El adaptador de mapas es compartido como infraestructura, con un único puerto; no duplica lógica por módulo. Catálogo y confianza usan AlmacenEvidencias con políticas distintas de acceso.
 
 ## Reglas
 

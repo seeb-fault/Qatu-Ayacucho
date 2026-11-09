@@ -1,6 +1,6 @@
 {
   "width": 1900,
-  "height": 1800,
+  "height": 1880,
   "title": "[Diagrama de componentes] Qatu — API Backend",
   "subtitle": "Modelo C4 · Nivel 3 · Monolito modular · Alquiler de herramientas y servicios de oficios",
   "nodes": [
@@ -132,7 +132,7 @@
       "lines": [
         "[Módulo: reservas]",
         "Calendario, cotización y estados",
-        "Bloqueos por recurso y fechas"
+        "Bloqueos por recurso y efectivo"
       ],
       "kind": "component"
     },
@@ -153,7 +153,7 @@
     {
       "id": "outbox",
       "x": 140,
-      "y": 1260,
+      "y": 1370,
       "w": 320,
       "h": 100,
       "title": "Notificaciones / outbox",
@@ -166,20 +166,21 @@
     {
       "id": "pagos",
       "x": 560,
-      "y": 1260,
+      "y": 1210,
       "w": 320,
-      "h": 100,
-      "title": "Componente de pagos",
+      "h": 110,
+      "title": "Pagos",
       "lines": [
-        "[Parte interna del módulo Reservas]",
-        "Intentos, verificación y conciliación"
+        "[Módulo: pagos]",
+        "Intentos, verificación y conciliación",
+        "Reembolsos pendientes"
       ],
-      "kind": "support"
+      "kind": "component"
     },
     {
       "id": "mapadapter",
       "x": 980,
-      "y": 1180,
+      "y": 1370,
       "w": 320,
       "h": 100,
       "title": "Adaptador de mapas",
@@ -246,7 +247,7 @@
     {
       "id": "mensajes",
       "x": 1510,
-      "y": 1380,
+      "y": 1400,
       "w": 320,
       "h": 100,
       "title": "Servicio de mensajería",
@@ -259,7 +260,7 @@
     {
       "id": "archivos",
       "x": 1510,
-      "y": 1530,
+      "y": 1610,
       "w": 320,
       "h": 100,
       "title": "Fotos y evidencias",
@@ -272,7 +273,7 @@
     {
       "id": "db",
       "x": 620,
-      "y": 1490,
+      "y": 1570,
       "w": 400,
       "h": 110,
       "title": "Base de datos",
@@ -628,16 +629,16 @@
       "points": [
         [
           720,
-          1140
+          1210
         ],
         [
           720,
-          1260
+          1140
         ]
       ],
-      "label": "Solicita pago",
+      "label": "Reserva por pagar",
       "lx": 720,
-      "ly": 1205,
+      "ly": 1180,
       "style": "solid"
     },
     {
@@ -648,20 +649,20 @@
         ],
         [
           650,
-          1200
+          1190
         ],
         [
           300,
-          1200
+          1190
         ],
         [
           300,
-          1260
+          1370
         ]
       ],
-      "label": "Evento guardado tras commit",
-      "lx": 410,
-      "ly": 1185,
+      "label": "Evento guardado en la transacción",
+      "lx": 440,
+      "ly": 1179,
       "style": "dashed"
     },
     {
@@ -692,11 +693,11 @@
       "points": [
         [
           880,
-          1310
+          1290
         ],
         [
           1460,
-          1310
+          1290
         ],
         [
           1460,
@@ -707,80 +708,80 @@
           1270
         ]
       ],
-      "label": "Cobra / verifica [HTTPS]",
+      "label": "Cobra / consulta [HTTPS]",
       "lx": 1180,
-      "ly": 1295,
+      "ly": 1279,
       "style": "solid"
     },
     {
       "points": [
         [
           1510,
-          1300
+          1310
         ],
         [
-          1480,
-          1300
+          1490,
+          1310
         ],
         [
-          1480,
-          1385
+          1490,
+          1350
         ],
         [
-          720,
-          1385
+          800,
+          1350
         ],
         [
-          720,
-          1360
+          800,
+          1320
         ]
       ],
-      "label": "Notifica resultado; backend verifica",
+      "label": "Aviso de la pasarela; backend consulta",
       "lx": 1150,
-      "ly": 1400,
+      "ly": 1358,
       "style": "dashed"
     },
     {
       "points": [
         [
           460,
-          1335
+          1420
         ],
         [
-          500,
-          1335
+          520,
+          1420
         ],
         [
-          500,
+          520,
+          1485
+        ],
+        [
+          1470,
+          1485
+        ],
+        [
+          1470,
           1450
-        ],
-        [
-          1460,
-          1450
-        ],
-        [
-          1460,
-          1430
         ],
         [
           1510,
-          1430
+          1450
         ]
       ],
       "label": "Envía avisos [HTTPS]",
-      "lx": 1080,
-      "ly": 1437,
+      "lx": 700,
+      "ly": 1480,
       "style": "solid"
     },
     {
       "points": [
         [
           1300,
-          1230
+          1420
         ],
         [
           1400,
-          1230
+          1420
         ],
         [
           1400,
@@ -823,50 +824,97 @@
     {
       "points": [
         [
-          300,
+          200,
           1140
         ],
         [
-          120,
-          1140
+          200,
+          1170
         ],
         [
-          120,
-          1638
+          90,
+          1170
+        ],
+        [
+          90,
+          1718
         ],
         [
           1470,
-          1638
+          1718
         ],
         [
           1470,
-          1580
+          1660
         ],
         [
           1510,
-          1580
+          1660
         ]
       ],
       "label": "Guarda fotos y evidencias mediante adaptador autorizado",
       "lx": 570,
-      "ly": 1624,
+      "ly": 1705,
       "style": "solid"
     },
     {
       "points": [
         [
           820,
-          1420
+          1500
         ],
         [
           820,
-          1490
+          1570
         ]
       ],
       "label": "Repositorios por módulo [SQL]",
       "lx": 820,
-      "ly": 1462,
+      "ly": 1542,
+      "style": "solid"
+    },
+    {
+      "points": [
+        [
+          920,
+          950
+        ],
+        [
+          920,
+          1240
+        ],
+        [
+          880,
+          1240
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
       "style": "solid"
     }
-  ]
+  ],
+  "boundaries": [
+    {
+      "x": 65,
+      "y": 420,
+      "w": 1365,
+      "h": 1080,
+      "title": "API Qatu [Contenedor: NestJS - TypeScript - monolito modular]"
+    },
+    {
+      "x": 120,
+      "y": 700,
+      "w": 1200,
+      "h": 635,
+      "title": "Siete módulos de negocio · API pública",
+      "tx": 320
+    }
+  ],
+  "notes": [
+    "Pagos depende de Reservas y es el único que habla con Culqi; outbox y mapas son soporte, no módulos adicionales.",
+    "La IA solo interpreta búsquedas; reservas y pagos funcionan sin depender de ella.",
+    "Culqi se ha probado solo con simulador; Yape requiere habilitación. Garantías sin custodia propia en el MVP."
+  ],
+  "legend": true
 }

@@ -61,6 +61,10 @@ Estado: 005.1/005.2 implementados y verificados localmente. Herramientas con ace
 - [x] T070 Verificar con doble e HTTP simulado: 20 reenvíos, claves distintas, importes y monedas incorrectos, falsificación, timeout y pago tardío; registrar evidencia en quickstart.md y activar 005.8 en CI.
 - [ ] T071 Probar con llaves reales de sandbox de Culqi: rutas, tokens, cargos, 3DS, listado y webhooks; ajustar el adaptador y registrar la evidencia.
 
+## Separación del módulo de pagos (ADR-014)
+
+- [x] T072 Mover pagos en línea a backend/src/modules/pagos/ con tablas propias, sin ciclos ni cambio de rutas, conservando la transacción de reserva y pago; verificar límites y registrar evidencia en quickstart.md.
+
 ## Conciliación de tareas originales (2026-11-05)
 
 Se revisaron T001–T036 contra lo implementado en 005.1–005.7. Se marcaron únicamente las cubiertas por completo:
