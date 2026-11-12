@@ -101,7 +101,7 @@ export function validarEntrega(root) {
     for (const relative of ['backend/migrations/resenas/002-evidencias.sql','backend/src/shared/infraestructura/archivos-cifrados.ts','backend/src/modules/resenas/aplicacion/evidencias.ts','backend/test/resenas/evidencias.test.ts','frontend/src/components/resenas/EvidenciasReserva.tsx','frontend/tests/resenas/evidencias.spec.ts']) requerir(relative);
   } else ausente('backend/migrations/resenas/002-evidencias.sql');
   if (incidencias) {
-    for (const relative of ['backend/migrations/resenas/003-incidencias-garantias.sql','backend/src/modules/resenas/aplicacion/incidencias.ts','backend/test/resenas/incidencias.test.ts','backend/test/resenas/fixture-admin-e2e.ts','frontend/src/components/resenas/GarantiaReserva.tsx','frontend/src/components/resenas/IncidenciasReserva.tsx','frontend/src/app/admin/incidencias/page.tsx','frontend/tests/resenas/incidencias.spec.ts']) requerir(relative);
+    for (const relative of ['backend/migrations/resenas/003-incidencias-garantias.sql','backend/migrations/reservas/010-eventos-incidencias.sql','backend/scripts/restauracion.ts','backend/test/resenas/restauracion.test.ts','backend/src/modules/resenas/aplicacion/incidencias.ts','backend/test/resenas/incidencias.test.ts','backend/test/resenas/fixture-admin-e2e.ts','frontend/src/components/resenas/GarantiaReserva.tsx','frontend/src/components/resenas/IncidenciasReserva.tsx','frontend/src/app/admin/incidencias/page.tsx','frontend/tests/resenas/incidencias.spec.ts']) requerir(relative);
   } else ausente('backend/migrations/resenas/003-incidencias-garantias.sql');
   return {
     entrega: manifest.ultimaEntrega,

@@ -10,7 +10,7 @@
 ## Aceptación funcional (pendiente)
 
 - [ ] Ejecutar US positivos y negativos con persistencia real cuando aplica.
-- [ ] Comprobar EQ-04, EQ-05, EQ-09 y guardar evidencia de condiciones/resultados.
+- [ ] Comprobar EQ-04, EQ-05, EQ-09 y guardar evidencia de condiciones/resultados. EQ-09: restauración local verificada (quickstart, 2026-11-12); copias fuera del VPS y RPO/RTO en 008.
 - [ ] Verificar seguridad, estados web y logs sin secretos.
 - [ ] Analizar consistencia y resolver diferencias antes del cierre.
 

@@ -1,4 +1,5 @@
 import { ErrorAplicacion } from '../../../shared/dominio/error-aplicacion';
+import type { Transaccion } from '../../../shared/dominio/transaccion';
 
 export class ErrorResena extends ErrorAplicacion {}
 
@@ -12,7 +13,11 @@ export interface ReservaParaResena {
   titulo: string; tipo: 'herramienta' | 'servicio'; estado: string; cerradaEn: string | null;
 }
 /** Lo que Reseñas necesita de Reservas. Lo cumple la fachada ConsultaReservas. */
-export interface ReservasDeResena { paraResena(id: string, actorId: string): Promise<ReservaParaResena | null> }
+export interface ReservasDeResena {
+  paraResena(id: string, actorId: string): Promise<ReservaParaResena | null>;
+  /** Registra el cambio de Reseñas y su aviso en la misma transacción de Reservas. */
+  conEvento<T>(reservaId: string, tipo: 'INCIDENCIA_ABIERTA' | 'INCIDENCIA_RESUELTA', actorId: string, operar: (tx: Transaccion) => Promise<T>): Promise<T>;
+}
 export interface IdentidadResenas { resolver(token: string): Promise<{ id: string; roles: string[] }> }
 
 export interface Resena {

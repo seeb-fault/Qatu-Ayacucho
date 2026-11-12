@@ -1,6 +1,6 @@
 # 006 — Reputación y confianza
 
-**Estado:** 006.1 (reseñas y moderación), 006.2 (evidencias privadas) y 006.3 (incidencias y garantía documental) implementados y verificados localmente. Pendiente: restauración EQ-09 y avisos a los participantes de una incidencia. **Fecha:** 2026-10-15.
+**Estado:** 006.1 (reseñas y moderación), 006.2 (evidencias privadas) y 006.3 (incidencias y garantía documental) implementados y verificados localmente. Con avisos de incidencias y restauración EQ-09 verificada localmente (las copias diarias fuera del VPS y la conciliación con la pasarela se completan en 008 y en Pagos). Pendiente: análisis de consistencia final. **Fecha:** 2026-10-15.
 **Módulo técnico:** resenas. **Historias:** HU10, HU14, HU17, HU18.
 
 ## Objetivo y alcance

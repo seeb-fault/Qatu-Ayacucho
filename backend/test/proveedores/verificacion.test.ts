@@ -12,6 +12,9 @@ import { DocumentosPrivados } from '../../src/modules/proveedores/infraestructur
 
 const png = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jL1sAAAAASUVORK5CYII=','base64');
 
+/** Clave del entorno, si la hay: así una base compartida queda legible con una sola clave (simulacro EQ-09). */
+const claveEntorno = process.env.DOCUMENTOS_KEY;
+
 test('documentos cifrados con autenticación, tipo y tamaño verificados', () => {
   process.env.DOCUMENTOS_KEY = randomBytes(32).toString('hex');
   const cifrado = new DocumentosPrivados();
@@ -27,7 +30,7 @@ test('carga, revisión y conservación documental privadas con PostgreSQL real',
   process.env.JWT_SECRET = 'secreto-exclusivo-de-pruebas-documentales-488';
   process.env.APP_ORIGIN = 'http://127.0.0.1:3000';
   process.env.NODE_ENV = 'test';
-  process.env.DOCUMENTOS_KEY = randomBytes(32).toString('hex');
+  process.env.DOCUMENTOS_KEY = claveEntorno || randomBytes(32).toString('hex');
   const clave = process.env.DOCUMENTOS_KEY;
   const pool = new Pool({ connectionString: process.env.TEST_DATABASE_URL });
   const usuarios = new PostgresUsuarios(pool);
