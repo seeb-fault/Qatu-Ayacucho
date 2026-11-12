@@ -37,3 +37,11 @@ No hay aplicación ejecutable todavía. Al implementar, completar aquí los coma
 - Navegador: `test:resenas` aprobó el recorrido: devolución real, reseña con validación, vista del proveedor sin formulario, perfil público, tarjeta del catálogo y perfil sin desborde a 360 px. `test:catalogo` 2, `test:proveedores` 6 y `npm test` 14 aprobadas.
 - En la ejecución secuencial de todas las suites fallaron una vez `efectivo.spec.ts` (alquiler con efectivo) y el recorrido de oficio de `pagos.spec.ts`; repetidos dos veces por separado aprobaron siempre (2 y 1). Se registra como inestabilidad por tiempo, sin causa confirmada; cada reserva cerrada hace ahora una consulta adicional de reseña.
 - Pendientes de 006: evidencias (006.2), garantía documental e incidencias (006.3), restauración EQ-09.
+
+## Validación local del incremento 006.2 — evidencias (2026-11-11)
+
+- Entorno: Windows, Node.js 24, PostgreSQL/PostGIS local en Docker, bases nuevas con sufijo `_test`; `DOCUMENTOS_KEY` aleatoria en el proceso. No se modificó `.env`.
+- Backend: `npm test` aprobó 160 pruebas sin omisiones. `test/resenas/evidencias.test.ts` cubre las etapas en dominio y, con PostgreSQL real: etapa cerrada (409), tercero (404), anónimo (401), PDF disfrazado y PDF real (400), etapa desconocida (400), cupo de 4 por etapa (409), descarga `attachment` con `CSP sandbox` y bytes idénticos para cliente, proveedor y administrador, contenido cifrado en la base, y retención: a los 90 días del cierre se borra el contenido, se conserva el hash y la descarga responde 410.
+- El cifrado de los documentos de verificación pasó a `shared/infraestructura/archivos-cifrados.ts` sin cambiar su comportamiento: `verificacion.test.ts` aprobó 9 de 9. Su prueba de conservación lanzaba el script de limpieza con `execFileSync`, que bloqueaba el servidor de la prueba y producía `ECONNRESET` (ya registrado en 005); ahora usa `execFile` asíncrono y aprobó tres repeticiones.
+- Navegador: `test:resenas` 2 (reseñas y evidencias: PDF rechazado, foto subida y descargada intacta, visible para el proveedor, 401 sin sesión, sin desborde a 360 px), `test:reservas` 8, `test:pagos` 2, `test:proveedores` 6, `test:catalogo` 2 y `npm test` 14, todas aprobadas.
+- Pendientes de 006: garantía documental e incidencias (006.3), que además deben retener evidencias con incidencia abierta, y la restauración EQ-09.

@@ -1,6 +1,6 @@
 # 006 — Reputación y confianza
 
-**Estado:** 006.1 (reseñas y moderación) implementado y verificado localmente; evidencias, garantía documental e incidencias pendientes. **Fecha:** 2026-10-15.
+**Estado:** 006.1 (reseñas y moderación) y 006.2 (evidencias privadas) implementados y verificados localmente; garantía documental e incidencias pendientes. **Fecha:** 2026-10-15.
 **Módulo técnico:** resenas. **Historias:** HU10, HU14, HU17, HU18.
 
 ## Objetivo y alcance
