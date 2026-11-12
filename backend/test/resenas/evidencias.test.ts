@@ -10,7 +10,7 @@ import { PostgresUsuarios } from '../../src/modules/usuarios/infraestructura/pos
 import { ScryptPasswords } from '../../src/modules/usuarios/infraestructura/passwords';
 
 const HORA = 3_600_000;
-const reserva = (estado: string, cerradaEn: string | null = null): ReservaParaResena => ({ id: 'r', clienteId: 'c', propietarioId: 'p', proveedorId: 'v', publicacionId: 'o', titulo: 'Taladro', estado, cerradaEn });
+const reserva = (estado: string, cerradaEn: string | null = null): ReservaParaResena => ({ id: 'r', clienteId: 'c', propietarioId: 'p', proveedorId: 'v', publicacionId: 'o', titulo: 'Taladro', tipo: 'herramienta', estado, cerradaEn });
 /** PNG mínimo válido: firma correcta y bytes aleatorios para que cada archivo tenga otra huella. */
 const png = () => Buffer.concat([Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]), randomBytes(64)]);
 

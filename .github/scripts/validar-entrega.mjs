@@ -13,7 +13,7 @@ export function validarEntrega(root) {
   const indice = entregas.indexOf(manifest.ultimaEntrega);
   assert.ok(indice >= 0, 'Entrega desconocida');
   const incrementos = manifest.incrementos ?? [];
-  assert.ok(Array.isArray(incrementos) && incrementos.every(i => ['005.1','005.2','005.3','005.4','005.5','005.6','005.7','005.8','006.1','006.2'].includes(i)) && new Set(incrementos).size === incrementos.length, 'Incremento desconocido o repetido');
+  assert.ok(Array.isArray(incrementos) && incrementos.every(i => ['005.1','005.2','005.3','005.4','005.5','005.6','005.7','005.8','006.1','006.2','006.3'].includes(i)) && new Set(incrementos).size === incrementos.length, 'Incremento desconocido o repetido');
   const reservas = incrementos.includes('005.1');
   const efectivo = incrementos.includes('005.2');
   const cotizaciones = incrementos.includes('005.3');
@@ -25,6 +25,8 @@ export function validarEntrega(root) {
   const resenas = incrementos.includes('006.1');
   const evidencias = incrementos.includes('006.2');
   assert.ok(!evidencias || resenas, '006.2 requiere reseñas 006.1');
+  const incidencias = incrementos.includes('006.3');
+  assert.ok(!incidencias || evidencias, '006.3 requiere evidencias 006.2');
   assert.ok(!resenas || ejecucion, '006.1 requiere operaciones cerradas: herramientas devueltas (005.2) y servicios cerrados (005.5)');
   assert.ok(!pagos || avisos, '005.8 requiere avisos 005.7');
   assert.ok(!avisos || despacho, '005.7 requiere despacho 005.6');
@@ -98,6 +100,9 @@ export function validarEntrega(root) {
   if (evidencias) {
     for (const relative of ['backend/migrations/resenas/002-evidencias.sql','backend/src/shared/infraestructura/archivos-cifrados.ts','backend/src/modules/resenas/aplicacion/evidencias.ts','backend/test/resenas/evidencias.test.ts','frontend/src/components/resenas/EvidenciasReserva.tsx','frontend/tests/resenas/evidencias.spec.ts']) requerir(relative);
   } else ausente('backend/migrations/resenas/002-evidencias.sql');
+  if (incidencias) {
+    for (const relative of ['backend/migrations/resenas/003-incidencias-garantias.sql','backend/src/modules/resenas/aplicacion/incidencias.ts','backend/test/resenas/incidencias.test.ts','backend/test/resenas/fixture-admin-e2e.ts','frontend/src/components/resenas/GarantiaReserva.tsx','frontend/src/components/resenas/IncidenciasReserva.tsx','frontend/src/app/admin/incidencias/page.tsx','frontend/tests/resenas/incidencias.spec.ts']) requerir(relative);
+  } else ausente('backend/migrations/resenas/003-incidencias-garantias.sql');
   return {
     entrega: manifest.ultimaEntrega,
     frontend: indice >= 1,
