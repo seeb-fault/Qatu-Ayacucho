@@ -23,9 +23,18 @@
 
 Entrada de reseña: `{ puntuacion: 1–5 entero, texto?: hasta 600 }`; campos extra se rechazan. `promedio` se redondea a un decimal y es `null` sin reseñas visibles. La ruta es singular porque hay una reseña por reserva.
 
+## Implementado en 006.2 — Evidencias
+
+| Método | Ruta | Acceso | Respuesta |
+|---|---|---|---|
+| GET | /reservas/:id/evidencias | Participante (404 a terceros) | `{ items, etapasAbiertas, maximoPorEtapa, diasDeRetencion }`; cada item: id, etapa, autor (cliente/proveedor), tipo, bytes, sha256, creadaEn, disponible |
+| POST | /reservas/:id/evidencias | Participante; multipart con `etapa` y `fotos` (1–4) | 201 `{ items }`. 400 formato o etapa; 404 tercero; 409 `ETAPA_CERRADA` o `CUPO_EVIDENCIAS`; 503 sin `DOCUMENTOS_KEY` |
+| GET | /evidencias/:id/archivo | Participante o administrador | Descarga `attachment` con `CSP sandbox`; 404 a terceros; 410 si se borró por retención |
+
+Etapas: **entrega** con la herramienta en manos del cliente (ENTREGA_POR_CONFIRMAR, EN_CURSO); **devolución** desde el aviso (DEVOLUCION_PENDIENTE) y hasta 48 h después de DEVUELTA; **trabajo** durante el servicio y hasta 48 h después de SERVICIO_CERRADO. Solo JPEG o PNG reconocidos por firma, de hasta 5 MiB, 4 por etapa. El guard comprueba sesión y participación antes de leer los archivos; `app.ts` solo admite multipart en esta ruta y en la verificación de proveedores.
+
 ## Extensiones propuestas para cubrir requisitos existentes
 
-- GET /evidencias/:id/archivo con autorización por participante/admin.
 - POST/PATCH /reservas/:id/garantia para acuerdo y registro documental.
 - Resolución de incidencias auditada.
 

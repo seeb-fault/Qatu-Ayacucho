@@ -168,6 +168,11 @@ export class PostgresReservas implements RepositorioReservas {
     return f ? { ...f, cerradaEn: f.cerradaEn ? new Date(f.cerradaEn).toISOString() : null } : null;
   }
 
+  async cierres(ids: string[]) {
+    const r = await this.pool.query('SELECT id, COALESCE(devuelto_en, servicio_cerrado_en) AS cierre FROM reservas WHERE id=ANY($1::uuid[])', [ids]);
+    return new Map<string, string | null>(r.rows.map(f => [f.id as string, f.cierre ? new Date(f.cierre).toISOString() : null]));
+  }
+
   async visible(id: string, actorId: string) {
     return Boolean((await this.pool.query('SELECT 1 FROM reservas WHERE id=$1 AND (cliente_id=$2 OR propietario_id=$2)', [id,actorId])).rowCount);
   }
