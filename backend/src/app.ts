@@ -8,10 +8,11 @@ import { ProveedoresModule } from './modules/proveedores';
 import { CatalogoModule } from './modules/catalogo';
 import { ReservasModule } from './modules/reservas';
 import { PagosModule } from './modules/pagos';
+import { ResenasModule } from './modules/resenas';
 import { ErrorAplicacion } from './shared/dominio/error-aplicacion';
 import { describirError } from './shared/infraestructura/base-datos';
 
-@Module({ imports: [UsuariosModule, ProveedoresModule, CatalogoModule, ReservasModule, PagosModule] })
+@Module({ imports: [UsuariosModule, ProveedoresModule, CatalogoModule, ReservasModule, PagosModule, ResenasModule] })
 class AppModule {}
 
 @Catch()

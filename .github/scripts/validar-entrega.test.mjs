@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { test } from 'node:test';
@@ -19,7 +19,7 @@ function escenario(context, entrega) {
 
 test('base declara explícitamente que no hay aplicaciones', context => {
   const { root } = escenario(context, 'base');
-  assert.deepEqual(validarEntrega(root), { entrega: 'base', frontend: false, backend: false, proveedores: false, catalogo: false, reservas: false, specs: false });
+  assert.deepEqual(validarEntrega(root), { entrega: 'base', frontend: false, backend: false, proveedores: false, catalogo: false, reservas: false, resenas: false, specs: false });
 });
 
 test('no acepta entrega desconocida', context => {
@@ -176,6 +176,17 @@ test('005.8 exige migración, adaptador y pruebas de pago',context=>{
   }
   assert.equal(validarEntrega(root).reservas,true);
   rmSync(join(root,'backend/test/pagos/pagos.test.ts'));assert.throws(()=>validarEntrega(root),/pagos.test/);
+});
+
+test('006.1 exige módulo, migración, pruebas y specs de reseñas',context=>{
+  const root=prepararCotizaciones(context);
+  writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2','005.3','005.4','005.5','005.6','005.7','005.8','006.1']}));
+  for(const nombre of ["backend/migrations/resenas/001-resenas.sql","backend/src/modules/resenas/resenas.module.ts","backend/src/modules/resenas/dominio/resenas.ts","backend/test/resenas/resenas.test.ts","frontend/src/components/resenas/ResenaReserva.tsx","frontend/src/app/admin/resenas/page.tsx","frontend/playwright.resenas.config.ts","frontend/tests/resenas/resenas.spec.ts",...["spec.md","plan.md","tasks.md","research.md","data-model.md","quickstart.md","contracts/api.md","checklists/requirements.md"].map(a=>"specs/006-reputacion-confianza/"+a),"backend/migrations/reservas/005-agenda-oficios.sql","backend/test/reservas/agenda.test.ts","frontend/tests/reservas/agenda.spec.ts","backend/migrations/reservas/006-ejecucion-oficios.sql","backend/test/reservas/ejecucion.test.ts","frontend/tests/reservas/ejecucion.spec.ts","backend/migrations/reservas/007-despacho-eventos.sql","backend/src/modules/reservas/aplicacion/despacho.ts","backend/test/reservas/despacho.test.ts","backend/migrations/reservas/008-avisos.sql","backend/src/modules/reservas/aplicacion/avisos.ts","backend/test/reservas/avisos.test.ts","frontend/src/app/avisos/page.tsx","frontend/tests/reservas/avisos.spec.ts","backend/migrations/reservas/009-pagos-en-linea.sql","backend/migrations/pagos/001-tablas-propias.sql","backend/src/modules/pagos/pagos.module.ts","backend/src/modules/pagos/aplicacion/pagos.ts","backend/src/modules/pagos/infraestructura/culqi.ts","backend/test/pagos/pagos.test.ts","backend/test/pagos/limites.test.ts","frontend/playwright.pagos.config.ts","frontend/tests/pagos/pagos.spec.ts"]) {
+    const target=join(root,nombre);mkdirSync(dirname(target),{recursive:true});writeFileSync(target,'');
+  }
+  const paquete=join(root,'frontend/package.json'),datos=JSON.parse(readFileSync(paquete,'utf8'));datos.scripts['test:resenas']='comando';writeFileSync(paquete,JSON.stringify(datos));
+  assert.equal(validarEntrega(root).resenas,true);
+  rmSync(join(root,'backend/test/resenas/resenas.test.ts'));assert.throws(()=>validarEntrega(root),/resenas.test/);
 });
 test('005.8 no puede declararse sin avisos',context=>{
   const root=prepararCotizaciones(context);writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2','005.3','005.4','005.5','005.6','005.8']}));assert.throws(()=>validarEntrega(root),/005.8 requiere/);

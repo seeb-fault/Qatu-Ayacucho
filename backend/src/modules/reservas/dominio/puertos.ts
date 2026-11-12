@@ -45,6 +45,11 @@ export interface ReservaParaPago {
   registrarPago(intentoId: string, importeCentimos: number): Promise<void>;
   registrarPagoTardio(intentoId: string): Promise<void>;
 }
+/** Datos mínimos de una reserva para otros módulos; solo se entregan a sus participantes. */
+export interface ParticipacionReserva {
+  id: string; clienteId: string; propietarioId: string; proveedorId: string; publicacionId: string;
+  titulo: string; estado: string; cerradaEn: string | null;
+}
 export interface RepositorioReservas {
   cotizar(id: string, actorId: string, versionActual: number, propuesta: PropuestaCotizacion): Promise<Solicitud>;
   responderCotizacion(id: string, actorId: string, versionActual: number, versionCotizacion: number, decision: 'ACEPTADA' | 'RECHAZADA', motivo: string | null): Promise<Solicitud>;
@@ -58,4 +63,5 @@ export interface RepositorioReservas {
   disponibilidad(recursoId: string, inicio: string, fin: string): Promise<{franjas: {inicio: string; fin: string}[]; enUso: boolean}>;
   conReserva<T>(id: string, actorId: string | null, operar: (reserva: ReservaParaPago) => Promise<T>): Promise<T>;
   visible(id: string, actorId: string): Promise<boolean>;
+  participacion(id: string, actorId: string): Promise<ParticipacionReserva | null>;
 }

@@ -4,6 +4,8 @@ La entrega [001 — Descubrimiento de ofertas](001-descubrimiento-ofertas/spec.m
 
 El incremento **005.1** inicia [solicitudes de reserva](005-reservas-contratacion-pagos/quickstart.md): envío, bandejas participantes y rechazo persistidos. No confirma fechas ni importes y no habilita pagos. 005 conserva su aceptación global pendiente.
 
+El incremento **006.1** añade [reseñas](006-reputacion-confianza/quickstart.md): el cliente califica una operación cerrada hasta 14 días después, la reputación aparece en el perfil público y en las tarjetas del catálogo, y un administrador ajeno a la operación puede ocultar o restablecer reseñas con motivo registrado.
+
 ## Evolución pendiente
 
 - [005 — Reservas, contratación y pagos](005-reservas-contratacion-pagos/spec.md)

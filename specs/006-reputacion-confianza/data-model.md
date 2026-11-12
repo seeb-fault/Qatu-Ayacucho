@@ -2,6 +2,10 @@
 
 **Fuente:** [modelo lógico Qatu](../../docs/03-diseño-de-software/modelo-de-datos.md). Esta vista pertenece a resenas; no es una migración aplicada.
 
+## Esquema implementado en 006.1
+
+`backend/migrations/resenas/001-resenas.sql` crea `resenas` (reserva, cliente, titular y proveedor, publicación, título, puntuación 1–5, texto opcional de hasta 600, oculta, versión) con `UNIQUE(reserva_id)`, y `resenas_moderaciones` (admin, oculta, motivo de 10–500, fecha), que no se edita ni se borra. La clave foránea a `reservas` es solo de integridad: Reseñas lee la reserva por la fachada `ConsultaReservas`. La reversión automática está bloqueada para conservar la auditoría.
+
 ## Datos propios
 
 resenas; garantias_documentadas; evidencias; incidencias.
@@ -19,7 +23,7 @@ Los campos adicionales operativos son propuestas de detalle del modelo existente
 
 ## Invariantes de persistencia y acceso
 
-1. Nombre técnico resenas; no crear séptimo módulo para confianza.
+1. Nombre técnico resenas; confianza no se separa en otro módulo.
 2. Reseña de cliente participante con reserva FINALIZADA; única por cliente/reserva y puntuación 1–5.
 3. Archivos privados con etapa, autor, hash, fecha y tamaño; referencia a reserva válida y permisos en descarga.
 4. Garantía documental separada del cobro; estado no acredita custodia ni transferencia bancaria.

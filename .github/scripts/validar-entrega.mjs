@@ -13,7 +13,7 @@ export function validarEntrega(root) {
   const indice = entregas.indexOf(manifest.ultimaEntrega);
   assert.ok(indice >= 0, 'Entrega desconocida');
   const incrementos = manifest.incrementos ?? [];
-  assert.ok(Array.isArray(incrementos) && incrementos.every(i => ['005.1','005.2','005.3','005.4','005.5','005.6','005.7','005.8'].includes(i)) && new Set(incrementos).size === incrementos.length, 'Incremento desconocido o repetido');
+  assert.ok(Array.isArray(incrementos) && incrementos.every(i => ['005.1','005.2','005.3','005.4','005.5','005.6','005.7','005.8','006.1'].includes(i)) && new Set(incrementos).size === incrementos.length, 'Incremento desconocido o repetido');
   const reservas = incrementos.includes('005.1');
   const efectivo = incrementos.includes('005.2');
   const cotizaciones = incrementos.includes('005.3');
@@ -22,6 +22,8 @@ export function validarEntrega(root) {
   const despacho = incrementos.includes('005.6');
   const avisos = incrementos.includes('005.7');
   const pagos = incrementos.includes('005.8');
+  const resenas = incrementos.includes('006.1');
+  assert.ok(!resenas || ejecucion, '006.1 requiere operaciones cerradas: herramientas devueltas (005.2) y servicios cerrados (005.5)');
   assert.ok(!pagos || avisos, '005.8 requiere avisos 005.7');
   assert.ok(!avisos || despacho, '005.7 requiere despacho 005.6');
   assert.ok(!despacho || ejecucion, '005.6 requiere ejecución 005.5');
@@ -86,6 +88,11 @@ export function validarEntrega(root) {
     for (const relative of ['backend/migrations/reservas/009-pagos-en-linea.sql','backend/migrations/pagos/001-tablas-propias.sql','backend/src/modules/pagos/pagos.module.ts','backend/src/modules/pagos/aplicacion/pagos.ts','backend/src/modules/pagos/infraestructura/culqi.ts','backend/test/pagos/pagos.test.ts','backend/test/pagos/limites.test.ts','frontend/playwright.pagos.config.ts','frontend/tests/pagos/pagos.spec.ts']) requerir(relative);
     scripts('frontend/package.json',['test:pagos']);
   } else { ausente('backend/migrations/reservas/009-pagos-en-linea.sql'); ausente('backend/src/modules/pagos'); }
+  if (resenas) {
+    for (const artefacto of artefactos) requerir(`specs/006-reputacion-confianza/${artefacto}`);
+    for (const relative of ['backend/migrations/resenas/001-resenas.sql','backend/src/modules/resenas/resenas.module.ts','backend/src/modules/resenas/dominio/resenas.ts','backend/test/resenas/resenas.test.ts','frontend/src/components/resenas/ResenaReserva.tsx','frontend/src/app/admin/resenas/page.tsx','frontend/playwright.resenas.config.ts','frontend/tests/resenas/resenas.spec.ts']) requerir(relative);
+    scripts('frontend/package.json',['test:resenas']);
+  } else ausente('backend/src/modules/resenas');
   return {
     entrega: manifest.ultimaEntrega,
     frontend: indice >= 1,
@@ -93,6 +100,7 @@ export function validarEntrega(root) {
     proveedores: indice >= 3,
     catalogo: indice >= 4,
     reservas,
+    resenas,
     specs: existsSync(resolve(root, '.specify/scripts/powershell/check-prerequisites.ps1')),
   };
 }

@@ -1,6 +1,6 @@
 # 006 — Reputación y confianza
 
-**Estado:** especificado; implementación y aceptación pendientes. **Fecha:** 2026-10-15.
+**Estado:** 006.1 (reseñas y moderación) implementado y verificado localmente; evidencias, garantía documental e incidencias pendientes. **Fecha:** 2026-10-15.
 **Módulo técnico:** resenas. **Historias:** HU10, HU14, HU17, HU18.
 
 ## Objetivo y alcance
@@ -41,7 +41,7 @@ Como participante, quiero documentar condiciones y reclamar un problema.
 
 | ID local | Requisito e invariante | Trazabilidad de alcance |
 |---|---|---|
-| M006-FR01 | Nombre técnico resenas; no crear séptimo módulo para confianza. | RF11, RF15, RF18, RF19, RF20 |
+| M006-FR01 | Nombre técnico resenas; confianza no se separa en otro módulo. | RF11, RF15, RF18, RF19, RF20 |
 | M006-FR02 | Reseña de cliente participante con reserva FINALIZADA; única por cliente/reserva y puntuación 1–5. | RF11, RF15, RF18, RF19, RF20 |
 | M006-FR03 | Archivos privados con etapa, autor, hash, fecha y tamaño; referencia a reserva válida y permisos en descarga. | RF11, RF15, RF18, RF19, RF20 |
 | M006-FR04 | Garantía documental separada del cobro; estado no acredita custodia ni transferencia bancaria. | RF11, RF15, RF18, RF19, RF20 |
@@ -72,7 +72,7 @@ Datos propios: resenas; garantias_documentadas; evidencias; incidencias. Identid
 
 ## Clarifications
 
-- D09: límites de archivo, retención/borrado, política de garantía y responsables de revisión antes de habilitar cargas/garantías.
+- D09: resuelta el 2026-11-11. Fotos (4 por etapa, 5 MiB), retención de 90 días tras el cierre, incidencias en 48 h resueltas por un administrador y reseñas del cliente hasta 14 días. Detalle en [research](./research.md).
 
 Estas decisiones bloquean únicamente las tareas afectadas. El resto del diseño y los contratos ya documentados pueden avanzar.
 

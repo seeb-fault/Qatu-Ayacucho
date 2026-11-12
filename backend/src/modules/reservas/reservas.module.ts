@@ -8,6 +8,7 @@ import { Reservas } from './aplicacion/reservas';
 import { Avisos } from './aplicacion/avisos';
 import { EnlacePagos } from './aplicacion/enlace-pagos';
 import { OperacionesPago } from './aplicacion/operaciones-pago';
+import { ConsultaReservas } from './aplicacion/consulta-reservas';
 import { DespachadorEventos } from './aplicacion/despacho';
 import type { Notificador } from './dominio/puertos';
 import { PostgresReservas } from './infraestructura/postgres';
@@ -26,6 +27,7 @@ export function crearNotificador(pool: Pool): Notificador | null {
   imports: [UsuariosModule, CatalogoModule, ProveedoresModule], controllers: [ReservasController, DisponibilidadController, AvisosController],
   providers: [
     { provide: EnlacePagos, useFactory: () => new EnlacePagos() },
+    { provide: ConsultaReservas, inject: [Pool,EnlacePagos], useFactory: (pool: Pool, enlace: EnlacePagos) => new ConsultaReservas(new PostgresReservas(pool,enlace)) },
     { provide: OperacionesPago, inject: [Pool,EnlacePagos], useFactory: (pool: Pool, enlace: EnlacePagos) => new OperacionesPago(new PostgresReservas(pool,enlace)) },
     { provide: Avisos, inject: [Pool,IdentidadUsuarios], useFactory: (pool: Pool, identidad: IdentidadUsuarios) => new Avisos(new PostgresAvisos(pool),identidad) },
     { provide: Pool, useFactory: () => crearPool(5) },
@@ -37,7 +39,7 @@ export function crearNotificador(pool: Pool): Notificador | null {
       return notificador ? new DespachadorEventos(new PostgresDespacho(pool),notificador) : null;
     } },
   ],
-  exports: [EnlacePagos, OperacionesPago],
+  exports: [EnlacePagos, OperacionesPago, ConsultaReservas],
 })
 export class ReservasModule implements OnApplicationBootstrap, OnApplicationShutdown {
   private reloj?: ReturnType<typeof setInterval>;

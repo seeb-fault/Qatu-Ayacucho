@@ -29,6 +29,7 @@ jobs:
       proveedores: ${{ steps.alcance.outputs.proveedores }}
       catalogo: ${{ steps.alcance.outputs.catalogo }}
       reservas: ${{ steps.alcance.outputs.reservas }}
+      resenas: ${{ steps.alcance.outputs.resenas }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -166,6 +167,9 @@ jobs:
       - name: Probar pagos en línea con doble (incremento 005.8)
         if: needs.especificaciones.outputs.reservas == 'true'
         run: npm run test:pagos -- --output=test-results/pagos
+      - name: Probar reseñas y reputación (incremento 006.1)
+        if: needs.especificaciones.outputs.resenas == 'true'
+        run: npm run test:resenas -- --output=test-results/resenas
       - name: Guardar evidencias sintéticas
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
