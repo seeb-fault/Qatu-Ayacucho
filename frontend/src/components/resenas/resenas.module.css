@@ -19,6 +19,11 @@
 .acciones small { color: var(--q-text-2); }
 .error { margin: 0; color: #9B1C3A; background: #FFF1F3; border: 1px solid #F8CDD6; padding: 10px 12px; border-radius: var(--q-radius-sm); }
 
+.evidencias { display: grid; gap: 6px; margin: 0 0 8px; padding: 0; list-style: none; }
+.evidencias a { font-weight: 600; color: var(--q-primary); }
+.campo input[type=file], .campo select { width: 100%; padding: 7px; border: 1px solid var(--q-border-strong); border-radius: var(--q-radius-sm); background: #fff; font: inherit; font-weight: 400; }
+.campo input[type=file]::file-selector-button { min-height: 32px; margin-right: 12px; padding: 6px 14px; border: 1px solid var(--q-border-strong); border-radius: var(--q-radius-sm); background: var(--q-surface); color: var(--q-text); font: inherit; font-weight: 600; cursor: pointer; }
+
 /* Reputación pública del proveedor */
 .reputacion { display: grid; gap: 14px; margin-top: 28px; }
 .resumen { display: flex; align-items: baseline; gap: 10px; }

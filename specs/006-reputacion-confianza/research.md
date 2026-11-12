@@ -19,9 +19,16 @@ ADR-002, ADR-007, ADR-012 gobiernan esta entrega. HU10, HU14, HU17, HU18 y RF11,
 - **Reseñas:** solo el cliente califica al proveedor, de 1 a 5, con comentario opcional, hasta 14 días después del cierre. Una reseña por reserva. Un administrador puede ocultarla con motivo; el promedio publicado se recalcula sin las ocultas.
 - **Garantía documental:** acuerdo escrito sobre el estado de la herramienta y sus accesorios al entregarla, respaldado por las evidencias. No custodia dinero ni acredita transferencias.
 
+## Decisiones de 006.3 (2026-11-12)
+
+- **Garantía sin monto:** el modelo lógico proponía `montoCentimos`, pero un importe sugeriría un depósito o custodia que Qatu no realiza. La garantía es solo el texto acordado del estado y los accesorios, que el proveedor puede corregir hasta que el cliente da conformidad con la versión vigente.
+- **Incidencias:** una abierta por reserva, con tipo (daño, faltante, servicio u otro) y descripción de 20 a 1000 caracteres; el administrador consulta las fotos de la reserva. Resultado a favor del cliente, a favor del proveedor o sin acuerdo; la resolución no se edita y no cambia pagos ni reservas.
+- **Retención:** la limpieza no borra fotos de reservas con una incidencia abierta.
+- **Pendiente:** avisar a los participantes de la apertura y la resolución, que requiere eventos de este módulo hacia la bandeja de avisos.
+
 ## Decisiones pendientes
 
-- Ninguna para 006.
+- Avisos de incidencias a los participantes.
 
 ## Alternativas y límites
 

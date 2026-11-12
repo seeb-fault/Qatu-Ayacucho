@@ -162,10 +162,15 @@ export class PostgresReservas implements RepositorioReservas {
   /** Cierre: devolución de la herramienta o cierre del servicio. */
   async participacion(id: string, actorId: string) {
     const r = await this.pool.query(`SELECT id, cliente_id AS "clienteId", propietario_id AS "propietarioId", proveedor_id AS "proveedorId",
-      publicacion_id AS "publicacionId", snapshot->>'titulo' AS titulo, estado, COALESCE(devuelto_en, servicio_cerrado_en) AS "cerradaEn"
+      publicacion_id AS "publicacionId", snapshot->>'titulo' AS titulo, snapshot->>'tipo' AS tipo, estado, COALESCE(devuelto_en, servicio_cerrado_en) AS "cerradaEn"
       FROM reservas WHERE id=$1 AND (cliente_id=$2 OR propietario_id=$2)`, [id,actorId]);
     const f = r.rows[0];
     return f ? { ...f, cerradaEn: f.cerradaEn ? new Date(f.cerradaEn).toISOString() : null } : null;
+  }
+
+  async cierres(ids: string[]) {
+    const r = await this.pool.query('SELECT id, COALESCE(devuelto_en, servicio_cerrado_en) AS cierre FROM reservas WHERE id=ANY($1::uuid[])', [ids]);
+    return new Map<string, string | null>(r.rows.map(f => [f.id as string, f.cierre ? new Date(f.cierre).toISOString() : null]));
   }
 
   async visible(id: string, actorId: string) {
