@@ -1,15 +1,14 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
 import Icono from './Icono';
+import Marca from './Marca';
 import BuscadorCabecera from './BuscadorCabecera';
 import MenuUbicacion from './MenuUbicacion';
 import BarraCategorias from './BarraCategorias';
 import CampanaAvisos from '@/components/avisos/CampanaAvisos';
 import {fuenteCatalogo} from '@/lib/api/publicaciones';
 
-export function Marca() {
-  return <Link href="/" className="brand" aria-label="Qatu, inicio"><span className="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="100%" height="100%"><circle cx="15" cy="14.5" r="7" fill="none" stroke="#fff" strokeWidth="3.4"/><path d="m19.5 19.5 5 5" stroke="#fff" strokeWidth="3.4" strokeLinecap="round"/></svg></span>qatu</Link>;
-}
+export { Marca };
 export default function Navegacion() {
   return <><a className="skip-link" href="#contenido">Saltar al contenido</a>
     <header className="header">

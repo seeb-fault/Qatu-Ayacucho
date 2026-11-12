@@ -36,12 +36,12 @@ export default function Acceso({ registro = false }: { registro?: boolean }) {
       <aside className={styles.story} aria-label="La comunidad Qatu">
         <span className={styles.location}><Icono nombre="pin" size={15}/> HECHO PARA AYACUCHO</span>
         <div className={styles.storyCopy}>
-          <span className={styles.kicker}>CERCA DE TI. LEJOS DE LO COMPLICADO.</span>
+          
           <h2>Grandes proyectos.<br/>{' '}Buenas manos.<br/>{' '}<span>Tu comunidad.</span></h2>
           <p>Encuentra esa herramienta que te falta o el talento que hace la diferencia. Todo comienza cerca.</p>
         </div>
         <div className={styles.scene} aria-hidden="true">
-          <span className={styles.orbit}/>
+          
           <div className={styles.toolCard}><span className={styles.toolIcon}><Icono nombre="drill" size={48}/></span><div><small>PARA TU PRÓXIMO PROYECTO</small><strong>La herramienta indicada</strong><span>Alquila cerca de ti <Icono nombre="arrow" size={15}/></span></div></div>
           <div className={styles.talentCard}><span className={styles.avatar}><Icono nombre="user" size={24}/></span><div><strong>Talento de tu barrio</strong><span>Oficios que conectan</span></div><Icono nombre="spark" size={22}/></div>
           <span className={styles.sceneLabel}><Icono nombre="leaf" size={16}/> Compartir nos lleva más lejos</span>
@@ -54,11 +54,7 @@ export default function Acceso({ registro = false }: { registro?: boolean }) {
           <Link href="/ingresar" aria-current={!registro ? 'page' : undefined}>Iniciar sesión</Link>
           <Link href="/registro" aria-current={registro ? 'page' : undefined}>Crear cuenta</Link>
         </nav>
-        <div className={styles.heading}>
-          <span className={styles.welcome}><Icono nombre={registro ? 'spark' : 'user'} size={22}/></span>
-          <h1 id="titulo-acceso">{registro ? 'Tu próximo proyecto\nempieza aquí.' : 'Qué bueno\nverte de nuevo.'}</h1>
-          <p>{registro ? 'Crea tu cuenta y descubre herramientas y oficios en tu comunidad.' : 'Ingresa a tu cuenta y sigue construyendo lo que tienes en mente.'}</p>
-        </div>
+        <h1 id="titulo-acceso" className={styles.srOnly}>{registro ? 'Crea tu cuenta en Qatu' : 'Iniciar sesión en Qatu'}</h1>
         <form onSubmit={enviar} className={styles.form} aria-busy={pendiente}>
           {registro && <div className={styles.field}><label htmlFor="acceso-nombre">Nombre</label><input id="acceso-nombre" name="nombre" placeholder="¿Cómo te llamas?" autoComplete="name" required minLength={2} maxLength={100}/></div>}
           <div className={styles.field}><label htmlFor="acceso-email">Correo electrónico</label><input id="acceso-email" name="email" type="email" placeholder="tu@correo.com" autoComplete="email" autoCapitalize="none" spellCheck={false} required maxLength={254}/></div>

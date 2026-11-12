@@ -13,7 +13,7 @@ export default async function ProveedorPublicoPage({ params }: { params: Promise
   if (!response.ok) throw new Error('El perfil no pudo cargarse.');
   const proveedor: ProveedorPublico = await response.json();
   return <section className={styles.panel} aria-labelledby="nombre-proveedor">
-    <span className="eyebrow">PROVEEDOR LOCAL</span><h1 id="nombre-proveedor">{proveedor.nombrePublico}</h1>
+    <h1 id="nombre-proveedor">{proveedor.nombrePublico}</h1>
     <p>Distrito de atención: <strong>{proveedor.zona.nombre}</strong></p>
     <div className={styles.estado}><strong>{estadosVerificacion[proveedor.estadoVerificacion]}</strong>{proveedor.estadoVerificacion === 'aprobada' ? 'La documentación fue revisada manualmente por administración. Esto no constituye una garantía sobre futuros servicios.' : 'Este perfil no tiene una verificación documental aprobada.'}</div>
     <h2>Acerca del proveedor</h2><p className={styles.descripcion}>{proveedor.descripcion}</p>

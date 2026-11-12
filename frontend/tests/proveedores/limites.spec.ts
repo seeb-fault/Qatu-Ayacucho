@@ -8,7 +8,7 @@ test('dos adjuntos de 5 MiB atraviesan el proxy y se guardan completos',async ({
   const contenido = Buffer.alloc(5242880,32);
   contenido.write('%PDF-1.4\n',0,'ascii');
   contenido.write('\n%%EOF',contenido.length-6,'ascii');
-  await page.goto('/proveedor');
+  await page.goto('/proveedor/perfil');
   await page.getByLabel('Documentos privados',{ exact: true }).setInputFiles([
     { name: 'limite-uno.pdf',mimeType: 'application/pdf',buffer: contenido },
     { name: 'limite-dos.pdf',mimeType: 'application/pdf',buffer: contenido },

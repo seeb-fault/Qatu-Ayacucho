@@ -7,7 +7,8 @@ test('crear, recargar, mostrar y ocultar perfil de proveedor con datos persistid
   const registro = await page.request.post('/api/v1/auth/registro', { headers: { Origin: 'http://127.0.0.1:3100' }, data: { email, nombre: 'Propietario web', password: 'frase segura para pruebas de perfiles' } });
   expect(registro.status()).toBe(201);
   await page.goto('/cuenta');
-  await page.getByRole('main').getByRole('link', { name: 'Mi perfil de proveedor', exact: true }).click();
+  await page.getByRole('main').getByRole('link', { name: 'Panel del proveedor', exact: true }).click();
+  await page.getByRole('link', { name: 'Crear mi perfil de proveedor', exact: true }).click();
   await page.getByLabel('Nombre público', { exact: true }).fill('Taller del barrio');
   await page.getByLabel('Descripción', { exact: true }).fill(descripcion);
   await page.getByLabel('Distrito de atención', { exact: true }).selectOption('carmen-alto');
@@ -45,7 +46,7 @@ test('crear, recargar, mostrar y ocultar perfil de proveedor con datos persistid
 });
 
 test('anónimo necesita sesión y un identificador público inexistente no revela perfil', async ({ page }) => {
-  await page.goto('/proveedor');
+  await page.goto('/proveedor/perfil');
   await expect(page.getByRole('link', { name: 'Ingresar para crear mi perfil de proveedor' })).toBeVisible();
   await expect(page.getByLabel('Nombre público', { exact: true })).toHaveCount(0);
   await page.goto(`/proveedores/${crypto.randomUUID()}`);
@@ -59,8 +60,8 @@ test('editar desde dos pestañas muestra conflicto y permite recargar el perfil 
   expect(creado.status()).toBe(201);
   const segunda = await context.newPage();
   try {
-    await page.goto('/proveedor');
-    await segunda.goto('/proveedor');
+    await page.goto('/proveedor/perfil');
+    await segunda.goto('/proveedor/perfil');
     await expect(page.getByLabel('Nombre público', { exact: true })).toHaveValue('Nombre inicial');
     await expect(segunda.getByLabel('Nombre público', { exact: true })).toHaveValue('Nombre inicial');
     await page.getByLabel('Nombre público', { exact: true }).fill('Nombre actualizado');

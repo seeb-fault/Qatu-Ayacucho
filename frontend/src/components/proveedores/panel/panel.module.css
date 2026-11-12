@@ -1,0 +1,80 @@
+/* Panel del proveedor: herramienta de trabajo a pantalla completa, separada de la tienda. */
+.shell { display: grid; grid-template-columns: 264px minmax(0, 1fr); min-height: 100dvh; background: var(--q-bg); }
+
+.menu { position: sticky; top: 0; height: 100dvh; display: flex; flex-direction: column; gap: 28px; padding: 26px 18px; background: #fff; border-right: 1px solid var(--q-border); }
+.menuTitulo { margin: 6px 12px 0; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--q-text-2); }
+.enlaces { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.enlace { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 10px 12px; border-radius: var(--q-radius-sm); color: var(--q-text); font-weight: 600; text-decoration: none; transition: background-color var(--q-fast) var(--q-ease), color var(--q-fast) var(--q-ease); }
+.enlace[aria-current="page"] { background: var(--q-navy); color: #fff; }
+.contador { margin-left: auto; min-width: 22px; padding: 1px 7px; border-radius: 999px; background: var(--q-primary); color: #fff; font-size: 12px; font-weight: 700; text-align: center; font-variant-numeric: tabular-nums; }
+.enlace[aria-current="page"] .contador { background: #fff; color: var(--q-navy); }
+.menuPie { display: grid; gap: 4px; margin-top: auto; padding-top: 18px; border-top: 1px solid var(--q-border); }
+.menuPie .enlace { font-weight: 500; color: var(--q-text-2); }
+@media (hover: hover) and (pointer: fine) {
+  .enlace:not([aria-current="page"]):hover { background: var(--q-muted-bg); }
+}
+
+.contenido { min-width: 0; padding: 32px clamp(20px, 4vw, 48px) 56px; }
+/* Las pantallas reutilizadas traen su tarjeta centrada; en el panel ocupan el ancho de trabajo. */
+.contenido > :global(section), .contenido > :global(div) > :global(section) { margin-top: 0; }
+
+/* Resumen */
+.resumen { display: grid; gap: 24px; max-width: 1180px; }
+.cabecera { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; }
+.cabecera h1 { margin: 0; font-size: clamp(26px, 3vw, 34px); letter-spacing: -.03em; line-height: 1.15; }
+.cabecera p { margin: 6px 0 0; color: var(--q-text-2); }
+.accionPrincipal { display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 10px 18px; border-radius: var(--q-radius-sm); background: var(--q-primary); color: #fff; font-weight: 700; text-decoration: none; }
+@media (hover: hover) and (pointer: fine) { .accionPrincipal:hover { background: var(--q-primary-hover); } }
+.accionPrincipal:active { transform: scale(.97); }
+
+.aviso { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 18px; border: 1px solid var(--q-border-strong); border-radius: var(--q-radius); background: var(--q-tint); }
+.aviso strong { display: block; color: var(--q-text); }
+.aviso span { color: var(--q-text-2); }
+.aviso a { font-weight: 700; color: var(--q-primary); }
+
+.cifras { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin: 0; }
+.cifra { display: grid; gap: 6px; padding: 18px; border: 1px solid var(--q-border); border-radius: var(--q-radius); background: #fff; }
+.cifra dt { order: 2; color: var(--q-text-2); font-size: 14px; }
+.cifra dd { order: 1; margin: 0; font-family: var(--font-head); font-size: 32px; font-weight: 800; letter-spacing: -.03em; color: var(--q-navy); font-variant-numeric: tabular-nums; }
+.cifra.destacada { border-color: var(--q-primary); background: var(--q-soft); }
+
+.columnas { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; align-items: start; }
+.bloque { padding: 20px; border: 1px solid var(--q-border); border-radius: var(--q-radius); background: #fff; }
+.bloque h2 { margin: 0 0 4px; font-size: 18px; }
+.bloque > p { margin: 0 0 14px; color: var(--q-text-2); font-size: 14px; }
+.lista { display: grid; margin: 0; padding: 0; list-style: none; }
+.item { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid var(--q-border); }
+.item:first-child { border-top: 0; }
+.item strong { display: block; overflow-wrap: anywhere; }
+.item span { color: var(--q-text-2); font-size: 14px; }
+.etiqueta { padding: 4px 10px; border-radius: 999px; background: var(--q-tint-blue); color: var(--q-navy); font-size: 13px; font-weight: 700; white-space: nowrap; }
+.etiqueta.accion { background: var(--q-soft); color: var(--q-deep); }
+.vacio { margin: 0; padding: 12px 0 2px; color: var(--q-text-2); }
+.verTodo { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--q-primary); }
+.nota { margin: 0; color: var(--q-text-2); font-size: 14px; }
+.pasos { display: grid; gap: 10px; margin: 8px 0 0; padding-left: 20px; }
+
+.textoCorto { display: none; }
+.barraMovil { display: none; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 20px; background: #fff; border-bottom: 1px solid var(--q-border); }
+.barraMovil a:last-child { font-weight: 600; color: var(--q-text-2); }
+
+/* Móvil: el menú pasa a una barra inferior fija. */
+@media (max-width: 860px) {
+  .shell { grid-template-columns: 1fr; padding-bottom: 72px; }
+  .menu { position: fixed; inset: auto 0 0 0; z-index: 30; height: auto; flex-direction: row; gap: 0; padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); border-right: 0; border-top: 1px solid var(--q-border); }
+  .menu > :global(.brand), .menuTitulo, .menuPie, .textoLargo { display: none; }
+  .textoCorto { display: inline; }
+  .enlaces { grid-auto-flow: column; grid-auto-columns: 1fr; width: 100%; gap: 2px; }
+  .enlace { flex-direction: column; justify-content: center; gap: 2px; min-height: 56px; padding: 6px 2px; font-size: 11px; text-align: center; }
+  .contador { position: absolute; transform: translate(14px, -18px); min-width: 18px; padding: 0 5px; font-size: 11px; }
+  .enlace { position: relative; }
+  .barraMovil { display: flex; }
+  .contenido { padding-top: 20px; }
+  .cifras { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .cifra { padding: 14px; }
+  .cifra dd { font-size: 26px; }
+  .item { grid-template-columns: 1fr; gap: 6px; }
+  .etiqueta { justify-self: start; }
+  .bloque { padding: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .enlace, .accionPrincipal { transition: none; } .accionPrincipal:active { transform: none; } }

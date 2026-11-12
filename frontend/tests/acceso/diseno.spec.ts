@@ -29,7 +29,7 @@ test('error de acceso accesible sin borrar los datos ingresados', async ({ page 
   await page.getByLabel('Correo electrónico').fill('prueba@example.com');
   await page.getByLabel('Contraseña', { exact: true }).fill('una frase de prueba segura');
   await page.getByRole('button', { name: 'Ingresar', exact: true }).click();
-  await expect(page.getByRole('region', { name: 'Qué bueno verte de nuevo.' }).getByRole('alert')).toContainText('Correo o contraseña incorrectos.');
+  await expect(page.getByRole('region', { name: 'Iniciar sesión en Qatu' }).getByRole('alert')).toContainText('Correo o contraseña incorrectos.');
   await expect(page.getByLabel('Correo electrónico')).toHaveValue('prueba@example.com');
   await expect(page.getByRole('button', { name: 'Ingresar', exact: true })).toBeEnabled();
 });

@@ -47,7 +47,7 @@ export default function BandejaAvisos() {
   });
 
   return <section className={styles.panel} aria-labelledby="titulo-avisos">
-    <span className="eyebrow">NOVEDADES DE TUS RESERVAS</span><h1 id="titulo-avisos">Avisos</h1>
+    <h1 id="titulo-avisos">Avisos</h1>
     <p>Aquí aparece cada cambio en tus solicitudes. Los avisos pueden tardar unos segundos en llegar.</p>
     {error && <p role="alert" className={styles.error}>{error}</p>}
     {sinSesion && <p><Link href="/ingresar">Inicia sesión para consultar tus avisos</Link>.</p>}
