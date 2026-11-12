@@ -10,12 +10,24 @@
 | POST | /reservas/:id/incidencias | Participante | motivo y revisión humana |
 | POST | /reservas/:id/resenas | Cliente de reserva finalizada | una por cliente y reserva |
 
+## Implementado en 006.1 — Reseñas
+
+| Método | Ruta | Acceso | Respuesta |
+|---|---|---|---|
+| GET | /reservas/:id/resena | Participante (404 a terceros) | `{ resena, puedeResenar, plazo }`; `resena` incluye `oculta` |
+| POST | /reservas/:id/resena | Cliente; reserva DEVUELTA o SERVICIO_CERRADO; hasta 14 días tras el cierre | 201 con la reseña. 400 entrada; 403 proveedor; 409 `RESERVA_NO_CERRADA`, `PLAZO_VENCIDO` o `RESENA_DUPLICADA` |
+| GET | /proveedores/:id/resenas?page | Público | `{ items, total, promedio, page, limit }`; solo visibles; sin cliente ni reserva |
+| GET | /resenas/resumen?proveedores=a,b | Público, hasta 50 ids | `{ [proveedorId]: { promedio, total } }` |
+| GET | /admin/resenas?page | Administrador | Todas, con `oculta` y `ultimaModeracion` |
+| PATCH | /admin/resenas/:id/moderacion | Administrador que no participó | Cuerpo `{ oculta, motivo }` (10–500); 403 si participó |
+
+Entrada de reseña: `{ puntuacion: 1–5 entero, texto?: hasta 600 }`; campos extra se rechazan. `promedio` se redondea a un decimal y es `null` sin reseñas visibles. La ruta es singular porque hay una reseña por reserva.
+
 ## Extensiones propuestas para cubrir requisitos existentes
 
 - GET /evidencias/:id/archivo con autorización por participante/admin.
 - POST/PATCH /reservas/:id/garantia para acuerdo y registro documental.
-- GET /proveedores/:id/resenas para reputación pública moderada.
-- PATCH /admin/resenas/:id/moderacion y resolución de incidencias auditada.
+- Resolución de incidencias auditada.
 
 Estas extensiones aún no están congeladas: completar DTO/estados en OpenAPI y actualizar docs antes de implementar. No se ejecutan operaciones ni llamadas externas desde estas especificaciones.
 

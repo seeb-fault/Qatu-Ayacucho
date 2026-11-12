@@ -1,0 +1,30 @@
+.resena { display: grid; gap: 10px; margin-top: 16px; padding: 16px; border: 1px solid var(--q-border); border-radius: var(--q-radius); background: var(--q-tint-blue); }
+.titulo { margin: 0; font-weight: 700; color: var(--q-text); }
+.estrellas { color: #B7791F; font-size: 20px; letter-spacing: 2px; }
+.texto { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.nota { margin: 0; color: var(--q-text-2); font-size: 14px; }
+.puntuacion { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin: 0; padding: 0; border: 0; }
+.puntuacion legend { margin-bottom: 6px; padding: 0; font-weight: 700; }
+.puntuacion label { position: relative; display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--q-radius-sm); color: var(--q-border-strong); font-size: 28px; cursor: pointer; transition: color var(--q-fast) var(--q-ease), background-color var(--q-fast) var(--q-ease); }
+.puntuacion label.activa { color: #B7791F; }
+.puntuacion input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.puntuacion label:has(input:focus-visible) { outline: 2px solid var(--q-primary); outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) { .puntuacion label:hover { background: #fff; } }
+.etiqueta { margin-left: 8px; font-weight: 600; color: var(--q-text-2); }
+.oculto { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.campo { display: grid; gap: 6px; font-weight: 600; }
+.campo textarea { width: 100%; padding: 12px 14px; border: 1px solid var(--q-border-strong); border-radius: var(--q-radius-sm); font: inherit; font-weight: 400; background: #fff; resize: vertical; }
+.campo textarea:focus { outline: none; border-color: var(--q-primary); box-shadow: var(--q-ring); }
+.acciones { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.acciones small { color: var(--q-text-2); }
+.error { margin: 0; color: #9B1C3A; background: #FFF1F3; border: 1px solid #F8CDD6; padding: 10px 12px; border-radius: var(--q-radius-sm); }
+
+/* Reputación pública del proveedor */
+.reputacion { display: grid; gap: 14px; margin-top: 28px; }
+.resumen { display: flex; align-items: baseline; gap: 10px; }
+.promedio { font-family: var(--font-head); font-size: 36px; font-weight: 800; color: var(--q-navy); font-variant-numeric: tabular-nums; }
+.lista { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.lista li { padding: 14px 16px; border: 1px solid var(--q-border); border-radius: var(--q-radius); background: #fff; }
+.lista li p { margin: 6px 0 0; overflow-wrap: anywhere; }
+.meta { color: var(--q-text-2); font-size: 14px; }
+@media (prefers-reduced-motion: reduce) { .puntuacion label { transition: none; } }

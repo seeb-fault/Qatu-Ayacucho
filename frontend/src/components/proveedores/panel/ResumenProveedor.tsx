@@ -7,6 +7,7 @@ import type { PaginaOfertas } from '@/lib/api/catalogo';
 import { apiJson, ErrorApi } from '@/lib/api/http';
 import type { Proveedor } from '@/lib/api/proveedores';
 import { fechaReserva, type PaginaReservas, type SolicitudReserva } from '@/lib/api/reservas';
+import type { ResenasProveedor } from '@/lib/api/resenas';
 import { ACTIVAS, EN_MANOS_DEL_CLIENTE, TRABAJOS_AGENDADOS, accionDelProveedor, proximas } from '@/lib/panel-proveedor';
 import styles from './panel.module.css';
 
@@ -14,7 +15,7 @@ import styles from './panel.module.css';
 const PAGINAS_MAXIMAS = 10;
 const rango = (s: SolicitudReserva) => `${fechaReserva(s.inicio)} – ${fechaReserva(s.fin)}`;
 
-interface Datos { perfil: Proveedor | null; ofertas: PaginaOfertas | null; reservas: SolicitudReserva[]; totalReservas: number }
+interface Datos { perfil: Proveedor | null; ofertas: PaginaOfertas | null; reservas: SolicitudReserva[]; totalReservas: number; reputacion?: ResenasProveedor | null }
 
 async function leerReservas() {
   const primera = await apiJson<PaginaReservas>('/reservas?vista=proveedor&page=1');
@@ -44,8 +45,10 @@ export default function ResumenProveedor() {
     try {
       const perfil = await apiJson<Proveedor>('/proveedores/me').catch(e => { if (e instanceof ErrorApi && e.status === 404) return null; throw e; });
       if (!perfil) { setDatos({ perfil: null, ofertas: null, reservas: [], totalReservas: 0 }); return; }
-      const [ofertas, { reservas, total }] = await Promise.all([apiJson<PaginaOfertas>('/publicaciones/mias?page=1'), leerReservas()]);
-      setDatos({ perfil, ofertas, reservas, totalReservas: total });
+      const [ofertas, { reservas, total }, reputacion] = await Promise.all([apiJson<PaginaOfertas>('/publicaciones/mias?page=1'), leerReservas(),
+        // La reputación es complementaria: si no carga, el resumen se muestra igual.
+        apiJson<ResenasProveedor>(`/proveedores/${perfil.id}/resenas`).catch(() => null)]);
+      setDatos({ perfil, ofertas, reservas, totalReservas: total, reputacion });
       setAhora(Date.now());
     } catch (e) {
       setSinSesion(e instanceof ErrorApi && e.status === 401);
@@ -91,6 +94,7 @@ export default function ResumenProveedor() {
       {herramientas && <div className={styles.cifra}><dt>Herramientas con clientes</dt><dd>{cuenta(EN_MANOS_DEL_CLIENTE)}</dd></div>}
       {oficios && <div className={styles.cifra}><dt>Trabajos agendados</dt><dd>{cuenta(TRABAJOS_AGENDADOS)}</dd></div>}
       <div className={styles.cifra}><dt>Ofertas publicadas</dt><dd>{ofertas?.total ?? 0}</dd></div>
+      {datos.reputacion && <div className={styles.cifra}><dt>{datos.reputacion.total ? `Calificación · ${datos.reputacion.total} ${datos.reputacion.total === 1 ? 'reseña' : 'reseñas'}` : 'Calificación · sin reseñas aún'}</dt><dd>{datos.reputacion.promedio !== null ? `${datos.reputacion.promedio.toFixed(1)} ★` : '—'}</dd></div>}
     </dl>
     {reservas.length < totalReservas && <p className={styles.nota}>Las cifras consideran tus {reservas.length} solicitudes más recientes de {totalReservas}.</p>}
 

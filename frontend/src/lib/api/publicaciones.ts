@@ -11,6 +11,14 @@ async function consultar(ruta:string) {
 function oferta(p:PublicacionPublica):Oferta {
  return {id:p.id,titulo:p.titulo,tipo:p.tipo,categoria:p.categoriaId,distrito:p.zona.nombre,precio:p.tarifaCentimos,unidad:p.unidad??'',imagen:p.imagen,fondo:p.tipo==='herramienta'?'#e5eef3':'#f3e9e0',descripcion:p.descripcion,incluye:p.incluye,condiciones:p.condiciones,proveedor:{nombre:p.proveedor.nombrePublico,iniciales:p.proveedor.nombrePublico.split(/\s+/).slice(0,2).map(s=>s[0]).join(''),verificado:p.proveedor.estadoVerificacion==='aprobada',experiencia:'Consulta el perfil público del proveedor.',id:p.proveedor.id},puntuacion:null,resenas:0,activa:true};
 }
+/** Reputación pública por proveedor (006). Si falla, el catálogo se muestra igual, sin estrellas. */
+async function conReputacion(items:Oferta[],publicaciones:PublicacionPublica[]):Promise<Oferta[]> {
+ const ids=[...new Set(publicaciones.map(p=>p.proveedor.id))];
+ if(!ids.length)return items;
+ let rep:Record<string,{promedio:number|null;total:number}>={};
+ try{rep=(await consultar('/resenas/resumen?proveedores='+ids.join(',')))??{};}catch{rep={};}
+ return items.map((o,i)=>{const r=rep[publicaciones[i].proveedor.id];return r&&r.total>0&&r.promedio!==null?{...o,puntuacion:r.promedio,resenas:r.total}:o;});
+}
 export async function consultarPublicaciones(f:Filtros):Promise<{items:Oferta[];total:number;pagina:number;paginas:number}> {
  if (fuenteCatalogo==='demostracion') return filtrarOfertas(f);
  const q=new URLSearchParams({page:String(f.pagina),limit:'20',orden:f.orden});
@@ -19,10 +27,10 @@ export async function consultarPublicaciones(f:Filtros):Promise<{items:Oferta[];
  if (!datos) throw new Error('Los filtros del catálogo no son válidos.');
  const paginas=Math.max(1,Math.ceil(datos.total/20));
  if(f.pagina>paginas)return consultarPublicaciones({...f,pagina:paginas});
- return {items:datos.items.map(oferta),total:datos.total,pagina:datos.page,paginas};
+ return {items:await conReputacion(datos.items.map(oferta),datos.items),total:datos.total,pagina:datos.page,paginas};
 }
 export async function consultarPublicacion(id:string):Promise<Oferta|null> {
  if(fuenteCatalogo==='demostracion')return [...ofertas,ofertaInactiva].find(o=>o.id===id&&o.activa)??null;
  const datos=await consultar('/publicaciones/'+encodeURIComponent(id)) as PublicacionPublica|null;
- return datos?oferta(datos):null;
+ return datos?(await conReputacion([oferta(datos)],[datos]))[0]:null;
 }

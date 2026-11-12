@@ -45,6 +45,6 @@ Incluir unitarias para reglas y estados, integración PostgreSQL para restriccio
 
 ## Riesgos y bloqueos
 
-- D09: límites de archivo, retención/borrado, política de garantía y responsables de revisión antes de habilitar cargas/garantías.
+- D09: resuelta el 2026-11-11; ver [research](./research.md).
 
 No activar tareas afectadas mientras falte la decisión. [Tareas](./tasks.md) · [Especificación](./spec.md).
