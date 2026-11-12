@@ -4,9 +4,9 @@
 @import 'tailwindcss/utilities.css' layer(utilities);
 @source '../';
 @theme {
-  --color-qatu-primary: #18566a;
-  --color-qatu-surface: #f2f6f8;
-  --color-qatu-accent: #bd533f;
+  --color-qatu-primary: #1D2B5C;
+  --color-qatu-surface: #FBF7F5;
+  --color-qatu-accent: #00804C;
 }
 
 :root { --forest:#18566a; --deep:#103b4c; --green:#24687a; --orange:#bd533f; --paper:#f7f9fb; --ink:#233e4c; --muted:#607681; --line:#dfe8ee; --cream:#eef4f7; }
@@ -37,8 +37,6 @@ body { font-size:16px; }
 .market-home .text-link { font-size:12px;margin:0;white-space:nowrap; }
 .offer-card { background:white;min-width:0; }
 .card-image { border:1px solid #e5ecf1;overflow:hidden;border-radius:12px;aspect-ratio:1.14; }
-.card-image>img { transition:transform .3s; }
-.offer-card:hover .card-image>img { transform:scale(1.04); }
 .offer-card h3 { font-size:14px;line-height:1.5;letter-spacing:-.2px;min-height:42px; }
 .card-meta { font-size:11px;gap:5px;flex-wrap:wrap; }
 .card-meta .rating { font-size:11px; }
@@ -153,7 +151,6 @@ body { font-size:16px; }
   .detail-section p,.included-list,.conditions-list,.quote-card>p { font-size:14px; }
   .detail-meta,.back-link { font-size:12px; }
 }
-@media(prefers-reduced-motion:reduce) { .card-image>img { transition:none; } }
 
 /* Shared controls use the same cool palette as the home. */
 .brand-mark span:nth-child(2) { background:#a9cbdc; }
@@ -162,7 +159,6 @@ body { font-size:16px; }
 .type-tabs button { color:#607681; }
 .type-tabs button.selected { color:var(--forest); }
 .compact .type-tabs button.selected { border-color:#a9c7d8;background:#e9f2f7; }
-.search-main input::placeholder { color:#647985; }
 .location-label select { color:#526d7a; }
 .bottom-nav { border-color:var(--line); }
 .footer-bottom { color:#b6cddc; }

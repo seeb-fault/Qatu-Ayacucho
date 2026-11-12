@@ -77,6 +77,10 @@ Los recursos SVG son locales. Los testimonios están identificados como ficticio
 
 Verificación: `npm run build`, `npm test` y `npm run test:acceso` (secuenciales, porque comparten el puerto del servidor de pruebas).
 
+## Panel del proveedor
+
+`/proveedor` es una herramienta de trabajo a pantalla completa, sin la cabecera ni el pie de la tienda. Secciones: Resumen (`/proveedor`), Solicitudes recibidas (`/proveedor/solicitudes`), Mis ofertas (`/proveedor/ofertas`), Perfil y verificación (`/proveedor/perfil`) y Avisos (`/proveedor/avisos`). El Resumen solo usa datos de la API: `src/lib/panel-proveedor.ts` decide qué paso corresponde al proveedor según las transiciones que el backend le permite. No muestra cifras de dinero. `/publicar`, `/reservas` y `/avisos` siguen disponibles. `/ingresar` y `/registro` también se muestran sin cabecera ni pie.
+
 ## Publicar ofertas (Spec 004)
 
 `/publicar` permite gestionar ofertas propias; requiere cuenta activa y perfil de proveedor verificado/público. `/admin/publicaciones` permite retirar o levantar retiradas con motivo y consultar auditoría. El header y la navegación móvil enlazan al editor; cuenta y perfil de proveedor también ofrecen acceso.

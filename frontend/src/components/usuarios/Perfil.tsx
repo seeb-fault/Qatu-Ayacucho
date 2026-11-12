@@ -63,7 +63,7 @@ export default function Perfil() {
 
   const iniciales = usuario?.nombre.trim().split(/\s+/).slice(0, 2).map(p => p[0]?.toUpperCase()).join('') ?? '';
   const accesos = usuario ? [
-    { href: '/proveedor', texto: 'Mi perfil de proveedor', detalle: 'Crea, edita y verifica tu perfil público.', icono: 'shield' },
+    { href: '/proveedor', texto: 'Panel del proveedor', detalle: 'Solicitudes, ofertas, perfil y verificación en un solo lugar.', icono: 'shield' },
     { href: '/publicar', texto: 'Gestionar mis ofertas', detalle: 'Publica herramientas u oficios y edítalos.', icono: 'box' },
     { href: '/reservas', texto: 'Mis solicitudes', detalle: 'Revisa solicitudes enviadas y recibidas.', icono: 'calendar' },
     ...(usuario.roles.includes('admin') ? [
@@ -76,7 +76,7 @@ export default function Perfil() {
   return <section className={styles.panel + ' ' + styles.cuenta} aria-labelledby="titulo-cuenta">
     <div className={styles.cabecera}>
       <span className={styles.avatar} aria-hidden="true">{iniciales || <Icono nombre="user" size={26}/>}</span>
-      <div><span className="eyebrow">TU CUENTA QATU</span><h1 id="titulo-cuenta">Mi perfil</h1>{usuario && <p className={styles.correo}>{usuario.email}</p>}</div>
+      <div><h1 id="titulo-cuenta">Mi perfil</h1>{usuario && <p className={styles.correo}>{usuario.email}</p>}</div>
     </div>
     {cargando && <p role="status">Cargando tu perfil…</p>}
     {error && <p role="alert" className={styles.error}>{error}</p>}

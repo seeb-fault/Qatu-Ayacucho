@@ -48,7 +48,7 @@ export default function RevisionProveedores() {
   }
 
   return <section className={styles.panel} aria-labelledby="titulo-revision">
-    <span className="eyebrow">ADMINISTRACIÓN</span><h1 id="titulo-revision">Revisar proveedores</h1>
+    <h1 id="titulo-revision">Revisar proveedores</h1>
     {error && <p role="alert" className={styles.error}>{error}</p>}
     {mensaje && <p role="status">{mensaje}</p>}
     {pendiente && <p role="status">Procesando…</p>}

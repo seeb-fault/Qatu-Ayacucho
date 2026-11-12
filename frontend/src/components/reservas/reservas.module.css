@@ -3,7 +3,7 @@
 .panel h2 { font-size: 21px; margin-bottom: 12px; }
 .panel p { line-height: 1.7; margin: 12px 0; }
 .panel a:not(:global(.button)) { color: var(--forest); text-decoration: underline; text-underline-offset: 3px; }
-.notice { background: var(--q-tint-violet); padding: 18px; border: 1px solid #E4DBFF; border-radius: var(--q-radius); margin: 20px 0; }
+.notice { background: var(--q-tint); padding: 18px; border: 1px solid var(--q-border-strong); border-radius: var(--q-radius); margin: 20px 0; }
 .error { color: #9B1C3A; background: #FFF1F3; border: 1px solid #F8CDD6; padding: 12px 14px; border-radius: var(--q-radius-sm); }
 .form { display: grid; gap: 20px; margin-top: 24px; }
 .form label { display: grid; gap: 8px; font-weight: 600; font-size: 14px; min-width: 0; }
@@ -12,11 +12,11 @@
 .form textarea { resize: vertical; }
 .dates { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin: 20px 0; }
-.toolbar button[aria-pressed=true] { background: var(--q-primary); color: white; border-color: transparent; box-shadow: var(--q-shadow-violet); }
+.toolbar button[aria-pressed=true] { background: var(--q-selected); color: white; border-color: transparent; }
 .list { display: grid; gap: 20px; margin-top: 24px; }
 .card { border: 1px solid var(--line); border-radius: var(--q-radius-lg); padding: 22px; overflow-wrap: anywhere; background: #fff; transition: box-shadow var(--q-med), border-color var(--q-med); }
-.card:hover { border-color: #DCD3FF; box-shadow: var(--q-shadow-sm); }
-.status { display: inline-block; font-weight: 700; font-size: 13px; border-radius: var(--q-pill); padding: 5px 12px; background: var(--q-tint-violet); color: var(--q-deep); }
+.card:hover { border-color: var(--q-border-strong); box-shadow: var(--q-shadow-sm); }
+.status { display: inline-block; font-weight: 700; font-size: 13px; border-radius: var(--q-pill); padding: 5px 12px; background: var(--q-tint); color: var(--q-deep); }
 .card dl { display: grid; grid-template-columns: 110px 1fr; gap: 10px; margin: 18px 0; }
 .card dt { color: var(--muted); }
 .card dd { margin: 0; }
@@ -61,9 +61,9 @@
 .atajos small { color: var(--q-text-2); font-size: 13px; }
 .disponibilidad { display: grid; gap: 10px; justify-items: start; }
 .disponibilidad p { margin: 0; padding: 12px 14px; border-radius: var(--q-radius-sm); background: var(--q-soft); color: var(--q-primary-hover); font-size: 14px; }
-.condiciones { padding: 18px; border: 1px solid #E4DBFF; border-radius: var(--q-radius); background: var(--q-tint-violet); }
+.condiciones { padding: 18px; border: 1px solid var(--q-border-strong); border-radius: var(--q-radius); background: var(--q-tint); }
 .condiciones h2 { font-size: 16px; margin-bottom: 4px; }
-.condiciones p { margin: 8px 0; font-size: 14px; color: #475467; }
+.condiciones p { margin: 8px 0; font-size: 14px; color: var(--q-text-2); }
 .condiciones strong { color: var(--q-text); }
 .condiciones .check { margin-top: 12px; padding: 12px; border-radius: var(--q-radius-sm); background: #fff; font-weight: 600; }
 .enviar { width: 100%; min-height: 52px; font-size: 16px; }
@@ -82,13 +82,13 @@
 .total span { color: var(--q-text-2); font-size: 13px; }
 .total strong { font-size: 28px; font-weight: 700; letter-spacing: -.02em; }
 .total small { color: var(--q-text-2); font-size: 13px; }
-.garantias { display: grid; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; font-size: 13px; color: #475467; }
+.garantias { display: grid; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; font-size: 13px; color: var(--q-text-2); }
 .garantias li { display: flex; align-items: center; gap: 8px; }
 .garantias svg { color: var(--q-success); }
 .exito { max-width: 640px; padding: 40px; border: 1px solid var(--q-border); border-radius: var(--q-radius-xl); background: #fff; box-shadow: var(--q-shadow-sm); }
 .exitoIcono { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: #ECFDF3; color: var(--q-success); }
 .exito h2 { margin-top: 20px; font-size: 26px; }
-.exito p { color: #475467; }
+.exito p { color: var(--q-text-2); }
 .exitoOferta { font-weight: 600; color: var(--q-text) !important; }
 .exitoFechas { display: flex; align-items: center; gap: 8px; }
 .exitoFechas svg { color: var(--q-primary); }

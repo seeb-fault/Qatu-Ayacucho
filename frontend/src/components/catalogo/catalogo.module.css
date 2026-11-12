@@ -4,7 +4,7 @@
 .panel h3 {font-size:17px;line-height:1.4;}
 .panel>p {margin:16px 0;}
 .panel a:not(:global(.button)) {color:var(--forest);text-decoration:underline;text-underline-offset:3px;}
-.notice {background:var(--q-soft);border:1px solid #E4DBFF;padding:22px;border-radius:var(--q-radius);margin:24px 0;}
+.notice {background:var(--q-soft);border:1px solid var(--q-border-strong);padding:22px;border-radius:var(--q-radius);margin:24px 0;}
 .notice p {margin:10px 0 20px;}
 .error {padding:15px;background:#FFF1F3;border:1px solid #F8CDD6;border-radius:var(--q-radius-sm);color:#9B1C3A;}
 .success {padding:15px;background:#E9F8F1;border:1px solid #BDE7D3;border-radius:var(--q-radius-sm);color:#0B6E4B;}
@@ -24,7 +24,7 @@
 .toolbar {display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
 .list {margin-top:36px;display:grid;gap:18px;}
 .item {padding:22px;border:1px solid var(--line);border-radius:var(--q-radius-lg);display:flex;flex-direction:column;gap:18px;background:#fff;min-width:0;transition:box-shadow var(--q-med),border-color var(--q-med);}
-.item:hover {border-color:#DCD3FF;box-shadow:var(--q-shadow-sm);}
+.item:hover {border-color:var(--q-border-strong);box-shadow:var(--q-shadow-sm);}
 .item h3 {overflow-wrap:anywhere;}
 .item p {font-size:14px;color:var(--muted);margin-top:8px;}
 .actions {display:flex;align-items:center;gap:16px;flex-wrap:wrap;}

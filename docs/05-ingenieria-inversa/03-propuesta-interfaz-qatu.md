@@ -6,7 +6,17 @@ Prototipo inicial de descubrimiento implementado en [frontend](../../frontend/RE
 
 ## Identidad propuesta
 
-Fondo claro, tipografía legible, verde oscuro como color principal y fotografías propias del catálogo. Colores propuestos: principal #145A46, acción #247A5A, fondo #F6F8F5 y texto #172B24. Validar contraste antes de adoptarlos. No son colores medidos de Hygglo.
+Fondo cálido claro, tipografía legible y fotografías propias del catálogo. Los tokens viven en `frontend/src/app/qatu.css`. No son colores medidos de Hygglo.
+
+| Rol | Color | Uso |
+|---|---|---|
+| Azul tinta | #1D2B5C | Texto, marca, selección, pie y bandas destacadas |
+| Esmeralda de acción | #00804C | Botones y enlaces; con blanco da 5.01:1 |
+| Esmeralda | #00A060 | Solo detalles: con blanco da 3.39:1 y no alcanza AA para texto |
+| Rosa niebla | #F4E1DE | Portada y selección de texto; con azul tinta da 10.74:1 |
+| Fondo | #FBF7F5 | Superficie general; las tarjetas son blancas |
+
+El movimiento solo responde a una acción o indica un estado: nada se desplaza solo. Los títulos no llevan etiquetas decorativas encima.
 
 Usar soles, distritos de Ayacucho y fechas presentadas en America/Lima. Las herramientas indican precio por día y servicios la unidad/cotización aplicable. Los precios de ejemplo se identifican como ficticios.
 

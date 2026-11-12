@@ -1,5 +1,5 @@
-import MiProveedor from '@/components/proveedores/MiProveedor';
+import ResumenProveedor from '@/components/proveedores/panel/ResumenProveedor';
 
-export const metadata = { title: 'Mi perfil de proveedor' };
+export const metadata = { title: 'Panel del proveedor' };
 
-export default function ProveedorPage() { return <MiProveedor/>; }
+export default function ProveedorPage() { return <ResumenProveedor/>; }

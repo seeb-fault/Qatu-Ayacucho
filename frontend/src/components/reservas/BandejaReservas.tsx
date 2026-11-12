@@ -7,7 +7,8 @@ import { type PaginaReservas, type SolicitudReserva } from '@/lib/api/reservas';
 import TarjetaReserva from './TarjetaReserva';
 import styles from './reservas.module.css';
 
-export default function BandejaReservas({ vistaInicial = 'cliente' }: { vistaInicial?: 'cliente' | 'proveedor' }) {
+/** soloRecibidas: en el panel del proveedor se muestra solo la bandeja de solicitudes recibidas. */
+export default function BandejaReservas({ vistaInicial = 'cliente', soloRecibidas = false }: { vistaInicial?: 'cliente' | 'proveedor'; soloRecibidas?: boolean }) {
   const [vista, setVista] = useState<'cliente' | 'proveedor'>(vistaInicial);
   const [page, setPage] = useState(1);
   const [datos, setDatos] = useState<PaginaReservas | null>(null);
@@ -45,12 +46,12 @@ export default function BandejaReservas({ vistaInicial = 'cliente' }: { vistaIni
 
   function cambiar(nueva: typeof vista) { setVista(nueva); setPage(1); setMensaje(''); }
   return <section className={styles.panel} aria-labelledby="titulo-reservas">
-    <span className="eyebrow">TUS PROYECTOS EN MARCHA</span><h1 id="titulo-reservas">Mis solicitudes</h1>
-    <p>Consulta lo que has solicitado y las solicitudes que reciben tus ofertas.</p>
+    <h1 id="titulo-reservas">{soloRecibidas ? 'Solicitudes recibidas' : 'Mis solicitudes'}</h1>
+    <p>{soloRecibidas ? 'Responde, entrega y cierra las solicitudes que reciben tus ofertas.' : 'Consulta lo que has solicitado y las solicitudes que reciben tus ofertas.'}</p>
     <p className={styles.hint}>Herramientas: apartado de 60 minutos y efectivo al recoger, confirmado por ambos participantes. Las visitas no bloquean. El pago en línea está en modo de prueba, sin cobros reales.</p>
     <div className={styles.toolbar} aria-label="Bandejas de solicitudes">
-      <button className="button outline" aria-pressed={vista === 'cliente'} disabled={ocupado || cargando} onClick={() => cambiar('cliente')}>Enviadas</button>
-      <button className="button outline" aria-pressed={vista === 'proveedor'} disabled={ocupado || cargando} onClick={() => cambiar('proveedor')}>Recibidas</button>
+      {!soloRecibidas && <><button className="button outline" aria-pressed={vista === 'cliente'} disabled={ocupado || cargando} onClick={() => cambiar('cliente')}>Enviadas</button>
+      <button className="button outline" aria-pressed={vista === 'proveedor'} disabled={ocupado || cargando} onClick={() => cambiar('proveedor')}>Recibidas</button></>}
       <button className="button outline" disabled={ocupado || cargando} onClick={() => { void cargar(); }}>Actualizar</button>
     </div>
     {error && <p role="alert" className={styles.error}>{error}</p>}

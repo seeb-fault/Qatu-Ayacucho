@@ -15,7 +15,7 @@ test('proveedor envía adjunto privado y administrador aprueba con historial', a
   });
   expect((await page.request.post('/api/v1/auth/registro',{ headers: { Origin: 'http://127.0.0.1:3100' },data: { email,password,nombre: 'Solicitante web' } })).status()).toBe(201);
   expect((await page.request.post('/api/v1/proveedores/me',{ headers: { Origin: 'http://127.0.0.1:3100' },data: { nombrePublico,descripcion: 'Actividad de mantenimiento y herramientas para proyectos locales.',zonaId: 'ayacucho',visiblePublicamente: true } })).status()).toBe(201);
-  await page.goto('/proveedor');
+  await page.goto('/proveedor/perfil');
   await page.getByLabel('Documentos privados',{ exact: true }).setInputFiles({ name: 'documento-sintetico.png',mimeType: 'image/png',buffer: png });
   await page.getByRole('checkbox',{ name: 'Acepto la política de conservación indicada.' }).check();
   await page.getByRole('button',{ name: 'Solicitar verificación',exact: true }).click();

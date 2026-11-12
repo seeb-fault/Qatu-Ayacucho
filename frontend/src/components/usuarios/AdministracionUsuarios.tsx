@@ -117,7 +117,7 @@ export default function AdministracionUsuarios() {
   }
 
   return <section className={`${styles.panel} ${styles.admin}`} aria-labelledby="titulo-administracion">
-    <span className="eyebrow">ADMINISTRACIÓN</span>
+    
     <h1 id="titulo-administracion">Administrar usuarios</h1>
     <p>Revisa cuentas y registra el motivo de cada cambio de acceso.</p>
     {error && <p role="alert" className={styles.error}>{error}</p>}

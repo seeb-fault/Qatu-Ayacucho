@@ -74,7 +74,7 @@ export default function MiProveedor() {
   }
 
   return <section className={styles.panel} aria-labelledby="titulo-proveedor">
-    <span className="eyebrow">OFRECE EN TU COMUNIDAD</span><h1 id="titulo-proveedor">Mi perfil de proveedor</h1>
+    <h1 id="titulo-proveedor">Mi perfil de proveedor</h1>
     <p>Presenta tus herramientas u oficios y el distrito donde atiendes.</p>
     <div className={styles.estado}><strong>{estadosVerificacion[perfil?.estadoVerificacion ?? 'no_solicitada']}</strong>Para publicar ofertas necesitas verificación documental aprobada y un perfil público.</div>
     {cargando && <p role="status">Cargando tu perfil…</p>}
@@ -92,9 +92,9 @@ export default function MiProveedor() {
       <button className="button primary" disabled={pendiente}>{pendiente ? 'Guardando…' : perfil ? 'Guardar cambios del proveedor' : 'Crear perfil de proveedor'}</button>
     </form>}
     {!cargando && !sinSesion && <div className={styles.acciones}>
-      {perfil?.visiblePublicamente && <Link href={`/proveedores/${perfil.id}`}>Ver mi página pública</Link>}
+      {perfil?.visiblePublicamente && <Link className="button outline" href={`/proveedores/${perfil.id}`}>Ver mi página pública</Link>}
       <button className="button outline" disabled={pendiente} onClick={cargar}>Recargar perfil</button>
-      <Link href="/publicar">Gestionar mis ofertas</Link><Link href="/cuenta">Volver a mi cuenta</Link>
+      <Link className="button outline" href="/proveedor/ofertas">Gestionar mis ofertas</Link>
     </div>}
     {!cargando && !sinSesion && perfil && <VerificacionProveedor perfil={perfil} onActualizado={cargar}/>}
   </section>;

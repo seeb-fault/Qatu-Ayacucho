@@ -11,12 +11,17 @@
 .form small { color: var(--muted); }
 .form .consentimiento { display: flex; align-items: flex-start; gap: 10px; font-weight: 400; }
 .consentimiento input { margin-top: 6px; min-width: 18px; min-height: 18px; accent-color: var(--q-primary); }
-.estado { background: var(--q-soft); border: 1px solid #E4DBFF; padding: 18px; border-radius: var(--q-radius); }
+.estado { background: var(--q-soft); border: 1px solid var(--q-border-strong); padding: 18px; border-radius: var(--q-radius); }
 .estado strong { color: var(--q-deep); }
 .estado strong { display: block; }
 .error { color: #9B1C3A; background: #FFF1F3; border: 1px solid #F8CDD6; padding: 12px 14px; border-radius: var(--q-radius-sm); }
 .descripcion { white-space: pre-wrap; }
-.acciones { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+.acciones { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+/* Selector de archivos con el mismo aspecto que los botones secundarios. */
+.form input[type=file] { padding: 7px; cursor: pointer; color: var(--q-text-2); }
+.form input[type=file]::file-selector-button { min-height: 32px; margin-right: 12px; padding: 6px 14px; border: 1px solid var(--q-border-strong); border-radius: var(--q-radius-sm); background: var(--q-surface); color: var(--q-text); font: inherit; font-weight: 600; cursor: pointer; transition: background-color var(--q-fast) var(--q-ease); }
+@media (hover: hover) and (pointer: fine) { .form input[type=file]::file-selector-button:hover { background: var(--q-muted-bg); } }
+@media (max-width: 480px) { .acciones > * { flex: 1 1 100%; } }
 .historial { padding-left: 24px; }
 .historial li { padding-bottom: 16px; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
 .solicitud { margin: 24px 0; padding: 20px; border: 1px solid var(--line); border-radius: var(--q-radius); background: var(--q-bg); }
