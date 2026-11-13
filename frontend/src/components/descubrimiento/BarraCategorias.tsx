@@ -1,17 +1,15 @@
 'use client';
 
+import type { ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { categorias, urlBusqueda } from '@/lib/catalogo';
 import Icono from './Icono';
 
 const todo = { tipo: '', nombre: 'Todo', icono: 'grid' };
-const tipos = [
-  { tipo: 'herramienta', nombre: 'Herramientas', icono: 'drill' },
-  { tipo: 'servicio', nombre: 'Oficios', icono: 'hammer' },
-];
 
-export default function BarraCategorias() {
+/** Herramientas y Oficios están en el encabezado; aquí van las categorías y, a la derecha, la ubicación. */
+export default function BarraCategorias({ children }: { children?: ReactNode }) {
   const ruta = usePathname();
   const enResultados = ruta === '/buscar';
   const params = useSearchParams();
@@ -25,21 +23,16 @@ export default function BarraCategorias() {
   // El resto se recorre deslizando dentro del recuadro.
   return <nav className="category-pills" aria-label="Categorías">
     <div className="container category-bar">
-      <Link href={urlBusqueda({ tipo: todo.tipo })} className={'pill pill-fija' + (todoResaltado ? ' active' : '')} aria-current={todoActivo ? 'page' : undefined}><span className="pill-icon"><Icono nombre={todo.icono} size={20}/></span>{todo.nombre}</Link>
-      <span className="pill-divider" aria-hidden="true"/>
       <div className="category-viewport">
         <div className="category-group">
-          {tipos.map(t => {
-            const activo = tipo === t.tipo && !categoria;
-            return <Link key={t.nombre} href={urlBusqueda({ tipo: t.tipo })} className={'pill' + (activo ? ' active' : '')} aria-current={activo ? 'page' : undefined}><span className="pill-icon"><Icono nombre={t.icono} size={20}/></span>{t.nombre}</Link>;
-          })}
-          <span className="pill-divider" aria-hidden="true"/>
+          <Link href={urlBusqueda({ tipo: todo.tipo })} className={'pill' + (todoResaltado ? ' active' : '')} aria-current={todoActivo ? 'page' : undefined}><span className="pill-icon"><Icono nombre={todo.icono} size={18}/></span>{todo.nombre}</Link>
           {categorias.map(c => {
             const activo = categoria === c.id;
             return <Link key={c.id} href={urlBusqueda({ tipo: c.tipo, categoria: c.id })} className={'pill' + (activo ? ' active' : '')} aria-current={activo ? 'page' : undefined}><span className="pill-icon"><Icono nombre={c.icono} size={20}/></span>{c.nombre}</Link>;
           })}
         </div>
       </div>
+      {children}
     </div>
   </nav>;
 }

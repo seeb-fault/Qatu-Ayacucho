@@ -15,7 +15,7 @@ export default function TarjetaOferta({ oferta: o, volver = '/buscar' }: { ofert
       <div className="card-meta"><span><Icono nombre="pin" size={14}/>{o.distrito}</span>{o.puntuacion !== null ? <span className="rating"><Icono nombre="star" size={13}/>{o.puntuacion.toFixed(1)} <small>({o.resenas})</small></span> : <span className="new-label">Sin reseñas</span>}</div>
       <h3><Link href={detalle}>{o.titulo}</Link></h3>
       <div className="card-price">{o.precio !== null ? <><strong>{soles(o.precio)}</strong>{o.unidad && <span> / {o.unidad}</span>}</> : <><strong>A cotizar</strong><span> según tu proyecto</span></>}</div>
-      <div className="card-footer"><span className="card-owner"><span className="mini-avatar" aria-hidden="true">{o.proveedor.iniciales}</span><span>Por {o.proveedor.nombre}</span></span><span className="type-chip"><Icono nombre={servicio ? 'hammer' : 'drill'} size={14}/>{servicio ? 'Servicio' : 'Alquiler'}</span></div>
+      <div className="card-footer"><span className="card-owner"><span className="mini-avatar" aria-hidden="true">{o.proveedor.iniciales}</span><span>Por {o.proveedor.nombre}</span></span><span className="type-chip"><Icono nombre={servicio ? 'hammer' : 'drill'} size={14}/>{servicio ? 'Contratar' : 'Alquilar'}</span></div>
     </div>
   </article>;
 }
