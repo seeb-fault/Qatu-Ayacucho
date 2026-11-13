@@ -6,6 +6,10 @@ El incremento **005.1** inicia [solicitudes de reserva](005-reservas-contratacio
 
 El incremento **006.1** añade [reseñas](006-reputacion-confianza/quickstart.md): el cliente califica una operación cerrada hasta 14 días después, la reputación aparece en el perfil público y en las tarjetas del catálogo, y un administrador ajeno a la operación puede ocultar o restablecer reseñas con motivo registrado.
 
+El incremento **006.2** añade [evidencias privadas](006-reputacion-confianza/quickstart.md): fotos de entrega, devolución o trabajo, cifradas, visibles solo para los participantes y la administración, y borradas 90 días después del cierre.
+
+El incremento **006.3** añade [incidencias y garantía documental](006-reputacion-confianza/quickstart.md): un participante reporta un problema hasta 48 h después del cierre y un administrador ajeno lo resuelve sin mover dinero; el proveedor documenta el estado de la herramienta y el cliente da conformidad al recibirla.
+
 ## Evolución pendiente
 
 - [005 — Reservas, contratación y pagos](005-reservas-contratacion-pagos/spec.md)

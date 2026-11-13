@@ -12,7 +12,7 @@ import { ScryptPasswords } from '../../src/modules/usuarios/infraestructura/pass
 
 const DIA = 86_400_000, HORA = 3_600_000;
 const reserva = (cambios: Partial<ReservaParaResena> = {}): ReservaParaResena => ({ id: 'r', clienteId: 'c', propietarioId: 'p', proveedorId: 'v', publicacionId: 'o',
-  titulo: 'Taladro', estado: 'DEVUELTA', cerradaEn: new Date(Date.UTC(2026, 10, 1)).toISOString(), ...cambios });
+  titulo: 'Taladro', tipo: 'herramienta', estado: 'DEVUELTA', cerradaEn: new Date(Date.UTC(2026, 10, 1)).toISOString(), ...cambios });
 
 test('entrada: puntuación entera de 1 a 5, comentario opcional de hasta 600 caracteres y sin campos extra', () => {
   assert.deepEqual(entradaResena({ puntuacion: 5, texto: '  Muy buena herramienta  ' }), { puntuacion: 5, texto: 'Muy buena herramienta' });

@@ -4,9 +4,9 @@
 @import 'tailwindcss/utilities.css' layer(utilities);
 @source '../';
 @theme {
-  --color-qatu-primary: #1D2B5C;
+  --color-qatu-primary: #141416;
   --color-qatu-surface: #FBF7F5;
-  --color-qatu-accent: #00804C;
+  --color-qatu-accent: #C8102E;
 }
 
 :root { --forest:#18566a; --deep:#103b4c; --green:#24687a; --orange:#bd533f; --paper:#f7f9fb; --ink:#233e4c; --muted:#607681; --line:#dfe8ee; --cream:#eef4f7; }

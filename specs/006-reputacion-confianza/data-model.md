@@ -6,6 +6,14 @@
 
 `backend/migrations/resenas/001-resenas.sql` crea `resenas` (reserva, cliente, titular y proveedor, publicación, título, puntuación 1–5, texto opcional de hasta 600, oculta, versión) con `UNIQUE(reserva_id)`, y `resenas_moderaciones` (admin, oculta, motivo de 10–500, fecha), que no se edita ni se borra. La clave foránea a `reservas` es solo de integridad: Reseñas lee la reserva por la fachada `ConsultaReservas`. La reversión automática está bloqueada para conservar la auditoría.
 
+## Esquema implementado en 006.2
+
+`backend/migrations/resenas/002-evidencias.sql` crea `evidencias` (reserva, autor, etapa, tipo, bytes, sha256, contenido cifrado con IV y tag, creación y borrado). El contenido se cifra con AES-256-GCM mediante `shared/infraestructura/archivos-cifrados.ts`, el mismo adaptador que usan los documentos de verificación. La limpieza horaria pide a Reservas las fechas de cierre por la fachada `ConsultaReservas` y, a los 90 días, borra contenido, IV y tag; se conservan metadata y hash.
+
+## Esquema implementado en 006.3
+
+`backend/migrations/resenas/003-incidencias-garantias.sql` crea `incidencias`, con una sola abierta por reserva (índice único parcial) y la restricción de que el revisor no sea cliente ni titular, y `garantias_documentadas`, una por reserva, con texto, versión y fecha de conformidad del cliente. La garantía no tiene monto.
+
 ## Datos propios
 
 resenas; garantias_documentadas; evidencias; incidencias.

@@ -25,7 +25,7 @@
 
 /* Mi cuenta */
 .cuenta { width: min(720px, calc(100% - 32px)); }
-.cabecera { display: flex; align-items: center; gap: 18px; padding: 22px; margin: -8px -8px 8px; border-radius: var(--q-radius-lg); background: var(--q-hero); border: 1px solid #ECE6FF; }
+.cabecera { display: flex; align-items: center; gap: 18px; padding: 22px; margin: -8px -8px 8px; border-radius: var(--q-radius-lg); background: var(--q-tint); border: 1px solid var(--q-border); }
 .cabecera h1 { margin: 4px 0 0; }
 .avatar { display: grid; place-items: center; flex-shrink: 0; width: 64px; height: 64px; border-radius: 20px; background: var(--q-navy); color: #fff; font-family: var(--font-head); font-size: 22px; font-weight: 800; }
 .panel .correo { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
@@ -34,7 +34,7 @@
 .roles li { padding: 4px 12px; border-radius: var(--q-pill); background: var(--q-tint); color: var(--q-deep); font-size: 12px; font-weight: 700; text-transform: capitalize; }
 .accesos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 20px 0 8px; padding: 0; list-style: none; }
 .accesos li { position: relative; display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid var(--line); border-radius: var(--q-radius); background: #fff; transition: border-color var(--q-med), box-shadow var(--q-med), transform var(--q-med) var(--q-ease); }
-.accesos li:hover, .accesos li:focus-within { border-color: #D6CCFF; box-shadow: var(--q-shadow-sm); transform: translateY(-2px); }
+.accesos li:hover, .accesos li:focus-within { border-color: var(--q-border-strong); box-shadow: var(--q-shadow-sm); transform: translateY(-2px); }
 .accesos li > span:nth-child(2) { display: flex; flex-direction: column; min-width: 0; flex: 1; }
 .accesos li > svg { flex-shrink: 0; color: var(--muted); }
 .panel .accesos a { color: var(--ink); font-weight: 700; text-decoration: none; }
