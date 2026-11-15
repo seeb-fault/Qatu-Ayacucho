@@ -1,6 +1,6 @@
 # Tareas — Reputación y confianza
 
-Estado: 006.1, 006.2 y 006.3 implementados; quedan la restauración EQ-09 y el análisis de consistencia final.
+Estado: 006.1, 006.2 y 006.3 implementados, con avisos de incidencias y restauración EQ-09 verificada; queda el análisis de consistencia final.
 
 ## Fase 1 — Preparación
 
@@ -54,7 +54,7 @@ Objetivo y prueba independiente: dado un acuerdo de garantía, reporto incidenci
 - [x] T024 Reseña ajena/anticipada/duplicada y puntuación inválida rechazadas; duplicado concurrente único. Registrar evidencia en specs/006-reputacion-confianza/quickstart.md.
 - [x] T025 Descargas de evidencia ajena y archivos inválidos rechazados; hashes y referencias verificables. Registrar evidencia en specs/006-reputacion-confianza/quickstart.md.
 - [x] T026 Moderación conserva auditoría y recalcula agregados sin reseñas ocultas. Registrar evidencia en specs/006-reputacion-confianza/quickstart.md.
-- [ ] T027 Restaurar archivos junto con metadata conforme a EQ-09. Registrar evidencia en specs/006-reputacion-confianza/quickstart.md.
+- [x] T027 Restaurar archivos junto con metadata conforme a EQ-09. Registrar evidencia en specs/006-reputacion-confianza/quickstart.md.
 - [ ] T028 Analizar consistencia e imports y registrar resultados/limitaciones en specs/006-reputacion-confianza/checklists/requirements.md.
 
 ## Dependencias y estrategia

@@ -28,6 +28,8 @@ export const AVISOS: Record<string, { para: Receptor; mensaje: string }> = {
   REEMBOLSO_PENDIENTE: { para: 'cliente', mensaje: 'Tu pago en línea quedó pendiente de reembolso.' },
   ENTREGA_REGISTRADA: { para: 'cliente', mensaje: 'El proveedor registró la entrega. Falta tu confirmación.' },
   COBRO_SOLICITADO: { para: 'cliente', mensaje: 'El proveedor terminó el trabajo. Ya puedes pagarlo en línea.' },
+  INCIDENCIA_ABIERTA: { para: 'otro', mensaje: 'La otra persona reportó un problema con esta reserva. Lo revisará la administración.' },
+  INCIDENCIA_RESUELTA: { para: 'ambos', mensaje: 'La administración resolvió la incidencia de esta reserva.' },
 };
 
 export function destinatarios(evento: EventoReserva): string[] | null {

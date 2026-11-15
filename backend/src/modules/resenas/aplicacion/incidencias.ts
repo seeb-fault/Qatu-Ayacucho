@@ -34,7 +34,8 @@ export class Incidencias {
     const datos = entradaIncidencia(value);
     const { actor, reserva } = await this.participante(token, id);
     exigirPuedeReclamar(reserva, this.ahora());
-    const incidencia = await this.repo.abrir({ reservaId: reserva.id, autorId: actor.id, clienteId: reserva.clienteId, propietarioId: reserva.propietarioId, ...datos });
+    const incidencia = await this.reservas.conEvento(reserva.id, 'INCIDENCIA_ABIERTA', actor.id,
+      tx => this.repo.abrir({ reservaId: reserva.id, autorId: actor.id, clienteId: reserva.clienteId, propietarioId: reserva.propietarioId, ...datos }, tx));
     return vista(incidencia, actor.id);
   }
 
@@ -58,7 +59,9 @@ export class Incidencias {
     const actual = await this.repo.porId(uuid(id));
     if (!actual) throw new ErrorResena('INCIDENCIA_NO_DISPONIBLE', 404, 'La incidencia no existe.');
     if ([actual.clienteId, actual.propietarioId].includes(actor.id)) throw new ErrorResena('SIN_PERMISO', 403, 'No puedes resolver una incidencia de una operación en la que participaste.');
-    return { ...vista(await this.repo.resolver(actual.id, actor.id, datos.resultado, datos.motivo)), reservaId: actual.reservaId };
+    const resuelta = await this.reservas.conEvento(actual.reservaId, 'INCIDENCIA_RESUELTA', actor.id,
+      tx => this.repo.resolver(actual.id, actor.id, datos.resultado, datos.motivo, tx));
+    return { ...vista(resuelta), reservaId: actual.reservaId };
   }
 
   /** Fotos de la reserva para revisar una incidencia; solo metadata, la descarga va por su ruta autorizada. */

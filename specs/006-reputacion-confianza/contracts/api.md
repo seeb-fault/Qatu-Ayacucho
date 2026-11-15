@@ -46,11 +46,9 @@ Etapas: **entrega** con la herramienta en manos del cliente (ENTREGA_POR_CONFIRM
 | PUT | /reservas/:id/garantia | Proveedor antes de entregar | `{ condiciones }` (20–1000); sin monto; 409 tras la conformidad |
 | POST | /reservas/:id/garantia/conformidad | Cliente al recibir | `{ version }` vigente; 409 si cambió |
 
-## Extensiones propuestas para cubrir requisitos existentes
+## Avisos
 
-- Avisos de apertura y resolución de incidencias a los participantes.
-
-Estas extensiones aún no están congeladas: completar DTO/estados en OpenAPI y actualizar docs antes de implementar. No se ejecutan operaciones ni llamadas externas desde estas especificaciones.
+Abrir una incidencia avisa a la otra persona y resolverla avisa a ambos, en la bandeja `GET /avisos` existente. No hay rutas nuevas: los eventos `INCIDENCIA_ABIERTA` e `INCIDENCIA_RESUELTA` se guardan en el outbox de Reservas en la misma transacción que la incidencia (migración `reservas/010-eventos-incidencias`).
 
 ## Datos de entrada/salida propuestos
 

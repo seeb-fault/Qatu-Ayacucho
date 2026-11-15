@@ -1,5 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import type { Pool } from 'pg';
+import type { Transaccion } from '../../../shared/dominio/transaccion';
 import { ErrorResena } from '../dominio/resenas';
 import type { Garantia, Incidencia, ResultadoIncidencia, TipoIncidencia } from '../dominio/incidencias';
 
@@ -13,9 +14,9 @@ const aGarantia = (f: any): Garantia => ({ ...f, registradaEn: fecha(f.registrad
 export class PostgresIncidencias {
   constructor(private readonly pool: Pool) {}
 
-  async abrir(d: { reservaId: string; autorId: string; clienteId: string; propietarioId: string; tipo: TipoIncidencia; descripcion: string }) {
+  async abrir(d: { reservaId: string; autorId: string; clienteId: string; propietarioId: string; tipo: TipoIncidencia; descripcion: string }, tx: Transaccion = this.pool) {
     try {
-      const r = await this.pool.query(`INSERT INTO incidencias(id,reserva_id,autor_id,cliente_id,propietario_id,tipo,descripcion) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING ${columnas}`,
+      const r = await tx.query(`INSERT INTO incidencias(id,reserva_id,autor_id,cliente_id,propietario_id,tipo,descripcion) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING ${columnas}`,
         [randomUUID(), d.reservaId, d.autorId, d.clienteId, d.propietarioId, d.tipo, d.descripcion]);
       return aIncidencia(r.rows[0]);
     } catch (error) {
@@ -43,8 +44,8 @@ export class PostgresIncidencias {
   }
 
   /** Solo se resuelve una incidencia abierta; dos revisores a la vez dejan una sola resolución. */
-  async resolver(id: string, revisorId: string, resultado: ResultadoIncidencia, motivo: string) {
-    const r = await this.pool.query(`UPDATE incidencias SET estado='resuelta', resultado=$3, motivo=$4, revisor_id=$2, resuelta_en=now()
+  async resolver(id: string, revisorId: string, resultado: ResultadoIncidencia, motivo: string, tx: Transaccion = this.pool) {
+    const r = await tx.query(`UPDATE incidencias SET estado='resuelta', resultado=$3, motivo=$4, revisor_id=$2, resuelta_en=now()
       WHERE id=$1 AND estado='abierta' RETURNING ${columnas}`, [id, revisorId, resultado, motivo]);
     if (!r.rowCount) throw new ErrorResena('INCIDENCIA_RESUELTA', 409, 'La incidencia ya fue resuelta.');
     return aIncidencia(r.rows[0]);

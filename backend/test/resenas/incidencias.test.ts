@@ -5,6 +5,7 @@ import { test } from 'node:test';
 import { Pool } from 'pg';
 import { crearApp } from '../../src/app';
 import { entradaIncidencia, entradaResolucion, puedeReclamar } from '../../src/modules/resenas/dominio/incidencias';
+import { destinatarios } from '../../src/modules/reservas/dominio/avisos';
 import type { ReservaParaResena } from '../../src/modules/resenas/dominio/resenas';
 import { PostgresUsuarios } from '../../src/modules/usuarios/infraestructura/postgres';
 import { ScryptPasswords } from '../../src/modules/usuarios/infraestructura/passwords';
@@ -24,6 +25,13 @@ test('dominio: se reclama desde la entrega hasta 48 h tras el cierre; entradas v
   for (const malo of [{ tipo: 'robo', descripcion: DESCRIPCION }, { tipo: 'dano', descripcion: 'corto' }, { tipo: 'dano', descripcion: DESCRIPCION, monto: 10 }])
     assert.throws(() => entradaIncidencia(malo), /tipo|caracteres|Revisa/);
   assert.throws(() => entradaResolucion({ resultado: 'devolver_dinero', motivo: 'Motivo suficiente.' }), /resultado/);
+});
+
+test('avisos: el reporte llega al otro participante y la resolución a ambos', () => {
+  const evento = (tipo: string, actorId: string) => ({ id: 'e', tipo, reservaId: 'r', clienteId: 'c', propietarioId: 'p', payload: { actorId }, creadoEn: '', intento: 1 });
+  assert.deepEqual(destinatarios(evento('INCIDENCIA_ABIERTA', 'c')), ['p']);
+  assert.deepEqual(destinatarios(evento('INCIDENCIA_ABIERTA', 'p')), ['c']);
+  assert.deepEqual(destinatarios(evento('INCIDENCIA_RESUELTA', 'admin')), ['c', 'p']);
 });
 
 test('incidencias y garantía reales en PostgreSQL', { skip: !process.env.TEST_DATABASE_URL }, async context => {
@@ -80,6 +88,8 @@ test('incidencias y garantía reales en PostgreSQL', { skip: !process.env.TEST_D
       const lista = await (await pedir(`/reservas/${s.id}/incidencias`, 'GET', undefined, proveedor)).json();
       assert.equal(lista.items.length, 1); assert.equal(lista.puedeReclamar, false); incidenciaId = lista.items[0].id;
       assert.equal(lista.items[0].estado, 'abierta'); assert.ok(!('clienteId' in lista.items[0]));
+      const ev = (await pool.query("SELECT payload FROM reservas_outbox WHERE agregado_id=$1 AND tipo='INCIDENCIA_ABIERTA'", [s.id])).rows;
+      assert.equal(ev.length, 1, 'un solo evento: el intento rechazado no deja evento'); assert.equal(ev[0].payload.reservaId, s.id);
     });
 
     await context.test('resolución: solo un admin ajeno, una vez, con motivo; no mueve dinero', async () => {
@@ -90,6 +100,8 @@ test('incidencias y garantía reales en PostgreSQL', { skip: !process.env.TEST_D
       assert.ok(abiertas.items.some((i: any) => i.id === incidenciaId));
       const [x, y] = await Promise.all([resolver(administrador, { resultado: 'a_favor_cliente', motivo: 'Las fotos de entrega muestran la broca entera.' }), resolver(administrador, { resultado: 'sin_acuerdo', motivo: 'Segunda decisión simultánea.' })]);
       assert.deepEqual([x.status, y.status].sort(), [200, 409]);
+      const resueltas = (await pool.query("SELECT payload FROM reservas_outbox WHERE agregado_id=$1 AND tipo='INCIDENCIA_RESUELTA'", [s.id])).rows;
+      assert.equal(resueltas.length, 1); assert.equal(resueltas[0].payload.actorId, admin.id);
       const fila = (await pool.query('SELECT estado, revisor_id, resultado FROM incidencias WHERE id=$1', [incidenciaId])).rows[0];
       assert.equal(fila.estado, 'resuelta'); assert.equal(fila.revisor_id, admin.id);
       const reservaTras = (await pool.query('SELECT pago_estado, efectivo_centimos FROM reservas WHERE id=$1', [s.id])).rows[0];

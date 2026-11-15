@@ -1,7 +1,8 @@
 import { randomUUID } from 'node:crypto';
 import type { Pool, PoolClient } from 'pg';
 import { ErrorReserva, type NuevaSolicitud, type Solicitud } from '../dominio/solicitud';
-import type { PagosDeReserva, RepositorioReservas, ReservaParaPago } from '../dominio/puertos';
+import type { EventoExterno, PagosDeReserva, RepositorioReservas, ReservaParaPago } from '../dominio/puertos';
+import type { Transaccion } from '../../../shared/dominio/transaccion';
 import { eventos, transicion, type AccionReserva } from '../dominio/alquiler';
 import { puedeCotizar, puedeConfirmarAgenda, type PropuestaCotizacion } from '../dominio/cotizacion';
 import { importeAPagar } from '../dominio/cobro';
@@ -166,6 +167,18 @@ export class PostgresReservas implements RepositorioReservas {
       FROM reservas WHERE id=$1 AND (cliente_id=$2 OR propietario_id=$2)`, [id,actorId]);
     const f = r.rows[0];
     return f ? { ...f, cerradaEn: f.cerradaEn ? new Date(f.cerradaEn).toISOString() : null } : null;
+  }
+
+  /** Ejecuta el cambio de otro módulo y guarda el evento en el outbox en la misma transacción: ambos o ninguno. */
+  conEvento<T>(reservaId: string, tipo: EventoExterno, actorId: string, operar: (tx: Transaccion) => Promise<T>) {
+    return this.transaccion(async client => {
+      const r = await client.query('SELECT version FROM reservas WHERE id=$1', [reservaId]);
+      if (!r.rowCount) throw new ErrorReserva('RESERVA_NO_DISPONIBLE',404,'La solicitud no está disponible.');
+      const resultado = await operar(client);
+      await client.query('INSERT INTO reservas_outbox(id,agregado_id,tipo,payload) VALUES($1,$2,$3,$4)',
+        [randomUUID(),reservaId,tipo,JSON.stringify({reservaId,version:r.rows[0].version,actorId})]);
+      return resultado;
+    });
   }
 
   async cierres(ids: string[]) {

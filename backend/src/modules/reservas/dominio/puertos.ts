@@ -45,6 +45,8 @@ export interface ReservaParaPago {
   registrarPago(intentoId: string, importeCentimos: number): Promise<void>;
   registrarPagoTardio(intentoId: string): Promise<void>;
 }
+/** Eventos que otros módulos pueden registrar en el outbox de Reservas para avisar a los participantes. */
+export type EventoExterno = 'INCIDENCIA_ABIERTA' | 'INCIDENCIA_RESUELTA';
 /** Datos mínimos de una reserva para otros módulos; solo se entregan a sus participantes. */
 export interface ParticipacionReserva {
   id: string; clienteId: string; propietarioId: string; proveedorId: string; publicacionId: string;
@@ -65,4 +67,5 @@ export interface RepositorioReservas {
   visible(id: string, actorId: string): Promise<boolean>;
   participacion(id: string, actorId: string): Promise<ParticipacionReserva | null>;
   cierres(ids: string[]): Promise<Map<string, string | null>>;
+  conEvento<T>(reservaId: string, tipo: EventoExterno, actorId: string, operar: (tx: Transaccion) => Promise<T>): Promise<T>;
 }
