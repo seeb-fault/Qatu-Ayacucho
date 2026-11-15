@@ -3,7 +3,19 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState, type FormEvent } from 'react';
-import { usuariosApi } from '@/lib/api/usuarios';
+import { ErrorAcceso, usuariosApi, type Usuario } from '@/lib/api/usuarios';
+
+/** Tras iniciar sesión: el proveedor va a su panel, el administrador a su cuenta y el cliente al inicio. */
+async function destinoTrasIngreso(usuario: Usuario | undefined) {
+  if (usuario?.roles.includes('admin')) return '/cuenta';
+  try {
+    await usuariosApi('/proveedores/me');
+    return '/proveedor';
+  } catch (error) {
+    if (error instanceof ErrorAcceso && error.status === 404) return '/';
+    return '/cuenta';
+  }
+}
 import Icono from '@/components/descubrimiento/Icono';
 import styles from './acceso.module.css';
 
@@ -20,11 +32,12 @@ export default function Acceso({ registro = false }: { registro?: boolean }) {
     setPendiente(true);
     setError('');
     try {
-      await usuariosApi(registro ? '/auth/registro' : '/auth/login', 'POST', {
+      const respuesta = await usuariosApi<{ usuario?: Usuario }>(registro ? '/auth/registro' : '/auth/login', 'POST', {
         email: form.get('email'), password: form.get('password'),
         ...(registro ? { nombre: form.get('nombre') } : {}),
       });
-      router.replace('/cuenta');
+      // Una cuenta nueva completa su perfil; quien vuelve a entrar va directo a lo suyo.
+      router.replace(registro ? '/cuenta' : await destinoTrasIngreso(respuesta?.usuario));
       router.refresh();
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Intenta nuevamente.');

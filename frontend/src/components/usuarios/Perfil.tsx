@@ -1,12 +1,14 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState, type FormEvent } from 'react';
 import { ErrorAcceso, usuariosApi, type Usuario } from '@/lib/api/usuarios';
 import Icono from '@/components/descubrimiento/Icono';
 import styles from './usuarios.module.css';
 
 export default function Perfil() {
+  const router = useRouter();
   const [usuario, setUsuario] = useState<Usuario | null>(null);
   const [nombre, setNombre] = useState('');
   const [error, setError] = useState('');
@@ -30,9 +32,12 @@ export default function Perfil() {
   useEffect(() => { void cargar(); }, []);
 
   function fallo(error: unknown) {
+    // Sesión vencida o inexistente: directo al ingreso, sin pasar por un aviso intermedio.
     if (error instanceof ErrorAcceso && error.status === 401) {
       setUsuario(null);
       setSinSesion(true);
+      router.replace('/ingresar');
+      return;
     }
     setError(error instanceof Error ? error.message : 'Intenta nuevamente.');
   }
@@ -55,8 +60,9 @@ export default function Perfil() {
     try {
       await usuariosApi('/auth/logout', 'POST', {});
       setUsuario(null);
-      setSinSesion(true);
-      setMensaje('Cerraste tu sesión.');
+      // Al salir se vuelve a la portada de Qatu.
+      router.replace('/');
+      router.refresh();
     } catch (error) { fallo(error); }
     finally { setPendiente(false); }
   }
