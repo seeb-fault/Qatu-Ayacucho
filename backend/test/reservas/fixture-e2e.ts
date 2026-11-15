@@ -18,6 +18,8 @@ async function preparar() {
     const perfil = await new PostgresProveedores(pool).crear(proveedor.id, { nombrePublico: 'Taller E2E ' + sufijo.slice(0,8), descripcion: 'Proveedor sintético de herramientas para el recorrido de solicitudes.', zonaId: 'ayacucho', visiblePublicamente: true });
     // Estado verificado sintético. No acredita el flujo documental, cubierto por 003/004.
     await pool.query("UPDATE proveedores SET estado_verificacion='aprobada' WHERE id=$1", [perfil.id]);
+    // El proveedor comparte su WhatsApp con quienes tengan una reserva activa (010).
+    await pool.query("UPDATE usuarios SET whatsapp='+51987654321', whatsapp_visible=true WHERE id=$1", [proveedor.id]);
     await pool.query("DELETE FROM limites_acceso WHERE clave='ip:127.0.0.1:login'");
     const servicio = process.argv.includes('--servicio');
     const clienteB = servicio ? await usuarios.crear('reservas-e2e-cliente-b-'+sufijo+'@example.com','Segundo cliente E2E',hash) : null;

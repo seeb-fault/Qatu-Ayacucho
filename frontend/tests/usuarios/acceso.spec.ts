@@ -18,17 +18,22 @@ test('registro real → perfil → salir → ingresar', async ({ page }) => {
   await page.getByRole('button', { name: 'Guardar perfil' }).click();
   await expect(page.getByRole('status')).toHaveText('Tu perfil se guardó.');
   await page.getByRole('button', { name: 'Cerrar sesión' }).click();
-  await expect(page.getByRole('link', { name: 'Ingresar a mi cuenta' })).toBeVisible();
+  await expect(page).toHaveURL(/:\d+\/$/);
+  await page.goto('/cuenta');
+  await expect(page).toHaveURL(/\/ingresar$/);
   await page.goto('/ingresar');
   await page.getByLabel('Correo electrónico').fill(email);
   await page.getByLabel('Contraseña', { exact: true }).fill(password);
   await page.getByRole('button', { name: 'Ingresar', exact: true }).click();
+  // Un cliente vuelve a la portada; su perfil sigue en Mi cuenta.
+  await expect(page).toHaveURL(/:\d+\/$/);
+  await page.goto('/cuenta');
   await expect(page.getByLabel('Nombre', { exact: true })).toHaveValue('Nombre actualizado');
 });
 
 test('perfil privado y formulario móvil sin desborde', async ({ page }) => {
   await page.goto('/cuenta');
-  await expect(page.getByRole('link', { name: 'Ingresar a mi cuenta' })).toBeVisible();
+  await expect(page).toHaveURL(/\/ingresar$/);
   await page.setViewportSize({ width: 360, height: 900 });
   for (const ruta of ['/registro', '/ingresar', '/cuenta']) {
     await page.goto(ruta);

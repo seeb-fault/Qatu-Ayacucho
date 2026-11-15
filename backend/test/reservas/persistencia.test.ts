@@ -19,6 +19,8 @@ test('solicitudes persistidas: privacidad, snapshot, bandejas, rechazo concurren
   const tercero = await usuarios.crearAdministrador('reservas-tercero-' + sufijo + '@example.com', 'Tercero reservas', hash, 'Verificar que administración no concede lectura indiscriminada');
   const perfil = await proveedores.crear(titular.id, { nombrePublico: 'Taller reservas ' + sufijo, descripcion: 'Herramientas y oficios para proyectos locales de mantenimiento.', zonaId: 'ayacucho', visiblePublicamente: true });
   await pool.query("UPDATE proveedores SET estado_verificacion='aprobada' WHERE id=$1", [perfil.id]);
+  // Publicar exige un WhatsApp visible (010).
+  await pool.query("UPDATE usuarios SET whatsapp='+51987654321', whatsapp_visible=true WHERE id=$1", [titular.id]);
   await pool.query("DELETE FROM limites_acceso WHERE clave='ip:127.0.0.1:login'");
   const app = await crearApp(); await app.listen(0, '127.0.0.1'); const root = await app.getUrl() + '/api/v1';
   const pedir = (ruta: string, method = 'GET', body?: unknown, cookie = '', origin = process.env.APP_ORIGIN!) => fetch(root + ruta, {

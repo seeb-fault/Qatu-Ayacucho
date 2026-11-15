@@ -9,6 +9,10 @@ export class IdentidadUsuarios {
 
   cuentasActivas(ids: string[]) { return this.usuarios.cuentasActivas(ids); }
 
+  /** WhatsApp de la contraparte de una reserva (010); null si no consintió mostrarlo. */
+  contactoPublico(usuarioId: string) { return this.usuarios.contactoPublico(usuarioId); }
+  tieneWhatsapp(usuarioId: string) { return this.usuarios.tieneWhatsapp(usuarioId); }
+
   cuentaActiva(usuarioId: string) {
     return this.usuarios.cuentaActiva(usuarioId);
   }

@@ -1,5 +1,9 @@
 import type { DatosOferta, FiltrosCatalogo, ProveedorCatalogo, Publicacion } from './oferta';
-export interface IdentidadCatalogo { resolver(token:string): Promise<{id:string;roles:string[]}> }
+export interface IdentidadCatalogo {
+  resolver(token:string): Promise<{id:string;roles:string[]}>;
+  /** Publicar exige un WhatsApp visible para coordinar con los clientes (010). */
+  tieneWhatsapp(usuarioId:string): Promise<boolean>;
+}
 export interface ProveedoresCatalogo {
   propio(token:string): Promise<{id:string;visiblePublicamente:boolean;estadoVerificacion:string}>;
   habilitados(): Promise<ProveedorCatalogo[]>;

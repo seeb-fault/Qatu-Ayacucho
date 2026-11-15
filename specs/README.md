@@ -10,12 +10,18 @@ El incremento **006.2** añade [evidencias privadas](006-reputacion-confianza/qu
 
 El incremento **006.3** añade [incidencias y garantía documental](006-reputacion-confianza/quickstart.md): un participante reporta un problema hasta 48 h después del cierre y un administrador ajeno lo resuelve sin mover dinero; el proveedor documenta el estado de la herramienta y el cliente da conformidad al recibirla.
 
+El incremento **009.1** añade [Mi lista](009-mi-lista/quickstart.md): el cliente guarda herramientas y oficios con sus fechas, los revisa (tarifa cambiada, fechas vencidas, unidad ocupada) y envía todas las solicitudes en un paso. Guardar exige sesión; quien no la tiene vuelve a la publicación con el ítem agregado tras ingresar.
+
+El incremento **010.1** añade [coordinación por WhatsApp](010-coordinacion-whatsapp/quickstart.md): cada usuario registra su WhatsApp con consentimiento y, desde que hay un compromiso (visita acordada, cotización enviada o reserva aceptada) hasta el cierre, la reserva muestra «Escribir a … por WhatsApp» con el mensaje ya escrito. Publicar exige un WhatsApp visible.
+
 ## Evolución pendiente
 
 - [005 — Reservas, contratación y pagos](005-reservas-contratacion-pagos/spec.md)
 - [006 — Reputación y confianza](006-reputacion-confianza/spec.md)
 - [007 — Búsqueda inteligente](007-busqueda-inteligente/spec.md)
 - [008 — Despliegue y validación](008-despliegue-validacion/spec.md)
+- [010 — Coordinación por WhatsApp](010-coordinacion-whatsapp/spec.md): etapa 2, avisos automáticos por WhatsApp Business (con costo, D08).
+- [009 — Mi lista](009-mi-lista/spec.md): guardar herramientas y oficios con sus fechas y enviar todas las solicitudes en un paso; exige sesión.
 
 ## Guías
 

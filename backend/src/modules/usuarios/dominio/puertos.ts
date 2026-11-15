@@ -1,4 +1,4 @@
-import type { Credenciales, EstadoUsuario, FiltrosUsuarios, PaginaAuditoria, PaginaUsuarios, Usuario } from './usuario';
+import type { ContactoUsuario, Credenciales, EstadoUsuario, FiltrosUsuarios, PaginaAuditoria, PaginaUsuarios, Usuario } from './usuario';
 
 export interface RepositorioUsuarios {
   crear(email: string, nombre: string, passwordHash: string): Promise<Usuario>;
@@ -6,6 +6,8 @@ export interface RepositorioUsuarios {
   porId(id: string): Promise<Usuario | null>;
   cuentasActivas(ids: string[]): Promise<string[]>;
   cambiarNombre(id: string, nombre: string): Promise<Usuario | null>;
+  contacto(id: string): Promise<(ContactoUsuario & { nombre: string; activo: boolean }) | null>;
+  cambiarContacto(id: string, contacto: ContactoUsuario): Promise<void>;
   crearSesion(id: string, usuarioId: string, expira: Date): Promise<void>;
   sesionActiva(id: string, usuarioId: string): Promise<boolean>;
   revocarSesion(id: string): Promise<void>;

@@ -79,6 +79,17 @@ export function entrada(value: unknown, campos: string[]): Record<string, unknow
   return value as Record<string, unknown>;
 }
 
+/** WhatsApp de Perú: acepta 9 dígitos que empiezan con 9, con o sin +51 y espacios; se guarda como +519XXXXXXXX. */
+export function whatsappValido(value: unknown): string | null {
+  if (value === null || value === '') return null;
+  const limpio = typeof value === 'string' ? value.replace(/[\s-]/g, '') : '';
+  const numero = /^(?:\+?51)?(9\d{8})$/.exec(limpio)?.[1];
+  if (!numero) throw new ErrorUsuario('ENTRADA_INVALIDA', 400, 'Escribe un celular de Perú de 9 dígitos que empiece con 9.');
+  return '+51' + numero;
+}
+
+export interface ContactoUsuario { whatsapp: string | null; whatsappVisible: boolean }
+
 export function nombreValido(value: unknown): string {
   if (typeof value !== 'string' || value.trim().length < 2 || value.trim().length > 100) {
     throw new ErrorUsuario('ENTRADA_INVALIDA', 400, 'El nombre debe tener entre 2 y 100 caracteres.');

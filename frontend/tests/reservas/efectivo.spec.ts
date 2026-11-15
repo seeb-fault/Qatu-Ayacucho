@@ -22,7 +22,8 @@ test('alquiler con efectivo: apartado, entrega, confirmación bilateral y devolu
   await page.getByRole('button',{name:'Enviar solicitud',exact:true}).click();await expect(page.getByRole('heading',{name:'Solicitud enviada'})).toBeVisible();
   await page.getByRole('link',{name:'Ir a mis solicitudes',exact:true}).click();
   const enviada=page.getByRole('article',{name:f.titulo,exact:true});await expect(enviada).toContainText('Pendiente de respuesta');
-  await expect(enviada.getByRole('link',{name:'Compartir coordinación por WhatsApp'})).toHaveAttribute('href',/^https:\/\/wa\.me\/\?text=/);
+  // Pendiente sin respuesta: todavía no se comparte el WhatsApp de la otra parte (010).
+  await expect(enviada.getByRole('link',{name:/por WhatsApp$/})).toHaveCount(0);
   const contexto=await browser.newContext({viewport:{width:360,height:900}});
   try {
     expect((await contexto.request.post(origin+'/api/v1/auth/login',{headers:{Origin:origin},data:{email:f.proveedorEmail,password:f.password}})).status()).toBe(200);

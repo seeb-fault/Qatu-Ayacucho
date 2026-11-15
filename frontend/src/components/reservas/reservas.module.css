@@ -100,3 +100,9 @@
 .acciones { display: flex; flex-wrap: wrap; gap: 12px; }
 @media (max-width: 960px) { .flujoGrid { grid-template-columns: 1fr; } .resumen { position: static; order: -1; } }
 @media (max-width: 640px) { .bloque { padding: 18px; } .progreso li:not(:last-child)::after { display: none; } .progreso li { margin-right: 0; } .exito { padding: 24px 20px; } .flujoTop { flex-wrap: wrap; } .acciones > * { flex: 1 1 auto; } }
+
+/* Coordinación por WhatsApp (010). Verde oscuro de WhatsApp con texto blanco: contraste 5.4:1. */
+.whatsapp { display: grid; gap: 8px; margin: 4px 0; padding: 14px 16px; border: 1px solid #CDEBD8; border-radius: 12px; background: #F2FBF5; }
+.whatsapp a.botonWhatsapp { display: inline-flex; align-items: center; justify-self: start; gap: 8px; min-height: 42px; padding: 0 16px; border-radius: 999px; background: #0E7A3E; color: #fff; font-size: 14px; font-weight: 600; text-decoration: none; transition: background var(--q-fast); }
+.whatsapp a.botonWhatsapp:hover { background: #0A5F30; color: #fff; }
+.whatsapp a.botonWhatsapp:focus-visible { outline: 2px solid #0E7A3E; outline-offset: 2px; }
