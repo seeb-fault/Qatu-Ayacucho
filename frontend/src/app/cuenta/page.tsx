@@ -1,11 +1,7 @@
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 import Perfil from '@/components/usuarios/Perfil';
 
 export const metadata = { title: 'Mi cuenta' };
 
-/** Sin sesión no hay perfil que mostrar: se va directo al ingreso. */
-export default async function CuentaPage() {
-  if (!(await cookies()).has('qatu_sesion')) redirect('/ingresar');
-  return <Perfil/>;
-}
+// La cookie de sesión solo viaja a /api/v1, así que la página no la ve: Perfil consulta la API
+// y, si responde 401, lleva directo a Ingresar.
+export default function CuentaPage() { return <Perfil/>; }
