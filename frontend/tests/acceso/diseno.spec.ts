@@ -34,9 +34,11 @@ test('error de acceso accesible sin borrar los datos ingresados', async ({ page 
   await expect(page.getByRole('button', { name: 'Ingresar', exact: true })).toBeEnabled();
 });
 
-test('registro mantiene el contrato y dirige al perfil', async ({ page }) => {
+test('registro mantiene el contrato y dirige al perfil', async ({ page, baseURL }) => {
   await page.route('**/api/v1/auth/registro', async route => {
     expect(route.request().postDataJSON()).toEqual({ nombre: 'Cliente de prueba', email: 'registro@example.com', password: 'una frase de prueba segura' });
+    // Como el registro real, deja una sesión: /cuenta sin cookie redirige a Ingresar.
+    await page.context().addCookies([{ name: 'qatu_sesion', value: 'sesion-simulada', url: baseURL! }]);
     await route.fulfill({ status: 201, json: {} });
   });
   await page.route('**/api/v1/usuarios/me', route => route.fulfill({ json: { id: 'prueba', nombre: 'Cliente de prueba', email: 'registro@example.com', roles: ['cliente'] } }));
