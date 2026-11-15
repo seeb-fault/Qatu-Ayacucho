@@ -1,0 +1,8 @@
+
+Running 3 tests using 1 worker
+
+  ok 1 tests\resenas\evidencias.spec.ts:13:5 › el cliente sube una foto de entrega, la ve en su reserva y la descarga intacta; un PDF se rechaza (12.5s)
+  ok 2 tests\resenas\incidencias.spec.ts:11:5 › garantía documental, reclamo del cliente y resolución por un administrador ajeno (17.2s)
+  ok 3 tests\resenas\resenas.spec.ts:10:5 › el cliente reseña una herramienta devuelta y la calificación llega al perfil público y al catálogo (17.4s)
+
+  3 passed (57.9s)

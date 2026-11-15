@@ -1,0 +1,346 @@
+{
+  "fecha": "2026-11-15T17:11:55.546Z",
+  "herramienta": "Playwright (Chrome)",
+  "suites": [
+    {
+      "suite": "acceso",
+      "total": 3,
+      "aprobadas": 3,
+      "duracion_s": 31,
+      "pruebas": [
+        {
+          "archivo": "acceso/diseno.spec.ts",
+          "titulo": "acceso y registro adaptables con navegación y contraseña visible opcional",
+          "estado": "passed",
+          "ms": 10006
+        },
+        {
+          "archivo": "acceso/diseno.spec.ts",
+          "titulo": "error de acceso accesible sin borrar los datos ingresados",
+          "estado": "passed",
+          "ms": 2865
+        },
+        {
+          "archivo": "acceso/diseno.spec.ts",
+          "titulo": "registro mantiene el contrato y dirige al perfil",
+          "estado": "passed",
+          "ms": 3960
+        }
+      ]
+    },
+    {
+      "suite": "catalogo",
+      "total": 2,
+      "aprobadas": 2,
+      "duracion_s": 49,
+      "pruebas": [
+        {
+          "archivo": "publicaciones.spec.ts",
+          "titulo": "publicar requiere sesión y un perfil público verificado; no concede permisos por interfaz",
+          "estado": "passed",
+          "ms": 7506
+        },
+        {
+          "archivo": "publicaciones.spec.ts",
+          "titulo": "oferta persistida: publicar, buscar, editar, conflicto de versión, desactivar y moderar",
+          "estado": "passed",
+          "ms": 30219
+        }
+      ]
+    },
+    {
+      "suite": "descubrimiento",
+      "total": 14,
+      "aprobadas": 14,
+      "duracion_s": 98,
+      "pruebas": [
+        {
+          "archivo": "descubrimiento/accesibilidad.spec.ts",
+          "titulo": "sin desborde en inicio/resultados/detalle a 360 px",
+          "estado": "passed",
+          "ms": 11556
+        },
+        {
+          "archivo": "descubrimiento/accesibilidad.spec.ts",
+          "titulo": "sin desborde en inicio/resultados/detalle a 390 px",
+          "estado": "passed",
+          "ms": 9093
+        },
+        {
+          "archivo": "descubrimiento/accesibilidad.spec.ts",
+          "titulo": "sin desborde en inicio/resultados/detalle a 1440 px",
+          "estado": "passed",
+          "ms": 10015
+        },
+        {
+          "archivo": "descubrimiento/accesibilidad.spec.ts",
+          "titulo": "enlace de salto y controles de búsqueda accesibles por teclado",
+          "estado": "passed",
+          "ms": 6961
+        },
+        {
+          "archivo": "descubrimiento/accesibilidad.spec.ts",
+          "titulo": "la galería cambia de vista con estado accesible",
+          "estado": "passed",
+          "ms": 3751
+        },
+        {
+          "archivo": "descubrimiento/accesibilidad.spec.ts",
+          "titulo": "la imagen de portada se describe y no desborda en móvil",
+          "estado": "passed",
+          "ms": 3396
+        },
+        {
+          "archivo": "descubrimiento/busqueda.spec.ts",
+          "titulo": "inicio → búsqueda convencional → detalle → volver conserva criterios",
+          "estado": "passed",
+          "ms": 7013
+        },
+        {
+          "archivo": "descubrimiento/busqueda.spec.ts",
+          "titulo": "cambiar tipo limpia categoría incompatible y permite corregir filtros",
+          "estado": "passed",
+          "ms": 4271
+        },
+        {
+          "archivo": "descubrimiento/busqueda.spec.ts",
+          "titulo": "presupuesto excluye tarifas mayores y servicios sin precio comparable",
+          "estado": "passed",
+          "ms": 2488
+        },
+        {
+          "archivo": "descubrimiento/busqueda.spec.ts",
+          "titulo": "paginación de 20 y catálogo completo de 24 ejemplos",
+          "estado": "passed",
+          "ms": 4402
+        },
+        {
+          "archivo": "descubrimiento/busqueda.spec.ts",
+          "titulo": "estado vacío permite quitar filtros",
+          "estado": "passed",
+          "ms": 5251
+        },
+        {
+          "archivo": "descubrimiento/busqueda.spec.ts",
+          "titulo": "error controlado recupera resultados sin perder búsqueda",
+          "estado": "passed",
+          "ms": 3592
+        },
+        {
+          "archivo": "descubrimiento/busqueda.spec.ts",
+          "titulo": "oficio, imagen ausente, reseñas y publicación desactivada",
+          "estado": "passed",
+          "ms": 4355
+        },
+        {
+          "archivo": "descubrimiento/busqueda.spec.ts",
+          "titulo": "acciones futuras explican el alcance sin enviar operaciones",
+          "estado": "passed",
+          "ms": 3010
+        }
+      ]
+    },
+    {
+      "suite": "pagos",
+      "total": 2,
+      "aprobadas": 2,
+      "duracion_s": 50,
+      "pruebas": [
+        {
+          "archivo": "pagos.spec.ts",
+          "titulo": "herramienta: rechazo sin cobro, pago en línea y entrega confirmada",
+          "estado": "passed",
+          "ms": 17621
+        },
+        {
+          "archivo": "pagos.spec.ts",
+          "titulo": "oficio: resultado desconocido sin repetir el pago, y pago final que cierra en móvil",
+          "estado": "passed",
+          "ms": 22046
+        }
+      ]
+    },
+    {
+      "suite": "proveedores",
+      "total": 6,
+      "aprobadas": 6,
+      "duracion_s": 79,
+      "pruebas": [
+        {
+          "archivo": "limites.spec.ts",
+          "titulo": "dos adjuntos de 5 MiB atraviesan el proxy y se guardan completos",
+          "estado": "passed",
+          "ms": 8797
+        },
+        {
+          "archivo": "perfil.spec.ts",
+          "titulo": "crear, recargar, mostrar y ocultar perfil de proveedor con datos persistidos",
+          "estado": "passed",
+          "ms": 10696
+        },
+        {
+          "archivo": "perfil.spec.ts",
+          "titulo": "anónimo necesita sesión y un identificador público inexistente no revela perfil",
+          "estado": "passed",
+          "ms": 2635
+        },
+        {
+          "archivo": "perfil.spec.ts",
+          "titulo": "editar desde dos pestañas muestra conflicto y permite recargar el perfil vigente",
+          "estado": "passed",
+          "ms": 4061
+        },
+        {
+          "archivo": "verificacion.spec.ts",
+          "titulo": "proveedor envía adjunto privado y administrador aprueba con historial",
+          "estado": "passed",
+          "ms": 11892
+        },
+        {
+          "archivo": "verificacion.spec.ts",
+          "titulo": "cola documental rechaza navegación directa anónima y de cliente",
+          "estado": "passed",
+          "ms": 2896
+        }
+      ]
+    },
+    {
+      "suite": "resenas",
+      "total": 3,
+      "aprobadas": 3,
+      "duracion_s": 58,
+      "pruebas": [
+        {
+          "archivo": "evidencias.spec.ts",
+          "titulo": "el cliente sube una foto de entrega, la ve en su reserva y la descarga intacta; un PDF se rechaza",
+          "estado": "passed",
+          "ms": 12526
+        },
+        {
+          "archivo": "incidencias.spec.ts",
+          "titulo": "garantía documental, reclamo del cliente y resolución por un administrador ajeno",
+          "estado": "passed",
+          "ms": 17209
+        },
+        {
+          "archivo": "resenas.spec.ts",
+          "titulo": "el cliente reseña una herramienta devuelta y la calificación llega al perfil público y al catálogo",
+          "estado": "passed",
+          "ms": 17350
+        }
+      ]
+    },
+    {
+      "suite": "reservas",
+      "total": 12,
+      "aprobadas": 12,
+      "duracion_s": 185,
+      "pruebas": [
+        {
+          "archivo": "agenda.spec.ts",
+          "titulo": "agenda de oficio: conflicto visible, cancelación y confirmación del segundo cliente sin anticipo",
+          "estado": "passed",
+          "ms": 16214
+        },
+        {
+          "archivo": "avisos.spec.ts",
+          "titulo": "avisos: el proveedor ve la campana, abre la solicitud y el cliente recibe la respuesta",
+          "estado": "passed",
+          "ms": 21329
+        },
+        {
+          "archivo": "cotizaciones.spec.ts",
+          "titulo": "oficio: propuesta, rechazo, nueva versión y aceptación con horario reservado sin anticipo",
+          "estado": "passed",
+          "ms": 18564
+        },
+        {
+          "archivo": "efectivo.spec.ts",
+          "titulo": "alquiler con efectivo: apartado, entrega, confirmación bilateral y devolución real",
+          "estado": "passed",
+          "ms": 17920
+        },
+        {
+          "archivo": "efectivo.spec.ts",
+          "titulo": "visita previa: acuerdo sin bloqueo, sin efectivo y nueva solicitud de alquiler explícita",
+          "estado": "passed",
+          "ms": 11110
+        },
+        {
+          "archivo": "ejecucion.spec.ts",
+          "titulo": "oficio: inicio, término rechazado, término confirmado con efectivo y cierre persistido",
+          "estado": "passed",
+          "ms": 18713
+        },
+        {
+          "archivo": "lista.spec.ts",
+          "titulo": "visitante guarda en su lista, ingresa, vuelve con el ítem agregado y envía la solicitud",
+          "estado": "passed",
+          "ms": 9681
+        },
+        {
+          "archivo": "lista.spec.ts",
+          "titulo": "el regreso tras ingresar solo acepta rutas de Qatu",
+          "estado": "passed",
+          "ms": 16216
+        },
+        {
+          "archivo": "mapa.spec.ts",
+          "titulo": "mapa: zona casi exacta para el público y punto exacto tras la aceptación",
+          "estado": "passed",
+          "ms": 9329
+        },
+        {
+          "archivo": "reintento.spec.ts",
+          "titulo": "un fallo del proxy se reintenta solo en lecturas: la bandeja se recupera y una escritura nunca se repite",
+          "estado": "passed",
+          "ms": 7085
+        },
+        {
+          "archivo": "solicitudes.spec.ts",
+          "titulo": "solicitud real: cliente solicita, proveedor rechaza y ambos ven el estado persistido",
+          "estado": "passed",
+          "ms": 19425
+        },
+        {
+          "archivo": "whatsapp.spec.ts",
+          "titulo": "el WhatsApp del proveedor aparece recién cuando acepta, con el mensaje de la reserva",
+          "estado": "passed",
+          "ms": 5233
+        }
+      ]
+    },
+    {
+      "suite": "usuarios",
+      "total": 4,
+      "aprobadas": 4,
+      "duracion_s": 163,
+      "pruebas": [
+        {
+          "archivo": "acceso.spec.ts",
+          "titulo": "registro real → perfil → salir → ingresar",
+          "estado": "passed",
+          "ms": 22773
+        },
+        {
+          "archivo": "acceso.spec.ts",
+          "titulo": "perfil privado y formulario móvil sin desborde",
+          "estado": "passed",
+          "ms": 4697
+        },
+        {
+          "archivo": "administracion.spec.ts",
+          "titulo": "administrador desactiva, consulta auditoría y reactiva con sesiones revocadas",
+          "estado": "passed",
+          "ms": 18602
+        },
+        {
+          "archivo": "administracion.spec.ts",
+          "titulo": "administración rechaza anónimo y cliente aunque se navegue directo a la ruta",
+          "estado": "passed",
+          "ms": 4182
+        }
+      ]
+    }
+  ]
+}

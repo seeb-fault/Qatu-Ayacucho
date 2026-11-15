@@ -83,3 +83,5 @@ Gran parte de los usuarios accederá desde el celular. La interfaz debe ser simp
 | AC09 | Recuperabilidad | Restaurar datos/archivos desde copias externas y conciliar pagos | EQ-09 |
 
 AC01 se evalúa en EQ-01/EQ-10; AC02 en EQ-02/EQ-09; AC03 en EQ-03; AC04 en EQ-04; AC05 en EQ-05; AC06 en EQ-06. Las cifras están en [08 - Escenarios](./08-escenarios-atributos-calidad.md) y son metas pendientes de validar, no resultados.
+
+**Evidencia (2026-11-15):** resultados de node:test, Playwright y Lighthouse, con el estado de cada atributo, en [06 - Pruebas de atributos de calidad](../06-pruebas-atributos-calidad/README.md).

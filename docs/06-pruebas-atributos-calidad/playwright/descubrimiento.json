@@ -1,0 +1,609 @@
+{
+  "config": {
+    "argv": [
+      "<usuario>\\AppData\\Local\\Author Software\\nvm\\installs\\v24.21.0\\node.exe",
+      "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\frontend\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--project=descubrimiento",
+      "--reporter=list,json",
+      "--output=./frontend/test-results/calidad-descubrimiento"
+    ],
+    "configFile": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\frontend\\playwright.config.ts",
+    "rootDir": "./frontend/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "./frontend/test-results/calidad-descubrimiento",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "descubrimiento",
+        "name": "descubrimiento",
+        "testDir": "./frontend/tests/descubrimiento",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 45000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\frontend\\test-results\\calidad-descubrimiento",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "descubrimiento",
+        "testDir": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\frontend\\tests\\descubrimiento",
+        "snapshotDir": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\frontend\\tests\\descubrimiento",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 45000,
+        "use": {
+          "baseURL": "http://127.0.0.1:3300",
+          "viewport": {
+            "width": 1440,
+            "height": 1050
+          },
+          "launchOptions": {
+            "executablePath": "C:/Program Files/Google/Chrome/Application/chrome.exe"
+          },
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "descubrimiento"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "\"<usuario>\\AppData\\Local\\Author Software\\nvm\\installs\\v24.21.0\\node.exe\" node_modules/next/dist/bin/next start --hostname 127.0.0.1 --port 3300",
+      "url": "http://127.0.0.1:3300",
+      "env": {
+        "QATU_CATALOGO": "demo"
+      },
+      "reuseExistingServer": false,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "descubrimiento\\accesibilidad.spec.ts",
+      "file": "descubrimiento/accesibilidad.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "sin desborde en inicio/resultados/detalle a 360 px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "descubrimiento",
+              "projectName": "descubrimiento",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11556,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T16:48:39.217Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "40fa4071676a3a15be2d-b485e6ad7dbd3d6ad763",
+          "file": "descubrimiento/accesibilidad.spec.ts",
+          "line": 2,
+          "column": 40
+        },
+        {
+          "title": "sin desborde en inicio/resultados/detalle a 390 px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "descubrimiento",
+              "projectName": "descubrimiento",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9093,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T16:48:52.401Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "40fa4071676a3a15be2d-1e8844ad5413c06b1f9d",
+          "file": "descubrimiento/accesibilidad.spec.ts",
+          "line": 2,
+          "column": 40
+        },
+        {
+          "title": "sin desborde en inicio/resultados/detalle a 1440 px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "descubrimiento",
+              "projectName": "descubrimiento",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10015,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T16:49:01.603Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "40fa4071676a3a15be2d-5e79fd872fe2fc13c85e",
+          "file": "descubrimiento/accesibilidad.spec.ts",
+          "line": 2,
+          "column": 40
+        },
+        {
+          "title": "enlace de salto y controles de búsqueda accesibles por teclado",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "descubrimiento",
+              "projectName": "descubrimiento",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6961,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T16:49:11.770Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "40fa4071676a3a15be2d-681f2073859a52af006f",
+          "file": "descubrimiento/accesibilidad.spec.ts",
+          "line": 3,
+          "column": 5
+        },
+        {
+          "title": "la galería cambia de vista con estado accesible",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "descubrimiento",
+              "projectName": "descubrimiento",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3751,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T16:49:18.818Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "40fa4071676a3a15be2d-e354d5a6e2aad5cb6582",
+          "file": "descubrimiento/accesibilidad.spec.ts",
+          "line": 4,
+          "column": 5
+        },
+        {
+          "title": "la imagen de portada se describe y no desborda en móvil",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "descubrimiento",
+              "projectName": "descubrimiento",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3396,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T16:49:22.683Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "40fa4071676a3a15be2d-e50af4a39fd064c6f95c",
+          "file": "descubrimiento/accesibilidad.spec.ts",
+          "line": 5,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "descubrimiento\\busqueda.spec.ts",
+      "file": "descubrimiento/busqueda.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "inicio → búsqueda convencional → detalle → volver conserva criterios",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "descubrimiento",
+              "projectName": "descubrimiento",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7013,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T16:49:26.215Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1de53d73a7a863f5e4c3-9c8b2309ca6dab392e06",
+          "file": "descubrimiento/busqueda.spec.ts",
+          "line": 2,
+          "column": 5
+        },
+        {
+          "title": "cambiar tipo limpia categoría incompatible y permite corregir filtros",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "descubrimiento",
+              "projectName": "descubrimiento",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4271,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T16:49:33.341Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1de53d73a7a863f5e4c3-d43d99edb2d49c2093e3",
+          "file": "descubrimiento/busqueda.spec.ts",
+          "line": 3,
+          "column": 5
+        },
+        {
+          "title": "presupuesto excluye tarifas mayores y servicios sin precio comparable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "descubrimiento",
+              "projectName": "descubrimiento",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2488,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T16:49:37.720Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1de53d73a7a863f5e4c3-90f314592878eb734ccb",
+          "file": "descubrimiento/busqueda.spec.ts",
+          "line": 4,
+          "column": 5
+        },
+        {
+          "title": "paginación de 20 y catálogo completo de 24 ejemplos",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "descubrimiento",
+              "projectName": "descubrimiento",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4402,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T16:49:40.310Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1de53d73a7a863f5e4c3-da1b1b3000c6de65b030",
+          "file": "descubrimiento/busqueda.spec.ts",
+          "line": 5,
+          "column": 5
+        },
+        {
+          "title": "estado vacío permite quitar filtros",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "descubrimiento",
+              "projectName": "descubrimiento",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5251,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T16:49:44.813Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1de53d73a7a863f5e4c3-c8ae1d4b7cf41593ea05",
+          "file": "descubrimiento/busqueda.spec.ts",
+          "line": 6,
+          "column": 5
+        },
+        {
+          "title": "error controlado recupera resultados sin perder búsqueda",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "descubrimiento",
+              "projectName": "descubrimiento",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3592,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T16:49:50.157Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1de53d73a7a863f5e4c3-922a888c01e00064fd11",
+          "file": "descubrimiento/busqueda.spec.ts",
+          "line": 7,
+          "column": 5
+        },
+        {
+          "title": "oficio, imagen ausente, reseñas y publicación desactivada",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "descubrimiento",
+              "projectName": "descubrimiento",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4355,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T16:49:53.845Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1de53d73a7a863f5e4c3-08cd9f46c9ea4d12941d",
+          "file": "descubrimiento/busqueda.spec.ts",
+          "line": 8,
+          "column": 5
+        },
+        {
+          "title": "acciones futuras explican el alcance sin enviar operaciones",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "descubrimiento",
+              "projectName": "descubrimiento",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3010,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T16:49:58.286Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1de53d73a7a863f5e4c3-5fff68e52f35302ba6d4",
+          "file": "descubrimiento/busqueda.spec.ts",
+          "line": 9,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-15T16:48:31.016Z",
+    "duration": 98271.304,
+    "expected": 14,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

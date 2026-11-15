@@ -1,0 +1,21 @@
+
+Running 4 tests using 1 worker
+
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/usuarios/me Error: read ECONNRESET
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4077,
+[WebServer]   code: 'ECONNRESET',
+[WebServer]   syscall: 'read'
+[WebServer] }
+[WebServer] Error: read ECONNRESET
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4077,
+[WebServer]   code: 'ECONNRESET',
+[WebServer]   syscall: 'read'
+[WebServer] }
+  ok 1 tests\usuarios\acceso.spec.ts:3:5 › registro real → perfil → salir → ingresar (22.8s)
+  ok 2 tests\usuarios\acceso.spec.ts:34:5 › perfil privado y formulario móvil sin desborde (4.7s)
+  ok 3 tests\usuarios\administracion.spec.ts:5:5 › administrador desactiva, consulta auditoría y reactiva con sesiones revocadas (18.6s)
+  ok 4 tests\usuarios\administracion.spec.ts:49:5 › administración rechaza anónimo y cliente aunque se navegue directo a la ruta (4.2s)
+
+  4 passed (2.7m)

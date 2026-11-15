@@ -1,12 +1,14 @@
 import { defineConfig } from '@playwright/test';
 import config from './playwright.usuarios.config';
+// Puerto del backend de prueba; en CI es 3001. Localmente puede cambiarse si 3001 está ocupado (el frontend debe compilarse con QATU_API_URL igual).
+const API_PORT = process.env.QATU_E2E_API_PORT ?? '3001';
 // Usa los mismos puertos que las otras E2E: ejecutar las suites secuencialmente.
 export default defineConfig({
   ...config, testDir: './tests/reservas', timeout: 90000,
   use: { ...config.use, baseURL: 'http://127.0.0.1:3100' },
   webServer: [
-    { command: 'npm run start --prefix ../backend', url: 'http://127.0.0.1:3001/api/v1/usuarios/me', timeout: 120000,
-      env: { APP_ORIGIN: 'http://127.0.0.1:3100', NODE_ENV: 'test', PORT: '3001', QATU_PAGOS: 'doble' }, reuseExistingServer: false },
+    { command: 'npm run start --prefix ../backend', url: `http://127.0.0.1:${API_PORT}/api/v1/usuarios/me`, timeout: 120000,
+      env: { APP_ORIGIN: 'http://127.0.0.1:3100', NODE_ENV: 'test', PORT: API_PORT, QATU_PAGOS: 'doble' }, reuseExistingServer: false },
     { command: `"${process.execPath}" node_modules/next/dist/bin/next start --hostname 127.0.0.1 --port 3100`, url: 'http://127.0.0.1:3100', timeout: 120000, reuseExistingServer: false },
   ],
 });
