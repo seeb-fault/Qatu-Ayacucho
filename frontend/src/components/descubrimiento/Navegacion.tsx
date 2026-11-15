@@ -8,6 +8,7 @@ import BarraCategorias from './BarraCategorias';
 import EnlacesPrincipales from './EnlacesPrincipales';
 import OcultarAlBajar from './OcultarAlBajar';
 import CampanaAvisos from '@/components/avisos/CampanaAvisos';
+import BotonLista from '@/components/lista/BotonLista';
 import {fuenteCatalogo} from '@/lib/api/publicaciones';
 
 export { Marca };
@@ -19,6 +20,7 @@ export default function Navegacion() {
         <Marca/>
         <BuscadorCabecera/>
         <nav className="desktop-nav" aria-label="Navegación principal"><Suspense fallback={null}><EnlacesPrincipales/></Suspense><Link className="nav-publish" href="/publicar" aria-label="Publicar una oferta"><Icono nombre="plus" size={17}/>Publicar</Link></nav>
+        <BotonLista/>
         <CampanaAvisos/>
         <Link className="account-button" href="/cuenta" aria-label="Mi cuenta" title="Mi cuenta"><Icono nombre="user" size={19}/></Link>
         <div className="mobile-actions"><Link className="mobile-explore" href="/cuenta" aria-label="Mi cuenta"><Icono nombre="user" size={20}/></Link></div>

@@ -5,6 +5,7 @@ import { UsuariosModule, IdentidadUsuarios } from '../usuarios';
 import { CatalogoModule, ConsultaCatalogo } from '../catalogo';
 import { ProveedoresModule, ConsultaProveedores } from '../proveedores';
 import { Reservas } from './aplicacion/reservas';
+import { Lista } from './aplicacion/lista';
 import { Avisos } from './aplicacion/avisos';
 import { EnlacePagos } from './aplicacion/enlace-pagos';
 import { OperacionesPago } from './aplicacion/operaciones-pago';
@@ -14,8 +15,10 @@ import type { Notificador } from './dominio/puertos';
 import { PostgresReservas } from './infraestructura/postgres';
 import { AvisosNotificador, PostgresAvisos } from './infraestructura/postgres-avisos';
 import { PostgresDespacho } from './infraestructura/postgres-despacho';
+import { PostgresLista } from './infraestructura/postgres-lista';
 import { ReservasController, DisponibilidadController } from './presentacion/reservas.controller';
 import { AvisosController } from './presentacion/avisos.controller';
+import { ListaController } from './presentacion/lista.controller';
 
 const DESPACHADOR = Symbol('DESPACHADOR_RESERVAS');
 /** El canal vigente es la bandeja de avisos de la app. Los canales externos siguen pendientes de D08. */
@@ -24,7 +27,7 @@ export function crearNotificador(pool: Pool): Notificador | null {
 }
 
 @Module({
-  imports: [UsuariosModule, CatalogoModule, ProveedoresModule], controllers: [ReservasController, DisponibilidadController, AvisosController],
+  imports: [UsuariosModule, CatalogoModule, ProveedoresModule], controllers: [ReservasController, DisponibilidadController, AvisosController, ListaController],
   providers: [
     { provide: EnlacePagos, useFactory: () => new EnlacePagos() },
     { provide: ConsultaReservas, inject: [Pool,EnlacePagos], useFactory: (pool: Pool, enlace: EnlacePagos) => new ConsultaReservas(new PostgresReservas(pool,enlace)) },
@@ -34,6 +37,9 @@ export function crearNotificador(pool: Pool): Notificador | null {
     { provide: Reservas, inject: [Pool,IdentidadUsuarios,ConsultaCatalogo,ConsultaProveedores,EnlacePagos],
       useFactory: (pool: Pool, identidad: IdentidadUsuarios, catalogo: ConsultaCatalogo, proveedores: ConsultaProveedores, enlace: EnlacePagos) =>
         new Reservas(new PostgresReservas(pool,enlace),identidad,catalogo,proveedores,enlace) },
+    { provide: Lista, inject: [Pool,IdentidadUsuarios,ConsultaCatalogo,ConsultaProveedores,EnlacePagos,Reservas],
+      useFactory: (pool: Pool, identidad: IdentidadUsuarios, catalogo: ConsultaCatalogo, proveedores: ConsultaProveedores, enlace: EnlacePagos, reservas: Reservas) =>
+        new Lista(new PostgresLista(pool),identidad,catalogo,proveedores,new PostgresReservas(pool,enlace),reservas) },
     { provide: DESPACHADOR, inject: [Pool], useFactory: (pool: Pool) => {
       const notificador = crearNotificador(pool);
       return notificador ? new DespachadorEventos(new PostgresDespacho(pool),notificador) : null;

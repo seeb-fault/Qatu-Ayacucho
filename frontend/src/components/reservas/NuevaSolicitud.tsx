@@ -1,14 +1,21 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState, type FormEvent } from 'react';
 import { apiJson, ErrorApi } from '@/lib/api/http';
 import type { PublicacionPublica } from '@/lib/api/catalogo';
 import { fechaReserva, dinero, rangoLima, type SolicitudReserva } from '@/lib/api/reservas';
+import { avisarCambioLista, guardarPendiente, tomarPendiente, type ItemPendiente } from '@/lib/api/lista';
+import { ingresarYVolver } from '@/lib/rutas';
 import Icono from '@/components/descubrimiento/Icono';
 import styles from './reservas.module.css';
 
-export default function NuevaSolicitud({ publicacionId }: { publicacionId: string }) {
+/** `modoLista`: se llegó desde «Agregar a mi lista»; guardar pasa a ser la acción principal. */
+export default function NuevaSolicitud({ publicacionId, modoLista = false }: { publicacionId: string; modoLista?: boolean }) {
+  const router = useRouter();
+  const [guardando, setGuardando] = useState(false);
+  const [guardado, setGuardado] = useState('');
   const [oferta, setOferta] = useState<PublicacionPublica | null>(null);
   const [creada, setCreada] = useState<SolicitudReserva | null>(null);
   const [error, setError] = useState('');
@@ -32,6 +39,38 @@ export default function NuevaSolicitud({ publicacionId }: { publicacionId: strin
     finally { setCargando(false); }
   }
   useEffect(() => { void cargar(); }, [publicacionId]);
+  useEffect(() => {
+    if (!oferta) return;
+    const pendiente = tomarPendiente(oferta.id);
+    if (pendiente) void guardar(pendiente);
+  }, [oferta]);
+
+  /** Guarda en Mi lista. Sin sesión, recuerda la elección y vuelve aquí después de ingresar. */
+  async function guardar(item: ItemPendiente) {
+    setGuardando(true); setError(''); setGuardado('');
+    try {
+      const r = await apiJson<{ total: number }>('/lista/items', 'POST', item);
+      setGuardado(`Agregado a tu lista (${r.total} ${r.total === 1 ? 'ítem' : 'ítems'}). No se envió ninguna solicitud todavía.`);
+      avisarCambioLista();
+    } catch (e) {
+      if (e instanceof ErrorApi && e.status === 401) {
+        guardarPendiente(item);
+        router.push(ingresarYVolver('/reservas/nueva?publicacion=' + publicacionId + '&lista=1'));
+        return;
+      }
+      setError(e instanceof Error ? e.message : 'No se pudo guardar en tu lista.');
+    } finally { setGuardando(false); }
+  }
+
+  function guardarDesdeFormulario(form: HTMLFormElement) {
+    if (!oferta) return;
+    const campos = ['recursoId', 'inicio', 'fin', ...(oferta.tipo === 'servicio' ? ['descripcionTrabajo'] : [])];
+    for (const nombre of campos) { const campo = form.elements.namedItem(nombre) as HTMLInputElement | null; if (campo && !campo.reportValidity()) return; }
+    let rango;
+    try { rango = rangoLima(inicio, fin); } catch (e) { setError(e instanceof Error ? e.message : 'Revisa las fechas.'); return; }
+    const datos = new FormData(form), descripcion = String(datos.get('descripcionTrabajo') ?? '').trim();
+    void guardar({ publicacionId: oferta.id, recursoId: String(datos.get('recursoId')), inicio: rango.inicio, fin: rango.fin, ...(descripcion ? { descripcionTrabajo: descripcion } : {}) });
+  }
   // Al enviar, se lleva la vista y el foco a la confirmación.
   useEffect(() => { if (creada) { window.scrollTo({ top: 0 }); document.getElementById('solicitud-enviada')?.focus(); } }, [creada]);
 
@@ -80,6 +119,7 @@ export default function NuevaSolicitud({ publicacionId }: { publicacionId: strin
     </header>
     {cargando && <div className={styles.cargando} role="status">Cargando oferta…</div>}
     {error && <p role="alert" className={styles.error}>{error}</p>}
+    {guardado && <p role="status" className={styles.notice}>{guardado} <Link href="/lista">Ver mi lista</Link></p>}
     {sinSesion && <p className={styles.notice}><Link href="/ingresar">Inicia sesión</Link> y vuelve a esta oferta para enviar tu solicitud.</p>}
     {!cargando && !oferta && <button className="button outline" onClick={cargar}>Reintentar</button>}
     {creada ? <div className={styles.exito} role="status">
@@ -123,8 +163,12 @@ export default function NuevaSolicitud({ publicacionId }: { publicacionId: strin
             </div>}
             <label>{oferta.tipo === 'servicio' ? 'Describe el trabajo' : 'Cuéntanos tu proyecto (opcional)'}<textarea name="descripcionTrabajo" rows={4} required={oferta.tipo === 'servicio'} minLength={oferta.tipo === 'servicio' ? 20 : undefined} maxLength={1500} placeholder={oferta.tipo === 'servicio' ? 'Ej.: cambiar dos grifos de cocina y revisar una fuga bajo el lavadero.' : 'Ej.: necesito perforar concreto para instalar repisas.'}/></label>
           </fieldset>
-          <button className={'button primary ' + styles.enviar} disabled={enviando || !recursosActivos.length}>{enviando ? 'Enviando…' : 'Enviar solicitud'}</button>
-          <p className={styles.hint}>Las fechas se muestran en hora de Lima. No se realizan pagos en este paso.</p>
+          {(() => {
+            const enviarBoton = <button className={(modoLista ? 'button outline ' : 'button primary ') + styles.enviar} disabled={enviando || guardando || !recursosActivos.length}>{enviando ? 'Enviando…' : modoLista ? 'Enviar solicitud ahora' : 'Enviar solicitud'}</button>;
+            const guardarBoton = !visita && <button type="button" className={(modoLista ? 'button primary ' : 'button outline ') + styles.enviar} disabled={enviando || guardando || !recursosActivos.length} onClick={e => guardarDesdeFormulario(e.currentTarget.form!)}>{guardando ? 'Guardando…' : 'Guardar en mi lista'}</button>;
+            return modoLista ? <>{guardarBoton}{enviarBoton}</> : <>{enviarBoton}{guardarBoton}</>;
+          })()}
+          <p className={styles.hint}>Las fechas se muestran en hora de Lima. No se realizan pagos en este paso. Guardar en tu lista no aparta fechas ni avisa al proveedor.</p>
         </form>
         <aside className={styles.resumen} aria-label="Resumen de tu solicitud">
           <span className={styles.resumenTipo + (herramienta ? '' : ' ' + styles.resumenServicio)}><Icono nombre={herramienta ? 'drill' : 'hammer'} size={15}/>{herramienta ? 'Alquiler' : 'Oficio'}</span>
