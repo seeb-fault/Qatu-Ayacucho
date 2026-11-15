@@ -16,8 +16,7 @@ export default function BuscadorCabecera() {
     const q = String(new FormData(event.currentTarget).get('q') ?? '').trim();
     router.push(urlBusqueda({ q }));
   }}>
-    <Icono nombre="search" size={19}/>
     <input name="q" type="search" placeholder="Busca herramientas u oficios en Ayacucho…" aria-label="Qué estás buscando" maxLength={200}/>
-    <button type="submit" aria-label="Buscar en Qatu"><Icono nombre="arrow" size={17}/></button>
+    <button type="submit" aria-label="Buscar en Qatu"><Icono nombre="search" size={17}/></button>
   </form>;
 }

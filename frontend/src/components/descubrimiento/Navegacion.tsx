@@ -5,6 +5,8 @@ import Marca from './Marca';
 import BuscadorCabecera from './BuscadorCabecera';
 import MenuUbicacion from './MenuUbicacion';
 import BarraCategorias from './BarraCategorias';
+import EnlacesPrincipales from './EnlacesPrincipales';
+import OcultarAlBajar from './OcultarAlBajar';
 import CampanaAvisos from '@/components/avisos/CampanaAvisos';
 import {fuenteCatalogo} from '@/lib/api/publicaciones';
 
@@ -12,15 +14,16 @@ export { Marca };
 export default function Navegacion() {
   return <><a className="skip-link" href="#contenido">Saltar al contenido</a>
     <header className="header">
+      <OcultarAlBajar/>
       <div className="container header-inner">
         <Marca/>
         <BuscadorCabecera/>
-        <Suspense fallback={<span className="location-menu-placeholder"/>}><MenuUbicacion/></Suspense>
+        <nav className="desktop-nav" aria-label="Navegación principal"><Suspense fallback={null}><EnlacesPrincipales/></Suspense><Link className="nav-publish" href="/publicar" aria-label="Publicar una oferta"><Icono nombre="plus" size={17}/>Publicar</Link></nav>
         <CampanaAvisos/>
-        <nav className="desktop-nav" aria-label="Navegación principal"><Link className="nav-publish" href="/publicar" aria-label="Publicar una oferta"><Icono nombre="plus" size={17}/>Publicar</Link><Link className="account-button" href="/cuenta"><Icono nombre="user" size={19}/><span>Mi cuenta</span></Link></nav>
+        <Link className="account-button" href="/cuenta" aria-label="Mi cuenta" title="Mi cuenta"><Icono nombre="user" size={19}/></Link>
         <div className="mobile-actions"><Link className="mobile-explore" href="/cuenta" aria-label="Mi cuenta"><Icono nombre="user" size={20}/></Link></div>
       </div>
-      <Suspense fallback={<div className="category-pills"/>}><BarraCategorias/></Suspense>
+      <Suspense fallback={<div className="category-pills"/>}><BarraCategorias><Suspense fallback={<span className="location-menu-placeholder"/>}><MenuUbicacion/></Suspense></BarraCategorias></Suspense>
     </header></>;
 }
 export function Footer() {
