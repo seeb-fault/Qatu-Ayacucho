@@ -64,4 +64,5 @@ export interface RepositorioReservas {
   conReserva<T>(id: string, actorId: string | null, operar: (reserva: ReservaParaPago) => Promise<T>): Promise<T>;
   visible(id: string, actorId: string): Promise<boolean>;
   participacion(id: string, actorId: string): Promise<ParticipacionReserva | null>;
+  cierres(ids: string[]): Promise<Map<string, string | null>>;
 }

@@ -44,7 +44,8 @@ export async function crearApp() {
     if (!['GET', 'HEAD', 'OPTIONS'].includes(request.method)) {
       // La pasarela no envía Origin. Su aviso solo indica qué cargo consultar por la API autenticada.
       if (request.method === 'POST' && request.path === '/api/v1/pagos/webhooks/culqi') { next(); return; }
-      const cargaDocumental = request.method === 'POST' && request.path === '/api/v1/proveedores/me/verificaciones' && request.is('multipart/form-data');
+      const cargaDocumental = request.method === 'POST' && request.is('multipart/form-data')
+        && (request.path === '/api/v1/proveedores/me/verificaciones' || /^\/api\/v1\/reservas\/[0-9a-f-]{36}\/evidencias$/i.test(request.path));
       if (request.headers.origin !== origin || (!request.is('application/json') && !cargaDocumental) || request.headers['sec-fetch-site'] === 'cross-site') {
         response.status(403).json({ code: 'ORIGEN_INVALIDO', mensaje: 'Solicitud no permitida.', correlationId: response.getHeader('X-Correlation-Id') });
         return;

@@ -6,6 +6,7 @@ import { dinero, fechaReserva, type SolicitudReserva } from '@/lib/api/reservas'
 import styles from './reservas.module.css';
 import CotizacionesServicio from './CotizacionesServicio';
 import ResenaReserva from '../resenas/ResenaReserva';
+import EvidenciasReserva from '../resenas/EvidenciasReserva';
 import { ESTADOS_CERRADOS } from '@/lib/api/resenas';
 import PagoEnLinea, { EstadoPago, useConfiguracionPagos } from '../pagos/PagoEnLinea';
 
@@ -55,6 +56,7 @@ export default function TarjetaReserva({solicitud:s,ocupado,operar,recargar}: Pr
     {s.estado === 'SERVICIO_CERRADO' && s.servicioCerradoEn && <p>Trabajo cerrado por ambos participantes: {fechaReserva(s.servicioCerradoEn)}</p>}
     {s.estado === 'VENCIDA' && <p>El apartado se liberó. Necesitas solicitar nuevamente para volver a coordinar.</p>}
     {['PENDIENTE','VISITA_ACORDADA','ACEPTADA','SERVICIO_CONFIRMADO'].includes(s.estado) && <p><a href={'https://wa.me/?text='+encodeURIComponent(textoWhatsApp)} target="_blank" rel="noopener noreferrer">Compartir coordinación por WhatsApp</a><span className={styles.hint}> · Tú eliges el destinatario. Esto no confirma pagos ni apartados.</span></p>}
+    {!['PENDIENTE','RECHAZADA','VISITA_ACORDADA','ACEPTADA','VENCIDA','CANCELADA','APARTADO_PAGADO','SERVICIO_CONFIRMADO'].includes(s.estado) && <EvidenciasReserva reservaId={s.id}/>}
     {ESTADOS_CERRADOS.includes(s.estado) && <ResenaReserva reservaId={s.id} esCliente={s.participacion === 'cliente'}/>}
     {['VISITA_ACORDADA','VENCIDA','CANCELADA','RECHAZADA','DEVUELTA','SERVICIO_CERRADO'].includes(s.estado) && <p><Link href={'/reservas/nueva?publicacion='+s.publicacionId}>Hacer una nueva solicitud de esta oferta</Link></p>}
 

@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+const ejecutar = promisify(execFile);
 import { randomBytes, randomUUID } from 'node:crypto';
 import { test } from 'node:test';
 import { Pool } from 'pg';
@@ -153,12 +155,12 @@ test('carga, revisión y conservación documental privadas con PostgreSQL real',
     await context.test('conservación mantiene activos, elimina adjuntos de inactivos y conserva decisiones', async () => {
       const nueva = await subir(4);
       assert.equal(nueva.status,201);
-      const limpiar = () => execFileSync(process.execPath,['--import','tsx','scripts/limpiar-documentos.ts'],{ env: process.env,encoding: 'utf8' });
-      assert.match(limpiar(),/Adjuntos eliminados de cuentas inactivas: 0/);
+      const limpiar = async () => (await ejecutar(process.execPath,['--import','tsx','scripts/limpiar-documentos.ts'],{ env: process.env,encoding: 'utf8' })).stdout;
+      assert.match(await limpiar(),/Adjuntos eliminados de cuentas inactivas: 0/);
       const bloquear = await pedir(`/admin/usuarios/${usuario.id}/estado`,'PATCH',{ estadoActual: 'activo',estado: 'inactivo',motivo: 'Fin del periodo activo de la cuenta documental' },cookieAdmin);
       assert.equal(bloquear.status,200);
       assert.equal((await pedir(`/proveedores/documentos/${documentoId}`,'GET',undefined,cookieAdmin)).status,404);
-      assert.match(limpiar(),/Adjuntos eliminados de cuentas inactivas: 2/);
+      assert.match(await limpiar(),/Adjuntos eliminados de cuentas inactivas: 2/);
       const restantes = await pool.query('SELECT count(*)::int AS total FROM documentos_proveedor d JOIN verificaciones_proveedor v ON v.id=d.verificacion_id WHERE v.proveedor_id=$1 AND d.contenido IS NOT NULL',[perfilId]);
       assert.equal(restantes.rows[0].total,0);
       const cuenta = await pool.query('SELECT count(*)::int AS total FROM verificaciones_proveedor WHERE proveedor_id=$1',[perfilId]);
