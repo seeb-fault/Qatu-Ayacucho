@@ -9,7 +9,7 @@ export const ESTADOS_CERRADOS = ['DEVUELTA', 'SERVICIO_CERRADO'];
 
 export interface ReservaParaResena {
   id: string; clienteId: string; propietarioId: string; proveedorId: string; publicacionId: string;
-  titulo: string; estado: string; cerradaEn: string | null;
+  titulo: string; tipo: 'herramienta' | 'servicio'; estado: string; cerradaEn: string | null;
 }
 /** Lo que Reseñas necesita de Reservas. Lo cumple la fachada ConsultaReservas. */
 export interface ReservasDeResena { paraResena(id: string, actorId: string): Promise<ReservaParaResena | null> }

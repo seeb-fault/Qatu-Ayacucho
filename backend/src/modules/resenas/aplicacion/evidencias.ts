@@ -9,7 +9,10 @@ export class Evidencias {
   private readonly archivos = new ArchivosCifrados();
 
   constructor(private readonly repo: PostgresEvidencias, private readonly reservas: ReservasDeResena & CierresDeReservas,
-    private readonly identidad: IdentidadResenas, private readonly ahora = () => Date.now()) {}
+    private readonly identidad: IdentidadResenas,
+    /** Reservas con una incidencia abierta: sus fotos se conservan aunque venza la retención. */
+    private readonly retenidas: { conIncidenciaAbierta(ids: string[]): Promise<Set<string>> } = { conIncidenciaAbierta: async () => new Set() },
+    private readonly ahora = () => Date.now()) {}
 
   habilitado() { return this.archivos.habilitado(); }
 
@@ -61,11 +64,12 @@ export class Evidencias {
     return { id: evidencia.id, tipo: evidencia.tipo, contenido: this.archivos.descifrar({ id: evidencia.id, contenido: evidencia.contenido, iv: evidencia.iv, tag: evidencia.tag }) };
   }
 
-  /** Borra el contenido de las reservas cerradas hace más de 90 días. Las incidencias (006.3) lo retendrán. */
+  /** Borra el contenido de las reservas cerradas hace más de 90 días, salvo que tengan una incidencia abierta. */
   async limpiar(lote = 500) {
     const ids = await this.repo.reservasConContenido(lote);
     if (!ids.length) return 0;
-    const cierres = await this.reservas.cierres(ids), limite = this.ahora() - DIAS_DE_RETENCION * 86_400_000;
-    return this.repo.borrarContenido(ids.filter(id => { const c = cierres.get(id); return c !== null && c !== undefined && Date.parse(c) <= limite; }));
+    const [cierres, conIncidencia] = await Promise.all([this.reservas.cierres(ids), this.retenidas.conIncidenciaAbierta(ids)]);
+    const limite = this.ahora() - DIAS_DE_RETENCION * 86_400_000;
+    return this.repo.borrarContenido(ids.filter(id => { const c = cierres.get(id); return !conIncidencia.has(id) && c !== null && c !== undefined && Date.parse(c) <= limite; }));
   }
 }

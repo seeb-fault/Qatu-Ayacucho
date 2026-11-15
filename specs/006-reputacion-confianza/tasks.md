@@ -1,6 +1,6 @@
 # Tareas — Reputación y confianza
 
-Estado: 006.1 (reseñas y moderación) y 006.2 (evidencias) implementados; garantía documental e incidencias pendientes.
+Estado: 006.1, 006.2 y 006.3 implementados; quedan la restauración EQ-09 y el análisis de consistencia final.
 
 ## Fase 1 — Preparación
 
@@ -35,19 +35,19 @@ Objetivo y prueba independiente: dado mi reserva finalizada sin reseña previa, 
 
 Objetivo y prueba independiente: dado un acuerdo de garantía, reporto incidencia; se conserva historial para revisión humana sin simular custodia.
 
-- [ ] T014 [US3] Implementar el caso «Registrar garantía e incidencia» con autorización/transiciones en backend/src/modules/resenas/aplicacion/; cumplir los FR aplicables de spec.md.
-- [ ] T015 [US3] Exponer DTO y controlador del caso «Registrar garantía e incidencia» en backend/src/modules/resenas/presentacion/ según contracts/api.md.
-- [ ] T016 [US3] Integrar el recorrido «Registrar garantía e incidencia» y sus estados negativos en frontend/src/components/resenas/ y frontend/src/app/.
-- [ ] T017 [US3] Verificar el caso positivo y el rechazo no autorizado de «Registrar garantía e incidencia» en backend/test/resenas/ y frontend/tests/resenas/; registrar resultado en quickstart.md.
+- [x] T014 [US3] Implementar el caso «Registrar garantía e incidencia» con autorización/transiciones en backend/src/modules/resenas/aplicacion/; cumplir los FR aplicables de spec.md.
+- [x] T015 [US3] Exponer DTO y controlador del caso «Registrar garantía e incidencia» en backend/src/modules/resenas/presentacion/ según contracts/api.md.
+- [x] T016 [US3] Integrar el recorrido «Registrar garantía e incidencia» y sus estados negativos en frontend/src/components/resenas/ y frontend/src/app/.
+- [x] T017 [US3] Verificar el caso positivo y el rechazo no autorizado de «Registrar garantía e incidencia» en backend/test/resenas/ y frontend/tests/resenas/; registrar resultado en quickstart.md.
 
 ## Trabajo de integración específico
 
-- [ ] T018 Resolver D09 y permisos por etapa/participante; archivos previstos en backend/src/modules/resenas/ o frontend/src/components/resenas/ según plan.md.
-- [ ] T019 Crear entidades/constraints de reseña, garantía, evidencia e incidencia; archivos previstos en backend/src/modules/resenas/ o frontend/src/components/resenas/ según plan.md.
+- [x] T018 Resolver D09 y permisos por etapa/participante; archivos previstos en backend/src/modules/resenas/ o frontend/src/components/resenas/ según plan.md.
+- [x] T019 Crear entidades/constraints de reseña, garantía, evidencia e incidencia; archivos previstos en backend/src/modules/resenas/ o frontend/src/components/resenas/ según plan.md.
 - [x] T020 Implementar adapter de archivos privados y descarga autorizada; archivos previstos en backend/src/modules/resenas/ o frontend/src/components/resenas/ según plan.md.
 - [x] T021 Implementar elegibilidad de reseña por ConsultaReservas y moderación; archivos previstos en backend/src/modules/resenas/ o frontend/src/components/resenas/ según plan.md.
-- [ ] T022 Implementar registro documental y revisión humana de incidencias; archivos previstos en backend/src/modules/resenas/ o frontend/src/components/resenas/ según plan.md.
-- [ ] T023 Integrar interfaz de evidencias/reseñas/garantía y verificar privacidad; archivos previstos en backend/src/modules/resenas/ o frontend/src/components/resenas/ según plan.md.
+- [x] T022 Implementar registro documental y revisión humana de incidencias; archivos previstos en backend/src/modules/resenas/ o frontend/src/components/resenas/ según plan.md.
+- [x] T023 Integrar interfaz de evidencias/reseñas/garantía y verificar privacidad; archivos previstos en backend/src/modules/resenas/ o frontend/src/components/resenas/ según plan.md.
 
 ## Cierre y verificación crítica
 

@@ -5,21 +5,27 @@ import { UsuariosModule, IdentidadUsuarios } from '../usuarios';
 import { ReservasModule, ConsultaReservas } from '../reservas';
 import { Resenas } from './aplicacion/resenas';
 import { Evidencias } from './aplicacion/evidencias';
+import { Incidencias } from './aplicacion/incidencias';
 import { PostgresResenas } from './infraestructura/postgres';
 import { PostgresEvidencias } from './infraestructura/postgres-evidencias';
+import { PostgresIncidencias } from './infraestructura/postgres-incidencias';
 import { ModeracionResenasController, ResenaReservaController, ResenasPublicasController } from './presentacion/resenas.controller';
 import { DescargaEvidenciaController, EvidenciasReservaController, ParticipanteEvidenciaGuard } from './presentacion/evidencias.controller';
+import { IncidenciasReservaController, ResolucionIncidenciasController } from './presentacion/incidencias.controller';
 
 /** Reputación y confianza (técnicamente «resenas»). Depende de Reservas por su fachada; Reservas no lo importa. */
 @Module({
   imports: [UsuariosModule, ReservasModule],
-  controllers: [ResenaReservaController, ResenasPublicasController, ModeracionResenasController, EvidenciasReservaController, DescargaEvidenciaController],
+  controllers: [ResenaReservaController, ResenasPublicasController, ModeracionResenasController, EvidenciasReservaController, DescargaEvidenciaController, IncidenciasReservaController, ResolucionIncidenciasController],
   providers: [
     { provide: Pool, useFactory: () => crearPool(5) },
     { provide: Resenas, inject: [Pool, ConsultaReservas, IdentidadUsuarios],
       useFactory: (pool: Pool, reservas: ConsultaReservas, identidad: IdentidadUsuarios) => new Resenas(new PostgresResenas(pool), reservas, identidad) },
-    { provide: Evidencias, inject: [Pool, ConsultaReservas, IdentidadUsuarios],
-      useFactory: (pool: Pool, reservas: ConsultaReservas, identidad: IdentidadUsuarios) => new Evidencias(new PostgresEvidencias(pool), reservas, identidad) },
+    { provide: PostgresIncidencias, inject: [Pool], useFactory: (pool: Pool) => new PostgresIncidencias(pool) },
+    { provide: Evidencias, inject: [Pool, ConsultaReservas, IdentidadUsuarios, PostgresIncidencias],
+      useFactory: (pool: Pool, reservas: ConsultaReservas, identidad: IdentidadUsuarios, incidencias: PostgresIncidencias) => new Evidencias(new PostgresEvidencias(pool), reservas, identidad, incidencias) },
+    { provide: Incidencias, inject: [PostgresIncidencias, ConsultaReservas, IdentidadUsuarios, Pool],
+      useFactory: (repo: PostgresIncidencias, reservas: ConsultaReservas, identidad: IdentidadUsuarios, pool: Pool) => new Incidencias(repo, reservas, identidad, new PostgresEvidencias(pool)) },
     ParticipanteEvidenciaGuard,
   ],
 })

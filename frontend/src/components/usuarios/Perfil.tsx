@@ -71,6 +71,7 @@ export default function Perfil() {
       { href: '/admin/proveedores', texto: 'Revisar proveedores', detalle: 'Evalúa la documentación enviada.', icono: 'check' },
       { href: '/admin/publicaciones', texto: 'Moderar publicaciones', detalle: 'Retira o restablece ofertas.', icono: 'info' },
       { href: '/admin/resenas', texto: 'Moderar reseñas', detalle: 'Oculta o restablece reseñas con motivo.', icono: 'star' },
+      { href: '/admin/incidencias', texto: 'Resolver incidencias', detalle: 'Revisa reclamos y fotos de evidencia.', icono: 'shield' },
     ] : []),
   ] : [];
 

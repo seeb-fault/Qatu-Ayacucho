@@ -48,7 +48,7 @@ export interface ReservaParaPago {
 /** Datos mínimos de una reserva para otros módulos; solo se entregan a sus participantes. */
 export interface ParticipacionReserva {
   id: string; clienteId: string; propietarioId: string; proveedorId: string; publicacionId: string;
-  titulo: string; estado: string; cerradaEn: string | null;
+  titulo: string; tipo: 'herramienta' | 'servicio'; estado: string; cerradaEn: string | null;
 }
 export interface RepositorioReservas {
   cotizar(id: string, actorId: string, versionActual: number, propuesta: PropuestaCotizacion): Promise<Solicitud>;
