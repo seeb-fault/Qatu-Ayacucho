@@ -10,7 +10,7 @@ import EvidenciasReserva from '../resenas/EvidenciasReserva';
 import GarantiaReserva from '../resenas/GarantiaReserva';
 import IncidenciasReserva from '../resenas/IncidenciasReserva';
 import { ESTADOS_CERRADOS } from '@/lib/api/resenas';
-import PagoEnLinea, { EstadoPago, useConfiguracionPagos } from '../pagos/PagoEnLinea';
+import IrAPagar, { EstadoPago, useConfiguracionPagos } from '../pagos/PagoEnLinea';
 
 const estados: Record<SolicitudReserva['estado'], string> = {
   PENDIENTE:'Pendiente de respuesta',RECHAZADA:'Rechazada',VISITA_ACORDADA:'Visita acordada',ACEPTADA:'Herramienta apartada',
@@ -42,7 +42,7 @@ export default function TarjetaReserva({solicitud:s,ocupado,operar,recargar}: Pr
       <p><strong>{dinero(s.condiciones.importeCentimos)}</strong> por {s.condiciones.dias} {s.condiciones.dias === 1 ? 'día' : 'días'}, a {dinero(s.condiciones.tarifaCentimos)} por bloque de 24 horas iniciado.</p>
       <p className={styles.hint}>Efectivo al recoger. Tolerancia de devolución: 30 minutos; después se suma un día por bloque adicional iniciado. El fin acordado no cambia por recoger tarde.</p>
     </div>}
-    {!proveedor && s.estado === 'ACEPTADA' && s.condiciones && <PagoEnLinea solicitud={s} importe={s.condiciones.importeCentimos} config={pagos} ocupado={ocupado} alTerminar={recargar}/>}
+    {!proveedor && s.estado === 'ACEPTADA' && s.condiciones && <IrAPagar solicitud={s} config={pagos}/>}
     {s.venceEn && <p><strong>Acércate antes de: {fechaReserva(s.venceEn)}.</strong> Si vence sin registro de efectivo, la unidad se libera. Actualiza la bandeja para comprobar el estado.</p>}
     <EstadoPago solicitud={s}/>
     {s.pagoEstado === 'PAGADO_EN_LINEA' && <p>Pagado en línea: {dinero(s.pagadoEnLineaCentimos)}. Modo de prueba, sin cobro real.</p>}
@@ -89,7 +89,7 @@ export default function TarjetaReserva({solicitud:s,ocupado,operar,recargar}: Pr
     {proveedor && s.estado === 'SERVICIO_EN_CURSO' && pagos?.disponible && <form className={styles.form} onSubmit={enviar('servicio/cobro')} aria-label="Solicitar pago en línea"><label className={styles.check}><input type="checkbox" required disabled={ocupado}/>Terminé el trabajo y el cliente pagará en línea</label><button className="button outline" disabled={ocupado}>Solicitar pago en línea</button></form>}
     {proveedor && s.estado === 'SERVICIO_POR_PAGAR' && acordada && <><p className={styles.hint}>El cliente debe pagar {dinero(acordada.importeCentimos)} en línea. Si prefiere efectivo, puedes registrarlo aquí.</p><form className={styles.form} onSubmit={enviar('servicio/termino')} aria-label="Declarar trabajo terminado"><label className={styles.check}><input type="checkbox" required disabled={ocupado}/>Recibí {dinero(acordada.importeCentimos)} en efectivo</label><button className="button outline" disabled={ocupado}>Registrar pago en efectivo</button></form></>}
     {!proveedor && s.estado === 'SERVICIO_POR_PAGAR' && acordada && <>
-      <PagoEnLinea solicitud={s} importe={acordada.importeCentimos} config={pagos} ocupado={ocupado} alTerminar={recargar}/>
+      <IrAPagar solicitud={s} config={pagos}/>
       <details><summary>El trabajo aún no terminó</summary><form className={styles.form} onSubmit={enviar('servicio/rechazo',true)}><label>Motivo para rechazar el término<textarea name="motivo" required minLength={10} maxLength={500} disabled={ocupado}/></label><button className="button outline" disabled={ocupado}>Rechazar término</button></form></details>
     </>}
     {proveedor && s.estado === 'SERVICIO_EN_CURSO' && acordada && <form className={styles.form} onSubmit={enviar('servicio/termino')} aria-label="Declarar trabajo terminado"><label className={styles.check}><input type="checkbox" required disabled={ocupado}/>Confirmo que terminé el trabajo y recibí {dinero(acordada.importeCentimos)} en efectivo</label><button className="button primary" disabled={ocupado}>Declarar trabajo terminado</button></form>}

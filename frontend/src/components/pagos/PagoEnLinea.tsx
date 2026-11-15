@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { apiJson } from '@/lib/api/http';
 import { dinero, type SolicitudReserva } from '@/lib/api/reservas';
 import styles from '../reservas/reservas.module.css';
@@ -9,6 +10,7 @@ const SCRIPT = 'https://js.culqi.com/checkout-js';
 interface Checkout { open(): void; close(): void; culqi?: () => void; token?: { id: string }; error?: unknown }
 declare global { interface Window { CulqiCheckout?: new (llave: string, config: unknown) => Checkout } }
 export interface ConfiguracionPagos { disponible: boolean; llavePublica: string | null }
+export type MetodoEnLinea = 'tarjeta' | 'yape';
 
 export function useConfiguracionPagos() {
   const [config, setConfig] = useState<ConfiguracionPagos | null>(null);
@@ -36,6 +38,15 @@ const motivos: Record<string, string> = {
   SIN_CARGO_CONFIRMADO: 'No se confirmó ningún cobro. Puedes intentarlo de nuevo.',
 };
 
+/** Reservas que el cliente puede pagar en línea, con su importe; null si no hay nada que pagar. */
+export function importePendiente(s: SolicitudReserva): number | null {
+  if (s.participacion !== 'cliente' || ['PROCESANDO', 'DESCONOCIDO'].includes(s.ultimoPago?.estado ?? '')) return null;
+  if (s.estado === 'ACEPTADA' && s.condiciones) return s.condiciones.importeCentimos;
+  const acordada = s.cotizaciones?.find(c => c.respuesta?.decision === 'ACEPTADA');
+  if (s.estado === 'SERVICIO_POR_PAGAR' && acordada) return acordada.importeCentimos;
+  return null;
+}
+
 /** Estado del último intento, visible para ambos participantes. */
 export function EstadoPago({ solicitud: s }: { solicitud: SolicitudReserva }) {
   const p = s.ultimoPago;
@@ -46,26 +57,38 @@ export function EstadoPago({ solicitud: s }: { solicitud: SolicitudReserva }) {
   return null;
 }
 
-type Props = { solicitud: SolicitudReserva; importe: number; config: ConfiguracionPagos | null; ocupado: boolean; alTerminar: () => Promise<void> | void };
-
-/** La tarjeta se ingresa en el checkout de Culqi: aquí solo se recibe un token de un solo uso. */
-export default function PagoEnLinea({ solicitud: s, importe, config, ocupado, alTerminar }: Props) {
+/**
+ * Abre el checkout de Culqi con un solo método y envía el token de un solo uso al backend.
+ * Los datos de la tarjeta o de Yape se ingresan en Culqi: nunca pasan por Qatu.
+ */
+export function usePagoCulqi(reservaId: string, importe: number, llave: string | null, alTerminar: () => Promise<void> | void) {
   const [procesando, setProcesando] = useState(false);
   const [error, setError] = useState('');
   const montado = useRef(true);
   useEffect(() => { montado.current = true; return () => { montado.current = false; }; }, []);
 
-  if (!config?.disponible || !config.llavePublica || ['PROCESANDO','DESCONOCIDO'].includes(s.ultimoPago?.estado ?? '')) return null;
-  const llave = config.llavePublica;
+  async function recibir(checkout: Checkout) {
+    if (!checkout.token) { setError('El pago no se completó. Puedes intentarlo de nuevo.'); return; }
+    const tokenId = checkout.token.id;
+    checkout.close();
+    setProcesando(true); setError('');
+    try {
+      await apiJson('/reservas/' + reservaId + '/pagos', 'POST', { tokenId }, { 'Idempotency-Key': crypto.randomUUID() });
+      await alTerminar();
+    } catch (e) {
+      if (montado.current) setError(e instanceof Error ? e.message : 'No se pudo confirmar el pago. Revisa tus reservas antes de repetirlo.');
+    } finally { if (montado.current) setProcesando(false); }
+  }
 
-  async function pagar() {
+  async function pagar(metodo: MetodoEnLinea) {
+    if (!llave) return;
     setError(''); setProcesando(true);
     try {
       await cargarScript();
       if (!window.CulqiCheckout) throw new Error('No se pudo cargar el pago en línea. Inténtalo de nuevo.');
       const checkout = new window.CulqiCheckout(llave, {
         settings: { title: 'Qatu', currency: 'PEN', amount: importe },
-        options: { lang: 'auto', installments: false, paymentMethods: { tarjeta: true, yape: false, billetera: false, bancaMovil: false, agente: false, cuotealo: false } },
+        options: { lang: 'auto', installments: false, paymentMethods: { tarjeta: metodo === 'tarjeta', yape: metodo === 'yape', billetera: false, bancaMovil: false, agente: false, cuotealo: false } },
       });
       checkout.culqi = () => { void recibir(checkout); };
       checkout.open();
@@ -74,22 +97,15 @@ export default function PagoEnLinea({ solicitud: s, importe, config, ocupado, al
     } finally { if (montado.current) setProcesando(false); }
   }
 
-  async function recibir(checkout: Checkout) {
-    if (!checkout.token) { setError('El pago no se completó. Puedes intentarlo de nuevo.'); return; }
-    const tokenId = checkout.token.id;
-    checkout.close();
-    setProcesando(true); setError('');
-    try {
-      await apiJson('/reservas/' + s.id + '/pagos', 'POST', { tokenId }, { 'Idempotency-Key': crypto.randomUUID() });
-      await alTerminar();
-    } catch (e) {
-      if (montado.current) setError(e instanceof Error ? e.message : 'No se pudo confirmar el pago. Actualiza la bandeja antes de repetirlo.');
-    } finally { if (montado.current) setProcesando(false); }
-  }
+  return { pagar, procesando, error };
+}
 
+/** En la tarjeta de la reserva: lleva a la página de pago. */
+export default function IrAPagar({ solicitud: s, config }: { solicitud: SolicitudReserva; config: ConfiguracionPagos | null }) {
+  const importe = importePendiente(s);
+  if (!config?.disponible || !config.llavePublica || importe === null) return null;
   return <div className={styles.notice} aria-label="Pago en línea">
     <p><strong>Modo de prueba:</strong> no se realizan cobros reales. Usa solo tarjetas de prueba.</p>
-    <button className="button primary" disabled={ocupado || procesando} onClick={() => { void pagar(); }}>{procesando ? 'Procesando…' : `Pagar ${dinero(importe)} en línea`}</button>
-    {error && <p role="alert" className={styles.error}>{error}</p>}
+    <Link className="button primary" href={`/reservas/${s.id}/pago`}>Ir a pagar {dinero(importe)}</Link>
   </div>;
 }

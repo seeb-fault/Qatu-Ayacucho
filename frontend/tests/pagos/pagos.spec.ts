@@ -10,6 +10,8 @@ const prepararCheckout=async(contexto:BrowserContext|Page,token:string)=>{
   await contexto.route('https://js.culqi.com/checkout-js',r=>r.fulfill({contentType:'text/javascript',body:checkoutDoble}));
   await contexto.addInitScript(t=>{(window as unknown as {__tokenPrueba:string}).__tokenPrueba=t;},token);
 };
+// Desde la tarjeta de la reserva se abre la página de pago; ahí se acepta y se paga.
+const irAPagar=async(pagina:Page,tarjeta:ReturnType<Page['getByRole']>)=>{await tarjeta.getByRole('link',{name:/^Ir a pagar /}).click();await expect(pagina.getByRole('heading',{level:1,name:'Pagar reserva'})).toBeVisible();await pagina.getByRole('checkbox',{name:/^Acepto pagar /}).check();};
 const entrar=async(request:BrowserContext['request'],email:string,password:string)=>expect((await request.post(origin+'/api/v1/auth/login',{headers:{Origin:origin},data:{email,password}})).status()).toBe(200);
 
 test('herramienta: rechazo sin cobro, pago en línea y entrega confirmada',async({page,browser})=>{
@@ -26,18 +28,20 @@ test('herramienta: rechazo sin cobro, pago en línea y entrega confirmada',async
     await page.goto('/reservas');
     const tarjeta=page.getByRole('article',{name:f.titulo,exact:true});
     await expect(tarjeta.getByLabel('Pago en línea')).toContainText('no se realizan cobros reales');
-    const pagar=tarjeta.getByRole('button',{name:/^Pagar .* en línea$/});
-    await pagar.click();
-    await expect(page.getByRole('article',{name:f.titulo,exact:true})).toContainText('no se hizo ningún cobro');
-    await expect(page.getByRole('article',{name:f.titulo,exact:true})).toContainText('Herramienta apartada');
+    await irAPagar(page,tarjeta);
+    await expect(page.getByRole('radio',{name:/Tarjeta/})).toBeChecked();
+    await page.getByRole('button',{name:/^Pagar .* en línea$/}).click();
+    await expect(page.getByRole('complementary',{name:'Tu reserva'})).toContainText('no se hizo ningún cobro');
+    await expect(page).toHaveURL(/\/pago$/);
     const config=await page.evaluate(()=>(window as unknown as {__checkout:{llave:string;config:{settings:{amount:number;currency:string};options:{paymentMethods:Record<string,boolean>}}}}).__checkout);
     expect(config.llave).toBe('pk_test_doble');expect(config.config.settings.amount).toBe(4250);expect(config.config.settings.currency).toBe('PEN');expect(config.config.options.paymentMethods.tarjeta).toBe(true);expect(config.config.options.paymentMethods.yape).toBe(false);
 
     await page.evaluate(()=>{(window as unknown as {__tokenPrueba:string}).__tokenPrueba='tkn_test_bueno_e2e';});
-    await tarjeta.getByRole('button',{name:/^Pagar .* en línea$/}).click();
+    await page.getByRole('button',{name:/^Pagar .* en línea$/}).click();
+    await expect(page).toHaveURL(/\/reservas$/);
     await expect(tarjeta).toContainText('Herramienta apartada y pagada');
     await expect(tarjeta).toContainText('Modo de prueba, sin cobro real');
-    await expect(tarjeta.getByRole('button',{name:/^Pagar .* en línea$/})).toHaveCount(0);
+    await expect(tarjeta.getByRole('link',{name:/^Ir a pagar /})).toHaveCount(0);
     const pagada=await (await page.request.get(origin+'/api/v1/reservas/'+s.id)).json();
     expect(pagada.pagoEstado).toBe('PAGADO_EN_LINEA');expect(pagada.pagadoEnLineaCentimos).toBe(4250);expect(pagada.efectivoCentimos).toBe(0);expect(pagada.venceEn).toBeNull();
 
@@ -86,10 +90,13 @@ test('oficio: resultado desconocido sin repetir el pago, y pago final que cierra
 
     const otra=await clienteCtx.newPage();await otra.goto(origin+'/reservas');
     const tarjeta=otra.getByRole('article',{name:f.titulo,exact:true});
-    await expect(tarjeta.getByRole('button',{name:/^Pagar .*180\.50 en línea$/})).toBeVisible();
+    await expect(tarjeta.getByRole('link',{name:/^Ir a pagar .*180\.50$/})).toBeVisible();
+    await irAPagar(otra,tarjeta);
+    await expect(otra.getByRole('button',{name:/^Pagar .*180\.50 en línea$/})).toBeVisible();
     expect(await otra.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
-    await otra.screenshot({path:'test-results/pago-oficio-360.png'});
-    await tarjeta.getByRole('button',{name:/^Pagar .* en línea$/}).click();
+    await otra.screenshot({path:'test-results/pago-oficio-360.png',fullPage:true});
+    await otra.getByRole('button',{name:/^Pagar .* en línea$/}).click();
+    await expect(otra).toHaveURL(/\/reservas$/);
     await expect(tarjeta).toContainText('Servicio cerrado');
     await expect(tarjeta).toContainText('Pagado en línea');
     const cerrada=await (await clienteCtx.request.get(origin+'/api/v1/reservas/'+id)).json();
@@ -105,6 +112,10 @@ test('oficio: resultado desconocido sin repetir el pago, y pago final que cierra
     await otra.reload();
     await expect(otra.getByRole('status').filter({hasText:'Estamos confirmando el pago'})).toBeVisible();
     await expect(otra.getByText('No vuelvas a pagar',{exact:false})).toBeVisible();
+    await expect(otra.getByRole('link',{name:/^Ir a pagar /})).toHaveCount(0);
+    // La página de pago tampoco ofrece pagar mientras se confirma el intento anterior.
+    await otra.goto(origin+'/reservas/'+dudosa+'/pago');
+    await expect(otra.getByText('Estamos confirmando el pago',{exact:false})).toBeVisible();
     await expect(otra.getByRole('button',{name:/^Pagar .* en línea$/})).toHaveCount(0);
   } finally {await clienteCtx.close();}
 });

@@ -55,6 +55,7 @@ test('solo sandbox: se rechazan llaves y tokens reales, y el doble no entra en p
   assert.throws(()=>new ProcesadorCulqi('sk_live_x'),/llaves de prueba/);
   assert.throws(()=>entradaPago({tokenId:'tkn_live_abc'}));assert.throws(()=>entradaPago({tokenId:'tkn_test_abc',importeCentimos:1}));
   assert.deepEqual(entradaPago({tokenId:'tkn_test_abc'}),{tokenId:'tkn_test_abc'});
+  assert.deepEqual(entradaPago({tokenId:'ype_test_abc'}),{tokenId:'ype_test_abc'});assert.throws(()=>entradaPago({tokenId:'ype_live_abc'}));assert.throws(()=>entradaPago({tokenId:'xyz_test_abc'}));
   const antes={m:process.env.QATU_PAGOS,n:process.env.NODE_ENV,p:process.env.CULQI_PUBLIC_KEY,s:process.env.CULQI_SECRET_KEY};
   const fijar=(k:string,v?:string)=>{if(v===undefined)delete process.env[k];else process.env[k]=v;};
   try {

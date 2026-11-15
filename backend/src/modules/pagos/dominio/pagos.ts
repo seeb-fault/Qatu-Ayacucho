@@ -55,10 +55,10 @@ export function uuid(value: unknown): string {
   return value.toLowerCase();
 }
 
-/** Solo se aceptan tokens de prueba: la pasarela está acordada únicamente para sandbox. */
+/** Token de un solo uso del checkout de Culqi, de tarjeta (tkn_) o Yape (ype_); solo de prueba: la pasarela está acordada únicamente para sandbox. */
 export function entradaPago(value: unknown): { tokenId: string } {
   const d = objeto(value, ['tokenId']);
-  if (typeof d.tokenId !== 'string' || !/^tkn_test_[A-Za-z0-9_-]{1,120}$/.test(d.tokenId)) throw new ErrorPago('TOKEN_INVALIDO', 400, 'No se pudo leer el pago. Inténtalo de nuevo.');
+  if (typeof d.tokenId !== 'string' || !/^(tkn|ype)_test_[A-Za-z0-9_-]{1,120}$/.test(d.tokenId)) throw new ErrorPago('TOKEN_INVALIDO', 400, 'No se pudo leer el pago. Inténtalo de nuevo.');
   return { tokenId: d.tokenId };
 }
 export function claveIdempotencia(value: unknown): string {

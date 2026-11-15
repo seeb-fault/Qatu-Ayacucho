@@ -1,0 +1,108 @@
+/* Página de pago: formulario a la izquierda y resumen fijo a la derecha; en móvil el resumen va arriba y se pliega. */
+.pagina { position: relative; isolation: isolate; width: min(1240px, calc(100% - 48px)); margin: 0 auto; padding: 40px 0 72px; }
+.pagina::before { content: ''; position: absolute; z-index: -1; inset: -40px 0 auto; height: 420px; background: radial-gradient(ellipse 40% 70% at 22% 0%, rgb(200 16 46 / .07), transparent 70%), radial-gradient(ellipse 30% 60% at 85% 10%, rgb(240 120 80 / .06), transparent 70%); pointer-events: none; }
+.cargando, .vacio { padding: 64px 0; color: var(--q-text-2); }
+.vacio h1 { margin-bottom: 12px; font-size: 32px; }
+.vacio p { margin-bottom: 20px; }
+.columnas { display: grid; grid-template-columns: minmax(0, 1fr) 380px; grid-template-areas: 'cab resumen' 'form resumen'; column-gap: 56px; align-items: start; }
+.formulario { grid-area: form; min-width: 0; }
+
+.cabecera { grid-area: cab; display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
+.cabecera h1 { font-size: clamp(30px, 3.2vw, 40px); font-weight: 800; letter-spacing: -.035em; }
+.volver { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; color: var(--q-text); transition: background var(--q-fast); }
+.volver:hover { background: var(--q-muted-bg); }
+
+.paso { padding-bottom: 32px; }
+.paso + .paso { padding-top: 28px; border-top: 1px solid var(--q-border); }
+.paso h2 { margin-bottom: 18px; font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
+.paso h2 span { color: var(--q-text-2); }
+.campos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 16px; }
+.campo { display: flex; min-width: 0; flex-direction: column; gap: 7px; }
+.campo > span:first-child { color: var(--q-text-2); font-size: 11px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; }
+.valor { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 46px; padding: 0 14px; overflow: hidden; border: 1px solid var(--q-border); border-radius: 10px; background: #FAFAFB; font-size: 14px; font-weight: 500; }
+.valor > svg { flex-shrink: 0; color: var(--q-text-2); }
+.campos:first-of-type .valor > svg { padding: 2px; border-radius: 50%; background: var(--q-success); color: #fff; box-sizing: content-box; }
+.nota { margin-top: 14px; color: var(--q-text-2); font-size: 13px; }
+.nota a { color: var(--q-primary); font-weight: 600; }
+.nota strong { color: var(--q-text); }
+
+.pills { display: flex; gap: 12px; margin-bottom: 20px; }
+.pills span { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 20px 0 14px; border: 1px solid transparent; border-radius: 12px; background: var(--q-muted-bg); color: var(--q-text-2); font-size: 14px; font-weight: 600; }
+.pills span svg { padding: 6px; border-radius: 50%; background: #fff; box-sizing: content-box; }
+.pills .pillActiva { border-color: var(--q-primary); background: var(--q-soft); color: var(--q-primary); }
+.pills .pillActiva svg { background: var(--q-primary); color: #fff; }
+
+.metodos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.metodo { position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 16px 12px 14px; border: 1.5px solid transparent; border-radius: 14px; background: var(--q-muted-bg); text-align: center; cursor: pointer; transition: border-color var(--q-fast), background var(--q-fast), box-shadow var(--q-fast); }
+.metodo:hover { background: var(--q-border); }
+.metodo input { position: absolute; opacity: 0; pointer-events: none; }
+.metodo:has(input:focus-visible) { outline: 2px solid var(--q-primary); outline-offset: 2px; }
+.metodo:has(input:disabled) { opacity: .5; cursor: not-allowed; }
+.metodo strong { margin-top: 6px; font-size: 14px; }
+.metodo small { color: var(--q-text-2); font-size: 12px; }
+.metodoActivo, .metodoActivo:hover { border-color: var(--q-primary); background: #fff; box-shadow: 0 0 0 4px rgb(200 16 46 / .08); }
+.logoTarjeta { display: inline-flex; align-items: center; height: 28px; }
+.logoTarjeta i { width: 20px; height: 20px; border-radius: 50%; background: #EB001B; }
+.logoTarjeta i + i { margin-left: -8px; background: #F79E1B; mix-blend-mode: multiply; }
+.logoTarjeta b { margin-left: 8px; color: #1A1F71; font-size: 17px; font-style: italic; font-weight: 900; letter-spacing: -.02em; }
+.logoYape { display: inline-grid; place-items: center; height: 28px; padding: 0 12px; border-radius: 8px; background: #742284; color: #fff; font-size: 15px; font-weight: 800; letter-spacing: -.02em; }
+.logoEfectivo { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: var(--q-success); color: #fff; font-size: 12px; font-weight: 800; }
+.instrucciones { display: grid; gap: 10px; margin-top: 16px; padding: 16px 18px; border-radius: 12px; background: #FAFAFB; border: 1px solid var(--q-border); font-size: 14px; animation: q-pop var(--q-med) var(--q-ease); }
+.instrucciones p { display: flex; align-items: flex-start; gap: 10px; }
+.instrucciones svg { flex-shrink: 0; margin-top: 2px; color: var(--q-primary); }
+.instrucciones .prueba { display: block; color: var(--q-text-2); font-size: 13px; }
+
+.resumen { grid-area: resumen; position: sticky; top: 96px; padding: 28px; border-radius: 18px; background: #fff; box-shadow: 0 1px 2px rgb(20 20 22 / .04), 0 24px 48px rgb(20 20 22 / .1); }
+.resumenCabecera { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.resumenCabecera h2 { font-size: 20px; font-weight: 700; }
+.desplegar { display: none; align-items: center; gap: 4px; border: 0; background: none; color: var(--q-primary); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+.desplegar[aria-expanded='true'] svg { transform: rotate(180deg); }
+.imagen { display: grid; place-items: center; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 14px; background: var(--q-tint); color: var(--q-primary); }
+.imagen img { width: 78%; height: 78%; object-fit: contain; }
+.producto { margin-top: 20px; font-size: 20px; font-weight: 700; line-height: 1.25; letter-spacing: -.02em; }
+.meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 8px; color: var(--q-text-2); font-size: 13px; }
+.meta span { padding: 2px 8px; border-radius: 999px; background: var(--q-soft); color: var(--q-deep); font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.lineas { display: grid; gap: 12px; margin: 20px 0 0; padding: 20px 0 0; border-top: 1px solid var(--q-border); }
+.lineas div { display: flex; justify-content: space-between; gap: 12px; }
+.lineas dt { color: var(--q-text-2); font-size: 12px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+.lineas dd { margin: 0; font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.gratis { color: var(--q-success); }
+.pagar { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--q-border); }
+.total { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px; }
+.total span { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.total strong { font-size: 30px; font-weight: 800; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.boton { width: 100%; min-height: 52px; border-radius: 999px; font-size: 15px; }
+.acepto { display: flex; align-items: flex-start; gap: 10px; margin-top: 16px; color: var(--q-text-2); font-size: 13px; line-height: 1.5; cursor: pointer; }
+.acepto input { flex-shrink: 0; width: 18px; height: 18px; margin-top: 1px; accent-color: var(--q-primary); }
+.error { margin-top: 12px; padding: 10px 12px; border-radius: 10px; background: #FEF3F2; color: var(--q-danger); font-size: 13px; }
+.seguro { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 16px; color: var(--q-text-2); font-size: 12px; }
+.sinPago { display: grid; gap: 12px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--q-border); color: var(--q-text-2); font-size: 14px; }
+
+@media (max-width: 900px) {
+  /* Título, resumen plegable, formulario y, al final, el total con el botón de pago. */
+  .columnas { grid-template-columns: minmax(0, 1fr); grid-template-areas: none; gap: 20px; }
+  .cabecera, .formulario { grid-area: auto; }
+  .cabecera { order: 0; margin-bottom: 0; }
+  .resumen { display: contents; }
+  .tarjetaResumen, .pagar, .sinPago { padding: 20px; border-radius: 18px; background: #fff; box-shadow: 0 1px 2px rgb(20 20 22 / .04), 0 12px 32px rgb(20 20 22 / .08); }
+  .tarjetaResumen { order: 1; }
+  .formulario { order: 2; }
+  .pagar, .sinPago { order: 3; margin-top: 0; border-top: 0; }
+  .resumenCabecera { margin-bottom: 0; }
+  .desplegar { display: inline-flex; }
+  .detalle { display: none; margin-top: 16px; }
+  .detalleAbierto { display: block; }
+  .imagen { aspect-ratio: 16 / 9; }
+}
+@media (max-width: 560px) {
+  .pagina { width: calc(100% - 32px); padding-top: 24px; }
+  .campos { grid-template-columns: 1fr; }
+  .metodos { grid-template-columns: 1fr; }
+  .metodo { flex-direction: row; gap: 12px; padding: 14px 16px; text-align: left; }
+  .metodo strong { margin: 0; }
+  .metodo small { margin-left: auto; }
+  .pills { flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .instrucciones { animation: none; }
+}
