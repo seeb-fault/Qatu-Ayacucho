@@ -9,7 +9,7 @@ async function consultar(ruta:string) {
  return response.json();
 }
 function oferta(p:PublicacionPublica):Oferta {
- return {id:p.id,titulo:p.titulo,tipo:p.tipo,categoria:p.categoriaId,distrito:p.zona.nombre,precio:p.tarifaCentimos,unidad:p.unidad??'',imagen:p.imagen,fondo:p.tipo==='herramienta'?'#e5eef3':'#f3e9e0',descripcion:p.descripcion,incluye:p.incluye,condiciones:p.condiciones,proveedor:{nombre:p.proveedor.nombrePublico,iniciales:p.proveedor.nombrePublico.split(/\s+/).slice(0,2).map(s=>s[0]).join(''),verificado:p.proveedor.estadoVerificacion==='aprobada',experiencia:'Consulta el perfil público del proveedor.',id:p.proveedor.id},puntuacion:null,resenas:0,activa:true};
+ return {ubicacion:p.ubicacion??null,id:p.id,titulo:p.titulo,tipo:p.tipo,categoria:p.categoriaId,distrito:p.zona.nombre,precio:p.tarifaCentimos,unidad:p.unidad??'',imagen:p.imagen,fondo:p.tipo==='herramienta'?'#e5eef3':'#f3e9e0',descripcion:p.descripcion,incluye:p.incluye,condiciones:p.condiciones,proveedor:{nombre:p.proveedor.nombrePublico,iniciales:p.proveedor.nombrePublico.split(/\s+/).slice(0,2).map(s=>s[0]).join(''),verificado:p.proveedor.estadoVerificacion==='aprobada',experiencia:'Consulta el perfil público del proveedor.',id:p.proveedor.id},puntuacion:null,resenas:0,activa:true};
 }
 /** Reputación pública por proveedor (006). Si falla, el catálogo se muestra igual, sin estrellas. */
 async function conReputacion(items:Oferta[],publicaciones:PublicacionPublica[]):Promise<Oferta[]> {

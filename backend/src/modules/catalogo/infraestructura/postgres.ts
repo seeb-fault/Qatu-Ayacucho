@@ -2,9 +2,11 @@ import { randomUUID } from 'node:crypto';
 import { Pool, type PoolClient } from 'pg';
 import { editarRecursos, ErrorCatalogo, type DatosOferta, type FiltrosCatalogo, type Publicacion } from '../dominio/oferta';
 import type { RepositorioCatalogo } from '../dominio/puertos';
+import type { UbicacionOferta } from '../dominio/ubicacion';
 const campos = `p.id,p.proveedor_id AS "proveedorId",p.tipo,p.categoria_id AS "categoriaId",p.zona_id AS "zonaId",p.titulo,p.descripcion,
  p.incluye,p.condiciones,p.activa,p.estado_moderacion AS "estadoModeracion",p.version,p.creado_en AS "creadoEn",p.actualizado_en AS "actualizadoEn",
- t.modalidad AS "modalidadPrecio",t.monto_centimos AS "tarifaCentimos",t.unidad`;
+ t.modalidad AS "modalidadPrecio",t.monto_centimos AS "tarifaCentimos",t.unidad,
+ (SELECT json_build_object('lat',u.lat_publica::float8,'lng',u.lng_publica::float8,'precision',u.precision) FROM catalogo_ubicaciones u WHERE u.publicacion_id=p.id) AS ubicacion`;
 const recursos = `COALESCE((SELECT json_agg(json_build_object('id',r.id,'identificador',r.identificador,'activo',r.activo) ORDER BY r.id) FROM catalogo_recursos r WHERE r.publicacion_id=p.id),'[]'::json)`;
 const origen = `FROM catalogo_publicaciones p JOIN catalogo_tarifas t ON t.publicacion_id=p.id`;
 const seleccion = `SELECT ${campos},${recursos} AS recursos ${origen}`;
@@ -81,5 +83,17 @@ export class PostgresCatalogo implements RepositorioCatalogo {
       return (await c.query(`${seleccion} WHERE p.id=$1`,[id])).rows[0];
     });
   }
+  async ubicacion(publicacionId:string):Promise<UbicacionOferta|null> {
+    const r=await this.pool.query('SELECT lat::float8 AS lat,lng::float8 AS lng,precision,lat_publica::float8 AS "latPublica",lng_publica::float8 AS "lngPublica" FROM catalogo_ubicaciones WHERE publicacion_id=$1',[publicacionId]);
+    const f=r.rows[0];
+    return f?{lat:f.lat,lng:f.lng,precision:f.precision,publica:{lat:f.latPublica,lng:f.lngPublica}}:null;
+  }
+  async guardarUbicacion(publicacionId:string,u:UbicacionOferta) {
+    await this.pool.query(`INSERT INTO catalogo_ubicaciones(publicacion_id,lat,lng,precision,lat_publica,lng_publica) VALUES($1,$2,$3,$4,$5,$6)
+      ON CONFLICT(publicacion_id) DO UPDATE SET lat=EXCLUDED.lat,lng=EXCLUDED.lng,precision=EXCLUDED.precision,lat_publica=EXCLUDED.lat_publica,lng_publica=EXCLUDED.lng_publica,actualizado_en=now()`,
+      [publicacionId,u.lat,u.lng,u.precision,u.publica.lat,u.publica.lng]);
+    return u;
+  }
+  async quitarUbicacion(publicacionId:string) { await this.pool.query('DELETE FROM catalogo_ubicaciones WHERE publicacion_id=$1',[publicacionId]); }
   async auditoria(id:string) { return (await this.pool.query(`SELECT actor_id AS "actorId",estado_anterior AS "estadoAnterior",estado_nuevo AS "estadoNuevo",motivo,version,creado_en AS "creadoEn" FROM catalogo_auditoria WHERE publicacion_id=$1 ORDER BY creado_en DESC,id`,[id])).rows; }
 }

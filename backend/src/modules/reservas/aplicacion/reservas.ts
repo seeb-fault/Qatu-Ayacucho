@@ -94,7 +94,9 @@ export class Reservas {
     if (!contactoPermitido(s)) throw new ErrorReserva('CONTACTO_NO_DISPONIBLE', 409, 'El WhatsApp se comparte cuando el proveedor acepta, agenda la visita o envía su cotización, y hasta que la operación termina.');
     const cliente = s.clienteId === actor.id;
     const otro = await this.identidad.contactoPublico(cliente ? s.propietarioId : s.clienteId);
-    return { rol: cliente ? 'proveedor' as const : 'cliente' as const, nombre: cliente ? s.snapshot.proveedor : otro?.nombre ?? 'Cliente', whatsapp: otro?.whatsapp ?? null };
+    // El punto exacto de la oferta: dónde recoger la herramienta o desde dónde trabaja el proveedor (011).
+    const ubicacion = await this.catalogo.ubicacionExacta(s.publicacionId);
+    return { rol: cliente ? 'proveedor' as const : 'cliente' as const, nombre: cliente ? s.snapshot.proveedor : otro?.nombre ?? 'Cliente', whatsapp: otro?.whatsapp ?? null, ubicacion };
   }
 
   vencer() { return this.repo.vencer(); }

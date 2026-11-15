@@ -37,7 +37,7 @@ test('oferta persistida: publicar, buscar, editar, conflicto de versión, desact
  await page.goto('/publicar');await page.getByRole('article',{name:titulo,exact:true}).getByRole('button',{name:'Editar '+titulo,exact:true}).click();
  await editor.getByLabel('Título',{exact:true}).fill(titulo+' editado');await editor.getByRole('button',{name:'Guardar cambios de la oferta'}).click();await expect(page.getByRole('status')).toContainText('se guardó');
  const guardada=(await (await page.request.get('/api/v1/publicaciones/mias')).json()).items.find((p:any)=>p.id===propia.id);expect(guardada.recursos.map((r:any)=>r.id).sort()).toEqual(ids);
- const {id,proveedorId,version,estadoModeracion,creadoEn,actualizadoEn,...datos}=propia;
+ const {id,proveedorId,version,estadoModeracion,creadoEn,actualizadoEn,ubicacion:_ubicacion,...datos}=propia;
  expect((await page.request.patch('/api/v1/publicaciones/'+id,{headers:{Origin:origin},data:{...datos,versionActual:version}})).status()).toBe(409);
  propia=guardada;
  await editor.getByLabel('Oferta activa',{exact:true}).uncheck();await editor.getByRole('button',{name:'Guardar cambios de la oferta'}).click();await expect(page.getByRole('status')).toContainText('se guardó');

@@ -9,6 +9,7 @@ import { CatalogoController, ModeracionController } from './presentacion/catalog
 export class ConsultaCatalogo {
  constructor(private readonly catalogo:Catalogo) {}
  consultar(id:string) { return this.catalogo.consultar(id); }
+ ubicacionExacta(id:string) { return this.catalogo.ubicacionExacta(id); }
 }
 @Module({imports:[UsuariosModule,ProveedoresModule],controllers:[CatalogoController,ModeracionController],providers:[
  {provide:Pool,useFactory:()=>crearPool(5)},
