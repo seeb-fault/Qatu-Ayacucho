@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { emailValido, entrada, ErrorUsuario, estadoValido, idValido, motivoValido, nombreValido, paginaValida, passwordValido, type Usuario } from '../dominio/usuario';
+import { emailValido, entrada, ErrorUsuario, estadoValido, idValido, motivoValido, nombreValido, paginaValida, passwordValido, whatsappValido, type Usuario } from '../dominio/usuario';
 import type { HashPasswords, RepositorioUsuarios, TokensSesion } from '../dominio/puertos';
 
 export class Usuarios {
@@ -48,8 +48,23 @@ export class Usuarios {
     return { usuario, sid: claims.sid };
   }
 
+  /** El perfil propio incluye el WhatsApp; nunca se entrega a otros módulos salvo por `contactoPublico`. */
   async perfil(token: string) {
-    return (await this.identidad(token)).usuario;
+    const { usuario } = await this.identidad(token);
+    const c = await this.repo.contacto(usuario.id);
+    return { ...usuario, whatsapp: c?.whatsapp ?? null, whatsappVisible: c?.whatsappVisible ?? false };
+  }
+
+  /** Para la contraparte de una reserva: el número solo si su dueño consintió mostrarlo y la cuenta está activa. */
+  async contactoPublico(usuarioId: string) {
+    const c = await this.repo.contacto(usuarioId);
+    if (!c) return null;
+    return { nombre: c.nombre, whatsapp: c.activo && c.whatsappVisible ? c.whatsapp : null };
+  }
+
+  async tieneWhatsapp(usuarioId: string) {
+    const c = await this.repo.contacto(usuarioId);
+    return Boolean(c?.whatsapp && c.whatsappVisible);
   }
 
   cuentasActivas(ids: string[]) { return this.repo.cuentasActivas(ids); }
@@ -60,10 +75,16 @@ export class Usuarios {
 
   async editar(token: string, value: unknown) {
     const { usuario } = await this.identidad(token);
-    const datos = entrada(value, ['nombre']);
-    const resultado = await this.repo.cambiarNombre(usuario.id, nombreValido(datos.nombre));
+    const datos = entrada(value, ['nombre', 'whatsapp', 'whatsappVisible']);
+    const nombre = nombreValido(datos.nombre);
+    if (datos.whatsappVisible !== undefined && typeof datos.whatsappVisible !== 'boolean') throw new ErrorUsuario('ENTRADA_INVALIDA', 400, 'Revisa los campos enviados.');
+    const actual = await this.repo.contacto(usuario.id);
+    const whatsapp = datos.whatsapp === undefined ? actual?.whatsapp ?? null : whatsappValido(datos.whatsapp);
+    const whatsappVisible = whatsapp === null ? false : (datos.whatsappVisible as boolean | undefined) ?? actual?.whatsappVisible ?? false;
+    const resultado = await this.repo.cambiarNombre(usuario.id, nombre);
     if (!resultado) throw new ErrorUsuario('SESION_INVALIDA', 401, 'Ingresa nuevamente para continuar.');
-    return resultado;
+    await this.repo.cambiarContacto(usuario.id, { whatsapp, whatsappVisible });
+    return { ...resultado, whatsapp, whatsappVisible };
   }
 
   async salir(token: string) {

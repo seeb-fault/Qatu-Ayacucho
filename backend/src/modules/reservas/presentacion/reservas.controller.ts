@@ -9,6 +9,7 @@ export class ReservasController {
   constructor(@Inject(Reservas) private readonly reservas: Reservas) {}
   @Post() solicitar(@Req() r: Request, @Body() d: unknown) { return this.reservas.solicitar(token(r), d); }
   @Get() listar(@Req() r: Request, @Query() q: unknown) { return this.reservas.listar(token(r), q); }
+  @Get(':id/contacto') contacto(@Req() r: Request, @Param('id') id: string) { return this.reservas.contacto(token(r), id); }
   @Get(':id') consultar(@Req() r: Request, @Param('id') id: string) { return this.reservas.consultar(token(r), id); }
   @Post(':id/cotizacion') cotizar(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.cotizar(token(r),id,d); }
   @Post(':id/cotizacion/aceptacion') aceptarCotizacion(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.responderCotizacion(token(r),id,d,'ACEPTADA'); }

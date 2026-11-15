@@ -1,6 +1,7 @@
 import { entradaSolicitud, entradaRechazo, filtros, uuid, texto, objeto, instante, invalida, ErrorReserva, type Solicitud } from '../dominio/solicitud';
 import { condiciones, entradaAccion, type AccionReserva } from '../dominio/alquiler';
 import { entradaCotizacion, entradaRespuestaCotizacion } from '../dominio/cotizacion';
+import { contactoPermitido } from '../dominio/coordinacion';
 import type { CatalogoReservas, IdentidadReservas, PagosDeReserva, ProveedoresReservas, RepositorioReservas, UltimoPago } from '../dominio/puertos';
 
 export class Reservas {
@@ -82,6 +83,18 @@ export class Reservas {
     const actor = await this.identidad.resolver(token), d = entradaRespuestaCotizacion(value,'ACEPTADA');
     await this.validarAgendaPublica(uuid(id),actor.id);
     return this.presentar(await this.repo.confirmarAgenda(id,actor.id,d.versionActual,d.versionCotizacion),actor.id);
+  }
+
+  /** WhatsApp de la otra parte, solo para participantes y solo mientras la operación está activa (010). */
+  async contacto(token: string, id: string) {
+    const actor = await this.identidad.resolver(token);
+    await this.repo.vencer();
+    const s = await this.repo.porId(uuid(id), actor.id);
+    if (!s) throw new ErrorReserva('RESERVA_NO_DISPONIBLE', 404, 'La solicitud no está disponible.');
+    if (!contactoPermitido(s)) throw new ErrorReserva('CONTACTO_NO_DISPONIBLE', 409, 'El WhatsApp se comparte cuando el proveedor acepta, agenda la visita o envía su cotización, y hasta que la operación termina.');
+    const cliente = s.clienteId === actor.id;
+    const otro = await this.identidad.contactoPublico(cliente ? s.propietarioId : s.clienteId);
+    return { rol: cliente ? 'proveedor' as const : 'cliente' as const, nombre: cliente ? s.snapshot.proveedor : otro?.nombre ?? 'Cliente', whatsapp: otro?.whatsapp ?? null };
   }
 
   vencer() { return this.repo.vencer(); }

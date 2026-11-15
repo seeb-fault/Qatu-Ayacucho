@@ -25,6 +25,8 @@ test('oferta persistida: publicar, buscar, editar, conflicto de versión, desact
  try{
  expect((await admin.request.post('/api/v1/auth/login',{headers:{Origin:origin},data:{email:emailAdmin,password}})).status()).toBe(200);
  expect((await admin.request.post('/api/v1/admin/proveedores/'+perfil.id+'/verificacion',{headers:{Origin:origin},data:{solicitudId:enviada.id,decision:'aprobada',motivo:'Documento sintético aceptado para ensayo del catálogo'}})).status()).toBe(201);
+ // Publicar exige un WhatsApp visible (010).
+ expect((await page.request.patch('/api/v1/usuarios/me',{headers:{Origin:origin},data:{nombre:'Publicador de prueba',whatsapp:'987654321',whatsappVisible:true}})).status()).toBe(200);
  await page.goto('/');await page.getByRole('navigation',{name:'Navegación principal'}).getByRole('link',{name:'Publicar una oferta'}).click();
  const editor=page.getByRole('form',{name:'Editor de oferta'});
  await editor.getByLabel('Título',{exact:true}).fill(titulo);await editor.getByLabel('Descripción',{exact:true}).fill('Taladro de mantenimiento para perforar concreto y madera en proyectos locales.');

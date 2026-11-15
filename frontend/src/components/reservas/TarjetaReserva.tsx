@@ -10,6 +10,7 @@ import EvidenciasReserva from '../resenas/EvidenciasReserva';
 import GarantiaReserva from '../resenas/GarantiaReserva';
 import IncidenciasReserva from '../resenas/IncidenciasReserva';
 import { ESTADOS_CERRADOS } from '@/lib/api/resenas';
+import CoordinarWhatsapp from './CoordinarWhatsapp';
 import IrAPagar, { EstadoPago, useConfiguracionPagos } from '../pagos/PagoEnLinea';
 
 const estados: Record<SolicitudReserva['estado'], string> = {
@@ -30,13 +31,13 @@ export default function TarjetaReserva({solicitud:s,ocupado,operar,recargar}: Pr
     e.preventDefault(); const form=new FormData(e.currentTarget);
     void operar(s,accion,motivo ? {motivo:form.get('motivo')} : undefined);
   };
-  const textoWhatsApp = `Hola, quiero coordinar ${s.tipoSolicitud === 'visita' ? 'la visita' : 'el alquiler'} de ${s.snapshot.titulo}. Inicio: ${fechaReserva(s.inicio)}; fin: ${fechaReserva(s.fin)} (Lima). Referencia: ${s.id}. Coordinemos retiro y devolución; confirma los estados en Qatu.`;
   return <article className={styles.card} aria-label={s.snapshot.titulo}>
     <span className={styles.status}>{s.estado === 'PENDIENTE' && cotizacionAceptada ? 'Cotización acordada; agenda por coordinar' : estados[s.estado]}</span><h2>{s.snapshot.titulo}</h2>
     <p>{s.tipoSolicitud === 'visita' ? 'Visita previa, sin apartado' : 'Solicitud de alquiler o servicio'} · Proveedor: {s.snapshot.proveedor}</p>
     <dl><dt>Unidad / agenda</dt><dd>{s.snapshot.recurso}</dd><dt>Inicio</dt><dd>{fechaReserva(s.inicio)}</dd><dt>Fin acordado</dt><dd>{fechaReserva(s.fin)}</dd></dl>
     <p className={styles.hint}>Fechas en hora de Lima. Referencia: {s.id}</p>
     {s.descripcionTrabajo && <p>{s.descripcionTrabajo}</p>}
+    <CoordinarWhatsapp solicitud={s}/>
     {s.snapshot.tipo === 'servicio' && s.tipoSolicitud === 'alquiler' && <CotizacionesServicio solicitud={s} ocupado={ocupado} operar={operar}/>}
     {s.condiciones && <div className={styles.notice}>
       <p><strong>{dinero(s.condiciones.importeCentimos)}</strong> por {s.condiciones.dias} {s.condiciones.dias === 1 ? 'día' : 'días'}, a {dinero(s.condiciones.tarifaCentimos)} por bloque de 24 horas iniciado.</p>
@@ -57,7 +58,6 @@ export default function TarjetaReserva({solicitud:s,ocupado,operar,recargar}: Pr
     {s.servicioIniciadoEn && <p>El proveedor registró el inicio del trabajo: {fechaReserva(s.servicioIniciadoEn)}</p>}
     {s.estado === 'SERVICIO_CERRADO' && s.servicioCerradoEn && <p>Trabajo cerrado por ambos participantes: {fechaReserva(s.servicioCerradoEn)}</p>}
     {s.estado === 'VENCIDA' && <p>El apartado se liberó. Necesitas solicitar nuevamente para volver a coordinar.</p>}
-    {['PENDIENTE','VISITA_ACORDADA','ACEPTADA','SERVICIO_CONFIRMADO'].includes(s.estado) && <p><a href={'https://wa.me/?text='+encodeURIComponent(textoWhatsApp)} target="_blank" rel="noopener noreferrer">Compartir coordinación por WhatsApp</a><span className={styles.hint}> · Tú eliges el destinatario. Esto no confirma pagos ni apartados.</span></p>}
     {s.snapshot.tipo === 'herramienta' && !['PENDIENTE','RECHAZADA','VISITA_ACORDADA','VENCIDA','CANCELADA'].includes(s.estado) && <GarantiaReserva reservaId={s.id} estado={s.estado} esCliente={s.participacion === 'cliente'}/>}
     {!['PENDIENTE','RECHAZADA','VISITA_ACORDADA','ACEPTADA','VENCIDA','CANCELADA','APARTADO_PAGADO','SERVICIO_CONFIRMADO'].includes(s.estado) && <EvidenciasReserva reservaId={s.id}/>}
     {!['PENDIENTE','RECHAZADA','VISITA_ACORDADA','ACEPTADA','VENCIDA','CANCELADA','APARTADO_PAGADO','SERVICIO_CONFIRMADO'].includes(s.estado) && <IncidenciasReserva reservaId={s.id} estado={s.estado}/>}

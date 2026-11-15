@@ -15,6 +15,8 @@ test('alquiler real: 100 carreras, vencimiento, efectivo bilateral y devolución
   const a=await usuarios.crear('calendario-a-'+sufijo+'@example.com','Cliente A',hash),b=await usuarios.crear('calendario-b-'+sufijo+'@example.com','Cliente B',hash);
   const perfil=await proveedores.crear(titular.id,{nombrePublico:'Taller calendario '+sufijo,descripcion:'Herramientas sintéticas para verificar disponibilidad y efectivo.',zonaId:'ayacucho',visiblePublicamente:true});
   await pool.query("UPDATE proveedores SET estado_verificacion='aprobada' WHERE id=$1",[perfil.id]);
+  // Publicar exige un WhatsApp visible (010).
+  await pool.query("UPDATE usuarios SET whatsapp='+51987654321',whatsapp_visible=true WHERE id=$1",[titular.id]);
   await pool.query("DELETE FROM limites_acceso WHERE clave='ip:127.0.0.1:login'");
   const app=await crearApp();await app.listen(0,'127.0.0.1');const root=await app.getUrl()+'/api/v1';
   const pedir=(ruta:string,method='GET',body?:unknown,cookie='')=>fetch(root+ruta,{method,headers:{Origin:process.env.APP_ORIGIN!,'Content-Type':'application/json',Cookie:cookie},body:body===undefined?undefined:JSON.stringify(body)});

@@ -26,6 +26,12 @@ test('catálogo real: propiedad, recursos, búsqueda, concurrencia y moderación
  await context.test('rechaza anónimos, proveedor sin verificar, origen ajeno y suplantación',async()=>{
   assert.equal((await pedir('/publicaciones','POST',datos)).status,401);assert.equal((await pedir('/publicaciones','POST',datos,sesion)).status,403);
   await pool.query("UPDATE proveedores SET estado_verificacion='aprobada' WHERE id=ANY($1::uuid[])",[[perfil.id,otroPerfil.id]]);
+  // Sin WhatsApp visible no se publica (010); el proveedor lo registra en su cuenta.
+  const sinWhatsapp=await pedir('/publicaciones','POST',datos,sesion);assert.equal(sinWhatsapp.status,409);assert.equal((await sinWhatsapp.json()).code,'WHATSAPP_REQUERIDO');
+  assert.equal((await pedir('/usuarios/me','PATCH',{nombre:'Proveedor catálogo',whatsapp:'987 654 321',whatsappVisible:false},sesion)).status,200);
+  assert.equal((await pedir('/publicaciones','POST',datos,sesion)).status,409);
+  const perfilPropio=await (await pedir('/usuarios/me','PATCH',{nombre:'Proveedor catálogo',whatsapp:'+51 987654321',whatsappVisible:true},sesion)).json();
+  assert.equal(perfilPropio.whatsapp,'+51987654321');assert.equal(perfilPropio.whatsappVisible,true);
   assert.equal((await pedir('/publicaciones','POST',{...datos,proveedorId:otroPerfil.id},sesion)).status,400);
   assert.equal((await pedir('/publicaciones','POST',datos,sesion,'https://otro.example')).status,403);
  });

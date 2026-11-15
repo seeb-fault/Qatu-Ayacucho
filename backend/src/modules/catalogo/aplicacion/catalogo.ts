@@ -35,6 +35,7 @@ export class Catalogo {
   }
   async crear(token:string,value:unknown) {
     const proveedor=await this.proveedor(token,true);
+    if (!await this.identidad.tieneWhatsapp((await this.identidad.resolver(token)).id)) throw new ErrorCatalogo('WHATSAPP_REQUERIDO',409,'Agrega tu WhatsApp en Mi cuenta y permite mostrarlo a tus clientes para publicar ofertas.');
     return this.repo.crear(proveedor.id,entradaOferta(value).datos);
   }
   async editar(token:string,id:string,value:unknown) {

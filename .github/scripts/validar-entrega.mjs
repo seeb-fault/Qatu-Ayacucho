@@ -13,7 +13,7 @@ export function validarEntrega(root) {
   const indice = entregas.indexOf(manifest.ultimaEntrega);
   assert.ok(indice >= 0, 'Entrega desconocida');
   const incrementos = manifest.incrementos ?? [];
-  assert.ok(Array.isArray(incrementos) && incrementos.every(i => ['005.1','005.2','005.3','005.4','005.5','005.6','005.7','005.8','006.1','006.2','006.3','009.1'].includes(i)) && new Set(incrementos).size === incrementos.length, 'Incremento desconocido o repetido');
+  assert.ok(Array.isArray(incrementos) && incrementos.every(i => ['005.1','005.2','005.3','005.4','005.5','005.6','005.7','005.8','006.1','006.2','006.3','009.1','010.1'].includes(i)) && new Set(incrementos).size === incrementos.length, 'Incremento desconocido o repetido');
   const reservas = incrementos.includes('005.1');
   const efectivo = incrementos.includes('005.2');
   const cotizaciones = incrementos.includes('005.3');
@@ -29,6 +29,8 @@ export function validarEntrega(root) {
   assert.ok(!incidencias || evidencias, '006.3 requiere evidencias 006.2');
   const lista = incrementos.includes('009.1');
   assert.ok(!lista || reservas, '009.1 requiere solicitudes 005.1');
+  const whatsapp = incrementos.includes('010.1');
+  assert.ok(!whatsapp || cotizaciones, '010.1 requiere cotizaciones 005.3');
   assert.ok(!resenas || ejecucion, '006.1 requiere operaciones cerradas: herramientas devueltas (005.2) y servicios cerrados (005.5)');
   assert.ok(!pagos || avisos, '005.8 requiere avisos 005.7');
   assert.ok(!avisos || despacho, '005.7 requiere despacho 005.6');
@@ -109,6 +111,10 @@ export function validarEntrega(root) {
     for (const artefacto of artefactos) requerir(`specs/009-mi-lista/${artefacto}`);
     for (const relative of ['backend/migrations/reservas/011-lista.sql','backend/src/modules/reservas/dominio/lista.ts','backend/src/modules/reservas/aplicacion/lista.ts','backend/src/modules/reservas/presentacion/lista.controller.ts','backend/test/reservas/lista.test.ts','frontend/src/lib/rutas.ts','frontend/src/components/lista/MiLista.tsx','frontend/src/components/lista/BotonLista.tsx','frontend/src/app/lista/page.tsx','frontend/tests/reservas/lista.spec.ts']) requerir(relative);
   } else ausente('backend/migrations/reservas/011-lista.sql');
+  if (whatsapp) {
+    for (const artefacto of artefactos) requerir(`specs/010-coordinacion-whatsapp/${artefacto}`);
+    for (const relative of ['backend/migrations/usuarios/003-whatsapp.sql','backend/src/modules/reservas/dominio/coordinacion.ts','backend/test/reservas/whatsapp.test.ts','frontend/src/components/reservas/CoordinarWhatsapp.tsx','frontend/tests/reservas/whatsapp.spec.ts']) requerir(relative);
+  } else ausente('backend/migrations/usuarios/003-whatsapp.sql');
   return {
     entrega: manifest.ultimaEntrega,
     frontend: indice >= 1,

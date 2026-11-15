@@ -53,6 +53,15 @@ export class PostgresUsuarios implements RepositorioUsuarios {
     return (await this.pool.query("SELECT id FROM usuarios WHERE id=ANY($1::uuid[]) AND estado='activo'",[ids])).rows.map(fila=>fila.id);
   }
 
+  async contacto(id: string) {
+    const r = await this.pool.query("SELECT nombre, whatsapp, whatsapp_visible AS \"whatsappVisible\", estado='activo' AS activo FROM usuarios WHERE id=$1", [id]);
+    return r.rows[0] ?? null;
+  }
+
+  async cambiarContacto(id: string, c: { whatsapp: string | null; whatsappVisible: boolean }) {
+    await this.pool.query('UPDATE usuarios SET whatsapp=$2, whatsapp_visible=$3, version=version+1 WHERE id=$1', [id, c.whatsapp, c.whatsappVisible]);
+  }
+
   async cambiarNombre(id: string, nombre: string) {
     const result = await this.pool.query("UPDATE usuarios SET nombre = $2, version = version + 1 WHERE id = $1 AND estado = 'activo' RETURNING id", [id, nombre]);
     return result.rowCount ? this.porId(id) : null;

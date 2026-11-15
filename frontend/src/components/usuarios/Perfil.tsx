@@ -11,6 +11,8 @@ export default function Perfil() {
   const router = useRouter();
   const [usuario, setUsuario] = useState<Usuario | null>(null);
   const [nombre, setNombre] = useState('');
+  const [whatsapp, setWhatsapp] = useState('');
+  const [whatsappVisible, setWhatsappVisible] = useState(false);
   const [error, setError] = useState('');
   const [mensaje, setMensaje] = useState('');
   const [cargando, setCargando] = useState(true);
@@ -24,6 +26,8 @@ export default function Perfil() {
       const datos = await usuariosApi<Usuario>('/usuarios/me');
       setUsuario(datos);
       setNombre(datos.nombre);
+      setWhatsapp(datos.whatsapp?.replace(/^\+51/, '') ?? '');
+      setWhatsappVisible(datos.whatsappVisible ?? false);
       setSinSesion(false);
     } catch (error) { fallo(error); }
     finally { setCargando(false); }
@@ -48,7 +52,10 @@ export default function Perfil() {
     setMensaje('');
     setError('');
     try {
-      setUsuario(await usuariosApi<Usuario>('/usuarios/me', 'PATCH', { nombre }));
+      const guardado = await usuariosApi<Usuario>('/usuarios/me', 'PATCH', { nombre, whatsapp: whatsapp.trim(), whatsappVisible: whatsapp.trim() ? whatsappVisible : false });
+      setUsuario(guardado);
+      setWhatsapp(guardado.whatsapp?.replace(/^\+51/, '') ?? '');
+      setWhatsappVisible(guardado.whatsappVisible ?? false);
       setMensaje('Tu perfil se guardó.');
     } catch (error) { fallo(error); }
     finally { setPendiente(false); }
@@ -97,6 +104,9 @@ export default function Perfil() {
       <form onSubmit={guardar} className={styles.form}>
         <h2>Datos personales</h2>
         <label>Nombre<input name="nombre" autoComplete="name" value={nombre} onChange={event => setNombre(event.target.value)} required minLength={2} maxLength={100}/></label>
+        <label>WhatsApp<span className={styles.telefono}><span aria-hidden="true">+51</span><input name="whatsapp" type="tel" inputMode="numeric" autoComplete="tel-national" placeholder="987 654 321" pattern="[0-9 ]{9,11}" title="9 dígitos que empiezan con 9" value={whatsapp} onChange={event => { setWhatsapp(event.target.value); if (!event.target.value.trim()) setWhatsappVisible(false); }} aria-describedby="ayuda-whatsapp"/></span></label>
+        <label className={styles.consentimiento}><input type="checkbox" checked={whatsappVisible} disabled={!whatsapp.trim()} onChange={event => setWhatsappVisible(event.target.checked)}/>Mostrar mi WhatsApp solo a quienes tengan una reserva aceptada conmigo</label>
+        <p id="ayuda-whatsapp" className={styles.ayuda}>Sirve para coordinar la entrega, la visita o la hora del trabajo. Se comparte desde que la reserva se acepta, se agenda la visita o se envía la cotización, y deja de mostrarse al terminar. Los proveedores lo necesitan para publicar.</p>
         <button className="button primary" disabled={pendiente}>{pendiente ? 'Procesando…' : 'Guardar perfil'}</button>
       </form>
       <button className="button outline" onClick={salir} disabled={pendiente}><Icono nombre="logout" size={17}/>Cerrar sesión</button>

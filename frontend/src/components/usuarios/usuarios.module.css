@@ -45,3 +45,11 @@
 .cuenta > :global(.button.outline) { gap: 8px; }
 @media (max-width: 600px) { .accesos { grid-template-columns: 1fr; } .cabecera { flex-direction: column; align-items: flex-start; gap: 12px; } }
 @media (prefers-reduced-motion: reduce) { .accesos li { transition: none; } }
+
+/* WhatsApp (010): prefijo de Perú fijo y consentimiento explícito. */
+.telefono { display: flex; align-items: stretch; }
+.telefono > span { display: grid; place-items: center; padding: 0 14px; border: 1px solid var(--line); border-right: 0; border-radius: var(--q-radius-sm) 0 0 var(--q-radius-sm); background: var(--q-muted-bg); color: var(--q-text-2); font-weight: 600; }
+.telefono input { border-radius: 0 var(--q-radius-sm) var(--q-radius-sm) 0 !important; }
+.form label.consentimiento { display: flex; align-items: flex-start; gap: 10px; font-weight: 500; }
+.consentimiento input { width: 18px !important; min-height: 0 !important; height: 18px; margin-top: 2px; padding: 0 !important; accent-color: var(--q-primary); }
+.ayuda { margin-top: -6px; color: var(--q-text-2); font-size: 13px; line-height: 1.5; }
