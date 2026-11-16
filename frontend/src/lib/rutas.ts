@@ -6,8 +6,9 @@ export function rutaInterna(valor: string | null | undefined): string | null {
   if (!valor || valor.length > 512 || !valor.startsWith('/') || valor.startsWith('//')) return null;
   if (/[\u0000-\u001f\u007f\\]/.test(valor)) return null;
   try {
-    const url = new URL(valor, 'http://qatu.local');
-    return url.origin === 'http://qatu.local' ? url.pathname + url.search + url.hash : null;
+    // Base ficticia solo para interpretar la ruta; nunca se conecta a ella.
+    const url = new URL(valor, 'https://qatu.local');
+    return url.origin === 'https://qatu.local' ? url.pathname + url.search + url.hash : null;
   } catch { return null; }
 }
 

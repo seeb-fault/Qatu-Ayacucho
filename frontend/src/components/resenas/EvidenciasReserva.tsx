@@ -73,7 +73,7 @@ export default function EvidenciasReserva({ reservaId }: { reservaId: string }) 
       </label>
       {error && <p role="alert" className={styles.error}>{error}</p>}
       {mensaje && <p role="status" className={styles.nota}>{mensaje}</p>}
-      <div className={styles.acciones}><button className="button outline" disabled={enviando}>{enviando ? 'Subiendo…' : 'Subir fotos'}</button></div>
+      <div className={styles.acciones}><button type="submit" className="button outline" disabled={enviando}>{enviando ? 'Subiendo…' : 'Subir fotos'}</button></div>
     </form>}
   </section>;
 }

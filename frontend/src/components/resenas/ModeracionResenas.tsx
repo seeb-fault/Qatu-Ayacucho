@@ -25,7 +25,7 @@ function Resena({ resena, onCambio }: { resena: ResenaAdministrada; onCambio: ()
     {error && <p role="alert" className={catalogo.error}>{error}</p>}
     <form onSubmit={guardar}>
       <label>Motivo de moderación<textarea value={motivo} onChange={e => setMotivo(e.target.value)} required minLength={10} maxLength={500} rows={2}/></label>
-      <button className="button outline" disabled={ocupado}>{resena.oculta ? 'Mostrar de nuevo' : 'Ocultar reseña'}</button>
+      <button type="submit" className="button outline" disabled={ocupado}>{resena.oculta ? 'Mostrar de nuevo' : 'Ocultar reseña'}</button>
     </form>
   </article>;
 }

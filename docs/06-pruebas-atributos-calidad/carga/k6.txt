@@ -1,0 +1,12 @@
+Resumen de la prueba de carga (k6)
+
+ 10 usuarios: p50 25 ms, p95 58 ms, p99 183 ms, máx 229 ms
+ 30 usuarios: p50 29 ms, p95 78 ms, p99 172 ms, máx 537 ms, errores 0.00 %
+ 60 usuarios: p50 44 ms, p95 134 ms, p99 267 ms, máx 458 ms, errores 0.00 %
+500 usuarios: p50 1930 ms, p95 3788 ms, p99 4075 ms, máx 4386 ms, errores 0.00 %
+
+Peticiones: 34038 (62.3/s); checks correctos: 100.00 %
+NO CUMPLE  http_req_duration{nivel:500} p(95)<1000
+CUMPLE  http_req_duration{nivel:60} p(95)<2000
+CUMPLE  http_req_duration{nivel:10} p(95)<1000
+CUMPLE  http_req_duration{nivel:30} p(95)<1000

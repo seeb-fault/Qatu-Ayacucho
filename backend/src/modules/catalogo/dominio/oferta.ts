@@ -14,7 +14,9 @@ export interface DatosOferta {
   tipo: Tipo; categoriaId: string; zonaId: string; titulo: string; descripcion: string; incluye: string[]; condiciones: string[];
   modalidadPrecio: 'fija' | 'cotizacion'; tarifaCentimos: number | null; unidad: 'día' | 'servicio' | null; activa: boolean; recursos: Recurso[];
 }
-export interface Publicacion extends DatosOferta { id: string; proveedorId: string; version: number; estadoModeracion: 'permitida' | 'retirada'; creadoEn: string; actualizadoEn: string }
+export interface Publicacion extends DatosOferta { id: string; proveedorId: string; version: number; estadoModeracion: 'permitida' | 'retirada'; creadoEn: string; actualizadoEn: string;
+  /** Punto público (011): exacto para locales, desplazado 50–100 m si el proveedor lo prefiere. */
+  ubicacion: { lat: number; lng: number; precision: 'exacta' | 'aproximada' } | null }
 export interface FiltrosCatalogo { q: string; tipo: string; categoriaId: string; zonaId: string; precioMaximoCentimos?: number; page: number; limit: number; orden: 'recomendados'|'precio'|'nombre' }
 export interface ProveedorCatalogo { id: string; nombrePublico: string; estadoVerificacion: string }
 export function fallo(mensaje = 'Revisa los datos de la oferta.'): never { throw new ErrorCatalogo('ENTRADA_INVALIDA',400,mensaje); }

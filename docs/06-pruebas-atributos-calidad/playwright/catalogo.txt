@@ -1,0 +1,7 @@
+
+Running 2 tests using 1 worker
+
+  ok 1 tests\catalogo\publicaciones.spec.ts:8:5 › publicar requiere sesión y un perfil público verificado; no concede permisos por interfaz (3.2s)
+  ok 2 tests\catalogo\publicaciones.spec.ts:16:5 › oferta persistida: publicar, buscar, editar, conflicto de versión, desactivar y moderar (22.0s)
+
+  2 passed (33.0s)

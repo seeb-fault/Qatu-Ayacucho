@@ -1,4 +1,5 @@
 'use client';
+import EditorUbicacion from '@/components/mapa/EditorUbicacion';
 import Link from 'next/link';
 import {useEffect,useState,type FormEvent} from 'react';
 import {Button} from 'primereact/button';
@@ -48,6 +49,7 @@ export default function GestionOfertas(){
  <label className={styles.check}><input type="checkbox" checked={datos.activa} onChange={e=>setDatos({...datos,activa:e.target.checked})}/>Oferta activa</label><p className={styles.hint}>La categoría asigna una ilustración de referencia. La tarifa y las condiciones se mostrarán públicamente. Reservas y pagos aún no están habilitados.</p>
  <Button type="submit" className="button primary">{guardando?'Guardando…':editando?'Guardar cambios de la oferta':'Publicar oferta'}</Button>
  </fieldset></form>}
+ {editando&&<EditorUbicacion key={editando.id} publicacionId={editando.id}/>}
  {listado&&<section className={styles.list} aria-label="Mis publicaciones"><div className={styles.toolbar}><h2>Mis publicaciones ({listado.total})</h2><Button type="button" className="button outline" disabled={guardando||cargando} onClick={()=>{nueva();void cargar();}}>Recargar publicaciones</Button></div>{listado.total===0&&<p>Aún no has publicado ofertas. Empieza con la herramienta o el oficio que quieras compartir.</p>}{listado.items.map(p=><article className={styles.item} key={p.id} aria-label={p.titulo}><div><h3>{p.titulo}</h3><p>{p.estadoModeracion==='retirada'?'Retirada por moderación':p.activa?'Activa':'Inactiva'} · {p.tipo==='herramienta'?'Herramienta':'Servicio'}</p></div><div className={styles.actions}>{habilitado&&<Button type="button" className="button outline" onClick={()=>editar(p)}>Editar {p.titulo}</Button>}{p.activa&&p.estadoModeracion==='permitida'&&habilitado&&<Link className="button outline" href={'/publicaciones/'+p.id}>Ver publicación</Link>}</div></article>)}<div className={styles.toolbar}><Button type="button" className="button outline" disabled={pagina<=1||cargando} onClick={()=>void cargar(pagina-1)}>Anterior</Button><span>Página {pagina} de {Math.max(1,Math.ceil(listado.total/20))}</span><Button type="button" className="button outline" disabled={pagina*20>=listado.total||cargando} onClick={()=>void cargar(pagina+1)}>Siguiente</Button></div></section>}
  <p><Link href="/cuenta">Volver a mi cuenta</Link> · <Link href="/buscar">Explorar catálogo</Link></p>
  </section>;

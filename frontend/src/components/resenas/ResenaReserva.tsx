@@ -57,7 +57,7 @@ export default function ResenaReserva({ reservaId, esCliente }: { reservaId: str
     </label>
     {error && <p role="alert" className={styles.error}>{error}</p>}
     <div className={styles.acciones}>
-      <button className="button primary" disabled={enviando}>{enviando ? 'Publicando…' : 'Publicar reseña'}</button>
+      <button type="submit" className="button primary" disabled={enviando}>{enviando ? 'Publicando…' : 'Publicar reseña'}</button>
       {estado.plazo && <small>Puedes reseñar hasta el {fechaReserva(estado.plazo)}.</small>}
     </div>
   </form>;

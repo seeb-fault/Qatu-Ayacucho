@@ -67,7 +67,7 @@ export default function RevisionProveedores() {
         {solicitud.estado === 'pendiente' && <form onSubmit={event => resolver(event,solicitud)} className={styles.form}>
           <label htmlFor={`decision-${solicitud.id}`}>Decisión</label><select id={`decision-${solicitud.id}`} name="decision" required defaultValue=""><option value="" disabled>Selecciona una decisión</option><option value="aprobada">Aprobar documentación</option><option value="rechazada">Rechazar documentación</option></select>
           <label>Motivo de la revisión<textarea name="motivo" required minLength={10} maxLength={500} rows={3}/></label>
-          <button className="button primary" disabled={pendiente}>Registrar decisión</button>
+          <button type="submit" className="button primary" disabled={pendiente}>Registrar decisión</button>
         </form>}
       </article>)}
       {cola && <nav aria-label="Páginas de verificaciones" className={styles.acciones}>

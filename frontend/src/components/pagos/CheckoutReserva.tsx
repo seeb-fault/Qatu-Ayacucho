@@ -72,7 +72,7 @@ export default function CheckoutReserva({ id }: { id: string }) {
   }
 
   const resumen = <>
-    <div className={styles.imagen}>{imagen ? <Image src={imagen} alt="" width={320} height={240}/> : <Icono nombre={servicio ? 'hammer' : 'drill'} size={56}/>}</div>
+    <div className={styles.imagen}>{imagen ? <Image src={imagen} alt="" width={320} height={240} priority/> : <Icono nombre={servicio ? 'hammer' : 'drill'} size={56}/>}</div>
     <h3 className={styles.producto}>{s.snapshot.titulo}</h3>
     <p className={styles.meta}><span>{servicio ? 'Oficio' : 'Herramienta'}</span>Por {s.snapshot.proveedor}</p>
     <dl className={styles.lineas}>
@@ -141,7 +141,7 @@ export default function CheckoutReserva({ id }: { id: string }) {
           ? <div className={styles.sinPago}><p>Esta reserva no tiene pagos pendientes.</p><Link className="button outline" href="/reservas">Volver a mis reservas</Link></div>
           : <form onSubmit={enviar} onInvalid={() => setAviso('Marca la casilla para confirmar el pago.')} className={styles.pagar}>
             <div className={styles.total}><span>Total</span><strong>{dinero(importe)}</strong></div>
-            <button className={'button primary ' + styles.boton} disabled={procesando}>{procesando ? 'Procesando…' : metodo === 'efectivo' ? 'Pagaré en efectivo' : `Pagar ${dinero(importe)} en línea`}{!procesando && <Icono nombre="arrow" size={18}/>}</button>
+            <button type="submit" className={'button primary ' + styles.boton} disabled={procesando}>{procesando ? 'Procesando…' : metodo === 'efectivo' ? 'Pagaré en efectivo' : `Pagar ${dinero(importe)} en línea`}{!procesando && <Icono nombre="arrow" size={18}/>}</button>
             <label className={styles.acepto}><input type="checkbox" required onChange={() => setAviso('')}/>{metodo === 'efectivo' ? `Acepto pagar ${dinero(importe)} en efectivo según las condiciones de esta reserva.` : `Acepto pagar ${dinero(importe)} por esta reserva según las condiciones mostradas.`}</label>
             {(aviso || error) && <p role="alert" className={styles.error}>{aviso || error}</p>}
             <p className={styles.seguro}><Icono nombre="shield" size={15}/>Pago procesado por Culqi</p>

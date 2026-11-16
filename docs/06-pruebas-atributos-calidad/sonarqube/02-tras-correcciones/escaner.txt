@@ -1,0 +1,123 @@
+02:31:05.280 WARN  Property 'sonar.working.directory' with value '/tmp/.scannerwork' is overridden with value '/tmp/scannerwork'
+02:31:05.322 INFO  Scanner configuration file: /opt/sonar-scanner/conf/sonar-scanner.properties
+02:31:05.328 INFO  Project root configuration file: NONE
+02:31:05.383 INFO  SonarScanner CLI 8.4.0.16527
+02:31:05.404 INFO  Linux 6.6.87.2-microsoft-standard-WSL2 amd64
+02:31:11.955 INFO  Communicating with SonarQube Community Build 26.11.0.134175
+02:31:11.959 INFO  JRE provisioning: os[linux], arch[x86_64]
+02:31:23.447 INFO  Starting SonarScanner Engine...
+02:31:23.452 INFO  Java 21.0.13 Eclipse Adoptium (64-bit)
+02:31:26.207 INFO  Load global settings
+02:31:26.852 INFO  Load global settings (done) | time=646ms
+02:31:26.874 INFO  Server id: 147B411E-AaHiL_zjM5w7B1tvU7Z8
+02:31:28.819 INFO  Loading required plugins
+02:31:28.824 INFO  Load plugins index
+02:31:29.051 INFO  Load plugins index (done) | time=223ms
+02:31:29.053 INFO  Load/download plugins
+02:31:30.782 INFO  Load/download plugins (done) | time=1728ms
+02:31:31.751 INFO  Load project settings for component key: 'qatu'
+02:31:31.795 INFO  Failed to load settings with NOT_FOUND error, which can happen if the project does not exist yet
+02:31:31.827 INFO  Process project properties
+02:31:31.873 INFO  Process project properties (done) | time=46ms
+02:31:31.901 INFO  Project key: qatu
+02:31:31.901 INFO  Base dir: /usr/src
+02:31:31.902 INFO  Working dir: /tmp/scannerwork
+02:31:32.419 INFO  Load quality profiles
+02:31:32.725 INFO  Load quality profiles (done) | time=305ms
+02:31:32.824 INFO  Load active rules
+02:31:33.712 INFO  Load active rules (done) | time=888ms
+02:31:33.732 INFO  Load analysis cache
+02:31:33.755 INFO  Load analysis cache (404) | time=23ms
+02:31:34.052 INFO  Preprocessing files...
+02:31:38.464 INFO  1 language detected in 227 preprocessed files (done) | time=4411ms
+02:31:38.467 INFO  14 files ignored because of inclusion/exclusion patterns
+02:31:38.472 INFO  Loading plugins for detected languages
+02:31:38.474 INFO  Load/download plugins
+02:31:41.855 INFO  Load/download plugins (done) | time=3380ms
+02:31:42.171 INFO  Load project repositories
+02:31:42.189 INFO  Load project repositories (done) | time=19ms
+02:31:42.271 INFO  Indexing files...
+02:31:42.272 INFO  Project configuration:
+02:31:42.274 INFO    Excluded sources: **/node_modules/**, **/*.css, **/*.svg
+02:31:42.277 INFO    Excluded sources for coverage: frontend/**
+02:31:44.945 INFO  227 files indexed (done) | time=2672ms
+02:31:44.947 INFO  Quality profile for ts: Sonar way core
+02:31:44.949 INFO  ------------- Run sensors on module Qatu
+02:31:45.020 INFO  Load metrics repository
+02:31:45.151 INFO  Load metrics repository (done) | time=128ms
+02:31:46.231 INFO  Sensor IaC YAML File Type Classification Sensor [iac]
+02:31:46.261 INFO  Sensor IaC YAML File Type Classification Sensor [iac] (done) | time=33ms
+02:31:46.263 INFO  Sensor IaC hadolint report Sensor [iac]
+02:31:46.265 INFO  Sensor IaC hadolint report Sensor [iac] (done) | time=1ms
+02:31:46.268 INFO  Sensor Java Config Sensor [iac]
+02:31:46.292 INFO  There are no files to be analyzed for the Java language
+02:31:46.296 INFO  Sensor Java Config Sensor [iac] (done) | time=27ms
+02:31:46.298 INFO  Sensor IaC Docker Sensor [iac]
+02:31:46.316 INFO  There are no files to be analyzed for the Docker language
+02:31:46.317 INFO  Sensor IaC Docker Sensor [iac] (done) | time=24ms
+02:31:46.319 INFO  Sensor JavaScript/TypeScript Coverage [javascript]
+02:31:46.329 INFO  Analysing [/usr/src/backend/coverage/lcov.info]
+02:31:51.703 WARN  Found 5 inconsistencies in coverage report. Re-run analyse in debug mode to see details.
+02:31:51.704 INFO  Sensor JavaScript/TypeScript Coverage [javascript] (done) | time=5387ms
+02:31:51.705 INFO  Sensor TextAndSecretsSensor [text]
+02:31:51.766 INFO  Available processors: 8
+02:31:51.767 INFO  Using 8 threads for analysis.
+02:31:52.746 INFO  Start fetching files for the text and secrets analysis
+02:31:52.770 INFO  Using Git CLI to retrieve dirty files
+02:31:52.795 WARN  Retrieving only language associated files, make sure to run the analysis inside a git repository to make use of inclusions specified via "sonar.text.inclusions"
+02:31:52.798 INFO  Starting the text and secrets analysis
+02:31:52.805 INFO  227 source files to be analyzed for the text and secrets analysis
+02:31:57.648 INFO  227/227 source files have been analyzed for the text and secrets analysis
+02:31:57.660 INFO  Sensor TextAndSecretsSensor [text] (done) | time=5956ms
+02:31:57.684 INFO  ------------- Run sensors on project
+02:31:58.711 INFO  Sensor JavaScript/TypeScript/CSS analysis [javascript]
+02:31:59.951 INFO  Detected os: Linux arch: amd64 alpine: false. Platform: LINUX_X64
+02:31:59.952 INFO  Deploy location /opt/sonar-scanner/.sonar/js/node-runtime, tagetRuntime: /opt/sonar-scanner/.sonar/js/node-runtime/node,  version: /opt/sonar-scanner/.sonar/js/node-runtime/version.txt
+02:32:06.670 INFO  Using embedded Node.js runtime.
+02:32:06.671 INFO  Using Node.js executable: '/opt/sonar-scanner/.sonar/js/node-runtime/node'.
+02:32:14.927 INFO  Memory configuration: OS (4890 MB), Node.js (2240 MB).
+02:32:14.988 INFO  gRPC analyze-project server listening on 127.0.0.1:46557
+02:32:16.184 INFO  Plugin version: [14.3.0.46350]
+02:32:38.646 INFO  Found 8 tsconfig.json file(s): [/usr/src/.local-reconstruccion/snapshots/actual/backend/tsconfig.json, /usr/src/.local-reconstruccion/snapshots/actual/frontend/tsconfig.json, /usr/src/.local-reconstruccion/snapshots/usuarios002/backend/tsconfig.json, /usr/src/.local-reconstruccion/snapshots/usuarios002/frontend/tsconfig.json, /usr/src/.local-reconstruccion/snapshots/web001/backend/tsconfig.json, /usr/src/.local-reconstruccion/snapshots/web001/frontend/tsconfig.json, /usr/src/backend/tsconfig.json, /usr/src/frontend/tsconfig.json]
+02:38:02.150 INFO  227 source files to be analyzed
+02:38:02.168 INFO  Creating TypeScript(6.0.3) program with configuration file /usr/src/.local-reconstruccion/snapshots/actual/backend/tsconfig.json [lib: lib.es2024.d.ts, lib.dom.d.ts]
+02:38:02.174 INFO  No files to analyze from tsconfig /usr/src/.local-reconstruccion/snapshots/actual/backend/tsconfig.json
+02:38:02.176 INFO  Creating TypeScript(6.0.3) program with configuration file /usr/src/.local-reconstruccion/snapshots/actual/frontend/tsconfig.json [lib: lib.dom.d.ts, lib.dom.iterable.d.ts, lib.esnext.d.ts]
+02:38:02.180 INFO  No files to analyze from tsconfig /usr/src/.local-reconstruccion/snapshots/actual/frontend/tsconfig.json
+02:38:02.182 INFO  Creating TypeScript(6.0.3) program with configuration file /usr/src/.local-reconstruccion/snapshots/usuarios002/backend/tsconfig.json [lib: lib.es2024.d.ts, lib.dom.d.ts]
+02:38:02.187 INFO  No files to analyze from tsconfig /usr/src/.local-reconstruccion/snapshots/usuarios002/backend/tsconfig.json
+02:38:02.190 INFO  Creating TypeScript(6.0.3) program with configuration file /usr/src/.local-reconstruccion/snapshots/usuarios002/frontend/tsconfig.json [lib: lib.dom.d.ts, lib.dom.iterable.d.ts, lib.esnext.d.ts]
+02:38:02.193 INFO  No files to analyze from tsconfig /usr/src/.local-reconstruccion/snapshots/usuarios002/frontend/tsconfig.json
+02:38:02.197 INFO  Creating TypeScript(6.0.3) program with configuration file /usr/src/.local-reconstruccion/snapshots/web001/backend/tsconfig.json [lib: lib.es2024.d.ts, lib.dom.d.ts]
+02:38:02.199 INFO  No files to analyze from tsconfig /usr/src/.local-reconstruccion/snapshots/web001/backend/tsconfig.json
+02:38:02.202 INFO  Creating TypeScript(6.0.3) program with configuration file /usr/src/.local-reconstruccion/snapshots/web001/frontend/tsconfig.json [lib: lib.dom.d.ts, lib.dom.iterable.d.ts, lib.esnext.d.ts]
+02:38:02.204 INFO  No files to analyze from tsconfig /usr/src/.local-reconstruccion/snapshots/web001/frontend/tsconfig.json
+02:38:02.209 INFO  Creating TypeScript(6.0.3) program with configuration file /usr/src/backend/tsconfig.json [lib: lib.es2024.d.ts, lib.dom.d.ts]
+02:38:02.212 INFO  Analyzing 80 file(s) from tsconfig /usr/src/backend/tsconfig.json (751 total files in program)
+02:38:02.215 INFO  Creating TypeScript(6.0.3) program with configuration file /usr/src/frontend/tsconfig.json [lib: lib.dom.d.ts, lib.dom.iterable.d.ts, lib.esnext.d.ts]
+02:38:02.224 INFO  Analyzing 117 file(s) from tsconfig /usr/src/frontend/tsconfig.json (818 total files in program)
+02:38:02.226 INFO  Analyzing 30 file(s) using merged compiler options [lib: lib.es2024.d.ts, lib.dom.d.ts]
+02:38:02.229 INFO  227/227 source files have been analyzed
+02:38:02.247 INFO  Hit the cache for 0 out of 227
+02:38:02.254 INFO  Miss the cache for 227 out of 227: ANALYSIS_MODE_INELIGIBLE [227/227]
+02:38:02.258 INFO  Sensor JavaScript/TypeScript/CSS analysis [javascript] (done) | time=363542ms
+02:38:02.262 INFO  Sensor IaC Project Sensor [iac]
+02:38:02.283 INFO  Sensor IaC Project Sensor [iac] (done) | time=21ms
+02:38:02.285 INFO  Sensor Zero Coverage Sensor
+02:38:02.315 INFO  Sensor Zero Coverage Sensor (done) | time=30ms
+02:38:02.316 INFO  ------------- Gather SCA dependencies on project
+02:38:02.364 INFO  Dependency analysis skipped
+02:38:02.373 INFO  SCM Publisher is disabled
+02:38:02.405 INFO  CPD Executor 56 files had no CPD blocks
+02:38:02.407 INFO  CPD Executor Calculating CPD for 118 files
+02:38:02.544 INFO  CPD Executor CPD calculation finished (done) | time=136ms
+02:38:05.451 INFO  Analysis report generated in 2864ms, dir size=2.5 MB
+02:38:06.356 INFO  Analysis report compressed in 901ms, zip size=1.5 MB
+02:38:09.535 INFO  Analysis report uploaded in 3174ms
+02:38:09.552 INFO  ------------- Check Quality Gate status
+02:38:09.555 INFO  Waiting for the analysis report to be processed (max 300s)
+02:38:29.996 INFO  QUALITY GATE STATUS: PASSED - View details on http://qatu-sonarqube:9000/dashboard?id=qatu
+02:38:31.927 INFO  Analysis total time: 7:08.264 min
+02:38:31.949 INFO  SonarScanner Engine completed successfully
+02:38:32.196 INFO  EXECUTION SUCCESS
+02:38:32.364 INFO  Total time: 7:26.906s

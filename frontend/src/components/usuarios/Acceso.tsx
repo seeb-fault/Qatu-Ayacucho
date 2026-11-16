@@ -74,7 +74,8 @@ export default function Acceso({ registro = false }: { registro?: boolean }) {
         </nav>
         <h1 id="titulo-acceso" className={styles.srOnly}>{registro ? 'Crea tu cuenta en Qatu' : 'Iniciar sesión en Qatu'}</h1>
         {siguiente && <p className={styles.switch} role="note">Después de ingresar volverás a la página donde estabas.</p>}
-        <form onSubmit={enviar} className={styles.form} aria-busy={pendiente}>
+        {/* method="post": si el JS aún no cargó, el navegador nunca pone la contraseña en la URL (OWASP ZAP 10024). */}
+        <form method="post" onSubmit={enviar} className={styles.form} aria-busy={pendiente}>
           {registro && <div className={styles.field}><label htmlFor="acceso-nombre">Nombre</label><input id="acceso-nombre" name="nombre" placeholder="¿Cómo te llamas?" autoComplete="name" required minLength={2} maxLength={100}/></div>}
           <div className={styles.field}><label htmlFor="acceso-email">Correo electrónico</label><input id="acceso-email" name="email" type="email" placeholder="tu@correo.com" autoComplete="email" autoCapitalize="none" spellCheck={false} required maxLength={254}/></div>
           <div className={styles.field}>

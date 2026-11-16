@@ -34,6 +34,8 @@ export interface CatalogoReservas {
     proveedor: { nombrePublico: string };
     recursos: { id?: string; identificador: string; activo: boolean }[];
   }>;
+  /** Punto exacto de la oferta (011); solo se entrega a la contraparte de una reserva activa. */
+  ubicacionExacta(id: string): Promise<{ lat: number; lng: number } | null>;
 }
 export interface ProveedoresReservas { titular(id: string): Promise<{ usuarioId: string }> }
 export interface UltimoPago { estado: string; codigo: string | null; reembolsoPendiente: boolean }

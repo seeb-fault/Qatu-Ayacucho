@@ -1,4 +1,5 @@
 import type { DatosOferta, FiltrosCatalogo, ProveedorCatalogo, Publicacion } from './oferta';
+import type { Punto, UbicacionOferta } from './ubicacion';
 export interface IdentidadCatalogo {
   resolver(token:string): Promise<{id:string;roles:string[]}>;
   /** Publicar exige un WhatsApp visible para coordinar con los clientes (010). */
@@ -15,4 +16,7 @@ export interface RepositorioCatalogo {
   editar(id:string,proveedorId:string,versionActual:number,datos:DatosOferta):Promise<Publicacion>;
   moderar(id:string,actorId:string,versionActual:number,estado:'permitida'|'retirada',motivo:string):Promise<Publicacion>;
   auditoria(id:string):Promise<unknown[]>;
+  ubicacion(publicacionId:string):Promise<UbicacionOferta|null>;
+  guardarUbicacion(publicacionId:string,u:UbicacionOferta):Promise<UbicacionOferta>;
+  quitarUbicacion(publicacionId:string):Promise<void>;
 }

@@ -1,0 +1,16 @@
+/* Editor de ubicación del proveedor (011). */
+.editor { display: grid; gap: 14px; margin-top: 24px; padding: 24px; border: 1px solid var(--q-border); border-radius: var(--q-radius-xl); background: #fff; }
+.editor h2 { font-size: 20px; }
+.ayuda { color: var(--q-text-2); font-size: 14px; line-height: 1.55; }
+.acciones { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.coordenadas { color: var(--q-text-2); font-size: 13px; font-variant-numeric: tabular-nums; }
+.opciones { display: grid; gap: 10px; margin: 0; padding: 0; border: 0; }
+.opciones legend { margin-bottom: 8px; font-size: 14px; font-weight: 700; }
+.opciones label { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border: 1.5px solid var(--q-border); border-radius: 12px; cursor: pointer; transition: border-color var(--q-fast), background var(--q-fast); }
+.opciones label:has(input:checked) { border-color: var(--q-primary); background: var(--q-soft); }
+.opciones input { flex-shrink: 0; width: 18px; height: 18px; margin-top: 2px; accent-color: var(--q-primary); }
+.opciones span { display: grid; gap: 2px; }
+.opciones strong { font-size: 14px; }
+.opciones small { color: var(--q-text-2); font-size: 13px; }
+.error { padding: 10px 12px; border-radius: 10px; background: #FEF3F2; color: var(--q-danger); font-size: 14px; }
+.exito { padding: 10px 12px; border-radius: 10px; background: #ECFDF3; color: var(--q-success); font-size: 14px; }

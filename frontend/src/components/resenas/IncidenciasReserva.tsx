@@ -45,7 +45,7 @@ export default function IncidenciasReserva({ reservaId, estado }: { reservaId: s
       </label>
       {error && <p role="alert" className={styles.error}>{error}</p>}
       <p className={styles.nota}>Lo revisa una persona de la administración. Qatu no mueve dinero por una incidencia.</p>
-      <div className={styles.acciones}><button className="button primary" disabled={ocupado}>Enviar reporte</button><button type="button" className="button outline" onClick={() => setAbierto(false)}>Cancelar</button></div>
+      <div className={styles.acciones}><button type="submit" className="button primary" disabled={ocupado}>Enviar reporte</button><button type="button" className="button outline" onClick={() => setAbierto(false)}>Cancelar</button></div>
     </form>}
   </section>;
 }

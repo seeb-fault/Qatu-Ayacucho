@@ -34,7 +34,7 @@ export default function CotizacionesServicio({solicitud:s,ocupado,operar}: Props
       <p>Tu cotización se aceptó antes de habilitar la reserva de agenda. El horario todavía necesita confirmación.</p>
       {!proveedor && <form className={styles.form} aria-label="Confirmar horario acordado" onSubmit={e=>{e.preventDefault();void operar(s,'agenda/confirmacion',{versionCotizacion:aceptada.version});}}>
         <label className={styles.check}><input type="checkbox" required disabled={ocupado}/>Confirmo el horario del {fechaReserva(s.inicio)} al {fechaReserva(s.fin)} (Lima), sin anticipo</label>
-        <button className="button primary" disabled={ocupado}>Confirmar horario acordado</button>
+        <button type="submit" className="button primary" disabled={ocupado}>Confirmar horario acordado</button>
       </form>}
     </>}
     {!ultima && <p>{proveedor ? 'Prepara una propuesta según el trabajo solicitado.' : 'El proveedor podrá enviarte una propuesta para revisar.'}</p>}
@@ -53,18 +53,18 @@ export default function CotizacionesServicio({solicitud:s,ocupado,operar}: Props
         <label>Importe total (S/)<input name="importe" inputMode="decimal" required pattern="[0-9]{1,6}([.,][0-9]{1,2})?" disabled={ocupado}/></label>
         <label>Vigente hasta (hora de Lima)<input name="vigenteHasta" type="datetime-local" required disabled={ocupado}/></label>
         <p className={styles.hint}>La vigencia debe terminar antes o al inicio solicitado. Incluye todos los conceptos del precio propuesto.</p>
-        <button className="button primary" disabled={ocupado}>Enviar cotización</button>
+        <button type="submit" className="button primary" disabled={ocupado}>Enviar cotización</button>
       </form>
     </details>}
     {habilitada && !proveedor && ultima && !ultima.respuesta && <>
       <form className={styles.form} aria-label="Aceptar cotización" onSubmit={e=>responder(e,'aceptacion')}>
         <label className={styles.check}><input type="checkbox" required disabled={ocupado}/>Acepto el alcance, los materiales y el total de {dinero(ultima.importeCentimos)} de la versión {ultima.version}</label>
         <p>Al aceptar, se reservará el horario del {fechaReserva(s.inicio)} al {fechaReserva(s.fin)} (Lima), si sigue disponible.</p>
-        <button className="button primary" disabled={ocupado}>Aceptar cotización</button>
+        <button type="submit" className="button primary" disabled={ocupado}>Aceptar cotización</button>
       </form>
       <details><summary>Rechazar esta propuesta</summary><form className={styles.form} aria-label="Rechazar cotización" onSubmit={e=>responder(e,'rechazo')}>
         <label>Motivo para rechazar la cotización<textarea name="motivo" required minLength={10} maxLength={500} disabled={ocupado}/></label>
-        <button className="button outline" disabled={ocupado}>Rechazar cotización</button>
+        <button type="submit" className="button outline" disabled={ocupado}>Rechazar cotización</button>
       </form></details>
     </>}
   </section>;

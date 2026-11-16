@@ -133,7 +133,7 @@ export default function MiLista() {
         </dl>
         <form onSubmit={enviar}>
           {herramientas.length > 0 && <label className={styles.acepto}><input type="checkbox" required/>Acepto el horario, el importe y las condiciones de alquiler de cada herramienta.</label>}
-          <button className={'button primary ' + styles.enviar} disabled={!listos.length || !!ocupado}>{ocupado === 'envio' ? 'Enviando…' : listos.length ? `Enviar ${listos.length} ${listos.length === 1 ? 'solicitud' : 'solicitudes'}` : 'Nada listo para enviar'}<Icono nombre="send" size={17}/></button>
+          <button type="submit" className={'button primary ' + styles.enviar} disabled={!listos.length || !!ocupado}>{ocupado === 'envio' ? 'Enviando…' : listos.length ? `Enviar ${listos.length} ${listos.length === 1 ? 'solicitud' : 'solicitudes'}` : 'Nada listo para enviar'}<Icono nombre="send" size={17}/></button>
         </form>
         <ul className={styles.garantias}><li><Icono nombre="check" size={15}/>No se cobra nada al enviar</li><li><Icono nombre="check" size={15}/>Cada proveedor responde por separado</li><li><Icono nombre="check" size={15}/>Lo que falle se queda en tu lista</li></ul>
       </aside>

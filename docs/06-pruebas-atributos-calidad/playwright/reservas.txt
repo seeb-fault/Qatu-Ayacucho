@@ -1,0 +1,18 @@
+
+Running 12 tests using 1 worker
+
+  ok  1 tests\reservas\agenda.spec.ts:6:5 › agenda de oficio: conflicto visible, cancelación y confirmación del segundo cliente sin anticipo (48.0s)
+  ok  2 tests\reservas\avisos.spec.ts:6:5 › avisos: el proveedor ve la campana, abre la solicitud y el cliente recibe la respuesta (38.9s)
+  ok  3 tests\reservas\cotizaciones.spec.ts:6:5 › oficio: propuesta, rechazo, nueva versión y aceptación con horario reservado sin anticipo (54.6s)
+  ok  4 tests\reservas\efectivo.spec.ts:15:5 › alquiler con efectivo: apartado, entrega, confirmación bilateral y devolución real (39.6s)
+  ok  5 tests\reservas\efectivo.spec.ts:51:5 › visita previa: acuerdo sin bloqueo, sin efectivo y nueva solicitud de alquiler explícita (21.3s)
+  ok  6 tests\reservas\ejecucion.spec.ts:8:5 › oficio: inicio, término rechazado, término confirmado con efectivo y cierre persistido (36.8s)
+  ok  7 tests\reservas\lista.spec.ts:10:5 › visitante guarda en su lista, ingresa, vuelve con el ítem agregado y envía la solicitud (18.0s)
+  ok  8 tests\reservas\lista.spec.ts:46:5 › el regreso tras ingresar solo acepta rutas de Qatu (21.6s)
+  ok  9 tests\reservas\mapa.spec.ts:9:5 › mapa: zona casi exacta para el público y punto exacto tras la aceptación (20.5s)
+[WebServer] ⨯ internal image response failed for /image 404
+  ok 10 tests\reservas\reintento.spec.ts:6:5 › un fallo del proxy se reintenta solo en lecturas: la bandeja se recupera y una escritura nunca se repite (16.2s)
+  ok 11 tests\reservas\solicitudes.spec.ts:6:5 › solicitud real: cliente solicita, proveedor rechaza y ambos ven el estado persistido (34.1s)
+  ok 12 tests\reservas\whatsapp.spec.ts:8:5 › el WhatsApp del proveedor aparece recién cuando acepta, con el mensaje de la reserva (15.3s)
+
+  12 passed (6.9m)

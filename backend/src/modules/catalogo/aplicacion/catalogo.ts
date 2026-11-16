@@ -1,5 +1,6 @@
 import { categorias, zonas, filtros, entradaOferta, uuid, objeto, version, texto, ErrorCatalogo, type Publicacion, type ProveedorCatalogo } from '../dominio/oferta';
 import type { IdentidadCatalogo, ProveedoresCatalogo, RepositorioCatalogo } from '../dominio/puertos';
+import { entradaUbicacion, puntoPublico } from '../dominio/ubicacion';
 export class Catalogo {
   constructor(private readonly repo:RepositorioCatalogo,private readonly identidad:IdentidadCatalogo,private readonly proveedores:ProveedoresCatalogo) {}
   opciones() { return {categorias,zonas}; }
@@ -42,6 +43,21 @@ export class Catalogo {
     const proveedor=await this.proveedor(token,true),datos=entradaOferta(value,true);
     return this.repo.editar(uuid(id),proveedor.id,datos.versionActual!,datos.datos);
   }
+  /** Solo el dueño de la oferta ve y cambia su punto exacto (011). */
+  private async propia(token:string,id:string) {
+    const proveedor=await this.proveedor(token),p=await this.repo.porId(uuid(id));
+    if (!p || p.proveedorId!==proveedor.id) throw new ErrorCatalogo('OFERTA_NO_DISPONIBLE',404,'Esta publicación no está disponible.');
+    return p;
+  }
+  /** Siempre un objeto JSON: `{ ubicacion: null }` si aún no se marcó (un null suelto llega como cuerpo vacío). */
+  async ubicacionPropia(token:string,id:string) { return { ubicacion: await this.repo.ubicacion((await this.propia(token,id)).id) }; }
+  async ubicar(token:string,id:string,value:unknown) {
+    const p=await this.propia(token,id),d=entradaUbicacion(value);
+    return this.repo.guardarUbicacion(p.id,{lat:d.lat,lng:d.lng,precision:d.precision,publica:puntoPublico(p.proveedorId,d,d.precision)});
+  }
+  async quitarUbicacion(token:string,id:string) { await this.repo.quitarUbicacion((await this.propia(token,id)).id); }
+  /** Para Reservas: el punto exacto, que solo se entrega a la contraparte de una reserva activa. */
+  async ubicacionExacta(publicacionId:string) { const u=await this.repo.ubicacion(publicacionId); return u?{lat:u.lat,lng:u.lng}:null; }
   async administrativas(token:string,value:unknown) { await this.admin(token); const f=filtros(value);return {...await this.repo.listar(f,{admin:true}),page:f.page,limit:f.limit}; }
   async moderar(token:string,id:string,value:unknown) {
     const actor=await this.admin(token),d=objeto(value,['estado','motivo','versionActual']);

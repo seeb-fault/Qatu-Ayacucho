@@ -89,7 +89,7 @@ export default function MiProveedor() {
       <label htmlFor="distrito-proveedor">Distrito de atención</label><select id="distrito-proveedor" name="zonaId" required value={zonaId} onChange={event => setZonaId(event.target.value)} disabled={perfil?.estadoVerificacion === 'pendiente'}><option value="">Selecciona un distrito</option>{zonas.map(zona => <option key={zona.id} value={zona.id}>{zona.nombre}</option>)}</select>
       <small>Selección manual de distrito. No necesitas un mapa para completar tu perfil.</small>
       <label className={styles.consentimiento}><input name="visiblePublicamente" type="checkbox" checked={visiblePublicamente} onChange={event => setVisiblePublicamente(event.target.checked)}/>Mostrar públicamente mi nombre, descripción y distrito de atención.</label>
-      <button className="button primary" disabled={pendiente}>{pendiente ? 'Guardando…' : perfil ? 'Guardar cambios del proveedor' : 'Crear perfil de proveedor'}</button>
+      <button type="submit" className="button primary" disabled={pendiente}>{pendiente ? 'Guardando…' : perfil ? 'Guardar cambios del proveedor' : 'Crear perfil de proveedor'}</button>
     </form>}
     {!cargando && !sinSesion && <div className={styles.acciones}>
       {perfil?.visiblePublicamente && <Link className="button outline" href={`/proveedores/${perfil.id}`}>Ver mi página pública</Link>}

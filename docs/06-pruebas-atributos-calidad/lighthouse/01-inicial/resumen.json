@@ -1,0 +1,259 @@
+{
+  "fecha": "2026-11-15T17:11:12.799Z",
+  "herramienta": "Lighthouse 12.6.1 (Chrome sin interfaz)",
+  "entorno": "Windows, build de producción local (next start) y backend local con base _test",
+  "resultados": [
+    {
+      "pagina": "inicio",
+      "ruta": "/",
+      "dispositivo": "movil",
+      "puntajes": {
+        "performance": 71,
+        "accessibility": 92,
+        "best-practices": 96,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 988,
+        "LCP_ms": 3452,
+        "TBT_ms": 851,
+        "CLS": 0.058,
+        "SI_ms": 2422,
+        "TTFB_ms": 278
+      },
+      "version": "12.6.1",
+      "configuracion": "mobile, simulate, red 150 ms RTT, CPU x4"
+    },
+    {
+      "pagina": "inicio",
+      "ruta": "/",
+      "dispositivo": "escritorio",
+      "puntajes": {
+        "performance": 80,
+        "accessibility": 92,
+        "best-practices": 96,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 286,
+        "LCP_ms": 737,
+        "TBT_ms": 451,
+        "CLS": 0.039,
+        "SI_ms": 1041,
+        "TTFB_ms": 248
+      },
+      "version": "12.6.1",
+      "configuracion": "desktop, simulate, red 40 ms RTT, CPU x1"
+    },
+    {
+      "pagina": "busqueda",
+      "ruta": "/buscar?tipo=herramienta",
+      "dispositivo": "movil",
+      "puntajes": {
+        "performance": 63,
+        "accessibility": 98,
+        "best-practices": 96,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 991,
+        "LCP_ms": 3808,
+        "TBT_ms": 1520,
+        "CLS": 0,
+        "SI_ms": 2126,
+        "TTFB_ms": 63
+      },
+      "version": "12.6.1",
+      "configuracion": "mobile, simulate, red 150 ms RTT, CPU x4"
+    },
+    {
+      "pagina": "busqueda",
+      "ruta": "/buscar?tipo=herramienta",
+      "dispositivo": "escritorio",
+      "puntajes": {
+        "performance": 86,
+        "accessibility": 98,
+        "best-practices": 96,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 287,
+        "LCP_ms": 787,
+        "TBT_ms": 314,
+        "CLS": 0.016,
+        "SI_ms": 1083,
+        "TTFB_ms": 82
+      },
+      "version": "12.6.1",
+      "configuracion": "desktop, simulate, red 40 ms RTT, CPU x1"
+    },
+    {
+      "pagina": "detalle-con-mapa",
+      "ruta": "/publicaciones/:id",
+      "dispositivo": "movil",
+      "puntajes": {
+        "performance": 61,
+        "accessibility": 100,
+        "best-practices": 96,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 1077,
+        "LCP_ms": 3460,
+        "TBT_ms": 2787,
+        "CLS": 0,
+        "SI_ms": 3451,
+        "TTFB_ms": 299
+      },
+      "version": "12.6.1",
+      "configuracion": "mobile, simulate, red 150 ms RTT, CPU x4"
+    },
+    {
+      "pagina": "detalle-con-mapa",
+      "ruta": "/publicaciones/:id",
+      "dispositivo": "escritorio",
+      "puntajes": {
+        "performance": 75,
+        "accessibility": 100,
+        "best-practices": 96,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 284,
+        "LCP_ms": 771,
+        "TBT_ms": 555,
+        "CLS": 0,
+        "SI_ms": 1387,
+        "TTFB_ms": 249
+      },
+      "version": "12.6.1",
+      "configuracion": "desktop, simulate, red 40 ms RTT, CPU x1"
+    },
+    {
+      "pagina": "ingresar",
+      "ruta": "/ingresar",
+      "dispositivo": "movil",
+      "puntajes": {
+        "performance": 69,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 1009,
+        "LCP_ms": 3440,
+        "TBT_ms": 1023,
+        "CLS": 0,
+        "SI_ms": 1537,
+        "TTFB_ms": 89
+      },
+      "version": "12.6.1",
+      "configuracion": "mobile, simulate, red 150 ms RTT, CPU x4"
+    },
+    {
+      "pagina": "ingresar",
+      "ruta": "/ingresar",
+      "dispositivo": "escritorio",
+      "puntajes": {
+        "performance": 98,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 299,
+        "LCP_ms": 802,
+        "TBT_ms": 122,
+        "CLS": 0,
+        "SI_ms": 636,
+        "TTFB_ms": 33
+      },
+      "version": "12.6.1",
+      "configuracion": "desktop, simulate, red 40 ms RTT, CPU x1"
+    },
+    {
+      "pagina": "mi-lista",
+      "ruta": "/lista",
+      "dispositivo": "movil",
+      "puntajes": {
+        "performance": 64,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 994,
+        "LCP_ms": 3797,
+        "TBT_ms": 689,
+        "CLS": 0.168,
+        "SI_ms": 1953,
+        "TTFB_ms": 127
+      },
+      "version": "12.6.1",
+      "configuracion": "mobile, simulate, red 150 ms RTT, CPU x4"
+    },
+    {
+      "pagina": "mi-lista",
+      "ruta": "/lista",
+      "dispositivo": "escritorio",
+      "puntajes": {
+        "performance": 95,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 337,
+        "LCP_ms": 1110,
+        "TBT_ms": 134,
+        "CLS": 0.051,
+        "SI_ms": 1046,
+        "TTFB_ms": 59
+      },
+      "version": "12.6.1",
+      "configuracion": "desktop, simulate, red 40 ms RTT, CPU x1"
+    },
+    {
+      "pagina": "pago",
+      "ruta": "/reservas/:id/pago",
+      "dispositivo": "movil",
+      "puntajes": {
+        "performance": 64,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 955,
+        "LCP_ms": 2939,
+        "TBT_ms": 823,
+        "CLS": 0.217,
+        "SI_ms": 1982,
+        "TTFB_ms": 71
+      },
+      "version": "12.6.1",
+      "configuracion": "mobile, simulate, red 150 ms RTT, CPU x4"
+    },
+    {
+      "pagina": "pago",
+      "ruta": "/reservas/:id/pago",
+      "dispositivo": "escritorio",
+      "puntajes": {
+        "performance": 94,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 303,
+        "LCP_ms": 1081,
+        "TBT_ms": 48,
+        "CLS": 0.12,
+        "SI_ms": 1051,
+        "TTFB_ms": 32
+      },
+      "version": "12.6.1",
+      "configuracion": "desktop, simulate, red 40 ms RTT, CPU x1"
+    }
+  ]
+}

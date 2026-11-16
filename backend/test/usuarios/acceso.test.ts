@@ -13,6 +13,11 @@ test('validación rechaza escalamiento de permisos y normaliza email', () => {
   assert.throws(() => nombreValido(' '));
   assert.throws(() => passwordValido('corta'));
   assert.throws(() => emailValido('invalido'));
+  // Expresión lineal (SonarQube S8786): dominio con al menos un punto y sin segmentos vacíos.
+  for (const malo of ['x@y', 'a@.b', 'a@b.', 'a@b..c', 'a b@c.d', 'a@@b.c']) assert.throws(() => emailValido(malo), malo);
+  assert.equal(emailValido(' ana.perez@mail.example.com '), 'ana.perez@mail.example.com');
+  const largo = 'a'.repeat(120) + '@' + 'b'.repeat(120) + '!';
+  const inicio = performance.now(); assert.throws(() => emailValido(largo)); assert.ok(performance.now() - inicio < 50);
 });
 
 test('hash salado y verificación scrypt', async () => {

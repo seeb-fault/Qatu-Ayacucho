@@ -129,7 +129,7 @@ export default function AdministracionUsuarios() {
       <form onSubmit={buscar} className={`${styles.form} ${styles.filtros}`}>
         <label>Buscar por nombre o correo<input name="q" maxLength={100} value={q} onChange={event => setQ(event.target.value)}/></label>
         <label>Estado de cuenta<select value={estado} onChange={event => setEstado(event.target.value)}><option value="">Todos</option><option value="activo">Activo</option><option value="inactivo">Inactivo</option></select></label>
-        <button className="button primary" disabled={pendiente}>Buscar usuarios</button>
+        <button type="submit" className="button primary" disabled={pendiente}>Buscar usuarios</button>
       </form>
       <button className="button outline" disabled={pendiente} onClick={() => actualizar(listado?.pagina ?? 1)}>Actualizar listado</button>
       {listado && <>
@@ -156,7 +156,7 @@ export default function AdministracionUsuarios() {
         <p>{seleccionado.email}</p>
         <p>{seleccionado.estado === 'activo' ? 'Se cerrarán sus sesiones y no podrá ingresar.' : 'Deberá iniciar una sesión nueva para ingresar.'}</p>
         <label>Motivo del cambio<textarea name="motivo" required minLength={10} maxLength={500} rows={3} value={motivo} onChange={event => setMotivo(event.target.value)}/></label>
-        <button className="button primary" disabled={pendiente}>Confirmar cambio de estado</button>
+        <button type="submit" className="button primary" disabled={pendiente}>Confirmar cambio de estado</button>
         <button type="button" className="button outline" disabled={pendiente} onClick={() => setSeleccionado(null)}>Cancelar</button>
       </form>}
       {cuentaAuditoria && auditoria && <section aria-labelledby="titulo-auditoria" className={styles.auditoria}>

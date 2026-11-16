@@ -98,7 +98,7 @@ export function nombreValido(value: unknown): string {
 }
 
 export function emailValido(value: unknown): string {
-  if (typeof value !== 'string' || value.trim().length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())) {
+  if (typeof value !== 'string' || value.trim().length > 254 || !/^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/.test(value.trim())) {
     throw new ErrorUsuario('ENTRADA_INVALIDA', 400, 'Ingresa un correo válido.');
   }
   return value.trim().toLowerCase();

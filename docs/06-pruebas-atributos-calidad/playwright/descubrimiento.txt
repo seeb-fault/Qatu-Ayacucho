@@ -1,0 +1,1811 @@
+
+Running 14 tests using 1 worker
+
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+  ok  1 [descubrimiento] › tests\descubrimiento\accesibilidad.spec.ts:2:40 › sin desborde en inicio/resultados/detalle a 360 px (5.0s)
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+  ok  2 [descubrimiento] › tests\descubrimiento\accesibilidad.spec.ts:2:40 › sin desborde en inicio/resultados/detalle a 390 px (4.5s)
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+  ok  3 [descubrimiento] › tests\descubrimiento\accesibilidad.spec.ts:2:40 › sin desborde en inicio/resultados/detalle a 1440 px (5.5s)
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+  ok  4 [descubrimiento] › tests\descubrimiento\accesibilidad.spec.ts:3:5 › enlace de salto y controles de búsqueda accesibles por teclado (2.2s)
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+  ok  5 [descubrimiento] › tests\descubrimiento\accesibilidad.spec.ts:4:5 › la galería cambia de vista con estado accesible (2.2s)
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+  ok  6 [descubrimiento] › tests\descubrimiento\accesibilidad.spec.ts:5:5 › la imagen de portada se describe y no desborda en móvil (2.0s)
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+  ok  7 [descubrimiento] › tests\descubrimiento\busqueda.spec.ts:2:5 › inicio → búsqueda convencional → detalle → volver conserva criterios (3.6s)
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+  ok  8 [descubrimiento] › tests\descubrimiento\busqueda.spec.ts:3:5 › cambiar tipo limpia categoría incompatible y permite corregir filtros (2.3s)
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+  ok  9 [descubrimiento] › tests\descubrimiento\busqueda.spec.ts:4:5 › presupuesto excluye tarifas mayores y servicios sin precio comparable (1.7s)
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+  ok 10 [descubrimiento] › tests\descubrimiento\busqueda.spec.ts:5:5 › paginación de 20 y catálogo completo de 24 ejemplos (3.4s)
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+  ok 11 [descubrimiento] › tests\descubrimiento\busqueda.spec.ts:6:5 › estado vacío permite quitar filtros (2.2s)
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+  ok 12 [descubrimiento] › tests\descubrimiento\busqueda.spec.ts:7:5 › error controlado recupera resultados sin perder búsqueda (1.9s)
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+  ok 13 [descubrimiento] › tests\descubrimiento\busqueda.spec.ts:8:5 › oficio, imagen ausente, reseñas y publicación desactivada (2.2s)
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/lista/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:3401/api/v1/avisos/resumen Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:3401
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 3401
+[WebServer] }
+  ok 14 [descubrimiento] › tests\descubrimiento\busqueda.spec.ts:9:5 › acciones futuras explican el alcance sin enviar operaciones (2.3s)
+
+  14 passed (46.1s)

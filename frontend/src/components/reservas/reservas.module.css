@@ -106,3 +106,7 @@
 .whatsapp a.botonWhatsapp { display: inline-flex; align-items: center; justify-self: start; gap: 8px; min-height: 42px; padding: 0 16px; border-radius: 999px; background: #0E7A3E; color: #fff; font-size: 14px; font-weight: 600; text-decoration: none; transition: background var(--q-fast); }
 .whatsapp a.botonWhatsapp:hover { background: #0A5F30; color: #fff; }
 .whatsapp a.botonWhatsapp:focus-visible { outline: 2px solid #0E7A3E; outline-offset: 2px; }
+
+/* Punto exacto de la reserva (011). */
+.punto { display: grid; gap: 8px; }
+.punto strong { font-size: 14px; }

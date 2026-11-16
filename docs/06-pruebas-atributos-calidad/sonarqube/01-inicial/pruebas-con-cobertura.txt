@@ -1,0 +1,349 @@
+✔ la carga rechaza una base de desarrollo o un servidor externo antes de conectar (926.6242ms)
+✔ la carga no puede sobrescribir archivos fuera de las carpetas de informes (208.1709ms)
+✔ duración inválida no inicia servidores ni consulta datos (193.4008ms)
+✔ dinero y unidades: no admite fracciones, valores no finitos, tarifas negativas ni cotización de herramienta (3.7471ms)
+✔ publicación rechaza suplantación, categorías incompatibles, recursos duplicados y oferta activa sin unidades (1.749ms)
+✔ edición conserva IDs de recursos y no permite reactivar una retirada (1.4667ms)
+✔ filtros limitan presupuesto y páginas, rechazan arrays repetidos y claves desconocidas (1.1514ms)
+▶ catálogo real: propiedad, recursos, búsqueda, concurrencia y moderación auditada
+  ✔ rechaza anónimos, proveedor sin verificar, origen ajeno y suplantación (178.4878ms)
+  ✔ crea herramienta y servicio, persiste recursos y excluye datos privados (197.1758ms)
+  ✔ búsqueda española sin tildes, filtros AND, presupuesto y orden estable (56.2762ms)
+  ✔ paginación predeterminada de veinte mantiene orden e IDs sin duplicados (1028.7639ms)
+  ✔ ediciones concurrentes: una gana, preserva IDs y la otra obtiene 409 (105.4763ms)
+  ✔ base de datos rechaza tarifas y recursos incoherentes incluso fuera del HTTP (55.6823ms)
+  ✔ moderación auditada: cliente rechazado, retirada oculta y dueño no puede reactivar (105.5365ms)
+  ✔ perfil oculto, aprobación revocada o cuenta inactiva excluyen publicaciones (91.1409ms)
+✔ catálogo real: propiedad, recursos, búsqueda, concurrencia y moderación auditada (3355.7091ms)
+✔ dominio: zona de servicio y punto público exacto o casi exacto (5.0565ms)
+▶ ubicación con PostgreSQL real: dueño, público y contraparte de la reserva
+  ✔ solo el dueño marca la ubicación, dentro de la zona de servicio (121.4518ms)
+  ✔ el público ve un punto a 50–100 m y nunca el exacto (79.194ms)
+  ✔ la contraparte de una reserva aceptada recibe el punto exacto; antes, no (197.2477ms)
+  ✔ un local abierto al público muestra el punto exacto; quitarla oculta el mapa (113.8825ms)
+✔ ubicación con PostgreSQL real: dueño, público y contraparte de la reserva (2411.8429ms)
+✔ Reservas no conoce a Pagos: ni sus archivos ni sus tablas ni la pasarela (7.7443ms)
+✔ Pagos usa a Reservas solo por su API pública y no toca sus tablas (2.2226ms)
+✔ Culqi: envía importe de servidor con llave secreta y solo aprueba un cargo exitoso coherente (30.4996ms)
+✔ Culqi: la incertidumbre nunca se trata como pago ni como rechazo (16.3451ms)
+✔ Culqi: rechazos con código limpio, 3DS sin integrar y consultas (5.8535ms)
+✔ solo sandbox: se rechazan llaves y tokens reales, y el doble no entra en producción (2.0195ms)
+▶ pagos reales en PostgreSQL: herramienta, oficio, idempotencia, incertidumbre y pago tardío
+  ✔ la configuración es pública y solo expone la llave de prueba (7.3016ms)
+  ✔ herramienta: paga el importe del servidor, se entrega y se devuelve sin saldo (1090.409ms)
+  ✔ veinte repeticiones de la misma clave tienen un solo efecto; otra carga con esa clave es conflicto (1022.0876ms)
+  ✔ claves distintas a la vez no abren dos cobros (389.3737ms)
+  ✔ un rechazo no cambia la reserva y permite intentar de nuevo (392.1702ms)
+  ✔ sin poder marcar el reembolso, la cancelación de una reserva pagada se revierte entera (296.1777ms)
+  ✔ cancelar tras pagar libera la unidad y deja el reembolso pendiente, sin devolver solo (484.6343ms)
+  ✔ un timeout queda desconocido, bloquea otro cobro y se concilia sin volver a cobrar (386.4629ms)
+  ✔ sin cargo localizado sigue desconocido, y pasada una hora permite reintentar (341.0578ms)
+  ✔ pago tardío: no reactiva la reserva vencida ni quita la unidad a otra persona (316.1636ms)
+  ✔ webhook: sin origen, un aviso falso no aprueba y veinte reenvíos tienen un efecto (424.4146ms)
+  ✔ oficio: se paga el total aceptado al terminar y el cierre libera la agenda (432.4151ms)
+  ✔ oficio: el cliente puede rechazar el cobro y el proveedor pasar a efectivo (525.2392ms)
+  ✔ PostgreSQL rechaza importes incoherentes y dos intentos activos (341.8445ms)
+✔ pagos reales en PostgreSQL: herramienta, oficio, idempotencia, incertidumbre y pago tardío (10570.163ms)
+✔ sin pasarela configurada no se ofrece el pago en línea (1.5971ms)
+▶ perfiles de proveedores: propiedad, concurrencia y privacidad con PostgreSQL real
+  ✔ zonas públicas y rutas privadas rechazan anónimos (181.3141ms)
+  ✔ sin perfil devuelve 404; dos altas simultáneas crean un solo perfil (74.2054ms)
+  ✔ validación impide suplantación, autoaprobación y zonas ajenas al catálogo (213.1979ms)
+  ✔ visibilidad explícita y proyección pública sin identidad privada (52.4544ms)
+  ✔ ediciones concurrentes usan versión y no sobrescriben cambios ajenos (113.1841ms)
+  ✔ ocultar y desactivar cuenta impide acceso público y no permite autoaprobación (171.055ms)
+✔ perfiles de proveedores: propiedad, concurrencia y privacidad con PostgreSQL real (2483.6633ms)
+✔ documentos cifrados con autenticación, tipo y tamaño verificados (13.5468ms)
+Error inesperado en la petición 1dd29995-5be1-41a5-b9bb-d1c72cc4b51d: Error DOCUMENTOS_NO_DISPONIBLES
+▶ carga, revisión y conservación documental privadas con PostgreSQL real
+  ✔ exige sesión, configuración de cifrado, consentimiento y archivos válidos (263.5256ms)
+  ✔ solicitud y documentos se guardan juntos; solo hay una pendiente (146.6277ms)
+  ✔ descargas privadas y pública sin metadatos documentales (85.7253ms)
+  ✔ administrador no puede revisar su propio perfil (104.6093ms)
+Error inesperado en la petición 76a02fd5-0ebc-46a6-a75b-d0e8d9155bc7: error P0001
+  ✔ fallo de escritura revierte decisión y versión sin borrar documentos (117.2529ms)
+  ✔ decisiones concurrentes guardan una sola resolución auditada (96.142ms)
+  ✔ conservación mantiene activos, elimina adjuntos de inactivos y conserva decisiones (5876.2466ms)
+✔ carga, revisión y conservación documental privadas con PostgreSQL real (8478.5768ms)
+✔ etapas: entrega mientras la herramienta está con el cliente; devolución y trabajo hasta 48 h tras el cierre (3.2039ms)
+▶ evidencias reales en PostgreSQL: etapa, cupo, formato, privacidad de descarga y retención
+  ✔ antes de la entrega no hay etapa abierta (68.5534ms)
+  ✔ participantes suben fotos de entrega; terceros y anónimos no (100.0372ms)
+  ✔ formato y cupo: solo JPG/PNG reales y como máximo 4 por etapa (230.1911ms)
+  ✔ descarga: participantes y admin reciben el archivo original; un tercero, 404 (96.2401ms)
+  ✔ retención: a los 90 días del cierre se borra el contenido y queda la huella (313.0047ms)
+✔ evidencias reales en PostgreSQL: etapa, cupo, formato, privacidad de descarga y retención (3853.7985ms)
+✔ dominio: se reclama desde la entrega hasta 48 h tras el cierre; entradas validadas (3.9575ms)
+✔ avisos: el reporte llega al otro participante y la resolución a ambos (0.4353ms)
+▶ incidencias y garantía reales en PostgreSQL
+  ✔ garantía: solo el proveedor la registra antes de entregar; el cliente no confirma antes de recibir (114.8694ms)
+  ✔ garantía: el cliente confirma la versión vigente y luego el acuerdo queda fijo (98.6652ms)
+  ✔ incidencia: participantes la abren; terceros no; una sola abierta por reserva (108.9727ms)
+  ✔ resolución: solo un admin ajeno, una vez, con motivo; no mueve dinero (133.5664ms)
+  ✔ retención: una incidencia abierta conserva las fotos aunque pasen 90 días (353.7963ms)
+✔ incidencias y garantía reales en PostgreSQL (3706.9374ms)
+✔ entrada: puntuación entera de 1 a 5, comentario opcional de hasta 600 caracteres y sin campos extra (3.8943ms)
+✔ elegibilidad: solo el cliente, con la operación cerrada y dentro de los 14 días (1.1259ms)
+✔ límites: Reseñas usa la fachada pública de Reservas y Reservas no conoce a Reseñas (7.9102ms)
+▶ reseñas reales en PostgreSQL: elegibilidad, unicidad, reputación pública y moderación auditada
+  ✔ no se reseña una operación sin cerrar (324.6906ms)
+  ✔ permisos y validación: proveedor 403, tercero 404, anónimo 401, entrada inválida 400 (69.6617ms)
+  ✔ dos envíos simultáneos dejan una sola reseña (84.6501ms)
+  ✔ la reputación pública no expone al cliente ni a la reserva (36.1425ms)
+  ✔ fuera del plazo de 14 días ya no se puede reseñar (321.56ms)
+  ✔ moderación: solo un admin ajeno, con motivo; el promedio público excluye la reseña oculta (113.2185ms)
+✔ reseñas reales en PostgreSQL: elegibilidad, unicidad, reputación pública y moderación auditada (4424.2837ms)
+▶ EQ-09: el verificador acepta una base íntegra y detecta clave distinta, archivo dañado y migración faltante
+  ✔ base íntegra: todo descifra, coincide con su hash y el pago está en el historial (2.573ms)
+  ✔ la verificación solo lee: repetirla da la misma huella (63.2192ms)
+  ✔ sin la clave original los archivos no se leen (125.2554ms)
+  ✔ un archivo dañado, una migración faltante o un pago perdido cambian el resultado (133.4442ms)
+✔ EQ-09: el verificador acepta una base íntegra y detecta clave distinta, archivo dañado y migración faltante (2544.185ms)
+▶ agenda de oficios: exclusión concurrente, cancelación, rollback y acuerdos históricos
+  ✔ dos clientes para la misma agenda: una aceptación, un conflicto y cero efectos parciales (381.8212ms)
+  ✔ cancelar antes del inicio libera agenda sin reescribir precio y permite aceptar la otra propuesta (167.3153ms)
+  ✔ rangos adyacentes se permiten y los servicios no vencen por el temporizador de herramientas (164.0218ms)
+Error inesperado en la petición 71033cee-7d0e-4ed9-bcab-bc1422765364: error P0001
+  ✔ si falla el evento de agenda se revierten cotización, estado y bloqueo (198.7065ms)
+  ✔ acuerdos de 005.3 requieren confirmación expresa del cliente y conservan su aceptación histórica (299.2639ms)
+✔ agenda de oficios: exclusión concurrente, cancelación, rollback y acuerdos históricos (3658.3355ms)
+✔ tarifa diaria: mínimo un bloque, cada bloque iniciado y dinero entero (1.9525ms)
+✔ devolución: tolerancia exacta de treinta minutos y bloques adicionales iniciados (2.177ms)
+✔ apartado: vence en sesenta minutos, no permite reanimación ni ampliación después del límite (0.9659ms)
+✔ efectivo y entrega requieren ambos participantes; devolución no confirma cobro adicional (0.4985ms)
+✔ visita sin condiciones económicas; mutaciones rechazan dinero, actores y fechas del navegador (0.5974ms)
+✔ destinatarios: la acción avisa a la otra persona y nunca a quien la hizo (3.2281ms)
+▶ avisos reales: bandeja propia, sin duplicados y lectura aislada
+  ✔ cada participante ve solo lo que le corresponde (325.397ms)
+  ✔ un evento reentregado no duplica el aviso (89.2138ms)
+  ✔ el vencimiento avisa a ambos y una cancelación solo a la otra persona (264.9901ms)
+  ✔ la lectura es propia: otra persona recibe 404 y no cambia nada (152.2185ms)
+  ✔ marcar todo afecta solo a quien lo pide (89.2199ms)
+  ✔ la bandeja pagina de 20 en 20 y rechaza consultas manipuladas (954.7089ms)
+  ✔ todo tipo de evento permitido por PostgreSQL tiene un aviso definido (4.036ms)
+✔ avisos reales: bandeja propia, sin duplicados y lectura aislada (4516.255ms)
+▶ alquiler real: 100 carreras, vencimiento, efectivo bilateral y devolución
+  ✔ condiciones explícitas, tarifa esperada y permisos; visita no bloquea (480.9669ms)
+Error inesperado en la petición 3785868d-a8cf-40db-9281-b7f5ceeb403c: error P0001
+  ✔ fallo de outbox revierte aceptación y bloqueo (221.5144ms)
+  ✔ EQ-07 local: 100 pares concurrentes, una aceptación por par y cero rangos superpuestos (14341.2996ms)
+  ✔ ampliación con motivo, vencimiento contra efectivo y liberación para otra solicitud (362.7738ms)
+  ✔ rangos adyacentes, disponibilidad privada y posesión física única (777.4172ms)
+  ✔ devolución tardía calcula saldo sin declarar recibido efectivo adicional (350.5174ms)
+  ✔ PostgreSQL impide estado aceptado sin bloqueo coherente (77.5642ms)
+✔ alquiler real: 100 carreras, vencimiento, efectivo bilateral y devolución (18208.6228ms)
+✔ cotización: dinero entero, vigencia UTC y respuesta sin importes manipulados (3.3104ms)
+▶ cotizaciones reales: versiones, privacidad, carrera de aceptación, inmutabilidad y outbox
+  ✔ roles, origen y campos estrictos; no se publica una propuesta inválida (124.0949ms)
+  ✔ nueva versión conserva la anterior y rechaza respuesta a versión sustituida (245.088ms)
+Error inesperado en la petición 23cd2fb3-cc38-4e72-93e7-42a455700d89: error P0001
+  ✔ fallo del outbox revierte la respuesta y la versión de solicitud (125.3602ms)
+  ✔ aceptación concurrente tiene un efecto y conserva el precio servidor con agenda sin pago (212.5917ms)
+  ✔ una propuesta vencida no se acepta ni altera el acuerdo (5335.1093ms)
+  ✔ publicar y aceptar una versión anterior en paralelo nunca acuerda un precio sustituido (169.2021ms)
+✔ cotizaciones reales: versiones, privacidad, carrera de aceptación, inmutabilidad y outbox (8600.7463ms)
+✔ la espera crece y tiene un máximo de una hora (2.8329ms)
+✔ el despacho se puede desactivar y entonces no afirma envíos (0.3145ms)
+✔ un canal colgado se corta por timeout y se reintenta (10.5601ms)
+✔ el rechazo definitivo no se reintenta y solo guarda un código sin datos (1.7529ms)
+✔ un fallo al registrar el resultado no interrumpe el resto del lote (0.7172ms)
+▶ despacho real: orden por reserva, reintentos, carrera, corte y canal caído
+  ✔ entrega el evento con sus participantes y lo marca enviado una sola vez (129.9089ms)
+  ✔ una reserva recibe sus eventos en orden, uno por lote (105.1434ms)
+  ✔ con el canal caído se reintenta con espera, se conserva el orden y la reserva no cambia (133.0778ms)
+  ✔ al agotar los intentos queda FALLIDO y no bloquea el evento siguiente (108.7649ms)
+  ✔ dos despachadores a la vez no entregan el mismo evento dos veces (617.6666ms)
+  ✔ tras un corte se reentrega el mismo id y un proceso atrasado no altera el resultado (149.0974ms)
+  ✔ PostgreSQL rechaza estados incoherentes y códigos que no son códigos (48.8729ms)
+✔ despacho real: orden por reserva, reintentos, carrera, corte y canal caído (2974.3201ms)
+✔ solicitudes: fechas futuras UTC reales, rango no vacío y sin normalización silenciosa (8.1532ms)
+✔ solicitudes: el navegador no determina identidad, estado, tarifa ni snapshot (1.4913ms)
+✔ respuestas: motivo y versión obligatorios; filtros no permiten cuentas ajenas ni arrays (4.6174ms)
+▶ ejecución de oficios: inicio, término, efectivo bilateral, cancelación sin iniciar y rollback
+  ✔ permisos y hora: nadie inicia antes de tiempo y cada acción pertenece a su participante (583.12ms)
+  ✔ ciclo completo: el efectivo es el total aceptado, el rechazo lo anula y el cierre libera la agenda (598.2427ms)
+  ✔ sin iniciar se cancela con motivo aunque pasó la hora; iniciado ya no se cancela (501.8661ms)
+  ✔ confirmar y rechazar a la vez tiene un solo efecto (340.839ms)
+Error inesperado en la petición 9117a1e2-aebf-4bd9-93aa-e156e9327c6b: error P0001
+  ✔ si falla el evento de cierre se conservan estado, efectivo y agenda (360.4951ms)
+  ✔ PostgreSQL rechaza importes ajenos a la cotización y estados incoherentes (272.085ms)
+  ✔ las acciones de oficio no se aplican a estados de herramienta ni a solicitudes pendientes (136.1321ms)
+✔ ejecución de oficios: inicio, término, efectivo bilateral, cancelación sin iniciar y rollback (5083.0452ms)
+✔ dominio: fechas futuras, estados de revisión y huella de envío (4.5187ms)
+▶ Mi lista con PostgreSQL real: privacidad, límites, revisión y envío idempotente
+  ✔ sin sesión no hay lista; el proveedor no guarda su propia oferta (74.9957ms)
+  ✔ guardar no crea solicitudes; un duplicado exacto se rechaza (107.6628ms)
+  ✔ la lista es privada: otra cuenta no la ve ni la modifica (59.2602ms)
+  ✔ la revisión marca tarifa cambiada, fechas vencidas y unidad ocupada (279.9193ms)
+  ✔ enviar crea una solicitud por ítem, deja los rechazados con su motivo y no se repite (193.6224ms)
+  ✔ dos envíos a la vez no duplican la solicitud de un ítem (105.4018ms)
+  ✔ la lista admite hasta 20 ítems (707.0519ms)
+✔ Mi lista con PostgreSQL real: privacidad, límites, revisión y envío idempotente (3221.1401ms)
+▶ solicitudes persistidas: privacidad, snapshot, bandejas, rechazo concurrente y outbox atómico
+  ✔ rechaza anónimos, suplantación, origen ajeno, recursos inactivos/ajenos y oferta propia (101.8154ms)
+  ✔ crea pendiente y snapshot servidor sin confirmar dinero; duplicados concurrentes tienen un efecto (111.0503ms)
+  ✔ bandejas propias sin fuga; administrador no participante obtiene 404; cliente no responde (128.798ms)
+  ✔ oficio requiere descripción; tarifa histórica no cambia al editar la publicación (126.4436ms)
+Error inesperado en la petición 250ca6e2-3252-4f8a-9eeb-bbe7295300cf: error P0001
+  ✔ si falla el outbox se revierten el rechazo y la versión (75.8853ms)
+  ✔ rechazo concurrente: una respuesta, versión y outbox; transición repetida no muta (110.9394ms)
+  ✔ base rechaza intervalos inválidos y autocontratación; oferta oculta no recibe nuevas solicitudes (149.1799ms)
+✔ solicitudes persistidas: privacidad, snapshot, bandejas, rechazo concurrente y outbox atómico (2443.8904ms)
+✔ dominio: formato de WhatsApp de Perú y estados que comparten el contacto (2.0247ms)
+▶ WhatsApp con PostgreSQL real: consentimiento, participantes y momento de la operación
+  ✔ el perfil propio guarda el número y el consentimiento; un número inválido se rechaza (84.9042ms)
+  ✔ una solicitud pendiente sin respuesta no comparte números (40.2476ms)
+  ✔ con la cotización enviada, cada parte ve el WhatsApp de la otra; un tercero no (124.3781ms)
+  ✔ sin consentimiento el número no se entrega, aunque esté guardado (53.1748ms)
+  ✔ al cancelar, el contacto deja de compartirse (52.4329ms)
+✔ WhatsApp con PostgreSQL real: consentimiento, participantes y momento de la operación (2496.4269ms)
+✔ validación rechaza escalamiento de permisos y normaliza email (2.5056ms)
+✔ hash salado y verificación scrypt (1002.7855ms)
+▶ HTTP y PostgreSQL: registro concurrente, permisos y sesiones
+  ✔ rechaza acceso anónimo y origen ajeno (97.543ms)
+  ✔ dos registros concurrentes generan una sola cuenta (421.8633ms)
+  ✔ perfil propio, campos permitidos y varios roles (116.1818ms)
+  ✔ logout revoca la cookie aun si se vuelve a enviar (29.8823ms)
+  ✔ login y expiración persistida (584.2781ms)
+  ✔ cuenta inactiva invalida sesiones y oculta su estado en login (903.654ms)
+  ✔ cuota persistente devuelve 429 (3196.1296ms)
+✔ HTTP y PostgreSQL: registro concurrente, permisos y sesiones (5598.4996ms)
+▶ administración HTTP y PostgreSQL con auditoría transaccional
+  ✔ CLI crea y audita administrador nuevo; nunca promueve email existente (668.7164ms)
+  ✔ matriz anónimo/cliente/proveedor rechaza acceso sin filtrar datos (65.7373ms)
+  ✔ listado paginado, filtros literales y DTO sin credenciales (107.6872ms)
+  ✔ validación, cuentas admin protegidas y origen ajeno no mutan (433.8101ms)
+  ✔ cambios concurrentes generan una sola auditoría y revocan sesiones (968.2363ms)
+  ✔ reactivar exige nuevo login y no revive las cookies previas (583.2052ms)
+Error inesperado en la petición dccbf762-fdd3-4fa9-b52b-a08a37072ff1: error P0001
+  ✔ fallo de auditoría revierte estado, versión y revocación (74.3069ms)
+  ✔ proveedor admite bloqueo de acceso; admin inactivo pierde autorización (76.8531ms)
+✔ administración HTTP y PostgreSQL con auditoría transaccional (5327.0957ms)
+✔ los registros de error no copian mensajes de PostgreSQL, que pueden citar datos (1.5499ms)
+✔ la API sobrevive y se recupera si PostgreSQL corta sus conexiones (1385.9229ms)
+ℹ tests 195
+ℹ suites 0
+ℹ pass 195
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 165021.231
+ℹ start of coverage report
+ℹ --------------------------------------------------------------------------------------------------------------
+ℹ file                          | line % | branch % | funcs % | uncovered lines
+ℹ --------------------------------------------------------------------------------------------------------------
+ℹ src                           |        |          |         | 
+ℹ  app.ts                       |  96.55 |    83.87 |   80.00 | 32-33
+ℹ  modules                      |        |          |         | 
+ℹ   catalogo                    |        |          |         | 
+ℹ    aplicacion                 |        |          |         | 
+ℹ     catalogo.ts               |  94.12 |    92.45 |   86.21 | 34-36 68
+ℹ    catalogo.module.ts         |  90.91 |    93.33 |   92.86 | 19 22
+ℹ    dominio                    |        |          |         | 
+ℹ     oferta.ts                 |  98.65 |    93.08 |   97.50 | 69
+ℹ     ubicacion.ts              |  97.62 |    95.45 |   81.82 | 38
+ℹ    index.ts                   | 100.00 |    75.00 |   66.67 | 
+ℹ    infraestructura            |        |          |         | 
+ℹ     postgres.ts               |  98.99 |    79.59 |   95.24 | 99
+ℹ    presentacion               |        |          |         | 
+ℹ     catalogo.controller.ts    |  79.17 |    95.45 |   81.82 | 19 21-24
+ℹ   pagos                       |        |          |         | 
+ℹ    aplicacion                 |        |          |         | 
+ℹ     pagos.ts                  |  92.13 |    90.74 |   92.86 | 32-34 64-66 89
+ℹ    dominio                    |        |          |         | 
+ℹ     pagos.ts                  |  98.51 |    90.48 |   90.91 | 64
+ℹ    index.ts                   | 100.00 |    66.67 |   50.00 | 
+ℹ    infraestructura            |        |          |         | 
+ℹ     culqi.ts                  | 100.00 |    86.67 |   92.00 | 
+ℹ     postgres.ts               |  99.05 |    90.38 |   95.65 | 105
+ℹ    pagos.module.ts            |  80.95 |    91.67 |   83.33 | 22-24 27 31-32 36 42
+ℹ    presentacion               |        |          |         | 
+ℹ     pagos.controller.ts       |  83.33 |    95.00 |   92.86 | 20 22-24
+ℹ   proveedores                 |        |          |         | 
+ℹ    aplicacion                 |        |          |         | 
+ℹ     consulta.ts               |  92.31 |    90.00 |   88.89 | 13
+ℹ     proveedores.ts            |  96.94 |    90.57 |   88.00 | 51-52 98
+ℹ    dominio                    |        |          |         | 
+ℹ     proveedor.ts              |  95.31 |    93.94 |   87.50 | 49-50 61
+ℹ     verificacion.ts           |  97.37 |    73.33 |   85.71 | 33
+ℹ    index.ts                   |  66.67 |    75.00 |   66.67 | 2
+ℹ    infraestructura            |        |          |         | 
+ℹ     documentos.ts             |  96.67 |    87.50 |   75.00 | 30
+ℹ     postgres.ts               |  89.87 |    80.70 |   89.47 | 42 101-112 154-155 158
+ℹ    presentacion               |        |          |         | 
+ℹ     proveedores.controller.ts |  91.67 |    90.91 |   92.00 | 64 67-68 70-72
+ℹ    proveedores.module.ts      |  81.40 |    90.00 |   80.00 | 22-25 32-34 43
+ℹ   resenas                     |        |          |         | 
+ℹ    aplicacion                 |        |          |         | 
+ℹ     evidencias.ts             |  98.67 |    86.96 |   95.00 | 75
+ℹ     incidencias.ts            |  98.96 |    82.14 |   96.00 | 96
+ℹ     resenas.ts                |  98.63 |    87.50 |   93.75 | 73
+ℹ    dominio                    |        |          |         | 
+ℹ     evidencias.ts             |  97.22 |    94.12 |   81.82 | 34
+ℹ     incidencias.ts            |  98.63 |    87.50 |   90.00 | 68
+ℹ     resenas.ts                |  98.82 |    89.09 |   85.71 | 80
+ℹ    index.ts                   | 100.00 |    66.67 |   50.00 | 
+ℹ    infraestructura            |        |          |         | 
+ℹ     postgres-evidencias.ts    |  98.18 |    86.36 |   91.67 | 55
+ℹ     postgres-incidencias.ts   |  97.56 |    75.00 |   94.44 | 25 82
+ℹ     postgres.ts               |  94.52 |    78.57 |   93.75 | 22 69-70 73
+ℹ    presentacion               |        |          |         | 
+ℹ     evidencias.controller.ts  |  90.70 |    87.50 |   94.12 | 33 35-36 43
+ℹ     incidencias.controller.ts |  78.26 |    90.00 |   94.44 | 18 20-23
+ℹ     resenas.controller.ts     |  84.62 |    95.45 |   94.74 | 22 24-26
+ℹ    resenas.module.ts          |  86.96 |    87.50 |   81.25 | 32-34 42-43 46
+ℹ   reservas                    |        |          |         | 
+ℹ    aplicacion                 |        |          |         | 
+ℹ     avisos.ts                 |  96.55 |    82.61 |   90.00 | 29
+ℹ     consulta-reservas.ts      |  91.67 |    88.89 |   87.50 | 12
+ℹ     despacho.ts               |  98.21 |    96.67 |   92.86 | 56
+ℹ     enlace-pagos.ts           |  93.75 |    81.82 |   85.71 | 16
+ℹ     lista.ts                  |  98.20 |    66.13 |   95.00 | 21 111
+ℹ     operaciones-pago.ts       |  87.50 |    87.50 |   85.71 | 8
+ℹ     reservas.ts               |  97.64 |    94.95 |   96.15 | 78-79 127
+ℹ    dominio                    |        |          |         | 
+ℹ     alquiler.ts               |  99.11 |    91.55 |   87.50 | 42
+ℹ     avisos.ts                 |  98.28 |    96.30 |   83.33 | 46
+ℹ     cobro.ts                  |  87.50 |    81.82 |   75.00 | 4
+ℹ     coordinacion.ts           |  92.31 |    71.43 |   66.67 | 11
+ℹ     cotizacion.ts             |  97.87 |    89.74 |   84.62 | 41
+ℹ     lista.ts                  |  98.53 |    87.50 |   92.31 | 62
+ℹ     puertos.ts                |  93.51 |    85.71 |   80.00 | 19 42 48 54 56
+ℹ     solicitud.ts              |  98.92 |    94.20 |   95.00 | 88
+ℹ    index.ts                   |  75.00 |    83.33 |   80.00 | 4
+ℹ    infraestructura            |        |          |         | 
+ℹ     postgres-avisos.ts        |  97.73 |    81.82 |   93.75 | 44
+ℹ     postgres-despacho.ts      |  97.37 |    90.00 |   88.89 | 38
+ℹ     postgres-lista.ts         |  98.70 |    85.71 |   93.75 | 77
+ℹ     postgres.ts               |  99.62 |    93.89 |   97.56 | 266
+ℹ    presentacion               |        |          |         | 
+ℹ     avisos.controller.ts      |  57.14 |    92.86 |   90.91 | 8 10-14
+ℹ     lista.controller.ts       |  52.94 |    93.75 |   92.31 | 9 11-17
+ℹ     reservas.controller.ts    |  92.50 |    97.37 |   97.14 | 37 39-40
+ℹ    reservas.module.ts         |  92.59 |    87.50 |   86.96 | 50-54 81
+ℹ   usuarios                    |        |          |         | 
+ℹ    aplicacion                 |        |          |         | 
+ℹ     aprovisionar-admin.ts     | 100.00 |    75.00 |   66.67 | 
+ℹ     identidad.ts              |  94.74 |    90.91 |   90.00 | 19
+ℹ     usuarios.ts               |  99.23 |    93.59 |   95.24 | 130
+ℹ    dominio                    |        |          |         | 
+ℹ     usuario.ts                |  99.11 |    98.11 |   95.45 | 107
+ℹ    index.ts                   |  66.67 |    75.00 |   66.67 | 2
+ℹ    infraestructura            |        |          |         | 
+ℹ     passwords.ts              |  95.24 |    75.00 |   87.50 | 21
+ℹ     postgres.ts               |  99.32 |    94.44 |   95.45 | 148
+ℹ     tokens.ts                 |  94.12 |    81.82 |   85.71 | 17
+ℹ    presentacion               |        |          |         | 
+ℹ     usuarios.controller.ts    |  78.48 |    90.63 |   94.12 | 15 27-28 35-36 44 49-50 54-56 60-61 65 70 75 79
+ℹ    usuarios.module.ts         |  92.59 |    88.89 |   87.50 | 21 27
+ℹ  shared                       |        |          |         | 
+ℹ   dominio                     |        |          |         | 
+ℹ    error-aplicacion.ts        |  80.00 |    83.33 |   80.00 | 5
+ℹ   infraestructura             |        |          |         | 
+ℹ    archivos-cifrados.ts       |  97.96 |    87.10 |   78.57 | 49
+ℹ    base-datos.ts              | 100.00 |    94.12 |   85.71 | 
+ℹ --------------------------------------------------------------------------------------------------------------
+ℹ all files                     |  95.53 |    88.96 |   90.55 | 
+ℹ --------------------------------------------------------------------------------------------------------------
+ℹ end of coverage report

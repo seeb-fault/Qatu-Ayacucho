@@ -1,0 +1,11 @@
+
+Running 6 tests using 1 worker
+
+  ok 1 tests\proveedores\limites.spec.ts:3:5 › dos adjuntos de 5 MiB atraviesan el proxy y se guardan completos (6.5s)
+  ok 2 tests\proveedores\perfil.spec.ts:5:5 › crear, recargar, mostrar y ocultar perfil de proveedor con datos persistidos (7.5s)
+  ok 3 tests\proveedores\perfil.spec.ts:48:5 › anónimo necesita sesión y un identificador público inexistente no revela perfil (1.9s)
+  ok 4 tests\proveedores\perfil.spec.ts:56:5 › editar desde dos pestañas muestra conflicto y permite recargar el perfil vigente (3.7s)
+  ok 5 tests\proveedores\verificacion.spec.ts:7:5 › proveedor envía adjunto privado y administrador aprueba con historial (10.2s)
+  ok 6 tests\proveedores\verificacion.spec.ts:57:5 › cola documental rechaza navegación directa anónima y de cliente (2.0s)
+
+  6 passed (38.9s)

@@ -55,7 +55,7 @@ export default function GarantiaReserva({ reservaId, estado, esCliente }: { rese
           <label>Estado y accesorios que entregas
             <textarea value={texto} onChange={e => setTexto(e.target.value)} minLength={20} maxLength={1000} rows={3} required placeholder="Ejemplo: funciona bien, sin golpes; incluye maletín, dos brocas y cargador."/>
           </label>
-          <div className={styles.acciones}><button className="button outline" disabled={ocupado}>Guardar estado</button></div>
+          <div className={styles.acciones}><button type="submit" className="button outline" disabled={ocupado}>Guardar estado</button></div>
         </form>
       : <div className={styles.acciones}><button className="button outline" onClick={() => { setTexto(garantia.condiciones); setEditando(true); }}>Corregir texto</button></div>)}
   </section>;
