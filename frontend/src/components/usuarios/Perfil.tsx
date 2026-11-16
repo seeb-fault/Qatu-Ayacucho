@@ -85,6 +85,7 @@ export default function Perfil() {
       { href: '/admin/publicaciones', texto: 'Moderar publicaciones', detalle: 'Retira o restablece ofertas.', icono: 'info' },
       { href: '/admin/resenas', texto: 'Moderar reseñas', detalle: 'Oculta o restablece reseñas con motivo.', icono: 'star' },
       { href: '/admin/incidencias', texto: 'Resolver incidencias', detalle: 'Revisa reclamos y fotos de evidencia.', icono: 'shield' },
+      { href: '/admin/reclamaciones', texto: 'Libro de Reclamaciones', detalle: 'Atiende reclamos y quejas en 15 días hábiles.', icono: 'info' },
     ] : []),
   ] : [];
 

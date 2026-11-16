@@ -13,7 +13,7 @@ export function validarEntrega(root) {
   const indice = entregas.indexOf(manifest.ultimaEntrega);
   assert.ok(indice >= 0, 'Entrega desconocida');
   const incrementos = manifest.incrementos ?? [];
-  assert.ok(Array.isArray(incrementos) && incrementos.every(i => ['005.1','005.2','005.3','005.4','005.5','005.6','005.7','005.8','006.1','006.2','006.3','009.1','010.1','011.1'].includes(i)) && new Set(incrementos).size === incrementos.length, 'Incremento desconocido o repetido');
+  assert.ok(Array.isArray(incrementos) && incrementos.every(i => ['005.1','005.2','005.3','005.4','005.5','005.6','005.7','005.8','006.1','006.2','006.3','009.1','010.1','011.1','012.1'].includes(i)) && new Set(incrementos).size === incrementos.length, 'Incremento desconocido o repetido');
   const reservas = incrementos.includes('005.1');
   const efectivo = incrementos.includes('005.2');
   const cotizaciones = incrementos.includes('005.3');
@@ -33,6 +33,8 @@ export function validarEntrega(root) {
   assert.ok(!whatsapp || cotizaciones, '010.1 requiere cotizaciones 005.3');
   const mapas = incrementos.includes('011.1');
   assert.ok(!mapas || whatsapp, '011.1 requiere el contacto de reserva de 010.1');
+  const legal = incrementos.includes('012.1');
+  assert.ok(!legal || incidencias, '012.1 requiere incidencias 006.3 (el libro vive en Reputación y confianza)');
   assert.ok(!resenas || ejecucion, '006.1 requiere operaciones cerradas: herramientas devueltas (005.2) y servicios cerrados (005.5)');
   assert.ok(!pagos || avisos, '005.8 requiere avisos 005.7');
   assert.ok(!avisos || despacho, '005.7 requiere despacho 005.6');
@@ -121,6 +123,10 @@ export function validarEntrega(root) {
     for (const artefacto of artefactos) requerir(`specs/011-mapas-ubicacion/${artefacto}`);
     for (const relative of ['backend/migrations/catalogo/002-ubicaciones.sql','backend/src/modules/catalogo/dominio/ubicacion.ts','backend/test/catalogo/ubicacion.test.ts','frontend/src/components/mapa/Mapa.tsx','frontend/src/components/mapa/EditorUbicacion.tsx','frontend/tests/reservas/mapa.spec.ts']) requerir(relative);
   } else ausente('backend/migrations/catalogo/002-ubicaciones.sql');
+  if (legal) {
+    for (const artefacto of artefactos) requerir(`specs/012-legal-reclamaciones/${artefacto}`);
+    for (const relative of ['backend/migrations/resenas/004-libro-reclamaciones.sql','backend/src/modules/resenas/dominio/reclamaciones.ts','backend/src/modules/resenas/aplicacion/reclamaciones.ts','backend/test/resenas/reclamaciones.test.ts','frontend/src/components/legal/LibroReclamaciones.tsx','frontend/src/app/libro-de-reclamaciones/page.tsx','frontend/src/app/terminos/page.tsx','frontend/src/app/devoluciones/page.tsx','frontend/src/app/privacidad/page.tsx','frontend/src/app/contacto/page.tsx','frontend/src/app/admin/reclamaciones/page.tsx','frontend/tests/resenas/reclamaciones.spec.ts']) requerir(relative);
+  } else ausente('backend/migrations/resenas/004-libro-reclamaciones.sql');
   return {
     entrega: manifest.ultimaEntrega,
     frontend: indice >= 1,

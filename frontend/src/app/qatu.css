@@ -919,3 +919,8 @@ input::placeholder, textarea::placeholder, .search-main input::placeholder { col
 .q-mapa-resultados { display: grid; gap: 12px; margin-bottom: 20px; }
 .q-mapa-resultados > .button { justify-self: start; }
 .q-mapa .leaflet-control-zoom a, .q-mapa .leaflet-control-zoom a:hover { color: var(--q-text); text-decoration: none; }
+
+/* 012: columna legal en el pie y aviso del Libro de Reclamaciones, visible en todas las páginas. */
+@media (min-width: 1101px) { .footer-main { grid-template-columns: 1.3fr 1fr 1fr 1fr 1fr; gap: 32px; } }
+.footer-main > div > a.footer-libro { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; padding: 8px 12px; border: 1px solid rgb(255 255 255 / .35); border-radius: 10px; color: #fff; font-weight: 600; }
+.footer-main > div > a.footer-libro:hover { border-color: #fff; }

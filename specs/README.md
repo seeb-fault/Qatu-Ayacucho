@@ -16,6 +16,8 @@ El incremento **010.1** añade [coordinación por WhatsApp](010-coordinacion-wha
 
 El incremento **011.1** añade [mapas y ubicación](011-mapas-ubicacion/quickstart.md) con Leaflet y OpenStreetMap, gratis y sin claves: el proveedor marca su punto y elige mostrarlo exacto (un local) o casi exacto a menos de 100 m (su casa); el detalle y los resultados muestran el mapa y, desde que hay compromiso, la contraparte ve el punto exacto con «Abrir en Google Maps».
 
+El incremento **012.1** añade [información legal y Libro de Reclamaciones](012-legal-reclamaciones/quickstart.md): términos y condiciones, política de cancelaciones y devoluciones, privacidad y contacto, enlazados desde el pie; y un Libro de Reclamaciones virtual integrado, sin cuenta obligatoria, con número correlativo, constancia imprimible, consulta con código y atención por la administración en 15 días hábiles. Los datos del titular se configuran y nunca se inventan.
+
 ## Evolución pendiente
 
 - [005 — Reservas, contratación y pagos](005-reservas-contratacion-pagos/spec.md)
@@ -24,6 +26,7 @@ El incremento **011.1** añade [mapas y ubicación](011-mapas-ubicacion/quicksta
 - [008 — Despliegue y validación](008-despliegue-validacion/spec.md)
 - [011 — Mapas y ubicación](011-mapas-ubicacion/spec.md): etapa 2, lugar del trabajo marcado por el cliente y «Cerca de ti».
 - [010 — Coordinación por WhatsApp](010-coordinacion-whatsapp/spec.md): etapa 2, avisos automáticos por WhatsApp Business (con costo, D08).
+- [012 — Información legal y Libro de Reclamaciones](012-legal-reclamaciones/spec.md): etapa 2, envío por correo, suspensión del plazo y avisos de vencimiento; datos reales del titular y revisión legal (D-012-1).
 - [009 — Mi lista](009-mi-lista/spec.md): guardar herramientas y oficios con sus fechas y enviar todas las solicitudes en un paso; exige sesión.
 
 ## Guías

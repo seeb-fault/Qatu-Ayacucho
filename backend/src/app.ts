@@ -11,6 +11,7 @@ import { ReservasModule } from './modules/reservas';
 import { PagosModule } from './modules/pagos';
 import { ResenasModule } from './modules/resenas';
 import { ErrorAplicacion } from './shared/dominio/error-aplicacion';
+import { proxiesConfiables } from './shared/infraestructura/proxies';
 import { describirError } from './shared/infraestructura/base-datos';
 
 @Module({ imports: [UsuariosModule, ProveedoresModule, CatalogoModule, ReservasModule, PagosModule, ResenasModule] })
@@ -35,8 +36,13 @@ export async function crearApp() {
   const origin = process.env.APP_ORIGIN ?? 'http://127.0.0.1:3000';
   const parsedOrigin = new URL(origin);
   if (parsedOrigin.origin !== origin || (process.env.NODE_ENV === 'production' && parsedOrigin.protocol !== 'https:')) throw new Error('APP_ORIGIN debe ser un origen válido; en producción requiere HTTPS.');
+  const proxies = proxiesConfiables(process.env.QATU_PROXIES_CONFIABLES);
   const app = await NestFactory.create<NestExpressApplication>(AppModule, { logger: false });
   app.disable('x-powered-by'); // No anunciar Express (OWASP ZAP 10037).
+  // IP real del visitante solo detrás de un proxy inverso confiable (ver proxies.ts). Sin él, request.ip es la de Next
+  // y los límites por IP son comunes a todo el sitio: en producción conviene configurarlo.
+  if (proxies) app.set('trust proxy', proxies);
+  else if (process.env.NODE_ENV === 'production') console.warn('QATU_PROXIES_CONFIABLES no está configurado: los límites por IP serán comunes a todos los visitantes.');
   app.enableShutdownHooks();
   app.setGlobalPrefix('api/v1');
   app.use((request: Request, response: Response, next: NextFunction) => {
