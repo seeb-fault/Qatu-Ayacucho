@@ -72,6 +72,7 @@ test('archivos en el almacén externo con PostgreSQL real', { skip: !process.env
   const pool = new Pool({ connectionString: process.env.TEST_DATABASE_URL });
   const memoria = new AlmacenMemoria(), archivos = new ArchivosExternos(pool, memoria), cifrado = new ArchivosCifrados();
   const evidencias = new PostgresEvidencias(pool, archivos), enBase = new PostgresEvidencias(pool);
+  let reservaCreada: string | undefined;
   const enCola = async (objeto: string) => (await pool.query('SELECT intentos, ultimo_error FROM objetos_por_borrar WHERE objeto=$1', [objeto])).rows[0];
   try {
     // Datos mínimos: un proveedor con una oferta y un cliente con una reserva.
@@ -80,7 +81,7 @@ test('archivos en el almacén externo con PostgreSQL real', { skip: !process.env
     const perfil = await proveedores.crear(dueno.id, { nombrePublico: 'Almacén ' + sufijo.slice(0, 8), descripcion: 'Proveedor sintético para las pruebas del almacén externo.', zonaId: 'ayacucho', visiblePublicamente: true });
     const oferta = await new PostgresCatalogo(pool).crear(perfil.id, { tipo: 'herramienta', categoriaId: 'perforacion', zonaId: 'ayacucho', titulo: 'Taladro almacén ' + sufijo.slice(0, 8),
       descripcion: 'Oferta sintética para las pruebas del almacén externo.', incluye: ['Equipo'], condiciones: ['Coordinar'], modalidadPrecio: 'fija', tarifaCentimos: 1000, unidad: 'día', activa: true, recursos: [{ identificador: 'Unidad', activo: true }] });
-    const reservaId = randomUUID();
+    const reservaId = randomUUID(); reservaCreada = reservaId;
     await pool.query(`INSERT INTO reservas (id,cliente_id,propietario_id,proveedor_id,publicacion_id,recurso_id,inicio,fin,descripcion_trabajo,snapshot)
       VALUES ($1,$2,$3,$4,$5,$6,now()+interval '30 days',now()+interval '31 days','',$7::jsonb)`, [reservaId, cliente.id, dueno.id, perfil.id, oferta.id, oferta.recursos[0].id, JSON.stringify({ titulo: oferta.titulo })]);
 
@@ -172,14 +173,11 @@ test('archivos en el almacén externo con PostgreSQL real', { skip: !process.env
     });
   } finally {
     AlmacenMemoria.fallar = null;
-    // El almacén en memoria muere con este proceso: los archivos vuelven a PostgreSQL para no dejar filas
-    // apuntando a objetos inexistentes en la base que comparten las demás pruebas.
-    for (const tabla of ['evidencias', 'documentos_proveedor']) {
-      for (const f of (await pool.query(`SELECT id, objeto FROM ${tabla} WHERE objeto IS NOT NULL`)).rows) {
-        const datos = AlmacenMemoria.objetos.get(f.objeto);
-        if (datos) await pool.query(`UPDATE ${tabla} SET contenido=$2, objeto=NULL WHERE id=$1`, [f.id, datos]);
-      }
-    }
+    // Los archivos de esta prueba se retiran al terminar. El almacén en memoria muere con el proceso, y en CI cada
+    // archivo de prueba usa su propia DOCUMENTOS_KEY: dejarlos vigentes rompería el verificador de restauración de otras pruebas.
+    if (reservaCreada) await pool.query('UPDATE evidencias SET contenido=NULL, objeto=NULL, iv=NULL, tag=NULL, eliminada_en=now() WHERE reserva_id=$1 AND eliminada_en IS NULL', [reservaCreada]);
+    assert.equal((await pool.query('SELECT count(*)::int AS n FROM evidencias WHERE objeto IS NOT NULL')).rows[0].n
+      + (await pool.query('SELECT count(*)::int AS n FROM documentos_proveedor WHERE objeto IS NOT NULL')).rows[0].n, 0, 'no quedan filas apuntando al almacén en memoria');
     await pool.end();
   }
 });
