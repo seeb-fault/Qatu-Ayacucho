@@ -32,7 +32,7 @@ function Revision({ incidencia, onCambio }: { incidencia: Incidencia; onCambio: 
       <form onSubmit={resolver}>
         <label>Resultado<select value={resultado} onChange={e => setResultado(e.target.value)} required><option value="">Elige un resultado</option>{Object.entries(RESULTADOS).map(([v, t]) => <option key={v} value={v}>{t}</option>)}</select></label>
         <label>Motivo de la decisión<textarea value={motivo} onChange={e => setMotivo(e.target.value)} required minLength={10} maxLength={500} rows={2}/></label>
-        <button className="button primary" disabled={ocupado}>Resolver incidencia</button>
+        <button type="submit" className="button primary" disabled={ocupado}>Resolver incidencia</button>
       </form>
     </>}
   </article>;

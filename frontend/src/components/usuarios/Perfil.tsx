@@ -107,7 +107,7 @@ export default function Perfil() {
         <label>WhatsApp<span className={styles.telefono}><span aria-hidden="true">+51</span><input name="whatsapp" type="tel" inputMode="numeric" autoComplete="tel-national" placeholder="987 654 321" pattern="[0-9 ]{9,11}" title="9 dígitos que empiezan con 9" value={whatsapp} onChange={event => { setWhatsapp(event.target.value); if (!event.target.value.trim()) setWhatsappVisible(false); }} aria-describedby="ayuda-whatsapp"/></span></label>
         <label className={styles.consentimiento}><input type="checkbox" checked={whatsappVisible} disabled={!whatsapp.trim()} onChange={event => setWhatsappVisible(event.target.checked)}/>Mostrar mi WhatsApp solo a quienes tengan una reserva aceptada conmigo</label>
         <p id="ayuda-whatsapp" className={styles.ayuda}>Sirve para coordinar la entrega, la visita o la hora del trabajo. Se comparte desde que la reserva se acepta, se agenda la visita o se envía la cotización, y deja de mostrarse al terminar. Los proveedores lo necesitan para publicar.</p>
-        <button className="button primary" disabled={pendiente}>{pendiente ? 'Procesando…' : 'Guardar perfil'}</button>
+        <button type="submit" className="button primary" disabled={pendiente}>{pendiente ? 'Procesando…' : 'Guardar perfil'}</button>
       </form>
       <button className="button outline" onClick={salir} disabled={pendiente}><Icono nombre="logout" size={17}/>Cerrar sesión</button>
     </>}

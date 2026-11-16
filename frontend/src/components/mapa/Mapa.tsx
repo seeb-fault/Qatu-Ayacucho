@@ -28,10 +28,11 @@ export default function Mapa({ puntos, alElegir, etiqueta, alto = 280, zoom = 16
   elegir.current = alElegir;
   const clave = JSON.stringify(puntos);
 
-  // Crea el mapa una vez, en el navegador.
+  // Crea el mapa una vez, en el navegador, y solo cuando se acerca a la vista: Leaflet (unos 150 KB)
+  // no compite con el contenido principal de la página en celulares lentos.
   useEffect(() => {
-    let vigente = true, observador: ResizeObserver | undefined;
-    void import('leaflet').then(({ default: L }) => {
+    let vigente = true, observador: ResizeObserver | undefined, vista: IntersectionObserver | undefined;
+    const cargar = () => void import('leaflet').then(({ default: L }) => {
       if (!vigente || !contenedor.current || mapa.current) return;
       lib.current = L;
       const m = L.map(contenedor.current, { scrollWheelZoom: false, attributionControl: true }).setView([HUAMANGA.lat, HUAMANGA.lng], 14);
@@ -44,7 +45,14 @@ export default function Mapa({ puntos, alElegir, etiqueta, alto = 280, zoom = 16
       observador = new ResizeObserver(() => m.invalidateSize());
       observador.observe(contenedor.current);
     });
-    return () => { vigente = false; observador?.disconnect(); mapa.current?.remove(); mapa.current = null; };
+    if (typeof IntersectionObserver === 'undefined' || !contenedor.current) cargar();
+    else {
+      vista = new IntersectionObserver(entradas => {
+        if (entradas.some(e => e.isIntersecting)) { vista?.disconnect(); cargar(); }
+      }, { rootMargin: '300px 0px' });
+      vista.observe(contenedor.current);
+    }
+    return () => { vigente = false; vista?.disconnect(); observador?.disconnect(); mapa.current?.remove(); mapa.current = null; };
   }, []);
 
   // Redibuja cuando cambian los puntos.

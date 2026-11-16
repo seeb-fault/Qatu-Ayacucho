@@ -55,7 +55,7 @@ export function entradaEnvio(value: unknown) {
 
 /** Misma clave con otro pedido es un error del cliente, no un reintento. */
 export function huellaEnvio(ids: string[] | null, aceptaCondiciones: boolean) {
-  return createHash('sha256').update(JSON.stringify({ ids: ids ? [...ids].sort() : null, aceptaCondiciones })).digest('hex');
+  return createHash('sha256').update(JSON.stringify({ ids: ids ? [...ids].sort((a, b) => (a < b ? -1 : a > b ? 1 : 0)) : null, aceptaCondiciones })).digest('hex');
 }
 
 /** Estado de un ítem frente a lo que hoy ofrece el catálogo y la agenda. */

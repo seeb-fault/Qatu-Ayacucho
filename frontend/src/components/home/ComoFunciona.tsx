@@ -51,7 +51,8 @@ export default function ComoFunciona({ muestras }: { muestras: Muestra[] }) {
           <span className="q-how-row">
             <span className="q-how-icon"><Icono nombre={p.icono} size={20}/></span>
             <strong>{p.titulo}</strong>
-            <small aria-hidden="true">{p.n}</small>
+            {/* Número decorativo: se pinta con CSS (::before) para que no cuente como texto. */}
+            <small aria-hidden="true" data-n={p.n}/>
           </span>
           {i === activo && <span className="q-how-desc">{p.texto}</span>}
           {i === activo && !quieto && <span className={'q-how-progress' + (pausa ? ' is-paused' : '')} style={{ animationDuration: DURACION + 'ms' }} aria-hidden="true"/>}

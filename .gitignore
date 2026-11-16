@@ -17,3 +17,5 @@ frontend/playwright-report/
 backend/dist/
 .local-postgres/
 .local-reconstruccion/
+backend/coverage/
+docs/06-pruebas-atributos-calidad/carga/.tmp/

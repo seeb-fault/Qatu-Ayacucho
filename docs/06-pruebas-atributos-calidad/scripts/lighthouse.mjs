@@ -4,7 +4,8 @@ import { execFileSync, spawn } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-const RAIZ = process.argv[2], OUT = join(RAIZ, 'docs/06-pruebas-atributos-calidad/lighthouse');
+// Tercer argumento opcional: subcarpeta de la corrida (por ejemplo, 02-tras-correcciones).
+const RAIZ = process.argv[2], OUT = join(RAIZ, 'docs/06-pruebas-atributos-calidad/lighthouse', process.argv[4] ?? '');
 const LH = process.argv[3];
 const WEB = 'http://127.0.0.1:3100', API = 'http://127.0.0.1:3401';
 mkdirSync(OUT, { recursive: true });

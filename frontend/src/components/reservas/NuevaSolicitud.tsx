@@ -164,7 +164,7 @@ export default function NuevaSolicitud({ publicacionId, modoLista = false }: { p
             <label>{oferta.tipo === 'servicio' ? 'Describe el trabajo' : 'Cuéntanos tu proyecto (opcional)'}<textarea name="descripcionTrabajo" rows={4} required={oferta.tipo === 'servicio'} minLength={oferta.tipo === 'servicio' ? 20 : undefined} maxLength={1500} placeholder={oferta.tipo === 'servicio' ? 'Ej.: cambiar dos grifos de cocina y revisar una fuga bajo el lavadero.' : 'Ej.: necesito perforar concreto para instalar repisas.'}/></label>
           </fieldset>
           {(() => {
-            const enviarBoton = <button className={(modoLista ? 'button outline ' : 'button primary ') + styles.enviar} disabled={enviando || guardando || !recursosActivos.length}>{enviando ? 'Enviando…' : modoLista ? 'Enviar solicitud ahora' : 'Enviar solicitud'}</button>;
+            const enviarBoton = <button type="submit" className={(modoLista ? 'button outline ' : 'button primary ') + styles.enviar} disabled={enviando || guardando || !recursosActivos.length}>{enviando ? 'Enviando…' : modoLista ? 'Enviar solicitud ahora' : 'Enviar solicitud'}</button>;
             const guardarBoton = !visita && <button type="button" className={(modoLista ? 'button primary ' : 'button outline ') + styles.enviar} disabled={enviando || guardando || !recursosActivos.length} onClick={e => guardarDesdeFormulario(e.currentTarget.form!)}>{guardando ? 'Guardando…' : 'Guardar en mi lista'}</button>;
             return modoLista ? <>{guardarBoton}{enviarBoton}</> : <>{enviarBoton}{guardarBoton}</>;
           })()}

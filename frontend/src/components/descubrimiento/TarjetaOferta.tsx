@@ -3,12 +3,13 @@ import Image from 'next/image';
 import { soles, type Oferta } from '@/lib/catalogo';
 import Icono from './Icono';
 
-export default function TarjetaOferta({ oferta: o, volver = '/buscar' }: { oferta: Oferta; volver?: string }) {
+/** `prioritaria`: tarjetas visibles al cargar (primera fila de resultados); su imagen no espera al desplazamiento. */
+export default function TarjetaOferta({ oferta: o, volver = '/buscar', prioritaria = false }: { oferta: Oferta; volver?: string; prioritaria?: boolean }) {
   const detalle = '/publicaciones/' + o.id + '?volver=' + encodeURIComponent(volver);
   const servicio = o.tipo === 'servicio';
   return <article className={'offer-card offer-card--' + o.tipo}>
     <Link className="card-image" href={detalle} tabIndex={-1} aria-hidden="true">
-      {o.imagen ? <Image src={o.imagen} alt="" width={600} height={440} sizes="(max-width: 767px) 45vw, (max-width: 1100px) 30vw, 260px"/> : <span className="no-photo"><Icono nombre="tool" size={44}/>Imagen no disponible</span>}
+      {o.imagen ? <Image src={o.imagen} alt="" width={600} height={440} sizes="(max-width: 767px) 45vw, (max-width: 1100px) 30vw, 260px" priority={prioritaria}/> : <span className="no-photo"><Icono nombre="tool" size={44}/>Imagen no disponible</span>}
       <span className={'offer-type ' + (servicio ? 'service' : '')}>{servicio ? 'Oficio' : 'Herramienta'}</span><span className="card-go"><Icono nombre="arrow" size={17}/></span>
     </Link>
     <div className="card-body">

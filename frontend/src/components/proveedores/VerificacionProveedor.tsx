@@ -52,7 +52,7 @@ export default function VerificacionProveedor({ perfil, onActualizado }: { perfi
       <label>Documentos privados<input type="file" name="documentos" accept="application/pdf,image/jpeg,image/png" multiple required onChange={event => setArchivos(Array.from(event.target.files ?? []))}/></label>
       <small>Uno o dos PDF, JPG o PNG; máximo 5 MiB por archivo.</small>
       <label className={styles.consentimiento}><input type="checkbox" required checked={acepta} onChange={event => setAcepta(event.target.checked)}/>Acepto la política de conservación indicada.</label>
-      <button className="button primary" disabled={pendiente}>{pendiente ? 'Enviando…' : 'Solicitar verificación'}</button>
+      <button type="submit" className="button primary" disabled={pendiente}>{pendiente ? 'Enviando…' : 'Solicitar verificación'}</button>
     </form>}
     {perfil.estadoVerificacion === 'pendiente' && <p>Tu solicitud está en revisión. Podrás modificar los datos del perfil cuando se resuelva; sí puedes ocultar su página pública.</p>}
     <h2>Historial de solicitudes</h2>

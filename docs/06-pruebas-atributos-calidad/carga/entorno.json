@@ -1,0 +1,13 @@
+{
+  "fecha": "2026-11-15T21:26:49.510Z",
+  "cpu": "AMD Ryzen 5 3500U with Radeon Vega Mobile Gfx  ",
+  "nucleos": 8,
+  "memoria_gb": 11,
+  "windows": "10.0.26300",
+  "node": "v24.21.0",
+  "k6": "k6 v2.4.0 (commit/dd9395906d, go1.27.3, linux/amd64)",
+  "postgres": "17.5 (Debian 17.5-1.pgdg110+1)",
+  "datos": "1000 publicaciones, 100 proveedores, 5000 reservas",
+  "nota": "k6 corre en Docker y llega al backend local por host.docker.internal; backend con un solo proceso de Node y pool de PostgreSQL por defecto.",
+  "codigo_k6": 99
+}

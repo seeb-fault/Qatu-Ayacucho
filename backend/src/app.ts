@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, Module } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import type { NestExpressApplication } from '@nestjs/platform-express';
 import { randomUUID } from 'node:crypto';
 import type { NextFunction, Request, Response } from 'express';
 import { UsuariosModule } from './modules/usuarios';
@@ -34,7 +35,8 @@ export async function crearApp() {
   const origin = process.env.APP_ORIGIN ?? 'http://127.0.0.1:3000';
   const parsedOrigin = new URL(origin);
   if (parsedOrigin.origin !== origin || (process.env.NODE_ENV === 'production' && parsedOrigin.protocol !== 'https:')) throw new Error('APP_ORIGIN debe ser un origen válido; en producción requiere HTTPS.');
-  const app = await NestFactory.create(AppModule, { logger: false });
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, { logger: false });
+  app.disable('x-powered-by'); // No anunciar Express (OWASP ZAP 10037).
   app.enableShutdownHooks();
   app.setGlobalPrefix('api/v1');
   app.use((request: Request, response: Response, next: NextFunction) => {

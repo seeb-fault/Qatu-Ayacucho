@@ -1,0 +1,223 @@
+{
+  "fecha": "2026-11-15T20:54:06.294Z",
+  "herramienta": "Lighthouse 12.6.1 (Chrome sin interfaz)",
+  "entorno": "Windows, build de producción local (next start) y backend local con base _test",
+  "resultados": [
+    {
+      "pagina": "inicio",
+      "ruta": "/",
+      "dispositivo": "movil",
+      "puntajes": {
+        "performance": 87,
+        "accessibility": 100,
+        "best-practices": 96,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 962,
+        "LCP_ms": 3117,
+        "TBT_ms": 320,
+        "CLS": 0,
+        "SI_ms": 1743
+      }
+    },
+    {
+      "pagina": "inicio",
+      "ruta": "/",
+      "dispositivo": "escritorio",
+      "puntajes": {
+        "performance": 96,
+        "accessibility": 100,
+        "best-practices": 96,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 270,
+        "LCP_ms": 698,
+        "TBT_ms": 158,
+        "CLS": 0.001,
+        "SI_ms": 849
+      }
+    },
+    {
+      "pagina": "busqueda",
+      "ruta": "/buscar?tipo=herramienta",
+      "dispositivo": "movil",
+      "puntajes": {
+        "performance": 93,
+        "accessibility": 100,
+        "best-practices": 96,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 931,
+        "LCP_ms": 2839,
+        "TBT_ms": 177,
+        "CLS": 0,
+        "SI_ms": 1534
+      }
+    },
+    {
+      "pagina": "busqueda",
+      "ruta": "/buscar?tipo=herramienta",
+      "dispositivo": "escritorio",
+      "puntajes": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 96,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 264,
+        "LCP_ms": 725,
+        "TBT_ms": 20,
+        "CLS": 0.001,
+        "SI_ms": 660
+      }
+    },
+    {
+      "pagina": "detalle-con-mapa",
+      "ruta": "/publicaciones/:id",
+      "dispositivo": "movil",
+      "puntajes": {
+        "performance": 85,
+        "accessibility": 100,
+        "best-practices": 96,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 924,
+        "LCP_ms": 2952,
+        "TBT_ms": 391,
+        "CLS": 0.058,
+        "SI_ms": 2191
+      }
+    },
+    {
+      "pagina": "detalle-con-mapa",
+      "ruta": "/publicaciones/:id",
+      "dispositivo": "escritorio",
+      "puntajes": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 96,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 265,
+        "LCP_ms": 688,
+        "TBT_ms": 26,
+        "CLS": 0.001,
+        "SI_ms": 613
+      }
+    },
+    {
+      "pagina": "ingresar",
+      "ruta": "/ingresar",
+      "dispositivo": "movil",
+      "puntajes": {
+        "performance": 95,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 922,
+        "LCP_ms": 2501,
+        "TBT_ms": 169,
+        "CLS": 0,
+        "SI_ms": 922
+      }
+    },
+    {
+      "pagina": "ingresar",
+      "ruta": "/ingresar",
+      "dispositivo": "escritorio",
+      "puntajes": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 270,
+        "LCP_ms": 616,
+        "TBT_ms": 1,
+        "CLS": 0,
+        "SI_ms": 361
+      }
+    },
+    {
+      "pagina": "mi-lista",
+      "ruta": "/lista",
+      "dispositivo": "movil",
+      "puntajes": {
+        "performance": 90,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 931,
+        "LCP_ms": 3077,
+        "TBT_ms": 235,
+        "CLS": 0,
+        "SI_ms": 1234
+      }
+    },
+    {
+      "pagina": "mi-lista",
+      "ruta": "/lista",
+      "dispositivo": "escritorio",
+      "puntajes": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 263,
+        "LCP_ms": 720,
+        "TBT_ms": 0,
+        "CLS": 0.001,
+        "SI_ms": 552
+      }
+    },
+    {
+      "pagina": "pago",
+      "ruta": "/reservas/:id/pago",
+      "dispositivo": "movil",
+      "puntajes": {
+        "performance": 87,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 929,
+        "LCP_ms": 3129,
+        "TBT_ms": 310,
+        "CLS": 0.001,
+        "SI_ms": 1191
+      }
+    },
+    {
+      "pagina": "pago",
+      "ruta": "/reservas/:id/pago",
+      "dispositivo": "escritorio",
+      "puntajes": {
+        "performance": 85,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metricas": {
+        "FCP_ms": 267,
+        "LCP_ms": 896,
+        "TBT_ms": 337,
+        "CLS": 0.001,
+        "SI_ms": 727
+      }
+    }
+  ]
+}

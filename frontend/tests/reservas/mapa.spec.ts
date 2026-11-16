@@ -20,6 +20,8 @@ test('mapa: zona casi exacta para el público y punto exacto tras la aceptación
     await page.goto('/publicaciones/' + f.publicacionId);
     const seccion = page.getByRole('region', { name: 'Ubicación' }).or(page.locator('section[aria-labelledby="titulo-ubicacion"]')).first();
     await expect(seccion).toContainText('a menos de 100 m');
+    // Leaflet se carga recién cuando el mapa se acerca a la vista (rendimiento en celular).
+    await seccion.scrollIntoViewIfNeeded();
     await expect(page.locator('.leaflet-container')).toHaveCount(1);
     expect(await page.content()).not.toContain(String(PLAZA.lat));
 

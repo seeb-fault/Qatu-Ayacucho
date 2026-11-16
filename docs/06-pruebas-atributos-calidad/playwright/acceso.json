@@ -2,14 +2,14 @@
   "config": {
     "argv": [
       "<usuario>\\AppData\\Local\\Author Software\\nvm\\installs\\v24.21.0\\node.exe",
-      "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\frontend\\node_modules\\@playwright\\test\\cli.js",
+      ".\\frontend\\node_modules\\@playwright\\test\\cli.js",
       "test",
       "--config",
       "playwright.acceso.config.ts",
       "--reporter=list,json",
       "--output=./frontend/test-results/calidad-acceso"
     ],
-    "configFile": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\frontend\\playwright.acceso.config.ts",
+    "configFile": ".\\frontend\\playwright.acceso.config.ts",
     "rootDir": "./frontend/tests",
     "failOnFlakyTests": false,
     "forbidOnly": false,
@@ -46,15 +46,15 @@
       {
         "grep": {},
         "grepInvert": null,
-        "outputDir": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\frontend\\test-results\\calidad-acceso",
+        "outputDir": ".\\frontend\\test-results\\calidad-acceso",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
           "actualWorkers": 1
         },
         "name": "acceso",
-        "testDir": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\frontend\\tests\\acceso",
-        "snapshotDir": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\frontend\\tests\\acceso",
+        "testDir": ".\\frontend\\tests\\acceso",
+        "snapshotDir": ".\\frontend\\tests\\acceso",
         "testIgnore": [],
         "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
         "timeout": 45000,
@@ -127,12 +127,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 10006,
+                  "duration": 6817,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-11-15T16:50:26.414Z",
+                  "startTime": "2026-11-15T23:44:10.165Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -161,12 +161,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 2865,
+                  "duration": 1279,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-11-15T16:50:37.945Z",
+                  "startTime": "2026-11-15T23:44:17.452Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -195,12 +195,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 3960,
+                  "duration": 2917,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-11-15T16:50:40.945Z",
+                  "startTime": "2026-11-15T23:44:18.774Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -218,8 +218,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-11-15T16:50:17.857Z",
-    "duration": 31366.341,
+    "startTime": "2026-11-15T23:44:07.646Z",
+    "duration": 15189.205999999998,
     "expected": 3,
     "skipped": 0,
     "unexpected": 0,

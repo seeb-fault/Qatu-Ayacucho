@@ -2,14 +2,14 @@
   "config": {
     "argv": [
       "<usuario>\\AppData\\Local\\Author Software\\nvm\\installs\\v24.21.0\\node.exe",
-      "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\frontend\\node_modules\\@playwright\\test\\cli.js",
+      ".\\frontend\\node_modules\\@playwright\\test\\cli.js",
       "test",
       "--config",
       "playwright.resenas.config.ts",
       "--reporter=list,json",
       "--output=./frontend/test-results/calidad-resenas"
     ],
-    "configFile": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\frontend\\playwright.resenas.config.ts",
+    "configFile": ".\\frontend\\playwright.resenas.config.ts",
     "rootDir": "./frontend/tests/resenas",
     "failOnFlakyTests": false,
     "forbidOnly": false,
@@ -46,15 +46,15 @@
       {
         "grep": {},
         "grepInvert": null,
-        "outputDir": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\frontend\\test-results\\calidad-resenas",
+        "outputDir": ".\\frontend\\test-results\\calidad-resenas",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
           "actualWorkers": 1
         },
         "name": "",
-        "testDir": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\frontend\\tests\\resenas",
-        "snapshotDir": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\frontend\\tests\\resenas",
+        "testDir": ".\\frontend\\tests\\resenas",
+        "snapshotDir": ".\\frontend\\tests\\resenas",
         "testIgnore": [],
         "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
         "timeout": 90000,
@@ -115,12 +115,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 12526,
+                  "duration": 9286,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-11-15T17:01:00.689Z",
+                  "startTime": "2026-11-15T23:50:14.806Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -157,12 +157,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 17209,
+                  "duration": 13596,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-11-15T17:01:14.070Z",
+                  "startTime": "2026-11-15T23:50:24.530Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -199,12 +199,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 17350,
+                  "duration": 9717,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-11-15T17:01:31.422Z",
+                  "startTime": "2026-11-15T23:50:38.187Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -222,8 +222,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-11-15T17:00:52.539Z",
-    "duration": 57944.047999999995,
+    "startTime": "2026-11-15T23:50:09.367Z",
+    "duration": 39812.774000000005,
     "expected": 3,
     "skipped": 0,
     "unexpected": 0,
