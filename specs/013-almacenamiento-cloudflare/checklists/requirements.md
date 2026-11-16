@@ -10,6 +10,6 @@
 ## Aceptación funcional
 
 - [x] Pruebas con PostgreSQL real, R2 real y suites de navegador (ver quickstart.md).
-- [ ] QATU_ALMACEN=r2 activo en desarrollo y archivos existentes movidos.
+- [x] QATU_ALMACEN=r2 activo en desarrollo y archivos existentes movidos.
 - [ ] Cuenta de Cloudflare con verificación en dos pasos y alerta de presupuesto.
 - [ ] Etapas 2 y 3.

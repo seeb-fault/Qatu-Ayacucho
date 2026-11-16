@@ -11,7 +11,7 @@ Estado: etapa 1 implementada (2026-11-16); etapas 2 y 3 pendientes.
 - [x] T005 [US3] Script archivos:mover y verificador de restauración con almacén.
 - [x] T006 Pruebas: backend/test/almacen/almacen.test.ts (memoria y R2 real), entorno de pruebas sin R2 y suites de navegador con QATU_ALMACEN=memoria; registrar en quickstart.md.
 - [x] T007 Política de privacidad: Cloudflare como encargado y transferencia internacional.
-- [ ] T008 Activar QATU_ALMACEN=r2 en desarrollo y mover los archivos existentes (con copia previa de la base).
+- [x] T008 Activar QATU_ALMACEN=r2 en desarrollo y mover los archivos existentes (con copia previa de la base).
 - [ ] T009 Buckets y token de producción; verificación en dos pasos y alerta de presupuesto en Cloudflare.
 
 ## Etapa 2

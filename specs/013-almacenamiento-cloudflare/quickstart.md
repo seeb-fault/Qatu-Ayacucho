@@ -33,4 +33,4 @@
   - Al validar se encontró un fallo: `scripts/limpiar-documentos.ts` arrancaba Proveedores sin el módulo del almacén. Se corrigió, y el cierre de la aplicación ahora espera la ronda de borrado en curso.
 - **Migraciones:** `compartido/001-objetos-por-borrar`, `proveedores/003-almacen-objetos` y `resenas/005-almacen-objetos` aplicadas, revertidas y reaplicadas.
 - **Navegador: 8 suites, 48 de 48, con `QATU_ALMACEN=memoria`.** Las subidas y descargas de documentos (proveedores) y de fotos (reseñas) recorren el almacén externo.
-- **Desarrollo:** la simulación de `archivos:mover` sobre la base de desarrollo encontró 2 documentos de proveedor por mover.
+- **Desarrollo (con copia previa de la base):** con `QATU_ALMACEN=r2`, la simulación encontró 2 documentos de proveedor. `archivos:mover` los movió a R2 (2 movidos, 0 pendientes, sin errores) y `restauracion:verificar` los leyó desde R2, los descifró y confirmó su hash (2 vigentes, 2 verificados, sin problemas).
