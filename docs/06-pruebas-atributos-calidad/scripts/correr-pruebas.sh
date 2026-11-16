@@ -13,6 +13,8 @@ export APP_ORIGIN=http://127.0.0.1:3100 QATU_E2E_API_PORT=3401 QATU_TEST_PORT=33
 
 cd "$RAIZ/backend"
 npm run -s migrate | tail -1
+# Las suites arrancan el backend desde dist/ (npm run start): se compila para probar el código actual.
+npm run -s build && echo "backend compilado"
 # El backend (node:test) usa su propia base, como en CI; aquí solo los recorridos de navegador.
 # El frontend consulta la API desde el servidor en tiempo de ejecución: QATU_API_URL debe apuntar al backend de prueba.
 export QATU_API_URL=http://127.0.0.1:3401

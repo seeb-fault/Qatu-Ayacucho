@@ -6,17 +6,24 @@ import { ReservasModule, ConsultaReservas } from '../reservas';
 import { Resenas } from './aplicacion/resenas';
 import { Evidencias } from './aplicacion/evidencias';
 import { Incidencias } from './aplicacion/incidencias';
+import { Reclamaciones } from './aplicacion/reclamaciones';
 import { PostgresResenas } from './infraestructura/postgres';
 import { PostgresEvidencias } from './infraestructura/postgres-evidencias';
 import { PostgresIncidencias } from './infraestructura/postgres-incidencias';
+import { PostgresReclamaciones } from './infraestructura/postgres-reclamaciones';
 import { ModeracionResenasController, ResenaReservaController, ResenasPublicasController } from './presentacion/resenas.controller';
 import { DescargaEvidenciaController, EvidenciasReservaController, ParticipanteEvidenciaGuard } from './presentacion/evidencias.controller';
 import { IncidenciasReservaController, ResolucionIncidenciasController } from './presentacion/incidencias.controller';
+import { AtencionReclamacionesController, LibroReclamacionesController } from './presentacion/reclamaciones.controller';
 
-/** Reputación y confianza (técnicamente «resenas»). Depende de Reservas por su fachada; Reservas no lo importa. */
+/**
+ * Reputación y confianza (técnicamente «resenas»): reseñas, evidencias, incidencias y el Libro de Reclamaciones (012).
+ * Depende de Reservas por su fachada; Reservas no lo importa.
+ */
 @Module({
   imports: [UsuariosModule, ReservasModule],
-  controllers: [ResenaReservaController, ResenasPublicasController, ModeracionResenasController, EvidenciasReservaController, DescargaEvidenciaController, IncidenciasReservaController, ResolucionIncidenciasController],
+  controllers: [ResenaReservaController, ResenasPublicasController, ModeracionResenasController, EvidenciasReservaController, DescargaEvidenciaController, IncidenciasReservaController, ResolucionIncidenciasController,
+    LibroReclamacionesController, AtencionReclamacionesController],
   providers: [
     { provide: Pool, useFactory: () => crearPool(5) },
     { provide: Resenas, inject: [Pool, ConsultaReservas, IdentidadUsuarios],
@@ -26,6 +33,8 @@ import { IncidenciasReservaController, ResolucionIncidenciasController } from '.
       useFactory: (pool: Pool, reservas: ConsultaReservas, identidad: IdentidadUsuarios, incidencias: PostgresIncidencias) => new Evidencias(new PostgresEvidencias(pool), reservas, identidad, incidencias) },
     { provide: Incidencias, inject: [PostgresIncidencias, ConsultaReservas, IdentidadUsuarios, Pool],
       useFactory: (repo: PostgresIncidencias, reservas: ConsultaReservas, identidad: IdentidadUsuarios, pool: Pool) => new Incidencias(repo, reservas, identidad, new PostgresEvidencias(pool)) },
+    { provide: Reclamaciones, inject: [Pool, IdentidadUsuarios],
+      useFactory: (pool: Pool, identidad: IdentidadUsuarios) => new Reclamaciones(new PostgresReclamaciones(pool), identidad) },
     ParticipanteEvidenciaGuard,
   ],
 })
