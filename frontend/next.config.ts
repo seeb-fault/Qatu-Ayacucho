@@ -37,6 +37,8 @@ const cabeceras = [
 
 const config: NextConfig = {
   poweredByHeader: false,
+  // Imagen de Docker (008): servidor autónomo con solo lo necesario. En desarrollo y en las pruebas se usa next start.
+  output: process.env.QATU_NEXT_STANDALONE === '1' ? 'standalone' : undefined,
   distDir: process.env.QATU_NEXT_DIST_DIR ?? '.next',
   experimental: { proxyClientMaxBodySize: 12 * 1024 * 1024 },
   async headers() {
