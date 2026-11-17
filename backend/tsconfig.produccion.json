@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": { "rootDir": ".", "outDir": "dist-produccion" },
+  "include": ["src/**/*.ts", "scripts/**/*.ts"]
+}

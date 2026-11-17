@@ -1,0 +1,11 @@
+# Nunca dentro de la imagen: secretos, dependencias locales, compilados y resultados de pruebas.
+.env
+.env.*
+node_modules
+.next
+.next-*
+out
+test-results
+playwright-report
+tests
+*.log

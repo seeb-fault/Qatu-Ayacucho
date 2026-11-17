@@ -19,3 +19,4 @@ backend/dist/
 .local-reconstruccion/
 backend/coverage/
 docs/06-pruebas-atributos-calidad/carga/.tmp/
+backend/dist-produccion/

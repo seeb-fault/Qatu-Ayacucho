@@ -13,9 +13,10 @@ import { ResenasModule } from './modules/resenas';
 import { ErrorAplicacion } from './shared/dominio/error-aplicacion';
 import { proxiesConfiables } from './shared/infraestructura/proxies';
 import { AlmacenModule } from './shared/infraestructura/almacen.module';
+import { SaludModule } from './shared/infraestructura/salud';
 import { describirError } from './shared/infraestructura/base-datos';
 
-@Module({ imports: [AlmacenModule, UsuariosModule, ProveedoresModule, CatalogoModule, ReservasModule, PagosModule, ResenasModule] })
+@Module({ imports: [AlmacenModule, SaludModule, UsuariosModule, ProveedoresModule, CatalogoModule, ReservasModule, PagosModule, ResenasModule] })
 class AppModule {}
 
 @Catch()
