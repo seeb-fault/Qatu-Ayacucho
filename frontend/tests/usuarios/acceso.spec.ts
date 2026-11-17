@@ -19,8 +19,10 @@ test('registro real → perfil → salir → ingresar', async ({ page }) => {
   await expect(page.getByRole('status')).toHaveText('Tu perfil se guardó.');
   await page.getByRole('button', { name: 'Cerrar sesión' }).click();
   await expect(page).toHaveURL(/:\d+\/$/);
+  // Sin sesión, Mi perfil lleva directo a Ingresar (sin tarjeta intermedia) y luego regresa a /cuenta.
   await page.goto('/cuenta');
-  await expect(page).toHaveURL(/\/ingresar$/);
+  await expect(page).toHaveURL(/\/ingresar\?siguiente=%2Fcuenta$/);
+  await expect(page.getByRole('link', { name: 'Ingresar a mi cuenta' })).toHaveCount(0);
   await page.goto('/ingresar');
   await page.getByLabel('Correo electrónico').fill(email);
   await page.getByLabel('Contraseña', { exact: true }).fill(password);
@@ -33,7 +35,7 @@ test('registro real → perfil → salir → ingresar', async ({ page }) => {
 
 test('perfil privado y formulario móvil sin desborde', async ({ page }) => {
   await page.goto('/cuenta');
-  await expect(page).toHaveURL(/\/ingresar$/);
+  await expect(page).toHaveURL(/\/ingresar\?siguiente=%2Fcuenta$/);
   await page.setViewportSize({ width: 360, height: 900 });
   for (const ruta of ['/registro', '/ingresar', '/cuenta']) {
     await page.goto(ruta);
