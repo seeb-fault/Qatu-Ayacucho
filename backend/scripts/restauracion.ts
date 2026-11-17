@@ -1,9 +1,10 @@
 import { createHash } from 'node:crypto';
 import type { Pool } from 'pg';
 import { ArchivosCifrados } from '../src/shared/infraestructura/archivos-cifrados';
+import type { AlmacenObjetos } from '../src/shared/infraestructura/almacen';
 import { MIGRACIONES } from './migraciones';
 
-/** Tablas con archivos cifrados dentro de la base: la copia de PostgreSQL los incluye. */
+/** Tablas con archivos cifrados. El contenido está en la base o, desde 013, en el almacén externo (columna objeto). */
 const ARCHIVOS = [
   { tabla: 'evidencias', borrado: 'eliminada_en' },
   { tabla: 'documentos_proveedor', borrado: 'eliminado_en' },
@@ -25,9 +26,10 @@ export interface ResultadoRestauracion {
 /**
  * Comprueba una base restaurada: migraciones completas, restricciones válidas, cada archivo cifrado
  * descifra con DOCUMENTOS_KEY y coincide con su hash, y el historial de pagos está completo.
- * Solo lee; no cambia la base.
+ * Los archivos en el almacén externo se leen de `almacen`: si falta alguno, la copia de la base no basta para restaurar.
+ * Solo lee; no cambia la base ni el almacén.
  */
-export async function verificarRestauracion(pool: Pick<Pool, 'query'>, archivos = new ArchivosCifrados()): Promise<ResultadoRestauracion> {
+export async function verificarRestauracion(pool: Pick<Pool, 'query'>, archivos = new ArchivosCifrados(), almacen: AlmacenObjetos | null = null): Promise<ResultadoRestauracion> {
   const problemas: string[] = [], huella = createHash('sha256');
 
   const aplicadas = new Set((await pool.query('SELECT nombre FROM migraciones')).rows.map(f => f.nombre as string));
@@ -50,12 +52,17 @@ export async function verificarRestauracion(pool: Pick<Pool, 'query'>, archivos 
     r.retirados = (await pool.query(`SELECT count(*)::integer AS n FROM ${tabla} WHERE ${borrado} IS NOT NULL`)).rows[0].n;
     // Por lotes, para no cargar todos los archivos en memoria.
     for (let desde = '00000000-0000-0000-0000-000000000000'; ;) {
-      const lote = (await pool.query(`SELECT id, bytes, sha256, contenido, iv, tag FROM ${tabla} WHERE ${borrado} IS NULL AND id > $1 ORDER BY id LIMIT 50`, [desde])).rows;
+      const lote = (await pool.query(`SELECT id, bytes, sha256, contenido, objeto, iv, tag FROM ${tabla} WHERE ${borrado} IS NULL AND id > $1 ORDER BY id LIMIT 50`, [desde])).rows;
       if (!lote.length) break;
       for (const f of lote) {
         r.vigentes++;
         huella.update(`${tabla}/${f.id}/${f.sha256};`);
         if (!archivos.habilitado()) continue;
+        if (!f.contenido) {
+          if (!almacen) { problemas.push(`${tabla} ${f.id}: está en el almacén externo y QATU_ALMACEN no lo habilita.`); continue; }
+          try { f.contenido = await almacen.leer(f.objeto); } catch { problemas.push(`${tabla} ${f.id}: no se pudo leer del almacén externo.`); continue; }
+          if (!f.contenido) { problemas.push(`${tabla} ${f.id}: falta en el almacén externo.`); continue; }
+        }
         try {
           const claro = archivos.descifrar(f);
           if (claro.length !== f.bytes || createHash('sha256').update(claro).digest('hex') !== f.sha256) problemas.push(`${tabla} ${f.id}: el contenido no coincide con su hash.`);

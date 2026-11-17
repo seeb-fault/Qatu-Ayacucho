@@ -11,9 +11,10 @@
     "admin:crear": "node --env-file-if-exists=.env --import tsx scripts/aprovisionar-admin.ts",
     "documentos:limpiar": "node --env-file-if-exists=.env --import tsx scripts/limpiar-documentos.ts",
     "restauracion:verificar": "node --env-file-if-exists=.env --import tsx scripts/verificar-restauracion.ts",
+    "archivos:mover": "node --env-file-if-exists=.env --import tsx scripts/mover-archivos.ts",
     "test:carga:catalogo": "node scripts/carga-catalogo.mjs",
     "carga:preparar": "node scripts/preparar-carga-catalogo.mjs",
-    "test": "node --env-file-if-exists=.env --import tsx --test --test-concurrency=1 test/usuarios/*.test.ts test/proveedores/*.test.ts test/catalogo/*.test.ts test/reservas/*.test.ts test/pagos/*.test.ts test/resenas/*.test.ts"
+    "test": "node --env-file-if-exists=.env --import tsx --import ./test/entorno-pruebas.ts --test --test-concurrency=1 test/almacen/*.test.ts test/usuarios/*.test.ts test/proveedores/*.test.ts test/catalogo/*.test.ts test/reservas/*.test.ts test/pagos/*.test.ts test/resenas/*.test.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.0",

@@ -18,6 +18,8 @@ El incremento **011.1** añade [mapas y ubicación](011-mapas-ubicacion/quicksta
 
 El incremento **012.1** añade [información legal y Libro de Reclamaciones](012-legal-reclamaciones/quickstart.md): términos y condiciones, política de cancelaciones y devoluciones, privacidad y contacto, enlazados desde el pie; y un Libro de Reclamaciones virtual integrado, sin cuenta obligatoria, con número correlativo, constancia imprimible, consulta con código y atención por la administración en 15 días hábiles. Los datos del titular se configuran y nunca se inventan.
 
+El incremento **013.1** lleva los [archivos privados a Cloudflare R2](013-almacenamiento-cloudflare/quickstart.md): los documentos de proveedores y las fotos de evidencia se cifran en Qatu y se guardan en un bucket privado, con una cola de borrado que garantiza la retención aunque R2 falle, un script verificado para mover los archivos existentes y un verificador de restauración que lee el almacén. PostgreSQL sigue siendo el almacén por defecto; R2 se activa con `QATU_ALMACEN=r2`.
+
 ## Evolución pendiente
 
 - [005 — Reservas, contratación y pagos](005-reservas-contratacion-pagos/spec.md)
@@ -26,6 +28,7 @@ El incremento **012.1** añade [información legal y Libro de Reclamaciones](012
 - [008 — Despliegue y validación](008-despliegue-validacion/spec.md)
 - [011 — Mapas y ubicación](011-mapas-ubicacion/spec.md): etapa 2, lugar del trabajo marcado por el cliente y «Cerca de ti».
 - [010 — Coordinación por WhatsApp](010-coordinacion-whatsapp/spec.md): etapa 2, avisos automáticos por WhatsApp Business (con costo, D08).
+- [013 — Almacenamiento y borde con Cloudflare](013-almacenamiento-cloudflare/spec.md): etapa 2, fotos públicas en la CDN; etapa 3, Cloudflare delante con WAF, IP real y Turnstile.
 - [012 — Información legal y Libro de Reclamaciones](012-legal-reclamaciones/spec.md): etapa 2, envío por correo, suspensión del plazo y avisos de vencimiento; datos reales del titular y revisión legal (D-012-1).
 - [009 — Mi lista](009-mi-lista/spec.md): guardar herramientas y oficios con sus fechas y enviar todas las solicitudes en un paso; exige sesión.
 
