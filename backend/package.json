@@ -2,7 +2,9 @@
   "name": "qatu-api",
   "version": "0.1.0",
   "private": true,
-  "engines": { "node": ">=22.0.0" },
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "dev": "node --env-file-if-exists=.env --import tsx src/main.ts",
     "build": "tsc -p tsconfig.json",
@@ -11,6 +13,8 @@
     "admin:crear": "node --env-file-if-exists=.env --import tsx scripts/aprovisionar-admin.ts",
     "documentos:limpiar": "node --env-file-if-exists=.env --import tsx scripts/limpiar-documentos.ts",
     "restauracion:verificar": "node --env-file-if-exists=.env --import tsx scripts/verificar-restauracion.ts",
+    "openapi": "node --import tsx scripts/openapi.ts",
+    "openapi:comprobar": "node --import tsx scripts/openapi.ts --comprobar",
     "archivos:mover": "node --env-file-if-exists=.env --import tsx scripts/mover-archivos.ts",
     "test:carga:catalogo": "node scripts/carga-catalogo.mjs",
     "carga:preparar": "node scripts/preparar-carga-catalogo.mjs",
@@ -19,8 +23,9 @@
   "dependencies": {
     "@nestjs/common": "^11.0.0",
     "@nestjs/core": "^11.0.0",
-    "@nestjs/platform-express": "^11.0.0",
     "@nestjs/jwt": "^11.0.0",
+    "@nestjs/platform-express": "^11.0.0",
+    "@nestjs/swagger": "11.4.8",
     "pg": "^8.16.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2"
@@ -31,5 +36,8 @@
     "@types/pg": "^8.15.0",
     "tsx": "^4.20.0",
     "typescript": "~5.9.3"
+  },
+  "scarfSettings": {
+    "enabled": false
   }
 }

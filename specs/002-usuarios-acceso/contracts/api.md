@@ -23,7 +23,7 @@
 - PATCH /admin/usuarios/:id/estado: solo admin activo; UUID válido y DTO exacto `{estadoActual,estado,motivo}`. Estados activo/inactivo diferentes; motivo trim de 10–500 caracteres. Devuelve 200 con identidad pública. 404 cuenta ausente; 409 estado desactualizado o cuenta administrativa protegida. Desactivar revoca todas sus sesiones; reactivar no las recupera. Estado/revocación/auditoría son una transacción.
 - GET /admin/usuarios/:id/auditoria: solo admin activo; query pagina igual a la anterior; devuelve `{eventos,pagina,total,paginas}`, 20 eventos por página orden fecha/id descendente. Evento: `{id,actorId,usuarioId,accion,estadoAnterior,estadoNuevo,motivo,creadoEn}`. actorId y estadoAnterior son null únicamente para crear_admin vía CLI. Sin ruta para editar/borrar eventos.
 
-El contrato fuente se sincroniza para US1/US2/US3; una definición OpenAPI legible por máquinas sigue pendiente. Aprovisionamiento CLI documentado en backend/README.md, sin endpoint público ni credenciales por defecto.
+El contrato fuente se sincroniza para US1/US2/US3; la definición OpenAPI legible por máquinas está en [openapi.json](../../../docs/03-diseño-de-software/diseño-externo/openapi.json) (014). Aprovisionamiento CLI documentado en backend/README.md, sin endpoint público ni credenciales por defecto.
 
 ## Datos de entrada/salida propuestos
 

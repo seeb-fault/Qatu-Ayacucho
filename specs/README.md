@@ -20,6 +20,8 @@ El incremento **012.1** añade [información legal y Libro de Reclamaciones](012
 
 El incremento **013.1** lleva los [archivos privados a Cloudflare R2](013-almacenamiento-cloudflare/quickstart.md): los documentos de proveedores y las fotos de evidencia se cifran en Qatu y se guardan en un bucket privado, con una cola de borrado que garantiza la retención aunque R2 falle, un script verificado para mover los archivos existentes y un verificador de restauración que lee el almacén. PostgreSQL sigue siendo el almacén por defecto; R2 se activa con `QATU_ALMACEN=r2`.
 
+El incremento **014.1** documenta la API con [Swagger/OpenAPI](014-documentacion-api/quickstart.md): la página `/api/v1/docs` muestra los 94 endpoints agrupados por módulo y permite probarlos con sesión; el contrato `openapi.json` se genera desde los controladores y `npm test` falla si una ruta queda sin documentar o el archivo se desactualiza.
+
 ## Evolución pendiente
 
 - [005 — Reservas, contratación y pagos](005-reservas-contratacion-pagos/spec.md)
@@ -30,6 +32,7 @@ El incremento **013.1** lleva los [archivos privados a Cloudflare R2](013-almace
 - [010 — Coordinación por WhatsApp](010-coordinacion-whatsapp/spec.md): etapa 2, avisos automáticos por WhatsApp Business (con costo, D08).
 - [013 — Almacenamiento y borde con Cloudflare](013-almacenamiento-cloudflare/spec.md): etapa 2, fotos públicas en la CDN; etapa 3, Cloudflare delante con WAF, IP real y Turnstile.
 - [012 — Información legal y Libro de Reclamaciones](012-legal-reclamaciones/spec.md): etapa 2, envío por correo, suspensión del plazo y avisos de vencimiento; datos reales del titular y revisión legal (D-012-1).
+- [014 — Documentación y pruebas de contrato de la API](014-documentacion-api/spec.md): etapa 2, colección Bruno con reporte HTML en el CI.
 - [009 — Mi lista](009-mi-lista/spec.md): guardar herramientas y oficios con sus fechas y enviar todas las solicitudes en un paso; exige sesión.
 
 ## Guías

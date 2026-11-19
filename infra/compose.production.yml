@@ -52,6 +52,8 @@ services:
       QATU_TITULAR_CORREO: ${QATU_TITULAR_CORREO:-}
       QATU_TITULAR_TELEFONO: ${QATU_TITULAR_TELEFONO:-}
       QATU_VERSION: ${QATU_VERSION:-}
+      # Swagger en /api/v1/docs (014): apagado en producción; 1 lo enciende (por ejemplo, para una revisión).
+      QATU_DOCS: ${QATU_DOCS:-0}
     expose: ["3001"]
     networks: [interna]
 

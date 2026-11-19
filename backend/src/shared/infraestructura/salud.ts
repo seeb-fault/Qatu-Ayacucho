@@ -1,5 +1,7 @@
 import { Controller, Get, HttpException, Inject, Module, type OnApplicationShutdown } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Pool } from 'pg';
+import { Doc, entero, nulable, opciones, respuesta } from '../presentacion/openapi';
 import { crearPool } from './base-datos';
 import { almacenDelProceso } from './almacen';
 
@@ -10,12 +12,20 @@ const POOL_SALUD = Symbol('POOL_SALUD');
  * - GET /salud/vida: el proceso responde (liveness). No toca la base.
  * - GET /salud: lista para atender (readiness): PostgreSQL responde en menos de 3 s. Si no, 503.
  */
+@ApiTags('Salud')
 @Controller('salud')
 export class SaludController {
   constructor(@Inject(POOL_SALUD) private readonly pool: Pool) {}
 
+  @Doc({ acceso: 'publico', resumen: 'Comprobar que el proceso responde', detalle: 'Liveness: no toca la base de datos.', devuelve: respuesta({ estado: opciones('ok') }) })
   @Get('vida') vida() { return { estado: 'ok' }; }
 
+  @Doc({
+    acceso: 'publico', resumen: 'Comprobar que la API puede atender',
+    detalle: 'Readiness: PostgreSQL debe responder en menos de 3 s. No expone datos personales ni secretos.',
+    devuelve: respuesta({ estado: opciones('ok'), base: opciones('ok'), baseMs: entero(0), almacen: opciones('postgres', 'r2', 'memoria'), version: nulable({ type: 'string' }) }),
+    errores: { 503: 'PostgreSQL no respondió en 3 s (SERVICIO_NO_DISPONIBLE)' },
+  })
   @Get()
   async lista() {
     const inicio = Date.now();

@@ -13,7 +13,7 @@ export function validarEntrega(root) {
   const indice = entregas.indexOf(manifest.ultimaEntrega);
   assert.ok(indice >= 0, 'Entrega desconocida');
   const incrementos = manifest.incrementos ?? [];
-  assert.ok(Array.isArray(incrementos) && incrementos.every(i => ['005.1','005.2','005.3','005.4','005.5','005.6','005.7','005.8','006.1','006.2','006.3','009.1','010.1','011.1','012.1','013.1'].includes(i)) && new Set(incrementos).size === incrementos.length, 'Incremento desconocido o repetido');
+  assert.ok(Array.isArray(incrementos) && incrementos.every(i => ['005.1','005.2','005.3','005.4','005.5','005.6','005.7','005.8','006.1','006.2','006.3','009.1','010.1','011.1','012.1','013.1','014.1'].includes(i)) && new Set(incrementos).size === incrementos.length, 'Incremento desconocido o repetido');
   const reservas = incrementos.includes('005.1');
   const efectivo = incrementos.includes('005.2');
   const cotizaciones = incrementos.includes('005.3');
@@ -36,6 +36,7 @@ export function validarEntrega(root) {
   const legal = incrementos.includes('012.1');
   const almacen = incrementos.includes('013.1');
   assert.ok(!almacen || evidencias, '013.1 requiere evidencias 006.2 (archivos cifrados que mover al almacén)');
+  const documentacion = incrementos.includes('014.1');
   assert.ok(!legal || incidencias, '012.1 requiere incidencias 006.3 (el libro vive en Reputación y confianza)');
   assert.ok(!resenas || ejecucion, '006.1 requiere operaciones cerradas: herramientas devueltas (005.2) y servicios cerrados (005.5)');
   assert.ok(!pagos || avisos, '005.8 requiere avisos 005.7');
@@ -133,6 +134,10 @@ export function validarEntrega(root) {
     for (const artefacto of artefactos) requerir(`specs/013-almacenamiento-cloudflare/${artefacto}`);
     for (const relative of ['backend/migrations/compartido/001-objetos-por-borrar.sql','backend/migrations/proveedores/003-almacen-objetos.sql','backend/migrations/resenas/005-almacen-objetos.sql','backend/src/shared/infraestructura/almacen.ts','backend/src/shared/infraestructura/archivos-externos.ts','backend/src/shared/infraestructura/almacen.module.ts','backend/scripts/migrar-archivos.ts','backend/scripts/mover-archivos.ts','backend/test/almacen/almacen.test.ts','backend/test/entorno-pruebas.ts']) requerir(relative);
   } else ausente('backend/migrations/compartido/001-objetos-por-borrar.sql');
+  if (documentacion) {
+    for (const artefacto of artefactos) requerir(`specs/014-documentacion-api/${artefacto}`);
+    for (const relative of ['backend/src/shared/presentacion/openapi.ts','backend/src/shared/infraestructura/documentacion-api.ts','backend/scripts/openapi.ts','backend/test/compartido/openapi.test.ts','docs/03-diseño-de-software/diseño-externo/openapi.json']) requerir(relative);
+  } else ausente('backend/src/shared/presentacion/openapi.ts');
   return {
     entrega: manifest.ultimaEntrega,
     frontend: indice >= 1,

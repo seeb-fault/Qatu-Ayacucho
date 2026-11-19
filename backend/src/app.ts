@@ -15,6 +15,7 @@ import { proxiesConfiables } from './shared/infraestructura/proxies';
 import { AlmacenModule } from './shared/infraestructura/almacen.module';
 import { SaludModule } from './shared/infraestructura/salud';
 import { describirError } from './shared/infraestructura/base-datos';
+import { documentacionHabilitada, publicarDocumentacion } from './shared/infraestructura/documentacion-api';
 
 @Module({ imports: [AlmacenModule, SaludModule, UsuariosModule, ProveedoresModule, CatalogoModule, ReservasModule, PagosModule, ResenasModule] })
 class AppModule {}
@@ -64,5 +65,7 @@ export async function crearApp() {
     next();
   });
   app.useGlobalFilters(new Errores());
+  // Swagger (014): /api/v1/docs y /api/v1/docs/openapi.json. En producción solo con QATU_DOCS=1.
+  if (documentacionHabilitada()) publicarDocumentacion(app);
   return app;
 }

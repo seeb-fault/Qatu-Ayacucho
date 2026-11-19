@@ -165,6 +165,7 @@ CULQI_SECRET_KEY=
 - **`DOCUMENTOS_KEY` es irrecuperable:** sin ella, los documentos y fotos cifrados no se pueden leer, ni siquiera con las copias. Guárdala en tu gestor de contraseñas **además** de en Dokploy.
 - Los secretos son hexadecimales a propósito: así no rompen la URL de la base.
 - Culqi: solo llaves `pk_test_` / `sk_test_`; vacías desactivan el pago en línea.
+- Swagger (`/api/v1/docs`) está apagado en producción. Para mostrarlo en una revisión, agrega `QATU_DOCS=1` y vuelve a desplegar; quítalo al terminar.
 
 ### Dominio (pestaña Domains)
 

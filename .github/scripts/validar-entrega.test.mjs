@@ -260,6 +260,18 @@ test('013.1 exige almacén externo, migraciones, cola de borrado y sus pruebas',
   assert.equal(validarEntrega(root).resenas,true);
   rmSync(join(root,'backend/src/shared/infraestructura/archivos-externos.ts'));assert.throws(()=>validarEntrega(root),/archivos-externos/);
 });
+test('014.1 exige el contrato OpenAPI, la página de Swagger y sus pruebas',context=>{
+  const root=prepararCotizaciones(context);
+  writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2','005.3','014.1']}));
+  assert.throws(()=>validarEntrega(root),/014-documentacion-api/);
+  for(const nombre of ['backend/src/shared/presentacion/openapi.ts','backend/src/shared/infraestructura/documentacion-api.ts','backend/scripts/openapi.ts','backend/test/compartido/openapi.test.ts','docs/03-diseño-de-software/diseño-externo/openapi.json',...['spec.md','plan.md','tasks.md','research.md','data-model.md','quickstart.md','contracts/api.md','checklists/requirements.md'].map(a=>'specs/014-documentacion-api/'+a)]) {
+    const target=join(root,nombre);mkdirSync(dirname(target),{recursive:true});writeFileSync(target,'');
+  }
+  assert.doesNotThrow(()=>validarEntrega(root));
+  rmSync(join(root,'docs/03-diseño-de-software/diseño-externo/openapi.json'));assert.throws(()=>validarEntrega(root),/openapi\.json/);
+  writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2','005.3']}));
+  assert.throws(()=>validarEntrega(root),/presentacion\/openapi/);
+});
 test('005.8 no puede declararse sin avisos',context=>{
   const root=prepararCotizaciones(context);writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2','005.3','005.4','005.5','005.6','005.8']}));assert.throws(()=>validarEntrega(root),/005.8 requiere/);
 });
