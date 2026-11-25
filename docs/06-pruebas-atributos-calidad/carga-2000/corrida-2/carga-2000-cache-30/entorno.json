@@ -1,0 +1,11 @@
+{
+  "fecha": "2026-11-25T21:00:22.814Z",
+  "maquina": "GitHub Actions ubuntu-24.04",
+  "cpu": "AMD EPYC 7763 64-Core Processor",
+  "nucleos": 4,
+  "memoria_gb": 17,
+  "node": "v24.22.3",
+  "k6": "2.4.0",
+  "cache_segundos": 30,
+  "nota": "PostgreSQL, la API (un proceso de Node) y k6 en la misma máquina."
+}

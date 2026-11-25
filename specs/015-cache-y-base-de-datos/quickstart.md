@@ -20,4 +20,4 @@
 - **Mis reservas:** de 7,59 ms y 172 bloques a **1,49 ms y 36 bloques**, mismo resultado.
 - **`test/catalogo/cache.test.ts`:** 10 de 10 (9 unitarias y 1 de integración HTTP).
 - **Bruno** confirmó las cabeceras y encontró el 400 cacheable (corregido).
-- **k6 sin caché frente a con caché:** pendiente de la corrida en GitHub Actions (T008).
+- **k6 sin caché frente a con caché (GitHub Actions, mismo procesador, 2 000 usuarios):** p95 de 1 595 ms a **168 ms**, p50 de 1 293 ms a 3 ms, +50 % de peticiones por segundo; 0 % de errores en ambos (docs/06-pruebas-atributos-calidad/carga-2000/README.md).

@@ -14,4 +14,4 @@ Estado: etapa 1 implementada (2026-11-25).
 
 - [x] T006 [US2] Perfil PERFIL=2000 en carga.k6.js con métricas y metas por escalón.
 - [x] T007 [US2] Workflow .github/workflows/carga.yml con caché 0 y 30 s y artefactos.
-- [ ] T008 [US2] Ejecutar el workflow y registrar resultados en docs/06-pruebas-atributos-calidad/carga-2000/.
+- [x] T008 [US2] Ejecutar el workflow y registrar resultados en docs/06-pruebas-atributos-calidad/carga-2000/.

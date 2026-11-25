@@ -5,4 +5,4 @@
 - [x] Decisiones con fecha, responsable y alternativas en research.md.
 - [x] Desactualización máxima documentada (M015-FR04).
 - [x] Sin datos privados en caché.
-- [ ] Comparación con k6 registrada (T008).
+- [x] Comparación con k6 registrada (T008).

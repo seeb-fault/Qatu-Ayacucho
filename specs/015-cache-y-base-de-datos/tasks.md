@@ -9,4 +9,4 @@ Estado: etapa 1 implementada (2026-11-25).
 - [x] T005 [US2] Cabeceras Cache-Control en lecturas públicas y no-store en errores (filtro global).
 - [x] T006 Pruebas en backend/test/catalogo/cache.test.ts.
 - [x] T007 QATU_CACHE_SEGUNDOS en backend/.env.example, infra/compose.production.yml e infra/runbooks/despliegue.md.
-- [ ] T008 [US2] Medir con k6 (2 000 usuarios) sin caché y con caché, y registrar la comparación.
+- [x] T008 [US2] Medir con k6 (2 000 usuarios) sin caché y con caché, y registrar la comparación.

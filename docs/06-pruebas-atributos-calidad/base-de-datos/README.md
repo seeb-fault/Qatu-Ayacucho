@@ -65,4 +65,13 @@ La caché ataca el punto 4: que la búsqueda pública, el 70 % del tráfico, no 
 
 ## 4. Efecto medido con k6
 
-Mismo perfil de 2 000 usuarios virtuales (ver [carga-2000](../carga-2000/README.md)) en dos máquinas iguales de GitHub Actions, sin caché (`QATU_CACHE_SEGUNDOS=0`) y con caché de 30 s. Los resultados están en [carga-2000/README.md](../carga-2000/README.md).
+Mismo perfil de 2 000 usuarios virtuales en máquinas de GitHub Actions, sin caché (`QATU_CACHE_SEGUNDOS=0`) y con caché de 30 s, repetido dos veces ([detalle](../carga-2000/README.md)). Comparación con el mismo procesador (Intel Xeon 6975P):
+
+| Con 2 000 usuarios | Sin caché | Con caché |
+|---|---|---|
+| p95 | 1 595 ms | **168 ms** (9,5 veces menos) |
+| p50 | 1 293 ms | **3 ms** |
+| Peticiones por segundo | 561 | **840** (+50 %) |
+| Errores | 0 % | 0 % |
+
+Con 1 000 usuarios el p95 baja de 326–381 ms a 5–11 ms. Sin caché la API también cumple la meta (p95 ≤ 2 s con 2 000 usuarios), pero cerca del límite. La caché da el margen para crecer.
