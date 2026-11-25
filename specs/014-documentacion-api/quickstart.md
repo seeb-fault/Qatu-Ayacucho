@@ -10,7 +10,7 @@
 
 ## Colección Bruno (etapa 2)
 
-Ver [docs/06-pruebas-atributos-calidad/bruno/README.md](../../docs/06-pruebas-atributos-calidad/bruno/README.md). Validación local (2026-11-25, base `_test` nueva): **34 peticiones y 42 de 42 pruebas**. La colección detectó que un 400 de la búsqueda salía con `Cache-Control: public` (corregido en 015: todo error lleva `no-store`).
+Ver [docs/06-pruebas-atributos-calidad/bruno/README.md](../../docs/06-pruebas-atributos-calidad/bruno/README.md). Validación local (2026-11-25, base `_test` nueva): **36 peticiones y 45 de 45 pruebas**. La colección detectó que un 400 de la búsqueda salía con `Cache-Control: public` (corregido en 015: todo error lleva `no-store`).
 
 ## Regenerar el contrato
 

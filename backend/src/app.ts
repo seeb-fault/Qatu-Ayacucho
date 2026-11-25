@@ -10,6 +10,7 @@ import { CatalogoModule } from './modules/catalogo';
 import { ReservasModule } from './modules/reservas';
 import { PagosModule } from './modules/pagos';
 import { ResenasModule } from './modules/resenas';
+import { BusquedaModule } from './modules/busqueda';
 import { ErrorAplicacion } from './shared/dominio/error-aplicacion';
 import { proxiesConfiables } from './shared/infraestructura/proxies';
 import { AlmacenModule } from './shared/infraestructura/almacen.module';
@@ -17,7 +18,7 @@ import { SaludModule } from './shared/infraestructura/salud';
 import { describirError } from './shared/infraestructura/base-datos';
 import { documentacionHabilitada, publicarDocumentacion } from './shared/infraestructura/documentacion-api';
 
-@Module({ imports: [AlmacenModule, SaludModule, UsuariosModule, ProveedoresModule, CatalogoModule, ReservasModule, PagosModule, ResenasModule] })
+@Module({ imports: [AlmacenModule, SaludModule, UsuariosModule, ProveedoresModule, CatalogoModule, ReservasModule, PagosModule, ResenasModule, BusquedaModule] })
 class AppModule {}
 
 @Catch()

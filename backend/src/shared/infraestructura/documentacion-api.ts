@@ -13,6 +13,7 @@ export const ETIQUETAS: Array<[string, string]> = [
   ['Usuarios', 'Registro, inicio y cierre de sesión, perfil propio'],
   ['Proveedores', 'Perfil de proveedor y verificación documental'],
   ['Catálogo', 'Publicaciones de herramientas y oficios, búsqueda y ubicación'],
+  ['Búsqueda', 'Búsqueda en lenguaje natural con IA y respaldo convencional'],
   ['Mi lista', 'Lista de solicitudes antes de enviarlas'],
   ['Reservas', 'Solicitudes, cotizaciones, apartado, entrega, devolución y servicio'],
   ['Pagos', 'Pago en línea en modo de prueba (Culqi)'],

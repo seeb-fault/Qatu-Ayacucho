@@ -12,7 +12,7 @@ Evidencia agregada en el Sprint 2. El mapa completo de actividades y entregables
 | Herramienta | Qué se ejecutó | Resultado |
 |---|---|---|
 | **Jest 30** (backend) | Las 32 suites del backend (unitarias de dominio e integración con PostgreSQL real), con cobertura | **32 de 32**; cobertura de **98,8 %** de líneas y **89,8 %** de ramas → [jest/](jest/) |
-| **Bruno 4.3** (API) | 34 peticiones con 42 pruebas de contrato y reglas de negocio | **42 de 42** → [bruno/](bruno/README.md) |
+| **Bruno 4.3** (API) | 36 peticiones con 45 pruebas de contrato y reglas de negocio | **45 de 45** → [bruno/](bruno/README.md) |
 | **k6 2.4** hasta **2 000 usuarios** | Escalones de 100, 250, 500, 1 000, 1 500 y 2 000 usuarios en GitHub Actions, sin caché y con caché | **12 de 12 metas** en 4 ejecuciones; 0 % de errores. Con 2 000 usuarios, p95 de 1,6–1,8 s sin caché y de **168 ms** con caché → [carga-2000/](carga-2000/README.md) |
 | **PostgreSQL** (`EXPLAIN ANALYZE`) | Consultas reales con 1 000 publicaciones y 5 000 reservas | Todas por debajo de 5 ms; «Mis reservas» de 7,6 a 1,5 ms → [base-de-datos/](base-de-datos/README.md) |
 

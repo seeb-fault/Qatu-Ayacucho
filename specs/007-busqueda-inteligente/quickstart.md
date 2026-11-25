@@ -1,31 +1,15 @@
-# Validación y recorrido — Búsqueda inteligente
+# Validación — Búsqueda inteligente
 
-## Preparación
+## Activar la IA en desarrollo
 
-No hay aplicación ejecutable todavía. Al implementar, completar aquí los comandos reales del repositorio; no se inventan npm scripts. Preparar entorno aislado con PostgreSQL, migraciones y usuarios de prueba con roles distintos. Nunca usar pagos reales ni archivos personales para la aceptación académica.
+1. Crea una llave en https://openrouter.ai/keys con un límite de crédito bajo (por ejemplo US$ 2).
+2. En `backend/.env`: `OPENROUTER_API_KEY=<tu llave>` (opcional: `QATU_IA_MODELO=`). Reinicia el backend.
+3. En `http://localhost:3000`, escribe en «Describe lo que necesitas»: «un taladro en el centro por menos de 40 soles para el sábado». Debe llevarte a /buscar con Perforación, distrito Ayacucho y hasta S/ 40, y la nota con la fecha a confirmar.
+4. Sin llave, la misma frase busca las palabras tal cual y lo explica.
+5. Prueba en vivo del adapter: `QATU_IA_PRUEBAS=1 npx jest test/busqueda` en `backend/` (usa la llave del .env).
 
-## Recorridos
+## Validación local (2026-11-25)
 
-1. US1: dado una consulta explícita de taladro/zona/presupuesto, ejecuto búsqueda; comprobar que veo filtros editables y ofertas con IDs/precios reales.
-2. US2: dado una fecha relativa o categoría ambigua, se interpreta la consulta; comprobar que se muestran campos que requieren precisión y prevalecen filtros manuales.
-3. US3: dado timeout, cuota o JSON inválido, ejecuto búsqueda; comprobar que recibo modo convencional sin bloquear reservas ni pagos.
-
-## Casos críticos
-
-- EQ-02: 429/5xx/latencia/JSON inválido con reservas/pagos operativos.
-- EQ-10: 50 consultas (30 explícitas,10 ambiguas,10 adversariales), fecha fija y etiquetas humanas.
-- Meta >=90% filtros exactos explícitos y >=80% pertinente en primeros5; cero IDs/precios inventados/escrituras.
-- Proveedor IA sustituible por doble sin modificar dominio; cuotas y límite 500 caracteres.
-
-## Registro de resultados
-
-| Campo | Valor |
-|---|---|
-| Commit/versiones/entorno | Pendiente |
-| Fixture y condiciones | Pendiente |
-| Comandos ejecutados | Pendiente |
-| Resultados positivos/negativos | Pendiente |
-| Medidas EQ-01/EQ-02/EQ-05/EQ-10 | Pendiente |
-| Limitaciones y fallos | Pendiente |
-
-[Escenarios fuente](../../docs/01-analisis-de-sistema/08-escenarios-atributos-calidad.md) · [Plan](./plan.md).
+- **Backend (`test/busqueda/busqueda.test.ts`):** validación de la salida del modelo (ids inventados, tipos incompatibles, precios y fechas inválidos, campos extra, caracteres de control), prioridad de filtros manuales, límites de entrada, adapter con fetch falso (lo que se envía, 429/402/5xx, JSON inválido, cancelación), caso de uso en cada respaldo, e integración HTTP con PostgreSQL y un OpenRouter falso local (modo natural con la oferta real, respuesta basura, IA lenta cortada a los 3 s, Origin ajeno 403).
+- **Navegador (`frontend/tests/descubrimiento/busqueda-ia.spec.ts`):** 5 de 5 — frase → filtros en la URL con la nota de interpretación; API caída → palabras tal cual; Enter desde la portada; quitar un criterio vuelve la búsqueda convencional; motivo desconocido sin mensajes inventados.
+- **Pendiente:** EQ-10 (50 consultas etiquetadas) con la llave real, y medir el costo por búsqueda.

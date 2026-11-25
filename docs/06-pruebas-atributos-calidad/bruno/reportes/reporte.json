@@ -22,13 +22,13 @@
           "status": 200,
           "statusText": "OK",
           "headers": {
-            "x-correlation-id": "3323db18-c345-412b-9330-f27c3fca71ae",
+            "x-correlation-id": "12ca3e33-af5d-4977-b82b-8edff9fe6e60",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "15",
             "etag": "W/\"f-zEyU8uspYexNXQo+eM6rxYB/Bc0\"",
-            "date": "Wed, 25 Nov 2026 20:23:14 GMT",
+            "date": "Wed, 25 Nov 2026 22:03:56 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
@@ -36,8 +36,8 @@
             "estado": "ok"
           },
           "url": "http://127.0.0.1/api/v1/salud/vida",
-          "responseTime": 27,
-          "duration": 27,
+          "responseTime": 24,
+          "duration": 24,
           "size": 15
         },
         "error": null,
@@ -47,13 +47,13 @@
           {
             "description": "200 con estado ok",
             "status": "pass",
-            "uid": "6JrkoJ18M1XVhYiB4UbiS"
+            "uid": "9S6_hKGSrTu6BjZej12W1"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.4519506,
+        "runDuration": 0.9312473,
         "name": "El proceso responde",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\01-salud-y-contrato\\salud-vida",
         "path": "01-salud-y-contrato\\salud-vida",
@@ -79,27 +79,27 @@
           "status": 200,
           "statusText": "OK",
           "headers": {
-            "x-correlation-id": "87268ed2-9589-4436-b2c1-63f132f038cd",
+            "x-correlation-id": "63d1cf1b-f6d5-49fa-83ea-5d55f61af150",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
-            "content-length": "74",
-            "etag": "W/\"4a-/8l8/awdLmUjU7LaxQGj7NQwDDk\"",
-            "date": "Wed, 25 Nov 2026 20:23:15 GMT",
+            "content-length": "75",
+            "etag": "W/\"4b-KxPjRtXjsz6e2DX0TgO2XFmUAMU\"",
+            "date": "Wed, 25 Nov 2026 22:03:56 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
             "estado": "ok",
             "base": "ok",
-            "baseMs": 4,
+            "baseMs": 23,
             "almacen": "postgres",
             "version": null
           },
           "url": "http://127.0.0.1/api/v1/salud",
-          "responseTime": 10,
-          "duration": 10,
-          "size": 74
+          "responseTime": 29,
+          "duration": 29,
+          "size": 75
         },
         "error": null,
         "status": "pass",
@@ -108,18 +108,18 @@
           {
             "description": "200 con la base disponible y sin datos sensibles",
             "status": "pass",
-            "uid": "Ipavgcrd-CQqC3gRgkGcm"
+            "uid": "DgfLuCOl-0eM00YC7VGJ2"
           },
           {
             "description": "no se guarda en caché",
             "status": "pass",
-            "uid": "WPlFudWDRnY2SbWhYGGaO"
+            "uid": "KgFTKYSOxe3pwz8d6H48k"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.2507776,
+        "runDuration": 0.1997175,
         "name": "La API puede atender (PostgreSQL)",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\01-salud-y-contrato\\salud-lista",
         "path": "01-salud-y-contrato\\salud-lista",
@@ -145,13 +145,13 @@
           "status": 200,
           "statusText": "OK",
           "headers": {
-            "x-correlation-id": "d846d683-52ca-4114-95c2-ac5fdb26f936",
+            "x-correlation-id": "b1a4f111-4394-47a8-951d-a768dea7cfe4",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
-            "content-length": "169402",
-            "etag": "W/\"295ba-Oo/pfETzcM5P8GxiR9Ie+lcmM0Q\"",
-            "date": "Wed, 25 Nov 2026 20:23:15 GMT",
+            "content-length": "173284",
+            "etag": "W/\"2a4e4-wgpghxDCMmBFyn4lvaT0fHdmrrs\"",
+            "date": "Wed, 25 Nov 2026 22:03:57 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
@@ -9278,6 +9278,110 @@
                     "Administración"
                   ]
                 }
+              },
+              "/api/v1/busqueda/intencion": {
+                "post": {
+                  "description": "La IA (OpenRouter) traduce el texto a criterios validados contra las categorías y distritos reales; las ofertas y precios salen del catálogo. Si la IA no está configurada, tarda más de 3 s, falla o se agota la cuota (30 por IP cada 15 min), responde igual en modo convencional buscando las palabras tal cual. Solo se envía al proveedor de IA el texto de la consulta.\n\n**Acceso:** público.\n\n**Escritura:** exige `Origin` igual a `APP_ORIGIN` y `Content-Type: application/json`.",
+                  "operationId": "Busqueda_intencion",
+                  "parameters": [],
+                  "requestBody": {
+                    "required": true,
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "type": "object",
+                          "properties": {
+                            "texto": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 500,
+                              "example": "taladro en el centro por menos de 40 soles para el sábado"
+                            },
+                            "filtros": {
+                              "type": "object",
+                              "properties": {
+                                "tipo": {
+                                  "type": "string",
+                                  "enum": [
+                                    "herramienta",
+                                    "servicio"
+                                  ]
+                                },
+                                "categoriaId": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 50,
+                                  "description": "Id de categoría de GET /publicaciones/opciones",
+                                  "example": "perforacion"
+                                },
+                                "zonaId": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 50,
+                                  "description": "Id de distrito de GET /publicaciones/opciones",
+                                  "example": "ayacucho"
+                                },
+                                "precioMaximoCentimos": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 99999999
+                                }
+                              },
+                              "additionalProperties": false,
+                              "description": "Filtros elegidos a mano: prevalecen sobre lo interpretado"
+                            },
+                            "page": {
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 10000,
+                              "default": 1
+                            }
+                          },
+                          "required": [
+                            "texto"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    }
+                  },
+                  "responses": {
+                    "200": {
+                      "description": "Resultados, en modo natural o convencional",
+                      "content": {
+                        "application/json": {
+                          "schema": {
+                            "$ref": "#/components/schemas/ResultadoBusquedaInteligente"
+                          }
+                        }
+                      }
+                    },
+                    "400": {
+                      "description": "Entrada inválida o campos desconocidos (ENTRADA_INVALIDA)",
+                      "content": {
+                        "application/json": {
+                          "schema": {
+                            "$ref": "#/components/schemas/Error"
+                          }
+                        }
+                      }
+                    },
+                    "403": {
+                      "description": "Origin distinto de APP_ORIGIN o Content-Type no permitido (ORIGEN_INVALIDO)",
+                      "content": {
+                        "application/json": {
+                          "schema": {
+                            "$ref": "#/components/schemas/Error"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "summary": "Buscar en lenguaje natural",
+                  "tags": [
+                    "Búsqueda"
+                  ]
+                }
               }
             },
             "info": {
@@ -9302,6 +9406,10 @@
               {
                 "name": "Catálogo",
                 "description": "Publicaciones de herramientas y oficios, búsqueda y ubicación"
+              },
+              {
+                "name": "Búsqueda",
+                "description": "Búsqueda en lenguaje natural con IA y respaldo convencional"
               },
               {
                 "name": "Mi lista",
@@ -11196,14 +11304,136 @@
                     }
                   },
                   "description": "Constancia de la hoja; no incluye identificadores internos"
+                },
+                "ResultadoBusquedaInteligente": {
+                  "type": "object",
+                  "properties": {
+                    "modo": {
+                      "type": "string",
+                      "enum": [
+                        "natural",
+                        "convencional"
+                      ],
+                      "description": "natural: la IA interpretó la consulta; convencional: se buscaron las palabras tal cual"
+                    },
+                    "motivo": {
+                      "type": "string",
+                      "enum": [
+                        "sin_configurar",
+                        "cuota",
+                        "tiempo",
+                        "error",
+                        "respuesta_invalida"
+                      ],
+                      "description": "Por qué no se usó la IA",
+                      "nullable": true
+                    },
+                    "criterios": {
+                      "type": "object",
+                      "properties": {
+                        "q": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "tipo": {
+                          "type": "string",
+                          "enum": [
+                            "herramienta",
+                            "servicio"
+                          ],
+                          "nullable": true
+                        },
+                        "categoriaId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 50,
+                          "description": "Id de categoría de GET /publicaciones/opciones",
+                          "example": "perforacion",
+                          "nullable": true
+                        },
+                        "zonaId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 50,
+                          "description": "Id de distrito de GET /publicaciones/opciones",
+                          "example": "ayacucho",
+                          "nullable": true
+                        },
+                        "precioMaximoCentimos": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 99999999,
+                          "nullable": true
+                        }
+                      },
+                      "description": "Criterios aplicados (validados; los manuales prevalecen). Editables en la web"
+                    },
+                    "fechas": {
+                      "type": "object",
+                      "properties": {
+                        "inicio": {
+                          "type": "string",
+                          "format": "date"
+                        },
+                        "fin": {
+                          "type": "string",
+                          "format": "date",
+                          "nullable": true
+                        }
+                      },
+                      "description": "Fechas mencionadas, a confirmar al reservar",
+                      "nullable": true
+                    },
+                    "camposQueRequierenPrecision": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": [
+                          "fechas",
+                          "zona",
+                          "categoria",
+                          "presupuesto",
+                          "tipo"
+                        ]
+                      }
+                    },
+                    "aviso": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "resultados": {
+                      "type": "object",
+                      "properties": {
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Publicacion"
+                          }
+                        },
+                        "total": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "limit": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 50
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
           },
           "url": "http://127.0.0.1/api/v1/docs/openapi.json",
-          "responseTime": 12,
-          "duration": 12,
-          "size": 169402
+          "responseTime": 9,
+          "duration": 9,
+          "size": 173284
         },
         "error": null,
         "status": "pass",
@@ -11212,13 +11442,13 @@
           {
             "description": "OpenAPI 3 con las rutas principales",
             "status": "pass",
-            "uid": "OAxVRHxzOJxuBWfbOw7lp"
+            "uid": "Mw_Pzx9PtHiwTVY0PgQ_1"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.2694246,
+        "runDuration": 0.2070947,
         "name": "Contrato OpenAPI publicado",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\01-salud-y-contrato\\contrato-openapi",
         "path": "01-salud-y-contrato\\contrato-openapi",
@@ -11246,31 +11476,31 @@
           "status": 201,
           "statusText": "Created",
           "headers": {
-            "x-correlation-id": "441fcfbe-638c-449e-80ff-89205ca78a2c",
+            "x-correlation-id": "99820a0e-2b82-4c90-8f53-d71d44798c88",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "207",
-            "etag": "W/\"cf-4Mit32+8c69d+uVKNs/X8aiNgWs\"",
-            "date": "Wed, 25 Nov 2026 20:23:16 GMT",
+            "etag": "W/\"cf-Lk4xkeCN63SkygGIlYCunWrPBPo\"",
+            "date": "Wed, 25 Nov 2026 22:03:57 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
             "usuario": {
-              "id": "09d3a98f-f57c-40a5-a1c7-04ea82afd6c9",
-              "email": "bruno-1795638195925-662073@example.com",
+              "id": "6b6f67ab-d54d-4371-bc74-38e2ba2f2b25",
+              "email": "bruno-1795644237517-506422@example.com",
               "nombre": "Cliente Bruno",
               "estado": "activo",
               "roles": [
                 "cliente"
               ]
             },
-            "expiraEn": "2026-11-25T20:38:16.353Z"
+            "expiraEn": "2026-11-25T22:18:57.945Z"
           },
           "url": "http://127.0.0.1/api/v1/auth/registro",
-          "responseTime": 434,
-          "duration": 434,
+          "responseTime": 438,
+          "duration": 438,
           "size": 207
         },
         "error": null,
@@ -11280,18 +11510,18 @@
           {
             "description": "201 con la identidad pública y rol cliente",
             "status": "pass",
-            "uid": "5OUmO6D-24TFDF221BPd1"
+            "uid": "lJJGrhCU8D7WuAZqE1Dgf"
           },
           {
             "description": "cookie de sesión HttpOnly, SameSite=Strict y Path=/api/v1",
             "status": "pass",
-            "uid": "En7GsVGd9hFE7xtnbbALL"
+            "uid": "QuQ6WX1wLsaSd4YMfLGZf"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.952141,
+        "runDuration": 0.8828649,
         "name": "Crear una cuenta (rol cliente)",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\02-usuarios\\01-registro",
         "path": "02-usuarios\\01-registro",
@@ -11318,20 +11548,20 @@
           "status": 403,
           "statusText": "Forbidden",
           "headers": {
-            "x-correlation-id": "bc6d292f-899e-4ef0-bccf-8a970adc3900",
+            "x-correlation-id": "be16cf6d-3918-4e2a-a0fd-0d313614bb1b",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "117",
-            "etag": "W/\"75-OkOQCGEn5rckNQTTTVpPy1EdNkQ\"",
-            "date": "Wed, 25 Nov 2026 20:23:16 GMT",
+            "etag": "W/\"75-50hrdPi7ZJ85CPcaKg5bN9WwDws\"",
+            "date": "Wed, 25 Nov 2026 22:03:58 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
             "code": "ORIGEN_INVALIDO",
             "mensaje": "Solicitud no permitida.",
-            "correlationId": "bc6d292f-899e-4ef0-bccf-8a970adc3900"
+            "correlationId": "be16cf6d-3918-4e2a-a0fd-0d313614bb1b"
           },
           "url": "http://127.0.0.1/api/v1/auth/registro",
           "responseTime": 4,
@@ -11345,13 +11575,13 @@
           {
             "description": "403 ORIGEN_INVALIDO con el formato de error común",
             "status": "pass",
-            "uid": "23JIivGHT1MOz3BXsp_eN"
+            "uid": "kZTFSAyyYftSFuV3EmU2H"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.148024,
+        "runDuration": 0.1477223,
         "name": "Rechazar escritura sin Origin (CSRF)",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\02-usuarios\\02-registro-sin-origen",
         "path": "02-usuarios\\02-registro-sin-origen",
@@ -11379,24 +11609,24 @@
           "status": 400,
           "statusText": "Bad Request",
           "headers": {
-            "x-correlation-id": "a8157b53-5466-4ea0-b69a-974f4a40d3e3",
+            "x-correlation-id": "538c0e9d-28e3-4f6e-8950-ab9d77cff1ca",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "122",
-            "etag": "W/\"7a-+QelzH8mdm33TCT8TUH7h6jh1ag\"",
-            "date": "Wed, 25 Nov 2026 20:23:16 GMT",
+            "etag": "W/\"7a-EkqsSpEIg1JW7Z/d+/yqqK2F0sE\"",
+            "date": "Wed, 25 Nov 2026 22:03:58 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
             "code": "ENTRADA_INVALIDA",
             "mensaje": "Revisa los campos enviados.",
-            "correlationId": "a8157b53-5466-4ea0-b69a-974f4a40d3e3"
+            "correlationId": "538c0e9d-28e3-4f6e-8950-ab9d77cff1ca"
           },
           "url": "http://127.0.0.1/api/v1/auth/registro",
-          "responseTime": 16,
-          "duration": 16,
+          "responseTime": 13,
+          "duration": 13,
           "size": 122
         },
         "error": null,
@@ -11406,13 +11636,13 @@
           {
             "description": "400: no se aceptan campos fuera del contrato",
             "status": "pass",
-            "uid": "fe-JL7Fa4RvMLMSbs21WO"
+            "uid": "N-LpLj7b3Owo4gGs8kQsW"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.1513214,
+        "runDuration": 0.1751353,
         "name": "Rechazar un rol enviado por el navegador",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\02-usuarios\\03-registro-con-rol",
         "path": "02-usuarios\\03-registro-con-rol",
@@ -11438,19 +11668,19 @@
           "status": 200,
           "statusText": "OK",
           "headers": {
-            "x-correlation-id": "5711fa86-7b13-4ee9-922f-66bbb6318f7f",
+            "x-correlation-id": "081875f3-12d6-4756-a0e0-8acc47c130f0",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "197",
-            "etag": "W/\"c5-nCDLUVXvO7izRHcukh/kHRqOC7c\"",
-            "date": "Wed, 25 Nov 2026 20:23:17 GMT",
+            "etag": "W/\"c5-8qMuLuTpJxEMjNEDQQAt6BkGo+c\"",
+            "date": "Wed, 25 Nov 2026 22:03:58 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
-            "id": "09d3a98f-f57c-40a5-a1c7-04ea82afd6c9",
-            "email": "bruno-1795638195925-662073@example.com",
+            "id": "6b6f67ab-d54d-4371-bc74-38e2ba2f2b25",
+            "email": "bruno-1795644237517-506422@example.com",
             "nombre": "Cliente Bruno",
             "estado": "activo",
             "roles": [
@@ -11460,8 +11690,8 @@
             "whatsappVisible": false
           },
           "url": "http://127.0.0.1/api/v1/usuarios/me",
-          "responseTime": 18,
-          "duration": 18,
+          "responseTime": 22,
+          "duration": 22,
           "size": 197
         },
         "error": null,
@@ -11471,13 +11701,13 @@
           {
             "description": "200 con mi correo y sin datos internos",
             "status": "pass",
-            "uid": "wvo7aO1-Hdket3SZP-Cax"
+            "uid": "uN_eiyCMMk5f1PGHDNIR-"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.1621382,
+        "runDuration": 0.1794303,
         "name": "Ver mi perfil con la sesión",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\02-usuarios\\04-perfil",
         "path": "02-usuarios\\04-perfil",
@@ -11505,19 +11735,19 @@
           "status": 200,
           "statusText": "OK",
           "headers": {
-            "x-correlation-id": "7b7b776d-c885-464d-9523-25600f4e9bbb",
+            "x-correlation-id": "6cc46a52-283f-46d4-bdc5-bc81c35db659",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "206",
-            "etag": "W/\"ce-sKM9XS9/Skfjbl3XIV79/4t3RSk\"",
-            "date": "Wed, 25 Nov 2026 20:23:17 GMT",
+            "etag": "W/\"ce-2AFeEmUsIkhghmKRov/c+sOycKY\"",
+            "date": "Wed, 25 Nov 2026 22:03:58 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
-            "id": "09d3a98f-f57c-40a5-a1c7-04ea82afd6c9",
-            "email": "bruno-1795638195925-662073@example.com",
+            "id": "6b6f67ab-d54d-4371-bc74-38e2ba2f2b25",
+            "email": "bruno-1795644237517-506422@example.com",
             "nombre": "Cliente Bruno",
             "estado": "activo",
             "roles": [
@@ -11527,8 +11757,8 @@
             "whatsappVisible": true
           },
           "url": "http://127.0.0.1/api/v1/usuarios/me",
-          "responseTime": 31,
-          "duration": 31,
+          "responseTime": 35,
+          "duration": 35,
           "size": 206
         },
         "error": null,
@@ -11538,13 +11768,13 @@
           {
             "description": "200 y el número queda normalizado con +51",
             "status": "pass",
-            "uid": "A1t2uhO4vgspYhbPJ5pf4"
+            "uid": "ctegzijKKRkreoOl6Sf_U"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.2151404,
+        "runDuration": 0.2485801,
         "name": "Registrar mi WhatsApp",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\02-usuarios\\05-editar-perfil",
         "path": "02-usuarios\\05-editar-perfil",
@@ -11570,24 +11800,24 @@
           "status": 401,
           "statusText": "Unauthorized",
           "headers": {
-            "x-correlation-id": "8bf8e117-fcda-4bdf-8010-cf92f25d25bf",
+            "x-correlation-id": "3451389c-71bb-4b9c-b041-39ea42ecfa45",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "128",
-            "etag": "W/\"80-RzQQByCIjzpi4jfzvGzFYJ9baLQ\"",
-            "date": "Wed, 25 Nov 2026 20:23:17 GMT",
+            "etag": "W/\"80-ZNQ8SfwEOVvVdx7BbeZcsMz9gKQ\"",
+            "date": "Wed, 25 Nov 2026 22:03:59 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
             "code": "SESION_INVALIDA",
             "mensaje": "Ingresa nuevamente para continuar.",
-            "correlationId": "8bf8e117-fcda-4bdf-8010-cf92f25d25bf"
+            "correlationId": "3451389c-71bb-4b9c-b041-39ea42ecfa45"
           },
           "url": "http://127.0.0.1/api/v1/usuarios/me",
-          "responseTime": 7,
-          "duration": 7,
+          "responseTime": 6,
+          "duration": 6,
           "size": 128
         },
         "error": null,
@@ -11597,13 +11827,13 @@
           {
             "description": "401 sin revelar detalles",
             "status": "pass",
-            "uid": "AE0PQPjAZkTw_1i7ZZarM"
+            "uid": "zleTt7j-93BM-v598RQGg"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.1663061,
+        "runDuration": 0.1822402,
         "name": "Sin sesión no hay perfil",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\02-usuarios\\06-perfil-sin-sesion",
         "path": "02-usuarios\\06-perfil-sin-sesion",
@@ -11629,24 +11859,24 @@
           "status": 403,
           "statusText": "Forbidden",
           "headers": {
-            "x-correlation-id": "c6d87fd7-6938-422a-9110-d01646a461a3",
+            "x-correlation-id": "eae9eb56-918c-4ef6-a75e-fde37dc1f43f",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "138",
-            "etag": "W/\"8a-Ofe2gWfYZ9hyM5hCSIb2knBWXUw\"",
-            "date": "Wed, 25 Nov 2026 20:23:17 GMT",
+            "etag": "W/\"8a-hZW2r5RFPOQQ2CgiiE9qUWwBgZc\"",
+            "date": "Wed, 25 Nov 2026 22:03:59 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
             "code": "SIN_PERMISO",
             "mensaje": "Esta acción requiere una cuenta administrativa.",
-            "correlationId": "c6d87fd7-6938-422a-9110-d01646a461a3"
+            "correlationId": "eae9eb56-918c-4ef6-a75e-fde37dc1f43f"
           },
           "url": "http://127.0.0.1/api/v1/admin/usuarios",
-          "responseTime": 12,
-          "duration": 12,
+          "responseTime": 13,
+          "duration": 13,
           "size": 138
         },
         "error": null,
@@ -11656,13 +11886,13 @@
           {
             "description": "403 por rol",
             "status": "pass",
-            "uid": "9NEaIeErsi01vc1b_NVQM"
+            "uid": "ccsR_CBpOe43RzEiymjyv"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.1671336,
+        "runDuration": 0.1755134,
         "name": "Un cliente no entra a la administración",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\02-usuarios\\07-admin-como-cliente",
         "path": "02-usuarios\\07-admin-como-cliente",
@@ -11690,24 +11920,24 @@
           "status": 401,
           "statusText": "Unauthorized",
           "headers": {
-            "x-correlation-id": "10a94769-a3a1-44c2-bd12-8dd0d5d7b0d9",
+            "x-correlation-id": "577a07ac-6703-4294-afd1-e3dc91e13187",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "134",
-            "etag": "W/\"86-SwDMbVbO7TnCRN/FUYxGmpFtHO8\"",
-            "date": "Wed, 25 Nov 2026 20:23:18 GMT",
+            "etag": "W/\"86-3lJmuUmJ2Qo1AmOKuqsIr0jZwSM\"",
+            "date": "Wed, 25 Nov 2026 22:03:59 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
             "code": "CREDENCIALES_INVALIDAS",
             "mensaje": "Correo o contraseña incorrectos.",
-            "correlationId": "10a94769-a3a1-44c2-bd12-8dd0d5d7b0d9"
+            "correlationId": "577a07ac-6703-4294-afd1-e3dc91e13187"
           },
           "url": "http://127.0.0.1/api/v1/auth/login",
-          "responseTime": 440,
-          "duration": 440,
+          "responseTime": 345,
+          "duration": 345,
           "size": 134
         },
         "error": null,
@@ -11717,13 +11947,13 @@
           {
             "description": "401 genérico: no dice si el correo existe",
             "status": "pass",
-            "uid": "GFML9AmuqWamWB50HOit5"
+            "uid": "vqeR0oPHlI0d2bElt07WT"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.6663414,
+        "runDuration": 0.4856345,
         "name": "Contraseña incorrecta",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\02-usuarios\\08-login-incorrecto",
         "path": "02-usuarios\\08-login-incorrecto",
@@ -11751,17 +11981,17 @@
           "status": 204,
           "statusText": "No Content",
           "headers": {
-            "x-correlation-id": "d1b230e3-5548-4290-9464-ea8949584326",
+            "x-correlation-id": "18e593ee-cca6-43d2-82f5-9b1ebca162e2",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
-            "date": "Wed, 25 Nov 2026 20:23:18 GMT",
+            "date": "Wed, 25 Nov 2026 22:03:59 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": "",
           "url": "http://127.0.0.1/api/v1/auth/logout",
-          "responseTime": 21,
-          "duration": 21,
+          "responseTime": 18,
+          "duration": 18,
           "size": 0
         },
         "error": null,
@@ -11771,13 +12001,13 @@
           {
             "description": "204 y borra la cookie",
             "status": "pass",
-            "uid": "jXFA8bQHVukdf4ibZlsyP"
+            "uid": "xKuVrUziIDmON18jDx2-W"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.2100222,
+        "runDuration": 0.1675753,
         "name": "Cerrar sesión",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\02-usuarios\\09-logout",
         "path": "02-usuarios\\09-logout",
@@ -11803,24 +12033,24 @@
           "status": 401,
           "statusText": "Unauthorized",
           "headers": {
-            "x-correlation-id": "52813e11-3c97-4d50-b1d9-f731e2282f71",
+            "x-correlation-id": "0c08d262-c4bd-41f4-b69d-32f0ddb4e757",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "128",
-            "etag": "W/\"80-0S6aJ+XmWltcI9M732/kNCGtbt4\"",
-            "date": "Wed, 25 Nov 2026 20:23:18 GMT",
+            "etag": "W/\"80-umoZqvkpWAIfMeBb/GCqr937wXs\"",
+            "date": "Wed, 25 Nov 2026 22:04:00 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
             "code": "SESION_INVALIDA",
             "mensaje": "Ingresa nuevamente para continuar.",
-            "correlationId": "52813e11-3c97-4d50-b1d9-f731e2282f71"
+            "correlationId": "0c08d262-c4bd-41f4-b69d-32f0ddb4e757"
           },
           "url": "http://127.0.0.1/api/v1/usuarios/me",
-          "responseTime": 8,
-          "duration": 8,
+          "responseTime": 9,
+          "duration": 9,
           "size": 128
         },
         "error": null,
@@ -11830,13 +12060,13 @@
           {
             "description": "401 aunque el token no haya vencido",
             "status": "pass",
-            "uid": "CXt2e6KnXkZQsNA1LrKOB"
+            "uid": "B8w06VQBSclLiFOo1lPr5"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.1777241,
+        "runDuration": 0.1668741,
         "name": "La sesión cerrada queda revocada en el servidor",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\02-usuarios\\10-sesion-revocada",
         "path": "02-usuarios\\10-sesion-revocada",
@@ -11864,31 +12094,31 @@
           "status": 200,
           "statusText": "OK",
           "headers": {
-            "x-correlation-id": "77020a9e-bb2a-4c08-a314-fffba8eec857",
+            "x-correlation-id": "dee92243-f242-4900-b8f7-2bc28c4a027c",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "207",
-            "etag": "W/\"cf-g/ecAUl0hsyV10bERLbzOOvfhS4\"",
-            "date": "Wed, 25 Nov 2026 20:23:19 GMT",
+            "etag": "W/\"cf-TcJ4uCWjP52BMzeM3iKoi/amSlo\"",
+            "date": "Wed, 25 Nov 2026 22:04:00 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
             "usuario": {
-              "id": "09d3a98f-f57c-40a5-a1c7-04ea82afd6c9",
-              "email": "bruno-1795638195925-662073@example.com",
+              "id": "6b6f67ab-d54d-4371-bc74-38e2ba2f2b25",
+              "email": "bruno-1795644237517-506422@example.com",
               "nombre": "Cliente Bruno",
               "estado": "activo",
               "roles": [
                 "cliente"
               ]
             },
-            "expiraEn": "2026-11-25T20:38:19.107Z"
+            "expiraEn": "2026-11-25T22:19:00.538Z"
           },
           "url": "http://127.0.0.1/api/v1/auth/login",
-          "responseTime": 361,
-          "duration": 361,
+          "responseTime": 376,
+          "duration": 376,
           "size": 207
         },
         "error": null,
@@ -11898,13 +12128,13 @@
           {
             "description": "200 con nueva sesión",
             "status": "pass",
-            "uid": "Q-aFn5gaRDEdm5MePannA"
+            "uid": "8qVCbWv3UO-w3fBCH9Fzt"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.7696224,
+        "runDuration": 0.7397258,
         "name": "Iniciar sesión de nuevo",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\02-usuarios\\11-login",
         "path": "02-usuarios\\11-login",
@@ -11930,13 +12160,13 @@
           "status": 200,
           "statusText": "OK",
           "headers": {
-            "x-correlation-id": "3ed4d3e2-9c2e-4ba7-a562-d9e0c1b1a3a7",
+            "x-correlation-id": "a201be29-3890-4adb-afa9-05a2135dd828",
             "cache-control": "public, max-age=3600",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "1010",
             "etag": "W/\"3f2-ol8I7JSJM0xCLULDRMfHfQuhjeY\"",
-            "date": "Wed, 25 Nov 2026 20:23:19 GMT",
+            "date": "Wed, 25 Nov 2026 22:04:00 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
@@ -12023,8 +12253,8 @@
             ]
           },
           "url": "http://127.0.0.1/api/v1/publicaciones/opciones",
-          "responseTime": 5,
-          "duration": 5,
+          "responseTime": 4,
+          "duration": 4,
           "size": 1010
         },
         "error": null,
@@ -12034,18 +12264,18 @@
           {
             "description": "200 con las categorías y los 4 distritos",
             "status": "pass",
-            "uid": "QMNZsAXG7SDqzD7ND1s_z"
+            "uid": "B5nZ-hV8yq_5HdVqiJ8a3"
           },
           {
             "description": "dato de referencia cacheable 1 hora",
             "status": "pass",
-            "uid": "0AIG9NBIT-7cuDHpNpOxL"
+            "uid": "-xrLon_eyIh0OduwxPhVx"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.1890359,
+        "runDuration": 0.1423917,
         "name": "Categorías y distritos",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\03-catalogo\\01-opciones",
         "path": "03-catalogo\\01-opciones",
@@ -12071,13 +12301,13 @@
           "status": 200,
           "statusText": "OK",
           "headers": {
-            "x-correlation-id": "d3e50d09-0f63-4916-aa53-105b0c7ad24e",
+            "x-correlation-id": "924ff5fe-7197-4772-b959-969490ec31a7",
             "cache-control": "public, max-age=30",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "944",
-            "etag": "W/\"3b0-Fs1ps52jELy+5C83y/dRVoN3i6I\"",
-            "date": "Wed, 25 Nov 2026 20:23:19 GMT",
+            "etag": "W/\"3b0-ZrRBKrVIjtsSVmI4/cEIUAGKrGY\"",
+            "date": "Wed, 25 Nov 2026 22:04:01 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
@@ -12086,13 +12316,13 @@
               {
                 "id": "********",
                 "tipo": "servicio",
-                "titulo": "Electricista cotización E2E c2d198ad",
+                "titulo": "Electricista cotización E2E 8ebb2658",
                 "unidad": null,
                 "zonaId": "ayacucho",
                 "incluye": [
                   "Equipo y accesorios"
                 ],
-                "creadoEn": "2026-11-25T20:23:06.287712+00:00",
+                "creadoEn": "2026-11-25T22:03:18.971034+00:00",
                 "recursos": [
                   {
                     "id": "********",
@@ -12106,14 +12336,14 @@
                   "Coordinar previamente el horario"
                 ],
                 "descripcion": "Oferta sintética para comprobar solicitudes persistidas en el navegador.",
-                "proveedorId": "67c92981-0fc6-4f73-9f04-f9d57974a19e",
-                "actualizadoEn": "2026-11-25T20:23:06.287712+00:00",
+                "proveedorId": "9e2144fd-e754-4b12-ad13-48f0cb1dc90e",
+                "actualizadoEn": "2026-11-25T22:03:18.971034+00:00",
                 "tarifaCentimos": null,
                 "modalidadPrecio": "cotizacion",
                 "moneda": "PEN",
                 "proveedor": {
-                  "id": "67c92981-0fc6-4f73-9f04-f9d57974a19e",
-                  "nombrePublico": "Taller E2E c2d198ad",
+                  "id": "9e2144fd-e754-4b12-ad13-48f0cb1dc90e",
+                  "nombrePublico": "Taller E2E 8ebb2658",
                   "estadoVerificacion": "aprobada"
                 },
                 "imagen": "/ilustraciones/electrician.svg",
@@ -12128,8 +12358,8 @@
             "limit": 20
           },
           "url": "http://127.0.0.1/api/v1/publicaciones?limit=20&orden=precio",
-          "responseTime": 72,
-          "duration": 72,
+          "responseTime": 70,
+          "duration": 70,
           "size": 944
         },
         "error": null,
@@ -12139,28 +12369,28 @@
           {
             "description": "200 paginado con máximo 20 resultados",
             "status": "pass",
-            "uid": "EunQc4BebwRuvUvIbU0BA"
+            "uid": "p7qGbXBfagXVwxboNl4h-"
           },
           {
             "description": "la vista pública no expone cuentas ni moderación",
             "status": "pass",
-            "uid": "ZKWlXHMhvqhlWIXjzHi0q"
+            "uid": "MYlJtwQD2hCGBl8IpZhAV"
           },
           {
             "description": "orden por precio ascendente",
             "status": "pass",
-            "uid": "m5qngcckHHQ7WlDSHPbPh"
+            "uid": "pEj0zeQBiTKOgmBzMtUBz"
           },
           {
             "description": "búsqueda pública cacheable 30 s",
             "status": "pass",
-            "uid": "gDHQYvrSEdzRFlARU3Z5X"
+            "uid": "JredOI13vBvX3qmo4Ezns"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.2370599,
+        "runDuration": 0.2157937,
         "name": "Buscar publicaciones",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\03-catalogo\\02-busqueda",
         "path": "03-catalogo\\02-busqueda",
@@ -12186,20 +12416,20 @@
           "status": 400,
           "statusText": "Bad Request",
           "headers": {
-            "x-correlation-id": "0c24e442-dd06-4ce4-89e5-52efdee6c373",
+            "x-correlation-id": "4ebc6f23-c184-43cc-909b-754f5487440c",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "114",
-            "etag": "W/\"72-9k9jXx+hoXED9aIvPM01cde/Cq8\"",
-            "date": "Wed, 25 Nov 2026 20:23:19 GMT",
+            "etag": "W/\"72-0MQ7z4ot4s8dFN2oqlRIb98CQoU\"",
+            "date": "Wed, 25 Nov 2026 22:04:01 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
             "code": "ENTRADA_INVALIDA",
             "mensaje": "Filtros inválidos.",
-            "correlationId": "0c24e442-dd06-4ce4-89e5-52efdee6c373"
+            "correlationId": "4ebc6f23-c184-43cc-909b-754f5487440c"
           },
           "url": "http://127.0.0.1/api/v1/publicaciones?orden=aleatorio",
           "responseTime": 4,
@@ -12213,13 +12443,13 @@
           {
             "description": "400 y el error no se guarda en caché",
             "status": "pass",
-            "uid": "CGUXtY1aRzAbi1rMDeifL"
+            "uid": "AjmBM_H5y1PgMu5a5VwQN"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.1514833,
+        "runDuration": 0.1481595,
         "name": "Filtro inválido",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\03-catalogo\\03-filtro-invalido",
         "path": "03-catalogo\\03-filtro-invalido",
@@ -12245,23 +12475,23 @@
           "status": 200,
           "statusText": "OK",
           "headers": {
-            "x-correlation-id": "6748c624-663f-47b6-ba20-a7507675935c",
+            "x-correlation-id": "8808526a-de72-4ff2-8ead-46c7bb3e4d21",
             "cache-control": "public, max-age=30",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "886",
-            "etag": "W/\"376-koIuMprroQGrbRjbp6q0VtUiTiQ\"",
-            "date": "Wed, 25 Nov 2026 20:23:20 GMT",
+            "etag": "W/\"376-a1QhbQ4oBgwyJ4SCy8MfoFx9754\"",
+            "date": "Wed, 25 Nov 2026 22:04:01 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
             "id": "********",
-            "proveedorId": "67c92981-0fc6-4f73-9f04-f9d57974a19e",
+            "proveedorId": "9e2144fd-e754-4b12-ad13-48f0cb1dc90e",
             "tipo": "servicio",
             "categoriaId": "electricidad",
             "zonaId": "ayacucho",
-            "titulo": "Electricista cotización E2E c2d198ad",
+            "titulo": "Electricista cotización E2E 8ebb2658",
             "descripcion": "Oferta sintética para comprobar solicitudes persistidas en el navegador.",
             "incluye": [
               "Equipo y accesorios"
@@ -12269,8 +12499,8 @@
             "condiciones": [
               "Coordinar previamente el horario"
             ],
-            "creadoEn": "2026-11-25T20:23:06.287Z",
-            "actualizadoEn": "2026-11-25T20:23:06.287Z",
+            "creadoEn": "2026-11-25T22:03:18.971Z",
+            "actualizadoEn": "2026-11-25T22:03:18.971Z",
             "modalidadPrecio": "cotizacion",
             "tarifaCentimos": null,
             "unidad": null,
@@ -12284,8 +12514,8 @@
             ],
             "moneda": "PEN",
             "proveedor": {
-              "id": "67c92981-0fc6-4f73-9f04-f9d57974a19e",
-              "nombrePublico": "Taller E2E c2d198ad",
+              "id": "9e2144fd-e754-4b12-ad13-48f0cb1dc90e",
+              "nombrePublico": "Taller E2E 8ebb2658",
               "estadoVerificacion": "aprobada"
             },
             "imagen": "/ilustraciones/electrician.svg",
@@ -12295,8 +12525,8 @@
             }
           },
           "url": "http://127.0.0.1/api/v1/publicaciones/********",
-          "responseTime": 14,
-          "duration": 14,
+          "responseTime": 17,
+          "duration": 17,
           "size": 886
         },
         "error": null,
@@ -12306,13 +12536,13 @@
           {
             "description": "200 con sus recursos activos y el proveedor público",
             "status": "pass",
-            "uid": "gj9R59UzunsKZN3tLKMjy"
+            "uid": "VN_t_Z-mbdSz4YtvXseWn"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.1789933,
+        "runDuration": 0.1958961,
         "name": "Detalle de una publicación activa",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\03-catalogo\\04-detalle",
         "path": "03-catalogo\\04-detalle",
@@ -12338,24 +12568,24 @@
           "status": 404,
           "statusText": "Not Found",
           "headers": {
-            "x-correlation-id": "9dd6e8a5-3114-4997-9edd-1f7e4d17d462",
+            "x-correlation-id": "1610c319-d0fe-4790-a97c-3c3f77434d79",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "137",
-            "etag": "W/\"89-7T/5PIMQoJC/yx0M/B7PyVIJRQY\"",
-            "date": "Wed, 25 Nov 2026 20:23:20 GMT",
+            "etag": "W/\"89-VF+XaxVeQCEK1IcZrVG+32YHzGY\"",
+            "date": "Wed, 25 Nov 2026 22:04:01 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
             "code": "OFERTA_NO_DISPONIBLE",
             "mensaje": "Esta publicación no está disponible.",
-            "correlationId": "9dd6e8a5-3114-4997-9edd-1f7e4d17d462"
+            "correlationId": "1610c319-d0fe-4790-a97c-3c3f77434d79"
           },
           "url": "http://127.0.0.1/api/v1/publicaciones/00000000-0000-4000-8000-000000000000",
-          "responseTime": 7,
-          "duration": 7,
+          "responseTime": 8,
+          "duration": 8,
           "size": 137
         },
         "error": null,
@@ -12365,13 +12595,13 @@
           {
             "description": "404 OFERTA_NO_DISPONIBLE",
             "status": "pass",
-            "uid": "7TiaZiXWoYYJJgM5Mnrj7"
+            "uid": "gUx89xEzJwtxt_iwJRpAn"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.2350093,
+        "runDuration": 0.1759997,
         "name": "Publicación inexistente",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\03-catalogo\\05-detalle-inexistente",
         "path": "03-catalogo\\05-detalle-inexistente",
@@ -12399,24 +12629,24 @@
           "status": 404,
           "statusText": "Not Found",
           "headers": {
-            "x-correlation-id": "5f1330c1-9d12-4f44-8f66-fd52796985f4",
+            "x-correlation-id": "8e32e52c-ec8f-4f95-a195-ecef0045f2a0",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "137",
-            "etag": "W/\"89-zyGeMUL2/mPgj41ajIM+F7PrqjA\"",
-            "date": "Wed, 25 Nov 2026 20:23:20 GMT",
+            "etag": "W/\"89-42SNAKd1PZMwLMspqiJyTdtDApY\"",
+            "date": "Wed, 25 Nov 2026 22:04:01 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
             "code": "PERFIL_NO_EXISTE",
             "mensaje": "Todavía no tienes un perfil de proveedor.",
-            "correlationId": "5f1330c1-9d12-4f44-8f66-fd52796985f4"
+            "correlationId": "8e32e52c-ec8f-4f95-a195-ecef0045f2a0"
           },
           "url": "http://127.0.0.1/api/v1/publicaciones",
-          "responseTime": 29,
-          "duration": 29,
+          "responseTime": 27,
+          "duration": 27,
           "size": 137
         },
         "error": null,
@@ -12426,13 +12656,13 @@
           {
             "description": "rechazado: primero hace falta un perfil de proveedor aprobado",
             "status": "pass",
-            "uid": "tNTcHU4yUQ7rXNoTsBygP"
+            "uid": "7XYtVNm8Cvyyv_MBM0ydc"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.2141397,
+        "runDuration": 0.3770283,
         "name": "Un cliente sin perfil de proveedor no publica",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\03-catalogo\\06-publicar-sin-perfil",
         "path": "03-catalogo\\06-publicar-sin-perfil",
@@ -12460,19 +12690,19 @@
           "status": 200,
           "statusText": "OK",
           "headers": {
-            "x-correlation-id": "f6b353e8-4892-4a85-8d3d-968cc7b9cfbf",
+            "x-correlation-id": "d4379713-78c6-4d1a-ba7c-5c7f27ed17a3",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "236",
-            "etag": "W/\"ec-Bz6DqrnAuJvUoATywAr1Y5ZIo6s\"",
-            "date": "Wed, 25 Nov 2026 20:23:21 GMT",
+            "etag": "W/\"ec-9skK8uX5GudVwA0V77V2Wfi7prs\"",
+            "date": "Wed, 25 Nov 2026 22:04:02 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
             "usuario": {
-              "id": "9d391334-056f-4810-9fc4-e40513f19a6a",
+              "id": "eb6b14e4-64a1-491f-8a1b-fe676fb652e9",
               "email": "********",
               "nombre": "Cliente E2E",
               "estado": "activo",
@@ -12480,11 +12710,11 @@
                 "cliente"
               ]
             },
-            "expiraEn": "2026-11-25T20:38:21.082Z"
+            "expiraEn": "2026-11-25T22:19:02.664Z"
           },
           "url": "http://127.0.0.1/api/v1/auth/login",
-          "responseTime": 353,
-          "duration": 353,
+          "responseTime": 503,
+          "duration": 503,
           "size": 236
         },
         "error": null,
@@ -12494,13 +12724,13 @@
           {
             "description": "200",
             "status": "pass",
-            "uid": "FPYzot2-gAsTVc6SpbU6Q"
+            "uid": "B9CVDy7Mt6Muk0YyoAsrK"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.665004,
+        "runDuration": 0.8324074,
         "name": "Iniciar sesión como cliente",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\04-reservas\\01-login-cliente",
         "path": "04-reservas\\01-login-cliente",
@@ -12528,19 +12758,19 @@
           "status": 200,
           "statusText": "OK",
           "headers": {
-            "x-correlation-id": "ce3aebe4-8b51-44f7-8ddb-3f01abff5821",
+            "x-correlation-id": "1ea12258-1583-4306-b444-73edc252ba83",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "240",
-            "etag": "W/\"f0-cNQg5wEpp2Cdc6MwuPLISLkb7tI\"",
-            "date": "Wed, 25 Nov 2026 20:23:21 GMT",
+            "etag": "W/\"f0-kh6yTy8aIrYaId2EoDr3k542iXo\"",
+            "date": "Wed, 25 Nov 2026 22:04:03 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
             "usuario": {
-              "id": "2452e727-8a00-4cf1-83f1-5f32591183bf",
+              "id": "cd260118-0148-4068-be4d-ef4b886a9d16",
               "email": "********",
               "nombre": "Proveedor E2E",
               "estado": "activo",
@@ -12548,11 +12778,11 @@
                 "cliente"
               ]
             },
-            "expiraEn": "2026-11-25T20:38:21.749Z"
+            "expiraEn": "2026-11-25T22:19:03.358Z"
           },
           "url": "http://127.0.0.1/api/v1/auth/login",
-          "responseTime": 359,
-          "duration": 359,
+          "responseTime": 366,
+          "duration": 366,
           "size": 240
         },
         "error": null,
@@ -12562,13 +12792,13 @@
           {
             "description": "200",
             "status": "pass",
-            "uid": "cQCSReFPAcSfWwDfRhbhW"
+            "uid": "fbchcWaP8sO3hOaVnqDvp"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.8284416,
+        "runDuration": 0.6614706,
         "name": "Iniciar sesión como proveedor",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\04-reservas\\02-login-proveedor",
         "path": "04-reservas\\02-login-proveedor",
@@ -12594,13 +12824,13 @@
           "status": 200,
           "statusText": "OK",
           "headers": {
-            "x-correlation-id": "69fb31fa-74a8-41a2-8602-1af89a077edf",
+            "x-correlation-id": "96748eb6-7aeb-439f-98b2-6f90e6cdf604",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "28",
             "etag": "W/\"1c-+AjXbaGAfR9CwlRrK/bqnrtCCoI\"",
-            "date": "Wed, 25 Nov 2026 20:23:22 GMT",
+            "date": "Wed, 25 Nov 2026 22:04:03 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
@@ -12609,8 +12839,8 @@
             "enUso": false
           },
           "url": "http://127.0.0.1/api/v1/recursos/********/disponibilidad?publicacionId=********&inicio=2026-12-16T15:00:00.000Z&fin=2026-12-16T16:00:00.000Z",
-          "responseTime": 62,
-          "duration": 62,
+          "responseTime": 58,
+          "duration": 58,
           "size": 28
         },
         "error": null,
@@ -12620,13 +12850,13 @@
           {
             "description": "200 con franjas ocupadas y sin datos de quién",
             "status": "pass",
-            "uid": "386OrpDB73QQ7pGQK2yKy"
+            "uid": "7vaVFoTXcTFO9QghTOQTQ"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.4502104,
+        "runDuration": 0.3531178,
         "name": "Disponibilidad pública sin identidades",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\04-reservas\\03-disponibilidad",
         "path": "04-reservas\\03-disponibilidad",
@@ -12654,19 +12884,19 @@
           "status": 201,
           "statusText": "Created",
           "headers": {
-            "x-correlation-id": "029fbec1-dbf1-4260-8c6b-38c70da6c395",
+            "x-correlation-id": "47ad2262-07a8-4bd1-8bd9-f0281492025d",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "1075",
-            "etag": "W/\"433-+v7FVmWQmfVV+TxZMo8IAZM7Vv8\"",
-            "date": "Wed, 25 Nov 2026 20:23:22 GMT",
+            "etag": "W/\"433-gPjRw5AZkDrp65IKK1ZQLp1Nkb0\"",
+            "date": "Wed, 25 Nov 2026 22:04:04 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
-            "id": "a77a77c8-4298-4400-b609-9dec90a59a85",
-            "proveedorId": "67c92981-0fc6-4f73-9f04-f9d57974a19e",
+            "id": "6b84b2fd-973c-4637-8e95-84ae6615de91",
+            "proveedorId": "9e2144fd-e754-4b12-ad13-48f0cb1dc90e",
             "publicacionId": "********",
             "recursoId": "********",
             "inicio": "2026-12-16T15:00:00.000Z",
@@ -12674,16 +12904,16 @@
             "descripcionTrabajo": "Revisar dos tomacorrientes y cambiar un interruptor de la sala.",
             "snapshot": {
               "tipo": "servicio",
-              "titulo": "Electricista cotización E2E c2d198ad",
+              "titulo": "Electricista cotización E2E 8ebb2658",
               "unidad": null,
               "recurso": "Agenda E2E",
-              "proveedor": "Taller E2E c2d198ad",
+              "proveedor": "Taller E2E 8ebb2658",
               "tarifaReferenciaCentimos": null
             },
             "estado": "PENDIENTE",
             "motivoRechazo": null,
             "version": 1,
-            "creadoEn": "2026-11-25T20:23:22.720Z",
+            "creadoEn": "2026-11-25T22:04:04.054Z",
             "tipoSolicitud": "alquiler",
             "condiciones": null,
             "venceEn": null,
@@ -12706,8 +12936,8 @@
             "participacion": "cliente"
           },
           "url": "http://127.0.0.1/api/v1/reservas",
-          "responseTime": 83,
-          "duration": 83,
+          "responseTime": 76,
+          "duration": 76,
           "size": 1075
         },
         "error": null,
@@ -12717,18 +12947,18 @@
           {
             "description": "201 PENDIENTE: no bloquea la agenda hasta que el proveedor responda",
             "status": "pass",
-            "uid": "ehoX1K2Dsr39bgOjmurtT"
+            "uid": "uJ7khw4ojVwzhd2dp-pYx"
           },
           {
             "description": "no expone los identificadores de las cuentas",
             "status": "pass",
-            "uid": "6GEwyXcIW-H46czkAdC3V"
+            "uid": "cwFvYOsGFUtVgeD-VOjLR"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.3848887,
+        "runDuration": 0.3272236,
         "name": "El cliente solicita el servicio",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\04-reservas\\04-solicitar",
         "path": "04-reservas\\04-solicitar",
@@ -12756,24 +12986,24 @@
           "status": 409,
           "statusText": "Conflict",
           "headers": {
-            "x-correlation-id": "cd18a1c5-5c48-438e-b990-f3e41ac2a51f",
+            "x-correlation-id": "b6f5c26b-781d-4f30-a459-d5e699282b0a",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "183",
-            "etag": "W/\"b7-q85+EDzjctLG4FamNuUKbKRIYR4\"",
-            "date": "Wed, 25 Nov 2026 20:23:23 GMT",
+            "etag": "W/\"b7-Zx5URREFIpzpQAd21RtPJmvXJG8\"",
+            "date": "Wed, 25 Nov 2026 22:04:04 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
             "code": "SOLICITUD_DUPLICADA",
             "mensaje": "Ya tienes una solicitud pendiente para esta unidad y estas fechas. Revisa tu bandeja.",
-            "correlationId": "cd18a1c5-5c48-438e-b990-f3e41ac2a51f"
+            "correlationId": "b6f5c26b-781d-4f30-a459-d5e699282b0a"
           },
           "url": "http://127.0.0.1/api/v1/reservas",
-          "responseTime": 37,
-          "duration": 37,
+          "responseTime": 34,
+          "duration": 34,
           "size": 183
         },
         "error": null,
@@ -12783,13 +13013,13 @@
           {
             "description": "409: una cuenta no repite una solicitud pendiente igual",
             "status": "pass",
-            "uid": "IkIFAF5TS0rLGu2sxb9Zd"
+            "uid": "ULie7WS9k4DiKGLqkuIxo"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.2094812,
+        "runDuration": 0.1622044,
         "name": "La misma solicitud dos veces",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\04-reservas\\05-solicitud-duplicada",
         "path": "04-reservas\\05-solicitud-duplicada",
@@ -12817,24 +13047,24 @@
           "status": 403,
           "statusText": "Forbidden",
           "headers": {
-            "x-correlation-id": "8a8f78dd-beb0-4a7f-82b4-b490b0ec9a22",
+            "x-correlation-id": "e6907b72-c21e-4395-8ae6-881d52129428",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "130",
-            "etag": "W/\"82-Prf5STScmg7TfjzA3KKMU6wJM2c\"",
-            "date": "Wed, 25 Nov 2026 20:23:23 GMT",
+            "etag": "W/\"82-MaayrNQyixDOjNWoF9AFUcKLHEs\"",
+            "date": "Wed, 25 Nov 2026 22:04:04 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
             "code": "RESERVA_PROPIA",
             "mensaje": "No puedes solicitar tu propia oferta.",
-            "correlationId": "8a8f78dd-beb0-4a7f-82b4-b490b0ec9a22"
+            "correlationId": "e6907b72-c21e-4395-8ae6-881d52129428"
           },
           "url": "http://127.0.0.1/api/v1/reservas",
-          "responseTime": 40,
-          "duration": 40,
+          "responseTime": 24,
+          "duration": 24,
           "size": 130
         },
         "error": null,
@@ -12844,13 +13074,13 @@
           {
             "description": "403",
             "status": "pass",
-            "uid": "D3uRI7lTO13zR3AHDlYZg"
+            "uid": "p3vip1AMMn1QeXsZrvXQ5"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.2321395,
+        "runDuration": 0.2734626,
         "name": "El proveedor no solicita su propia oferta",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\04-reservas\\06-oferta-propia",
         "path": "04-reservas\\06-oferta-propia",
@@ -12862,7 +13092,7 @@
         },
         "request": {
           "method": "GET",
-          "url": "http://127.0.0.1:3403/api/v1/reservas/a77a77c8-4298-4400-b609-9dec90a59a85",
+          "url": "http://127.0.0.1:3403/api/v1/reservas/6b84b2fd-973c-4637-8e95-84ae6615de91",
           "headers": {
             "Accept": "application/json, text/plain, */*",
             "User-Agent": "bruno-runtime/4.3.0",
@@ -12876,24 +13106,24 @@
           "status": 404,
           "statusText": "Not Found",
           "headers": {
-            "x-correlation-id": "7a8676e6-8aa4-4dc4-bd9f-a026b597c144",
+            "x-correlation-id": "d9aef0f6-0402-48a5-8297-bc5f7985deae",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "133",
-            "etag": "W/\"85-AECOl+CoC8+XrGYuluA2H+I1QdI\"",
-            "date": "Wed, 25 Nov 2026 20:23:23 GMT",
+            "etag": "W/\"85-UfEI9doaK31paBGHBq01WXLC0/U\"",
+            "date": "Wed, 25 Nov 2026 22:04:04 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
             "code": "RESERVA_NO_DISPONIBLE",
             "mensaje": "La solicitud no está disponible.",
-            "correlationId": "7a8676e6-8aa4-4dc4-bd9f-a026b597c144"
+            "correlationId": "d9aef0f6-0402-48a5-8297-bc5f7985deae"
           },
-          "url": "http://127.0.0.1/api/v1/reservas/a77a77c8-4298-4400-b609-9dec90a59a85",
-          "responseTime": 25,
-          "duration": 25,
+          "url": "http://127.0.0.1/api/v1/reservas/6b84b2fd-973c-4637-8e95-84ae6615de91",
+          "responseTime": 28,
+          "duration": 28,
           "size": 133
         },
         "error": null,
@@ -12903,13 +13133,13 @@
           {
             "description": "404: ni siquiera confirma que existe",
             "status": "pass",
-            "uid": "II3HEkb9degvWCU1KouWM"
+            "uid": "sX2eQFZJLYcXhnUOwDto6"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.2390878,
+        "runDuration": 0.2905327,
         "name": "Un tercero no ve la reserva",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\04-reservas\\07-tercero",
         "path": "04-reservas\\07-tercero",
@@ -12935,13 +13165,13 @@
           "status": 200,
           "statusText": "OK",
           "headers": {
-            "x-correlation-id": "d836a24f-689d-4c83-9f3a-3d7c12dfd52e",
+            "x-correlation-id": "81fc8749-f337-4d09-9146-c581a6ac90ef",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "1139",
-            "etag": "W/\"473-pXrlJaA0vWY73bjNZLVG8Fw1/cg\"",
-            "date": "Wed, 25 Nov 2026 20:23:23 GMT",
+            "etag": "W/\"473-sb1qQjo9FQqqq+uSCBbtLTOsyUc\"",
+            "date": "Wed, 25 Nov 2026 22:04:05 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
@@ -12949,19 +13179,19 @@
             "total": 1,
             "items": [
               {
-                "id": "a77a77c8-4298-4400-b609-9dec90a59a85",
+                "id": "6b84b2fd-973c-4637-8e95-84ae6615de91",
                 "fin": "2026-12-16T16:00:00.000Z",
                 "estado": "PENDIENTE",
                 "inicio": "2026-12-16T15:00:00.000Z",
                 "venceEn": null,
                 "version": 1,
-                "creadoEn": "2026-11-25T20:23:22.720Z",
+                "creadoEn": "2026-11-25T22:04:04.054Z",
                 "snapshot": {
                   "tipo": "servicio",
-                  "titulo": "Electricista cotización E2E c2d198ad",
+                  "titulo": "Electricista cotización E2E 8ebb2658",
                   "unidad": null,
                   "recurso": "Agenda E2E",
-                  "proveedor": "Taller E2E c2d198ad",
+                  "proveedor": "Taller E2E 8ebb2658",
                   "tarifaReferenciaCentimos": null
                 },
                 "diasExtra": 0,
@@ -12971,7 +13201,7 @@
                 "recibidoEn": null,
                 "condiciones": null,
                 "entregadoEn": null,
-                "proveedorId": "67c92981-0fc6-4f73-9f04-f9d57974a19e",
+                "proveedorId": "9e2144fd-e754-4b12-ad13-48f0cb1dc90e",
                 "cotizaciones": [],
                 "motivoRechazo": null,
                 "publicacionId": "********",
@@ -12995,8 +13225,8 @@
             "limit": 20
           },
           "url": "http://127.0.0.1/api/v1/reservas?vista=proveedor",
-          "responseTime": 29,
-          "duration": 29,
+          "responseTime": 58,
+          "duration": 58,
           "size": 1139
         },
         "error": null,
@@ -13006,13 +13236,13 @@
           {
             "description": "200 y la solicitud aparece como recibida",
             "status": "pass",
-            "uid": "ULb4TX5QfaguaULkNRdTn"
+            "uid": "Nu0WH_txrG3OJjzkuGDps"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.2549541,
+        "runDuration": 0.3129633,
         "name": "El proveedor la recibe en su bandeja",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\04-reservas\\08-bandeja-proveedor",
         "path": "04-reservas\\08-bandeja-proveedor",
@@ -13024,7 +13254,7 @@
         },
         "request": {
           "method": "POST",
-          "url": "http://127.0.0.1:3403/api/v1/reservas/a77a77c8-4298-4400-b609-9dec90a59a85/rechazo",
+          "url": "http://127.0.0.1:3403/api/v1/reservas/6b84b2fd-973c-4637-8e95-84ae6615de91/rechazo",
           "headers": {
             "Accept": "application/json, text/plain, */*",
             "User-Agent": "bruno-runtime/4.3.0",
@@ -13040,19 +13270,19 @@
           "status": 201,
           "statusText": "Created",
           "headers": {
-            "x-correlation-id": "48aa06ba-400d-48e7-8c94-52555ad8a840",
+            "x-correlation-id": "63eda6c1-13d7-48d5-b8db-76649ac20f2b",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "1112",
-            "etag": "W/\"458-DeVxFOywF0PO/IG1fbOxH1GWURY\"",
-            "date": "Wed, 25 Nov 2026 20:23:24 GMT",
+            "etag": "W/\"458-yDbPWXllIdLS6GOdJivbCCMFidk\"",
+            "date": "Wed, 25 Nov 2026 22:04:05 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
-            "id": "a77a77c8-4298-4400-b609-9dec90a59a85",
-            "proveedorId": "67c92981-0fc6-4f73-9f04-f9d57974a19e",
+            "id": "6b84b2fd-973c-4637-8e95-84ae6615de91",
+            "proveedorId": "9e2144fd-e754-4b12-ad13-48f0cb1dc90e",
             "publicacionId": "********",
             "recursoId": "********",
             "inicio": "2026-12-16T15:00:00.000Z",
@@ -13060,16 +13290,16 @@
             "descripcionTrabajo": "Revisar dos tomacorrientes y cambiar un interruptor de la sala.",
             "snapshot": {
               "tipo": "servicio",
-              "titulo": "Electricista cotización E2E c2d198ad",
+              "titulo": "Electricista cotización E2E 8ebb2658",
               "unidad": null,
               "recurso": "Agenda E2E",
-              "proveedor": "Taller E2E c2d198ad",
+              "proveedor": "Taller E2E 8ebb2658",
               "tarifaReferenciaCentimos": null
             },
             "estado": "RECHAZADA",
             "motivoRechazo": "No tengo agenda libre en ese horario.",
             "version": 2,
-            "creadoEn": "2026-11-25T20:23:22.720Z",
+            "creadoEn": "2026-11-25T22:04:04.054Z",
             "tipoSolicitud": "alquiler",
             "condiciones": null,
             "venceEn": null,
@@ -13091,9 +13321,9 @@
             "ultimoPago": null,
             "participacion": "proveedor"
           },
-          "url": "http://127.0.0.1/api/v1/reservas/a77a77c8-4298-4400-b609-9dec90a59a85/rechazo",
-          "responseTime": 51,
-          "duration": 51,
+          "url": "http://127.0.0.1/api/v1/reservas/6b84b2fd-973c-4637-8e95-84ae6615de91/rechazo",
+          "responseTime": 55,
+          "duration": 55,
           "size": 1112
         },
         "error": null,
@@ -13103,13 +13333,13 @@
           {
             "description": "201 RECHAZADA con el motivo y una versión nueva",
             "status": "pass",
-            "uid": "283ytakpGdhhydujfLnG0"
+            "uid": "VzhDxCdryhvDpqUi4A6Vj"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.2503625,
+        "runDuration": 0.2591788,
         "name": "El proveedor rechaza con motivo",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\04-reservas\\09-rechazar",
         "path": "04-reservas\\09-rechazar",
@@ -13121,7 +13351,7 @@
         },
         "request": {
           "method": "POST",
-          "url": "http://127.0.0.1:3403/api/v1/reservas/a77a77c8-4298-4400-b609-9dec90a59a85/rechazo",
+          "url": "http://127.0.0.1:3403/api/v1/reservas/6b84b2fd-973c-4637-8e95-84ae6615de91/rechazo",
           "headers": {
             "Accept": "application/json, text/plain, */*",
             "User-Agent": "bruno-runtime/4.3.0",
@@ -13137,24 +13367,24 @@
           "status": 409,
           "statusText": "Conflict",
           "headers": {
-            "x-correlation-id": "a171987c-7f54-41ab-8c00-ccf5706803f9",
+            "x-correlation-id": "835ebdcb-9b5f-441b-ad7c-e41deabe5d23",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "158",
-            "etag": "W/\"9e-DEA8K2nmbnDiHKzy2wApx3Zr5pI\"",
-            "date": "Wed, 25 Nov 2026 20:23:24 GMT",
+            "etag": "W/\"9e-6L3ux+gbBpJ7VgdqF4fFbxy2GYc\"",
+            "date": "Wed, 25 Nov 2026 22:04:05 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
             "code": "RESERVA_MODIFICADA",
             "mensaje": "La solicitud cambió o ya fue respondida. Recarga la bandeja.",
-            "correlationId": "a171987c-7f54-41ab-8c00-ccf5706803f9"
+            "correlationId": "835ebdcb-9b5f-441b-ad7c-e41deabe5d23"
           },
-          "url": "http://127.0.0.1/api/v1/reservas/a77a77c8-4298-4400-b609-9dec90a59a85/rechazo",
-          "responseTime": 32,
-          "duration": 32,
+          "url": "http://127.0.0.1/api/v1/reservas/6b84b2fd-973c-4637-8e95-84ae6615de91/rechazo",
+          "responseTime": 27,
+          "duration": 27,
           "size": 158
         },
         "error": null,
@@ -13164,13 +13394,13 @@
           {
             "description": "409: control de concurrencia por versión",
             "status": "pass",
-            "uid": "mFQj5ir8QQl0YMrbpN1CW"
+            "uid": "E7yLYV5LOU5_9_owWBNiK"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.2536717,
+        "runDuration": 0.2452381,
         "name": "Repetir el rechazo con la versión vieja",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\04-reservas\\10-rechazo-con-version-vieja",
         "path": "04-reservas\\10-rechazo-con-version-vieja",
@@ -13196,13 +13426,13 @@
           "status": 200,
           "statusText": "OK",
           "headers": {
-            "x-correlation-id": "7050b018-9cf3-4488-b633-66a03a050cb9",
+            "x-correlation-id": "e5d82055-2d50-47e1-9e73-33c7d53e747f",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "78",
             "etag": "W/\"4e-CneSdIGIsLge+IEFgXV8ikEwWcQ\"",
-            "date": "Wed, 25 Nov 2026 20:23:24 GMT",
+            "date": "Wed, 25 Nov 2026 22:04:05 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
@@ -13214,8 +13444,8 @@
             "telefono": null
           },
           "url": "http://127.0.0.1/api/v1/reclamaciones/titular",
-          "responseTime": 7,
-          "duration": 7,
+          "responseTime": 6,
+          "duration": 6,
           "size": 78
         },
         "error": null,
@@ -13225,13 +13455,13 @@
           {
             "description": "200 con los cinco campos (null si no se configuraron)",
             "status": "pass",
-            "uid": "J4k1dw8DQ1Kxk8EQ5X1ve"
+            "uid": "Lm4Ypw33z50CmFhK80E98"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.2170513,
+        "runDuration": 0.1890589,
         "name": "Datos del proveedor del servicio",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\05-libro-de-reclamaciones\\01-titular",
         "path": "05-libro-de-reclamaciones\\01-titular",
@@ -13259,13 +13489,13 @@
           "status": 201,
           "statusText": "Created",
           "headers": {
-            "x-correlation-id": "b8133797-6106-411a-876f-a026bcbff55c",
+            "x-correlation-id": "88ec50df-6f13-474e-bb64-1eaecf3adfd1",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "744",
-            "etag": "W/\"2e8-DvPEhAMo/iVHhAbKr85LwBRI8Gk\"",
-            "date": "Wed, 25 Nov 2026 20:23:25 GMT",
+            "etag": "W/\"2e8-6oXc8tbvwOvIRCnJUzM9s6cI8xs\"",
+            "date": "Wed, 25 Nov 2026 22:04:06 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
@@ -13279,12 +13509,12 @@
               "direccion": null,
               "razonSocial": null
             },
-            "presentadaEn": "2026-11-25T20:23:24.964Z",
+            "presentadaEn": "2026-11-25T22:04:06.245Z",
             "venceEn": "2026-12-16",
             "consumidor": {
               "nombre": "Consumidor Bruno",
               "tipoDocumento": "DNI",
-              "numeroDocumento": "91629178",
+              "numeroDocumento": "88938554",
               "domicilio": "Jr. Prueba 123, Ayacucho",
               "telefono": null,
               "email": "reclamo-bruno@example.com",
@@ -13301,11 +13531,11 @@
             "detalle": "El técnico no llegó a la hora acordada y no avisó del retraso.",
             "pedido": "Que se reprograme la visita sin costo.",
             "respuesta": null,
-            "codigoConsulta": "Lo003-uyNzlS"
+            "codigoConsulta": "4haBixHBI0Go"
           },
           "url": "http://127.0.0.1/api/v1/reclamaciones",
-          "responseTime": 67,
-          "duration": 67,
+          "responseTime": 65,
+          "duration": 65,
           "size": 744
         },
         "error": null,
@@ -13315,18 +13545,18 @@
           {
             "description": "201 con número correlativo y plazo de respuesta",
             "status": "pass",
-            "uid": "dZ2uB_l_pgsXMdoiVy1K4"
+            "uid": "Xc6y_46TA9SQnUqyZ5x2c"
           },
           {
             "description": "la constancia no incluye ids internos",
             "status": "pass",
-            "uid": "Eh57JIfaNeRGKNTxqoPFq"
+            "uid": "OkN1JkA5bQVtuIH6HSZUl"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.6254619,
+        "runDuration": 0.974661,
         "name": "Presentar un reclamo sin cuenta",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\05-libro-de-reclamaciones\\02-presentar",
         "path": "05-libro-de-reclamaciones\\02-presentar",
@@ -13338,7 +13568,7 @@
         },
         "request": {
           "method": "GET",
-          "url": "http://127.0.0.1:3403/api/v1/reclamaciones/consulta?numero=LR-2026-000001&codigo=Lo003-uyNzlS",
+          "url": "http://127.0.0.1:3403/api/v1/reclamaciones/consulta?numero=LR-2026-000001&codigo=4haBixHBI0Go",
           "headers": {
             "Accept": "application/json, text/plain, */*",
             "User-Agent": "bruno-runtime/4.3.0",
@@ -13352,13 +13582,13 @@
           "status": 200,
           "statusText": "OK",
           "headers": {
-            "x-correlation-id": "31dec3d3-1156-4ecb-9548-2ca60757f494",
+            "x-correlation-id": "39a05f9a-5b81-43ff-af26-42ff22082262",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "712",
-            "etag": "W/\"2c8-M8YsE5E9DRUOJIcwMIFoUvwwhn0\"",
-            "date": "Wed, 25 Nov 2026 20:23:25 GMT",
+            "etag": "W/\"2c8-1U6ZylPzkQIHBK+eF1mvMjc5UYM\"",
+            "date": "Wed, 25 Nov 2026 22:04:07 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
@@ -13372,12 +13602,12 @@
               "direccion": null,
               "razonSocial": null
             },
-            "presentadaEn": "2026-11-25T20:23:24.964Z",
+            "presentadaEn": "2026-11-25T22:04:06.245Z",
             "venceEn": "2026-12-16",
             "consumidor": {
               "nombre": "Consumidor Bruno",
               "tipoDocumento": "DNI",
-              "numeroDocumento": "91629178",
+              "numeroDocumento": "88938554",
               "domicilio": "Jr. Prueba 123, Ayacucho",
               "telefono": null,
               "email": "reclamo-bruno@example.com",
@@ -13395,9 +13625,9 @@
             "pedido": "Que se reprograme la visita sin costo.",
             "respuesta": null
           },
-          "url": "http://127.0.0.1/api/v1/reclamaciones/consulta?numero=LR-2026-000001&codigo=Lo003-uyNzlS",
-          "responseTime": 20,
-          "duration": 20,
+          "url": "http://127.0.0.1/api/v1/reclamaciones/consulta?numero=LR-2026-000001&codigo=4haBixHBI0Go",
+          "responseTime": 26,
+          "duration": 26,
           "size": 712
         },
         "error": null,
@@ -13407,13 +13637,13 @@
           {
             "description": "200 con la misma hoja, aún sin respuesta",
             "status": "pass",
-            "uid": "qrbXTrKWzyaMkTUTMREfl"
+            "uid": "IrkG2FT686XED3VHuXKAx"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.2360101,
+        "runDuration": 0.2528219,
         "name": "Consultar la hoja con su código",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\05-libro-de-reclamaciones\\03-consultar",
         "path": "05-libro-de-reclamaciones\\03-consultar",
@@ -13439,20 +13669,20 @@
           "status": 404,
           "statusText": "Not Found",
           "headers": {
-            "x-correlation-id": "78b6e430-62a3-4609-91cd-0d91ecffca0b",
+            "x-correlation-id": "f4e15395-27d4-47db-a3d9-086c4c7d3b27",
             "cache-control": "no-store",
             "x-content-type-options": "nosniff",
             "content-type": "application/json; charset=utf-8",
             "content-length": "147",
-            "etag": "W/\"93-ihhISK4VhCe0tygcVyzOHuCvjm8\"",
-            "date": "Wed, 25 Nov 2026 20:23:25 GMT",
+            "etag": "W/\"93-HNw2HIpApsjbqT2AI38MgpUZsyA\"",
+            "date": "Wed, 25 Nov 2026 22:04:07 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5"
           },
           "data": {
             "code": "HOJA_NO_DISPONIBLE",
             "mensaje": "No encontramos una hoja con ese número y código.",
-            "correlationId": "78b6e430-62a3-4609-91cd-0d91ecffca0b"
+            "correlationId": "f4e15395-27d4-47db-a3d9-086c4c7d3b27"
           },
           "url": "http://127.0.0.1/api/v1/reclamaciones/consulta?numero=LR-2026-000001&codigo=AAAAAAAAAAAA",
           "responseTime": 15,
@@ -13466,22 +13696,164 @@
           {
             "description": "404: sin el código no se lee la hoja",
             "status": "pass",
-            "uid": "vlukRfWuy_MeQ0T2jey_y"
+            "uid": "QvbHfiiF3sw0caSZIOw-j"
           }
         ],
         "preRequestTestResults": [],
         "postResponseTestResults": [],
         "shouldStopRunnerExecution": false,
-        "runDuration": 0.2008968,
+        "runDuration": 0.1636364,
         "name": "Código de consulta incorrecto",
         "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\05-libro-de-reclamaciones\\04-codigo-incorrecto",
         "path": "05-libro-de-reclamaciones\\04-codigo-incorrecto",
         "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "06-busqueda\\01-sin-ia.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://127.0.0.1:3403/api/v1/busqueda/intencion",
+          "headers": {
+            "Accept": "application/json, text/plain, */*",
+            "User-Agent": "bruno-runtime/4.3.0",
+            "Content-Length": "62",
+            "Accept-Encoding": "gzip, compress, deflate, br",
+            "Host": "127.0.0.1:3403",
+            "Connection": "keep-alive",
+            "Origin": "http://127.0.0.1:3100",
+            "Content-Type": "application/json"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "x-correlation-id": "80d08817-8024-4425-ba85-4fabbaf73610",
+            "cache-control": "no-store",
+            "x-content-type-options": "nosniff",
+            "content-type": "application/json; charset=utf-8",
+            "content-length": "346",
+            "etag": "W/\"15a-Xk+vMU6T3H42hWpRE6RFzIEWVTY\"",
+            "date": "Wed, 25 Nov 2026 22:04:07 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5"
+          },
+          "data": {
+            "modo": "convencional",
+            "motivo": "sin_configurar",
+            "criterios": {
+              "q": "servicio",
+              "tipo": "servicio",
+              "categoriaId": null,
+              "zonaId": null,
+              "precioMaximoCentimos": null
+            },
+            "fechas": null,
+            "camposQueRequierenPrecision": [],
+            "aviso": "La búsqueda inteligente no está activada: buscamos tus palabras tal cual.",
+            "resultados": {
+              "items": [],
+              "total": 0,
+              "page": 1,
+              "limit": 20
+            }
+          },
+          "url": "http://127.0.0.1/api/v1/busqueda/intencion",
+          "responseTime": 23,
+          "duration": 23,
+          "size": 346
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [],
+        "testResults": [
+          {
+            "description": "200 en modo convencional con el motivo y el filtro manual",
+            "status": "pass",
+            "uid": "Mm1GrAPpF27gvNH1QKaQP"
+          },
+          {
+            "description": "los resultados salen del catálogo real",
+            "status": "pass",
+            "uid": "TdvLyl4fFE3s8YRg8TiMF"
+          }
+        ],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.1632333,
+        "name": "Sin llave de IA, busca las palabras tal cual",
+        "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\06-busqueda\\01-sin-ia",
+        "path": "06-busqueda\\01-sin-ia",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "06-busqueda\\02-texto-largo.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://127.0.0.1:3403/api/v1/busqueda/intencion",
+          "headers": {
+            "Accept": "application/json, text/plain, */*",
+            "User-Agent": "bruno-runtime/4.3.0",
+            "Content-Length": "518",
+            "Accept-Encoding": "gzip, compress, deflate, br",
+            "Host": "127.0.0.1:3403",
+            "Connection": "keep-alive",
+            "Origin": "http://127.0.0.1:3100",
+            "Content-Type": "application/json"
+          }
+        },
+        "response": {
+          "status": 400,
+          "statusText": "Bad Request",
+          "headers": {
+            "x-correlation-id": "60ae169a-b2d6-4660-bfc9-307560235371",
+            "cache-control": "no-store",
+            "x-content-type-options": "nosniff",
+            "content-type": "application/json; charset=utf-8",
+            "content-length": "142",
+            "etag": "W/\"8e-smmwFFjwYr7q4hMd3DdMOgR2uko\"",
+            "date": "Wed, 25 Nov 2026 22:04:07 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5"
+          },
+          "data": {
+            "code": "ENTRADA_INVALIDA",
+            "mensaje": "Escribe lo que necesitas en 1 a 500 caracteres.",
+            "correlationId": "60ae169a-b2d6-4660-bfc9-307560235371"
+          },
+          "url": "http://127.0.0.1/api/v1/busqueda/intencion",
+          "responseTime": 4,
+          "duration": 4,
+          "size": 142
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [],
+        "testResults": [
+          {
+            "description": "400 sin llamar a la IA",
+            "status": "pass",
+            "uid": "NsnlyVEcVd1uBPfwJ6pas"
+          }
+        ],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.253825,
+        "name": "Texto de más de 500 caracteres",
+        "suitename": "<usuario>\\Documents\\SERIE 400-PAR\\ARQUITECTURA DE SOFTWARE\\Qatu-arquitSoft-02-Noe_Yupanqui_Santiago\\Qatu-Ayacucho\\docs\\06-pruebas-atributos-calidad\\bruno\\06-busqueda\\02-texto-largo",
+        "path": "06-busqueda\\02-texto-largo",
+        "iterationIndex": 0
       }
     ],
     "summary": {
-      "totalRequests": 34,
-      "passedRequests": 34,
+      "totalRequests": 36,
+      "passedRequests": 36,
       "failedRequests": 0,
       "errorRequests": 0,
       "skippedRequests": 0,
@@ -13489,8 +13861,8 @@
       "totalAssertions": 0,
       "passedAssertions": 0,
       "failedAssertions": 0,
-      "totalTests": 42,
-      "passedTests": 42,
+      "totalTests": 45,
+      "passedTests": 45,
       "failedTests": 0,
       "totalPreRequestTests": 0,
       "passedPreRequestTests": 0,

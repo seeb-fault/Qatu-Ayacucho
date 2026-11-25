@@ -12,4 +12,4 @@
 - [x] Todas las rutas documentadas y comprobadas por prueba (ver quickstart.md).
 - [x] Página apagada en producción salvo QATU_DOCS=1.
 - [ ] Recorrido manual con sesión desde la página.
-- [x] Etapa 2: colección Bruno con reporte HTML (42 de 42 pruebas).
+- [x] Etapa 2: colección Bruno con reporte HTML (45 de 45 pruebas).

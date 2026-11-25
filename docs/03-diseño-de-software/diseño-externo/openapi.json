@@ -9121,6 +9121,110 @@
           "Administración"
         ]
       }
+    },
+    "/api/v1/busqueda/intencion": {
+      "post": {
+        "description": "La IA (OpenRouter) traduce el texto a criterios validados contra las categorías y distritos reales; las ofertas y precios salen del catálogo. Si la IA no está configurada, tarda más de 3 s, falla o se agota la cuota (30 por IP cada 15 min), responde igual en modo convencional buscando las palabras tal cual. Solo se envía al proveedor de IA el texto de la consulta.\n\n**Acceso:** público.\n\n**Escritura:** exige `Origin` igual a `APP_ORIGIN` y `Content-Type: application/json`.",
+        "operationId": "Busqueda_intencion",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "texto": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 500,
+                    "example": "taladro en el centro por menos de 40 soles para el sábado"
+                  },
+                  "filtros": {
+                    "type": "object",
+                    "properties": {
+                      "tipo": {
+                        "type": "string",
+                        "enum": [
+                          "herramienta",
+                          "servicio"
+                        ]
+                      },
+                      "categoriaId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 50,
+                        "description": "Id de categoría de GET /publicaciones/opciones",
+                        "example": "perforacion"
+                      },
+                      "zonaId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 50,
+                        "description": "Id de distrito de GET /publicaciones/opciones",
+                        "example": "ayacucho"
+                      },
+                      "precioMaximoCentimos": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 99999999
+                      }
+                    },
+                    "additionalProperties": false,
+                    "description": "Filtros elegidos a mano: prevalecen sobre lo interpretado"
+                  },
+                  "page": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 10000,
+                    "default": 1
+                  }
+                },
+                "required": [
+                  "texto"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Resultados, en modo natural o convencional",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResultadoBusquedaInteligente"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Entrada inválida o campos desconocidos (ENTRADA_INVALIDA)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Origin distinto de APP_ORIGIN o Content-Type no permitido (ORIGEN_INVALIDO)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Buscar en lenguaje natural",
+        "tags": [
+          "Búsqueda"
+        ]
+      }
     }
   },
   "info": {
@@ -9145,6 +9249,10 @@
     {
       "name": "Catálogo",
       "description": "Publicaciones de herramientas y oficios, búsqueda y ubicación"
+    },
+    {
+      "name": "Búsqueda",
+      "description": "Búsqueda en lenguaje natural con IA y respaldo convencional"
     },
     {
       "name": "Mi lista",
@@ -11039,6 +11147,128 @@
           }
         },
         "description": "Constancia de la hoja; no incluye identificadores internos"
+      },
+      "ResultadoBusquedaInteligente": {
+        "type": "object",
+        "properties": {
+          "modo": {
+            "type": "string",
+            "enum": [
+              "natural",
+              "convencional"
+            ],
+            "description": "natural: la IA interpretó la consulta; convencional: se buscaron las palabras tal cual"
+          },
+          "motivo": {
+            "type": "string",
+            "enum": [
+              "sin_configurar",
+              "cuota",
+              "tiempo",
+              "error",
+              "respuesta_invalida"
+            ],
+            "description": "Por qué no se usó la IA",
+            "nullable": true
+          },
+          "criterios": {
+            "type": "object",
+            "properties": {
+              "q": {
+                "type": "string",
+                "nullable": true
+              },
+              "tipo": {
+                "type": "string",
+                "enum": [
+                  "herramienta",
+                  "servicio"
+                ],
+                "nullable": true
+              },
+              "categoriaId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 50,
+                "description": "Id de categoría de GET /publicaciones/opciones",
+                "example": "perforacion",
+                "nullable": true
+              },
+              "zonaId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 50,
+                "description": "Id de distrito de GET /publicaciones/opciones",
+                "example": "ayacucho",
+                "nullable": true
+              },
+              "precioMaximoCentimos": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 99999999,
+                "nullable": true
+              }
+            },
+            "description": "Criterios aplicados (validados; los manuales prevalecen). Editables en la web"
+          },
+          "fechas": {
+            "type": "object",
+            "properties": {
+              "inicio": {
+                "type": "string",
+                "format": "date"
+              },
+              "fin": {
+                "type": "string",
+                "format": "date",
+                "nullable": true
+              }
+            },
+            "description": "Fechas mencionadas, a confirmar al reservar",
+            "nullable": true
+          },
+          "camposQueRequierenPrecision": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "fechas",
+                "zona",
+                "categoria",
+                "presupuesto",
+                "tipo"
+              ]
+            }
+          },
+          "aviso": {
+            "type": "string",
+            "nullable": true
+          },
+          "resultados": {
+            "type": "object",
+            "properties": {
+              "items": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Publicacion"
+                }
+              },
+              "total": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "limit": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 50
+              }
+            }
+          }
+        }
       }
     }
   }

@@ -11,6 +11,7 @@ Pruebas de contrato y de reglas de negocio de la API REST, escritas con [Bruno](
 | 03 Catálogo | 6 | Búsqueda paginada (≤ 20), ordenada y sin datos privados; cabeceras de caché (1 h en referencias, 30 s en búsqueda, `no-store` en errores); 404 de oferta inexistente; un cliente sin perfil de proveedor no publica |
 | 04 Reservas | 10 | Disponibilidad sin identidades; solicitud PENDIENTE sin ids de cuentas; solicitud duplicada → 409; no se solicita la oferta propia (403); un tercero recibe 404; el proveedor la ve en su bandeja; rechazo con motivo y versión nueva; repetir con la versión vieja → 409 |
 | 05 Libro de Reclamaciones | 4 | Hoja sin cuenta con número correlativo `LR-AAAA-NNNNNN` y código de consulta; consulta con el código; código incorrecto → 404 |
+| 06 Búsqueda inteligente | 2 | Sin llave de IA responde 200 en modo convencional con el motivo, conserva el filtro manual y trae ofertas reales; texto de más de 500 caracteres → 400 |
 
 ## Ejecutar
 

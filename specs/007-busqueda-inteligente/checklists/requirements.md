@@ -1,5 +1,7 @@
 # Checklist — Búsqueda inteligente
 
+**007.1 (2026-11-25):** D10 resuelta; FR01–FR06 implementados y probados (validación de salida, prioridad manual, sin SQL ni escrituras, 3 s, respaldo convencional, sin datos privados al modelo). Pendiente: EQ-10.
+
 ## Revisión documental
 
 - [ ] Revisión humana de alcance HU01/HU15/HU16, requisitos RF01/RF16/RF17 y reglas locales.
