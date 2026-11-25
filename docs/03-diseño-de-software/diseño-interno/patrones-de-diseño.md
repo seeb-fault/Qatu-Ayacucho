@@ -35,11 +35,11 @@ flowchart LR
 
 | Puerto | Adapter | Servicio externo | Módulo | Estado |
 |---|---|---|---|---|
-| `ProcesadorPagos` | `CulqiPagoAdapter` | Culqi (tarjeta y Yape habilitado por la pasarela) | Reservas | Diseñado; integración real pendiente (D08) |
+| `ProcesadorPagos` | `ProcesadorCulqi` (y `ProcesadorDoble` en pruebas) | Culqi (tarjeta y Yape habilitado por la pasarela) | Pagos | **Implementado** en modo de prueba (005.8) |
 | `InterpreteIntencion` | `ModeloLenguajeAdapter` | Proveedor de IA (modelo por seleccionar) | Búsqueda | Diseñado |
 | `ServicioMapas` | `MapasAdapter` | Mapas y geocodificación (proveedor por definir) | Proveedores / Catálogo | Diseñado; distrito manual como respaldo |
-| `AlmacenArchivos` | `AlmacenLocalAdapter` → `AlmacenS3Adapter` | Volumen persistente del VPS; luego almacenamiento S3 compatible | Catálogo / Reseñas | Diseñado |
-| `CacheConsultas` | `RedisCacheAdapter` | Redis (opcional) | Catálogo / Búsqueda | Opcional; se activa solo si EQ-01 lo justifica |
+| `AlmacenObjetos` | `AlmacenR2` (S3 con firma SigV4) y `AlmacenMemoria` en pruebas | Cloudflare R2 | Compartido (Proveedores / Reseñas) | **Implementado** (013.1) |
+| `RepositorioCatalogo`, `ProveedoresCatalogo` | `RepositorioCatalogoEnCache`, `ProveedoresCatalogoEnCache` (Decorator sobre los adapters de PostgreSQL) | Memoria del proceso (`CacheMemoria`); Redis sería otro decorador | Catálogo | **Implementado** (015.1), tras medir con k6 |
 | `Notificador` | `MensajeriaAdapter` | Mensajería (proveedor por definir) | Reservas | Puerto, despachador y canal dentro de la app implementados; canal externo pendiente |
 | `TokensSesion` | `JwtTokens` | `JwtService` de NestJS | Usuarios | **Implementado** |
 | `HashPasswords` | `ScryptPasswords` | `node:crypto` (scrypt) | Usuarios | **Implementado** |
@@ -72,13 +72,23 @@ Los tres últimos están en `backend/src/modules/usuarios/infraestructura/` y de
 
 `AlmacenArchivos` guarda el binario y PostgreSQL guarda solo la metadata (ruta, tipo, tamaño y hash). En el MVP el adapter escribe en un **volumen persistente del VPS** incluido en las copias de respaldo. Las fotos del catálogo se sirven por una ruta controlada; las evidencias privadas exigen permiso por reserva y URL temporal. Cambiar a almacenamiento S3 compatible solo requiere otro adapter.
 
-### Caché con Redis
+### Caché de lecturas públicas
 
-`CacheConsultas` permite guardar temporalmente resultados de consultas públicas (catálogo y búsquedas frecuentes). `RedisCacheAdapter` se activa únicamente si las pruebas de carga EQ-01 demuestran que hace falta. La caché se invalida al editar o desactivar una publicación y **nunca decide** la aceptación de una reserva: la disponibilidad final siempre se comprueba en PostgreSQL. Si Redis falla, la consulta va directo a la base de datos.
+La prueba de carga del Sprint 1 (p95 de 3,8 s con 500 usuarios) y el análisis de la base (spec 015) mostraron que el costo está en las idas a la base, no en las consultas. Se implementó en memoria del proceso con el patrón **Decorator** (ver abajo); Redis queda como otro decorador si se despliegan varias réplicas. La caché se invalida al editar o desactivar una publicación y **nunca decide** la aceptación de una reserva: la disponibilidad final siempre se comprueba en PostgreSQL. Si Redis falla, la consulta va directo a la base de datos.
 
 ### Mensajería
 
 `Notificador` envía avisos (solicitud recibida, aceptada, vencida). Los avisos se registran en la base de datos y se reintentan; un fallo de mensajería no revierte una reserva ya confirmada.
+
+## Otros patrones aplicados
+
+| Patrón | Dónde | Para qué |
+|---|---|---|
+| **Repository** | `PostgresUsuarios`, `PostgresCatalogo`, `PostgresReservas`… detrás de interfaces del dominio (`RepositorioCatalogo`…) | El dominio y los casos de uso no conocen SQL; las pruebas usan dobles o PostgreSQL real |
+| **Facade** | `IdentidadUsuarios`, `ConsultaProveedores`, `ConsultaCatalogo`, `ConsultaReservas` | Cada módulo expone a los demás una fachada mínima; nadie lee tablas ajenas (monolito modular) |
+| **Decorator** | `RepositorioCatalogoEnCache`, `ProveedoresCatalogoEnCache` | Añade caché a la búsqueda pública sin modificar el repositorio ni el caso de uso (principio abierto/cerrado); las escrituras invalidan |
+| **Outbox** | `reservas_outbox` y `DespachadorEventos` | Los eventos de una reserva se guardan en la misma transacción y se despachan después con reintentos |
+| **Decorador de NestJS** `@Doc` | Controladores (014) | Documenta cada endpoint en OpenAPI desde el código, sin duplicar las reglas de validación |
 
 ## Reglas del patrón en Qatu
 
@@ -96,7 +106,7 @@ Los tres últimos están en `backend/src/modules/usuarios/infraestructura/` y de
 | DA04 / DA12 | ADR-004 / ADR-011 | `CulqiPagoAdapter` con pagos verificados |
 | DA06 | ADR-005 | `MapasAdapter` y `MensajeriaAdapter` con degradación controlada |
 | DA10 | ADR-009 | `ModeloLenguajeAdapter` de solo lectura con respaldo convencional |
-| DA02 | ADR-003 | `RedisCacheAdapter` opcional tras medir |
+| DA02 | ADR-003 | Caché en memoria con Decorator tras medir (015); Redis como siguiente paso con varias réplicas |
 | DA13 | ADR-010 / ADR-012 | `AlmacenArchivos` con metadata en BD y copias externas |
 
 [ADR](../../01-analisis-de-sistema/07-desision-arquitectonica.md) · [Escenarios](../../01-analisis-de-sistema/08-escenarios-atributos-calidad.md) · [Principios](./principios-de-diseño.md) · [C4 componentes](../../04-modelo-c4/Nivel3-Diagrama-de-Componentes.md).

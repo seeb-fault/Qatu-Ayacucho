@@ -22,6 +22,12 @@ El incremento **013.1** lleva los [archivos privados a Cloudflare R2](013-almace
 
 El incremento **014.1** documenta la API con [Swagger/OpenAPI](014-documentacion-api/quickstart.md): la página `/api/v1/docs` muestra los 94 endpoints agrupados por módulo y permite probarlos con sesión; el contrato `openapi.json` se genera desde los controladores y `npm test` falla si una ruta queda sin documentar o el archivo se desactualiza.
 
+El incremento **014.2** agrega una [colección Bruno](../docs/06-pruebas-atributos-calidad/bruno/README.md) con 42 pruebas de contrato y reglas de negocio (sesión, CSRF, permisos, reservas, Libro de Reclamaciones) que corre en el CI y deja un reporte HTML.
+
+El incremento **015.1** [analiza la base de datos y agrega caché](015-cache-y-base-de-datos/quickstart.md): los planes de las consultas reales con datos de carga, «Mis reservas» 5 veces más rápida, y la búsqueda pública en una caché en memoria de 30 s (patrón Decorator) con `Cache-Control` en las lecturas públicas.
+
+El incremento **016.1** [pasa las pruebas del backend a Jest con cobertura y mide la carga hasta 2 000 usuarios](016-pruebas-jest-y-carga/quickstart.md): 32 suites en el CI con reporte de cobertura, y un workflow de k6 por escalones de 100 a 2 000 usuarios, sin caché y con caché.
+
 ## Evolución pendiente
 
 - [005 — Reservas, contratación y pagos](005-reservas-contratacion-pagos/spec.md)
@@ -32,7 +38,6 @@ El incremento **014.1** documenta la API con [Swagger/OpenAPI](014-documentacion
 - [010 — Coordinación por WhatsApp](010-coordinacion-whatsapp/spec.md): etapa 2, avisos automáticos por WhatsApp Business (con costo, D08).
 - [013 — Almacenamiento y borde con Cloudflare](013-almacenamiento-cloudflare/spec.md): etapa 2, fotos públicas en la CDN; etapa 3, Cloudflare delante con WAF, IP real y Turnstile.
 - [012 — Información legal y Libro de Reclamaciones](012-legal-reclamaciones/spec.md): etapa 2, envío por correo, suspensión del plazo y avisos de vencimiento; datos reales del titular y revisión legal (D-012-1).
-- [014 — Documentación y pruebas de contrato de la API](014-documentacion-api/spec.md): etapa 2, colección Bruno con reporte HTML en el CI.
 - [009 — Mi lista](009-mi-lista/spec.md): guardar herramientas y oficios con sus fechas y enviar todas las solicitudes en un paso; exige sesión.
 
 ## Guías

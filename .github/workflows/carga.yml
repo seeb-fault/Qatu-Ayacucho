@@ -84,6 +84,8 @@ jobs:
         run: |
           ulimit -n 65536 || true
           # Una meta incumplida (código 99) es un resultado, no un fallo del workflow: se guarda y se informa.
+          # k6 corre en el contenedor con otro usuario: la carpeta de resultados debe aceptar su escritura.
+          chmod 777 "$SALIDA"
           set +e
           docker run --rm --network host --ulimit nofile=65536:65536 \
             -v "$GITHUB_WORKSPACE/docs/06-pruebas-atributos-calidad/scripts:/scripts:ro" -v "$RUNNER_TEMP:/datos:ro" -v "$SALIDA:/salida" \

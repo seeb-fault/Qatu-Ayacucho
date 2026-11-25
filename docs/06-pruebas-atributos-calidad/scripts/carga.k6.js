@@ -60,7 +60,8 @@ const tipos = ['', 'herramienta', 'servicio'];
 const categorias = { herramienta: ['perforacion', 'corte', 'pintura', 'jardineria', 'limpieza'], servicio: ['gasfiteria', 'electricidad', 'carpinteria', 'pintor', 'jardinero'] };
 const zonas = ['', 'ayacucho', 'san-juan-bautista', 'carmen-alto', 'jesus-nazareno'];
 const textos = ['', '', 'taladro', 'gasfitero', 'pintor', 'amoladora'];
-// k6 no incluye URLSearchParams: la consulta se arma a mano.
+// k6 no incluye URLSearchParams: la consulta se arma a mano. Cada petición lleva una etiqueta name por operación para que
+// k6 no cree una serie de métricas por cada URL distinta.
 const consulta = p => Object.entries(p).map(([k, v]) => k + '=' + encodeURIComponent(v)).join('&');
 const azar = a => a[Math.floor(Math.random() * a.length)];
 
@@ -85,18 +86,18 @@ export default function (s) {
     if (q) p.q = q;
     if (Math.random() < 0.3) p.orden = 'precio';
     p.page = String(1 + Math.floor(Math.random() * 3));
-    const r = http.get(API + '/publicaciones?' + consulta(p), { tags: { operacion: 'busqueda' } });
+    const r = http.get(API + '/publicaciones?' + consulta(p), { tags: { operacion: 'busqueda', name: 'GET /publicaciones' } });
     check(r, { 'búsqueda 200': v => v.status === 200, 'máximo 20 resultados': v => v.status !== 200 || v.json('items').length <= 20 });
   } else if (x < 0.9) {
-    const r = http.get(API + '/publicaciones/' + azar(datos.muestras).publicacionId, { tags: { operacion: 'detalle' } });
+    const r = http.get(API + '/publicaciones/' + azar(datos.muestras).publicacionId, { tags: { operacion: 'detalle', name: 'GET /publicaciones/:id' } });
     check(r, { 'detalle 200': v => v.status === 200 });
   } else if (x < 0.95) {
-    const r = http.get(API + '/reservas', { headers: { Cookie: azar(s.cookies) }, tags: { operacion: 'mis_reservas' } });
+    const r = http.get(API + '/reservas', { headers: { Cookie: azar(s.cookies) }, tags: { operacion: 'mis_reservas', name: 'GET /reservas' } });
     check(r, { 'reservas 200': v => v.status === 200 });
   } else {
     const m = azar(datos.muestras), inicio = new Date(Date.UTC(2027, 1, 1 + Math.floor(Math.random() * 60)));
     const fin = new Date(inicio.getTime() + 86_400_000);
-    const r = http.get(`${API}/recursos/${m.recursoId}/disponibilidad?publicacionId=${m.publicacionId}&inicio=${inicio.toISOString()}&fin=${fin.toISOString()}`, { tags: { operacion: 'disponibilidad' } });
+    const r = http.get(`${API}/recursos/${m.recursoId}/disponibilidad?publicacionId=${m.publicacionId}&inicio=${inicio.toISOString()}&fin=${fin.toISOString()}`, { tags: { operacion: 'disponibilidad', name: 'GET /recursos/:id/disponibilidad' } });
     check(r, { 'disponibilidad 200': v => v.status === 200 });
   }
   sleep(0.5 + Math.random()); // tiempo de lectura de una persona entre acciones
