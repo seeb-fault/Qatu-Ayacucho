@@ -1,0 +1,22 @@
+meta {
+  name: Filtro inválido
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{api}}/publicaciones?orden=aleatorio
+  body: none
+  auth: none
+}
+
+params:query {
+  orden: aleatorio
+}
+
+tests {
+  test("400 y el error no se guarda en caché", function () {
+    expect(res.getStatus()).to.equal(400);
+    expect(res.getHeader("cache-control")).to.equal("no-store");
+  });
+}

@@ -1,6 +1,6 @@
 # 014 — Documentación y pruebas de contrato de la API
 
-**Estado:** etapa 1 (014.1, Swagger/OpenAPI) implementada; etapa 2 (colección Bruno) pendiente. **Fecha:** 2026-11-19.
+**Estado:** etapa 1 (014.1, Swagger/OpenAPI, 2026-11-19) y etapa 2 (014.2, colección Bruno, 2026-11-25) implementadas.
 **Módulos técnicos:** compartido (documento OpenAPI y página) y la capa de presentación de todos los módulos. **Historias:** requisito del Sprint 2, actividad 4: «Endpoints REST funcionales y documentados con OpenAPI/Swagger».
 
 ## Objetivo y alcance
@@ -8,7 +8,7 @@
 Que la API REST de Qatu tenga un contrato legible por máquinas y una página para explorarla y probarla, sin que el contrato se separe del código.
 
 - **Etapa 1 (014.1):** OpenAPI 3 generado desde los controladores con `@nestjs/swagger`; página Swagger UI en `/api/v1/docs`; contrato versionado en `docs/03-diseño-de-software/diseño-externo/openapi.json`; pruebas que fallan si una ruta no está documentada o si el archivo no coincide con el código.
-- **Etapa 2:** colección Bruno, generada a partir del contrato, con aserciones de reglas de negocio y reporte HTML en el CI.
+- **Etapa 2 (014.2):** colección Bruno (`docs/06-pruebas-atributos-calidad/bruno/`) con 34 peticiones y 42 pruebas de contrato y reglas de negocio, ejecutada en el CI con reporte HTML, JSON y JUnit.
 - **Fuera de alcance:** cambiar el comportamiento de los endpoints, versionar la API más allá de `/api/v1` y publicar la página en producción de forma permanente.
 
 ## User Scenarios & Testing

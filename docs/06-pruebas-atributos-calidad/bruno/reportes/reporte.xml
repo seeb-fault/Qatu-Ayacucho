@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<testsuites>
+  <testsuite name="El proceso responde" file="01-salud-y-contrato\salud-vida.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.873" hostname="DESKTOP-2EH0B1D" time="0.452">
+    <testcase name="200 con estado ok" status="pass" classname="01-salud-y-contrato\salud-vida" time="0.452"/>
+  </testsuite>
+  <testsuite name="La API puede atender (PostgreSQL)" file="01-salud-y-contrato\salud-lista.bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-25T20:23:25.874" hostname="DESKTOP-2EH0B1D" time="0.251">
+    <testcase name="200 con la base disponible y sin datos sensibles" status="pass" classname="01-salud-y-contrato\salud-lista" time="0.125"/>
+    <testcase name="no se guarda en caché" status="pass" classname="01-salud-y-contrato\salud-lista" time="0.125"/>
+  </testsuite>
+  <testsuite name="Contrato OpenAPI publicado" file="01-salud-y-contrato\contrato-openapi.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.874" hostname="DESKTOP-2EH0B1D" time="0.269">
+    <testcase name="OpenAPI 3 con las rutas principales" status="pass" classname="01-salud-y-contrato\contrato-openapi" time="0.269"/>
+  </testsuite>
+  <testsuite name="Crear una cuenta (rol cliente)" file="02-usuarios\01-registro.bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-25T20:23:25.874" hostname="DESKTOP-2EH0B1D" time="0.952">
+    <testcase name="201 con la identidad pública y rol cliente" status="pass" classname="02-usuarios\01-registro" time="0.476"/>
+    <testcase name="cookie de sesión HttpOnly, SameSite=Strict y Path=/api/v1" status="pass" classname="02-usuarios\01-registro" time="0.476"/>
+  </testsuite>
+  <testsuite name="Rechazar escritura sin Origin (CSRF)" file="02-usuarios\02-registro-sin-origen.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.875" hostname="DESKTOP-2EH0B1D" time="0.148">
+    <testcase name="403 ORIGEN_INVALIDO con el formato de error común" status="pass" classname="02-usuarios\02-registro-sin-origen" time="0.148"/>
+  </testsuite>
+  <testsuite name="Rechazar un rol enviado por el navegador" file="02-usuarios\03-registro-con-rol.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.875" hostname="DESKTOP-2EH0B1D" time="0.151">
+    <testcase name="400: no se aceptan campos fuera del contrato" status="pass" classname="02-usuarios\03-registro-con-rol" time="0.151"/>
+  </testsuite>
+  <testsuite name="Ver mi perfil con la sesión" file="02-usuarios\04-perfil.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.875" hostname="DESKTOP-2EH0B1D" time="0.162">
+    <testcase name="200 con mi correo y sin datos internos" status="pass" classname="02-usuarios\04-perfil" time="0.162"/>
+  </testsuite>
+  <testsuite name="Registrar mi WhatsApp" file="02-usuarios\05-editar-perfil.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.876" hostname="DESKTOP-2EH0B1D" time="0.215">
+    <testcase name="200 y el número queda normalizado con +51" status="pass" classname="02-usuarios\05-editar-perfil" time="0.215"/>
+  </testsuite>
+  <testsuite name="Sin sesión no hay perfil" file="02-usuarios\06-perfil-sin-sesion.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.876" hostname="DESKTOP-2EH0B1D" time="0.166">
+    <testcase name="401 sin revelar detalles" status="pass" classname="02-usuarios\06-perfil-sin-sesion" time="0.166"/>
+  </testsuite>
+  <testsuite name="Un cliente no entra a la administración" file="02-usuarios\07-admin-como-cliente.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.876" hostname="DESKTOP-2EH0B1D" time="0.167">
+    <testcase name="403 por rol" status="pass" classname="02-usuarios\07-admin-como-cliente" time="0.167"/>
+  </testsuite>
+  <testsuite name="Contraseña incorrecta" file="02-usuarios\08-login-incorrecto.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.876" hostname="DESKTOP-2EH0B1D" time="0.666">
+    <testcase name="401 genérico: no dice si el correo existe" status="pass" classname="02-usuarios\08-login-incorrecto" time="0.666"/>
+  </testsuite>
+  <testsuite name="Cerrar sesión" file="02-usuarios\09-logout.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.876" hostname="DESKTOP-2EH0B1D" time="0.210">
+    <testcase name="204 y borra la cookie" status="pass" classname="02-usuarios\09-logout" time="0.210"/>
+  </testsuite>
+  <testsuite name="La sesión cerrada queda revocada en el servidor" file="02-usuarios\10-sesion-revocada.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.877" hostname="DESKTOP-2EH0B1D" time="0.178">
+    <testcase name="401 aunque el token no haya vencido" status="pass" classname="02-usuarios\10-sesion-revocada" time="0.178"/>
+  </testsuite>
+  <testsuite name="Iniciar sesión de nuevo" file="02-usuarios\11-login.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.877" hostname="DESKTOP-2EH0B1D" time="0.770">
+    <testcase name="200 con nueva sesión" status="pass" classname="02-usuarios\11-login" time="0.770"/>
+  </testsuite>
+  <testsuite name="Categorías y distritos" file="03-catalogo\01-opciones.bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-25T20:23:25.877" hostname="DESKTOP-2EH0B1D" time="0.189">
+    <testcase name="200 con las categorías y los 4 distritos" status="pass" classname="03-catalogo\01-opciones" time="0.095"/>
+    <testcase name="dato de referencia cacheable 1 hora" status="pass" classname="03-catalogo\01-opciones" time="0.095"/>
+  </testsuite>
+  <testsuite name="Buscar publicaciones" file="03-catalogo\02-busqueda.bru" errors="0" failures="0" skipped="0" tests="4" timestamp="2026-11-25T20:23:25.877" hostname="DESKTOP-2EH0B1D" time="0.237">
+    <testcase name="200 paginado con máximo 20 resultados" status="pass" classname="03-catalogo\02-busqueda" time="0.059"/>
+    <testcase name="la vista pública no expone cuentas ni moderación" status="pass" classname="03-catalogo\02-busqueda" time="0.059"/>
+    <testcase name="orden por precio ascendente" status="pass" classname="03-catalogo\02-busqueda" time="0.059"/>
+    <testcase name="búsqueda pública cacheable 30 s" status="pass" classname="03-catalogo\02-busqueda" time="0.059"/>
+  </testsuite>
+  <testsuite name="Filtro inválido" file="03-catalogo\03-filtro-invalido.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.877" hostname="DESKTOP-2EH0B1D" time="0.151">
+    <testcase name="400 y el error no se guarda en caché" status="pass" classname="03-catalogo\03-filtro-invalido" time="0.151"/>
+  </testsuite>
+  <testsuite name="Detalle de una publicación activa" file="03-catalogo\04-detalle.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.877" hostname="DESKTOP-2EH0B1D" time="0.179">
+    <testcase name="200 con sus recursos activos y el proveedor público" status="pass" classname="03-catalogo\04-detalle" time="0.179"/>
+  </testsuite>
+  <testsuite name="Publicación inexistente" file="03-catalogo\05-detalle-inexistente.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.877" hostname="DESKTOP-2EH0B1D" time="0.235">
+    <testcase name="404 OFERTA_NO_DISPONIBLE" status="pass" classname="03-catalogo\05-detalle-inexistente" time="0.235"/>
+  </testsuite>
+  <testsuite name="Un cliente sin perfil de proveedor no publica" file="03-catalogo\06-publicar-sin-perfil.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.878" hostname="DESKTOP-2EH0B1D" time="0.214">
+    <testcase name="rechazado: primero hace falta un perfil de proveedor aprobado" status="pass" classname="03-catalogo\06-publicar-sin-perfil" time="0.214"/>
+  </testsuite>
+  <testsuite name="Iniciar sesión como cliente" file="04-reservas\01-login-cliente.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.878" hostname="DESKTOP-2EH0B1D" time="0.665">
+    <testcase name="200" status="pass" classname="04-reservas\01-login-cliente" time="0.665"/>
+  </testsuite>
+  <testsuite name="Iniciar sesión como proveedor" file="04-reservas\02-login-proveedor.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.878" hostname="DESKTOP-2EH0B1D" time="0.828">
+    <testcase name="200" status="pass" classname="04-reservas\02-login-proveedor" time="0.828"/>
+  </testsuite>
+  <testsuite name="Disponibilidad pública sin identidades" file="04-reservas\03-disponibilidad.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.878" hostname="DESKTOP-2EH0B1D" time="0.450">
+    <testcase name="200 con franjas ocupadas y sin datos de quién" status="pass" classname="04-reservas\03-disponibilidad" time="0.450"/>
+  </testsuite>
+  <testsuite name="El cliente solicita el servicio" file="04-reservas\04-solicitar.bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-25T20:23:25.878" hostname="DESKTOP-2EH0B1D" time="0.385">
+    <testcase name="201 PENDIENTE: no bloquea la agenda hasta que el proveedor responda" status="pass" classname="04-reservas\04-solicitar" time="0.192"/>
+    <testcase name="no expone los identificadores de las cuentas" status="pass" classname="04-reservas\04-solicitar" time="0.192"/>
+  </testsuite>
+  <testsuite name="La misma solicitud dos veces" file="04-reservas\05-solicitud-duplicada.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.878" hostname="DESKTOP-2EH0B1D" time="0.209">
+    <testcase name="409: una cuenta no repite una solicitud pendiente igual" status="pass" classname="04-reservas\05-solicitud-duplicada" time="0.209"/>
+  </testsuite>
+  <testsuite name="El proveedor no solicita su propia oferta" file="04-reservas\06-oferta-propia.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.879" hostname="DESKTOP-2EH0B1D" time="0.232">
+    <testcase name="403" status="pass" classname="04-reservas\06-oferta-propia" time="0.232"/>
+  </testsuite>
+  <testsuite name="Un tercero no ve la reserva" file="04-reservas\07-tercero.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.879" hostname="DESKTOP-2EH0B1D" time="0.239">
+    <testcase name="404: ni siquiera confirma que existe" status="pass" classname="04-reservas\07-tercero" time="0.239"/>
+  </testsuite>
+  <testsuite name="El proveedor la recibe en su bandeja" file="04-reservas\08-bandeja-proveedor.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.879" hostname="DESKTOP-2EH0B1D" time="0.255">
+    <testcase name="200 y la solicitud aparece como recibida" status="pass" classname="04-reservas\08-bandeja-proveedor" time="0.255"/>
+  </testsuite>
+  <testsuite name="El proveedor rechaza con motivo" file="04-reservas\09-rechazar.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.879" hostname="DESKTOP-2EH0B1D" time="0.250">
+    <testcase name="201 RECHAZADA con el motivo y una versión nueva" status="pass" classname="04-reservas\09-rechazar" time="0.250"/>
+  </testsuite>
+  <testsuite name="Repetir el rechazo con la versión vieja" file="04-reservas\10-rechazo-con-version-vieja.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.879" hostname="DESKTOP-2EH0B1D" time="0.254">
+    <testcase name="409: control de concurrencia por versión" status="pass" classname="04-reservas\10-rechazo-con-version-vieja" time="0.254"/>
+  </testsuite>
+  <testsuite name="Datos del proveedor del servicio" file="05-libro-de-reclamaciones\01-titular.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.879" hostname="DESKTOP-2EH0B1D" time="0.217">
+    <testcase name="200 con los cinco campos (null si no se configuraron)" status="pass" classname="05-libro-de-reclamaciones\01-titular" time="0.217"/>
+  </testsuite>
+  <testsuite name="Presentar un reclamo sin cuenta" file="05-libro-de-reclamaciones\02-presentar.bru" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-11-25T20:23:25.879" hostname="DESKTOP-2EH0B1D" time="0.625">
+    <testcase name="201 con número correlativo y plazo de respuesta" status="pass" classname="05-libro-de-reclamaciones\02-presentar" time="0.313"/>
+    <testcase name="la constancia no incluye ids internos" status="pass" classname="05-libro-de-reclamaciones\02-presentar" time="0.313"/>
+  </testsuite>
+  <testsuite name="Consultar la hoja con su código" file="05-libro-de-reclamaciones\03-consultar.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.880" hostname="DESKTOP-2EH0B1D" time="0.236">
+    <testcase name="200 con la misma hoja, aún sin respuesta" status="pass" classname="05-libro-de-reclamaciones\03-consultar" time="0.236"/>
+  </testsuite>
+  <testsuite name="Código de consulta incorrecto" file="05-libro-de-reclamaciones\04-codigo-incorrecto.bru" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-11-25T20:23:25.880" hostname="DESKTOP-2EH0B1D" time="0.201">
+    <testcase name="404: sin el código no se lee la hoja" status="pass" classname="05-libro-de-reclamaciones\04-codigo-incorrecto" time="0.201"/>
+  </testsuite>
+</testsuites>

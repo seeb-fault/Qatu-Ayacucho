@@ -1,6 +1,6 @@
 # Tareas — Documentación y pruebas de contrato de la API
 
-Estado: etapa 1 implementada (2026-11-19); etapa 2 pendiente.
+Estado: etapas 1 (2026-11-19) y 2 (2026-11-25) implementadas.
 
 ## Etapa 1
 
@@ -11,9 +11,9 @@ Estado: etapa 1 implementada (2026-11-19); etapa 2 pendiente.
 - [x] T005 [US3] Script npm run openapi y contrato versionado en docs/03-diseño-de-software/diseño-externo/openapi.json.
 - [x] T006 [US3] Pruebas en backend/test/compartido/openapi.test.ts.
 - [x] T007 [US1] QATU_DOCS en backend/.env.example, infra/compose.production.yml e infra/runbooks/despliegue.md.
-- [ ] T008 [US2] Recorrido manual por el frontend: login y una operación con sesión desde la página.
+- [ ] T008 [US2] Recorrido manual por el frontend: login y una operación con sesión desde la página (lo hace el equipo con los servidores de desarrollo).
 
 ## Etapa 2
 
-- [ ] T009 Colección Bruno importada del contrato, con flujos y aserciones de negocio.
-- [ ] T010 Ejecutar Bruno en el CI y guardar el reporte HTML como artefacto.
+- [x] T009 Colección Bruno con flujos y aserciones de negocio: salud y contrato, usuarios y sesión, catálogo, reservas y Libro de Reclamaciones.
+- [x] T010 Ejecutar Bruno en el CI (docs/06-pruebas-atributos-calidad/scripts/bruno.mjs) y guardar el reporte HTML como artefacto.

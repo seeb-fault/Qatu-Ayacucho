@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
-import { test } from 'node:test';
 import { condiciones, liquidar, transicion, entradaAccion } from '../../src/modules/reservas/dominio/alquiler';
 import type { Solicitud } from '../../src/modules/reservas/dominio/solicitud';
+import { test } from '@jest/globals';
 
 const ahora = Date.parse('2030-01-01T10:00:00.000Z');
 function solicitud(): Solicitud {

@@ -1,6 +1,5 @@
 import assert from 'node:assert/strict';
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
-import { test } from 'node:test';
 import { Pool } from 'pg';
 import { AlmacenMemoria, AlmacenR2, ErrorAlmacen, claveObjeto, crearAlmacen } from '../../src/shared/infraestructura/almacen';
 import { ArchivosExternos } from '../../src/shared/infraestructura/archivos-externos';
@@ -11,6 +10,8 @@ import { PostgresCatalogo } from '../../src/modules/catalogo/infraestructura/pos
 import { PostgresUsuarios } from '../../src/modules/usuarios/infraestructura/postgres';
 import { migrarArchivos } from '../../scripts/migrar-archivos';
 import { verificarRestauracion } from '../../scripts/restauracion';
+import { test } from '@jest/globals';
+import { caso } from '../caso';
 
 const ENDPOINT = 'https://' + 'a'.repeat(32) + '.r2.cloudflarestorage.com';
 /** PNG sintético: firma válida y bytes aleatorios. */
@@ -56,7 +57,7 @@ test('AlmacenR2: firma S3 (SigV4, región auto) y códigos HTTP', async () => {
   await assert.rejects(caida.leer(clave), (e: unknown) => e instanceof ErrorAlmacen && /conectar/.test((e as Error).message));
 });
 
-test('AlmacenR2 contra Cloudflare R2 real', { skip: process.env.QATU_R2_PRUEBAS !== '1' && 'solo con QATU_R2_PRUEBAS=1 y las variables QATU_R2_*' }, async () => {
+(process.env.QATU_R2_PRUEBAS !== '1' && 'solo con QATU_R2_PRUEBAS=1 y las variables QATU_R2_*' ? test.skip : test)('AlmacenR2 contra Cloudflare R2 real', async () => {
   const v = (k: string) => process.env[k]!.trim();
   const r2 = new AlmacenR2(v('QATU_R2_ENDPOINT'), v('QATU_R2_ACCESS_KEY_ID'), v('QATU_R2_SECRET_ACCESS_KEY'), v('QATU_R2_BUCKET_PRIVADO'));
   const clave = claveObjeto('resenas', 'evidencias', randomUUID()), datos = randomBytes(4096);
@@ -67,7 +68,7 @@ test('AlmacenR2 contra Cloudflare R2 real', { skip: process.env.QATU_R2_PRUEBAS 
   assert.equal(await r2.leer(clave), null);
 });
 
-test('archivos en el almacén externo con PostgreSQL real', { skip: !process.env.TEST_DATABASE_URL }, async context => {
+(!process.env.TEST_DATABASE_URL ? test.skip : test)('archivos en el almacén externo con PostgreSQL real', async () => {
   process.env.DOCUMENTOS_KEY ||= randomBytes(32).toString('hex');
   const pool = new Pool({ connectionString: process.env.TEST_DATABASE_URL });
   const memoria = new AlmacenMemoria(), archivos = new ArchivosExternos(pool, memoria), cifrado = new ArchivosCifrados();
@@ -86,7 +87,7 @@ test('archivos en el almacén externo con PostgreSQL real', { skip: !process.env
       VALUES ($1,$2,$3,$4,$5,$6,now()+interval '30 days',now()+interval '31 days','',$7::jsonb)`, [reservaId, cliente.id, dueno.id, perfil.id, oferta.id, oferta.recursos[0].id, JSON.stringify({ titulo: oferta.titulo })]);
 
     let guardada: { id: string; sha256: string };
-    await context.test('evidencia: la fila guarda solo la clave; el almacén, los mismos bytes cifrados', async () => {
+    await caso('evidencia: la fila guarda solo la clave; el almacén, los mismos bytes cifrados', async () => {
       const a = cifrado.cifrar(png(), ['image/png']);
       [guardada] = await evidencias.guardar(reservaId, cliente.id, 'entrega', [a]);
       const fila = (await pool.query('SELECT contenido, objeto FROM evidencias WHERE id=$1', [a.id])).rows[0];
@@ -96,14 +97,14 @@ test('archivos en el almacén externo con PostgreSQL real', { skip: !process.env
       assert.equal(createHash('sha256').update(cifrado.descifrar({ id: a.id, contenido: leida.contenido!, iv: leida.iv!, tag: leida.tag! })).digest('hex'), a.sha256);
     });
 
-    await context.test('si el almacén falla al subir, no se registra nada', async () => {
+    await caso('si el almacén falla al subir, no se registra nada', async () => {
       const a = cifrado.cifrar(png(), ['image/png']);
       AlmacenMemoria.fallar = op => op === 'guardar';
       try { await assert.rejects(evidencias.guardar(reservaId, cliente.id, 'entrega', [a]), ErrorAlmacen); } finally { AlmacenMemoria.fallar = null; }
       assert.equal((await pool.query('SELECT count(*)::int AS n FROM evidencias WHERE id=$1', [a.id])).rows[0].n, 0);
     });
 
-    await context.test('si la transacción falla después de subir, los objetos se borran del almacén', async () => {
+    await caso('si la transacción falla después de subir, los objetos se borran del almacén', async () => {
       const lote = Array.from({ length: 4 }, () => cifrado.cifrar(png(), ['image/png'])); // ya hay 1 en «entrega»: 5 superan el cupo de 4
       await assert.rejects(evidencias.guardar(reservaId, cliente.id, 'entrega', lote), (e: any) => e.status === 409);
       await archivos.procesarCola();
@@ -111,7 +112,7 @@ test('archivos en el almacén externo con PostgreSQL real', { skip: !process.env
       for (const a of lote) assert.equal(await enCola(`resenas/evidencias/${a.id}`), undefined);
     });
 
-    await context.test('retención: borrar encola el objeto en la misma operación; un fallo se reintenta', async () => {
+    await caso('retención: borrar encola el objeto en la misma operación; un fallo se reintenta', async () => {
       const objeto = `resenas/evidencias/${guardada.id}`;
       AlmacenMemoria.fallar = op => op === 'borrar';
       try {
@@ -128,7 +129,7 @@ test('archivos en el almacén externo con PostgreSQL real', { skip: !process.env
       assert.equal((await evidencias.archivo(guardada.id))!.contenido, null);
     });
 
-    await context.test('documentos de proveedor: suben al almacén, se leen y se purgan por la cola', async () => {
+    await caso('documentos de proveedor: suben al almacén, se leen y se purgan por la cola', async () => {
       const doc = cifrado.cifrar(png(), ['image/png']);
       const v = await proveedores.solicitar(perfil.id, perfil.version, [doc]);
       assert.equal(v.documentos[0].disponible, true);
@@ -142,7 +143,7 @@ test('archivos en el almacén externo con PostgreSQL real', { skip: !process.env
       assert.equal(await proveedores.documento(doc.id), null);
     });
 
-    await context.test('la base rechaza un archivo vigente con contenido y objeto a la vez, o sin ninguno', async () => {
+    await caso('la base rechaza un archivo vigente con contenido y objeto a la vez, o sin ninguno', async () => {
       const a = cifrado.cifrar(png(), ['image/png']);
       const insertar = (contenido: Buffer | null, objeto: string | null) => pool.query(`INSERT INTO evidencias(id,reserva_id,autor_id,etapa,tipo,bytes,sha256,contenido,iv,tag,objeto)
         VALUES($1,$2,$3,'devolucion','image/png',$4,$5,$6,$7,$8,$9)`, [a.id, reservaId, cliente.id, a.bytes, a.sha256, contenido, Buffer.from(a.iv), Buffer.from(a.tag), objeto]);
@@ -150,7 +151,7 @@ test('archivos en el almacén externo con PostgreSQL real', { skip: !process.env
       await assert.rejects(insertar(null, null), /evidencias_contenido_u_objeto/);
     });
 
-    await context.test('mover a R2 los archivos que ya estaban en PostgreSQL, y verificarlos al restaurar', async () => {
+    await caso('mover a R2 los archivos que ya estaban en PostgreSQL, y verificarlos al restaurar', async () => {
       const a = cifrado.cifrar(png(), ['image/png']);
       await enBase.guardar(reservaId, dueno.id, 'devolucion', [a]);
       assert.ok((await pool.query('SELECT contenido FROM evidencias WHERE id=$1', [a.id])).rows[0].contenido);
@@ -176,6 +177,14 @@ test('archivos en el almacén externo con PostgreSQL real', { skip: !process.env
     // Los archivos de esta prueba se retiran al terminar. El almacén en memoria muere con el proceso, y en CI cada
     // archivo de prueba usa su propia DOCUMENTOS_KEY: dejarlos vigentes rompería el verificador de restauración de otras pruebas.
     if (reservaCreada) await pool.query('UPDATE evidencias SET contenido=NULL, objeto=NULL, iv=NULL, tag=NULL, eliminada_en=now() WHERE reserva_id=$1 AND eliminada_en IS NULL', [reservaCreada]);
+    // migrarArchivos mueve todos los archivos de la base, también los de otras suites que corrieron antes (Jest no
+    // sigue el orden alfabético): se devuelven a PostgreSQL con los mismos bytes cifrados.
+    for (const tabla of ['evidencias', 'documentos_proveedor']) {
+      for (const fila of (await pool.query(`SELECT id, objeto FROM ${tabla} WHERE objeto IS NOT NULL`)).rows) {
+        const bytes = AlmacenMemoria.objetos.get(fila.objeto);
+        if (bytes) await pool.query(`UPDATE ${tabla} SET contenido=$2, objeto=NULL WHERE id=$1`, [fila.id, bytes]);
+      }
+    }
     assert.equal((await pool.query('SELECT count(*)::int AS n FROM evidencias WHERE objeto IS NOT NULL')).rows[0].n
       + (await pool.query('SELECT count(*)::int AS n FROM documentos_proveedor WHERE objeto IS NOT NULL')).rows[0].n, 0, 'no quedan filas apuntando al almacén en memoria');
     await pool.end();

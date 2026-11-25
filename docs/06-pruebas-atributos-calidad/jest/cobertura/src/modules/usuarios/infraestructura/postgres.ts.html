@@ -1,0 +1,529 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/modules/usuarios/infraestructura/postgres.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../../index.html">All files</a> / <a href="index.html">src/modules/usuarios/infraestructura</a> postgres.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">99.32% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>147/148</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">90.9% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>50/55</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>17/17</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">99.32% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>147/148</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">31x</span>
+<span class="cline-any cline-yes">31x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">35x</span>
+<span class="cline-any cline-yes">35x</span>
+<span class="cline-any cline-yes">35x</span>
+<span class="cline-any cline-yes">35x</span>
+<span class="cline-any cline-yes">35x</span>
+<span class="cline-any cline-yes">34x</span>
+<span class="cline-any cline-yes">35x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">34x</span>
+<span class="cline-any cline-yes">35x</span>
+<span class="cline-any cline-yes">35x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">35x</span>
+<span class="cline-any cline-yes">35x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">113x</span>
+<span class="cline-any cline-yes">113x</span>
+<span class="cline-any cline-yes">70x</span>
+<span class="cline-any cline-yes">70x</span>
+<span class="cline-any cline-yes">70x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1272x</span>
+<span class="cline-any cline-yes">1272x</span>
+<span class="cline-any cline-yes">1272x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">628x</span>
+<span class="cline-any cline-yes">628x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1207x</span>
+<span class="cline-any cline-yes">1207x</span>
+<span class="cline-any cline-yes">1207x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">68x</span>
+<span class="cline-any cline-yes">68x</span>
+<span class="cline-any cline-yes">68x</span>
+<span class="cline-any cline-yes">68x</span>
+<span class="cline-any cline-yes">68x</span>
+<span class="cline-any cline-yes">66x</span>
+<span class="cline-any cline-yes">66x</span>
+<span class="cline-any cline-yes">68x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">68x</span>
+<span class="cline-any cline-yes">68x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1228x</span>
+<span class="cline-any cline-yes">1228x</span>
+<span class="cline-any cline-yes">1228x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">260x</span>
+<span class="cline-any cline-yes">260x</span>
+<span class="cline-any cline-yes">260x</span>
+<span class="cline-any cline-yes">260x</span>
+<span class="cline-any cline-yes">260x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { randomUUID } from 'node:crypto';
+import { Pool } from 'pg';
+import type { RepositorioUsuarios } from '../dominio/puertos';
+import { ErrorUsuario, type EstadoUsuario, type FiltrosUsuarios, type Usuario, type PaginaAuditoria } from '../dominio/usuario';
+&nbsp;
+const seleccion = `SELECT u.id, u.email_normalizado AS email, u.nombre, u.estado,
+  ARRAY(SELECT rol FROM roles_usuario WHERE usuario_id = u.id ORDER BY rol) AS roles FROM usuarios u`;
+&nbsp;
+export class PostgresUsuarios implements RepositorioUsuarios {
+  constructor(private readonly pool: Pool) {}
+&nbsp;
+  async crear(email: string, nombre: string, passwordHash: string) {
+    return this.crearConRoles(email, nombre, passwordHash);
+  }
+&nbsp;
+  async crearAdministrador(email: string, nombre: string, passwordHash: string, motivo: string) {
+    return this.crearConRoles(email, nombre, passwordHash, motivo);
+  }
+&nbsp;
+  private async crearConRoles(email: string, nombre: string, passwordHash: string, motivo?: string) {
+    const client = await this.pool.connect();
+    try {
+      await client.query('BEGIN');
+      const id = randomUUID();
+      await client.query('INSERT INTO usuarios(id,email_normalizado,nombre,password_hash) VALUES ($1,$2,$3,$4)', [id, email, nombre, passwordHash]);
+      await client.query("INSERT INTO roles_usuario(usuario_id,rol) VALUES ($1,'cliente')", [id]);
+      if (motivo !== undefined) {
+        await client.query("INSERT INTO roles_usuario(usuario_id,rol) VALUES ($1,'admin')", [id]);
+        await client.query("INSERT INTO auditoria_usuarios(id,usuario_id,accion,estado_nuevo,motivo) VALUES ($1,$2,'crear_admin','activo',$3)", [randomUUID(), id, motivo]);
+      }
+      await client.query('COMMIT');
+      return { id, email, nombre, estado: 'activo' as const, roles: motivo === undefined ? ['cliente' as const] : ['admin' as const, 'cliente' as const] };
+    } catch (error) {
+      await client.query('ROLLBACK');
+      if ((error as { code?: string }).code === '23505') throw new ErrorUsuario('EMAIL_DUPLICADO', 409, <span class="branch-0 cbranch-no" title="branch not covered" >'Ya existe una cuenta con ese correo.');</span>
+<span class="cstat-no" title="statement not covered" >      throw error;</span>
+<span class="branch-0 cbranch-no" title="branch not covered" >    } finally {</span> client.release(); }
+  }
+&nbsp;
+  async credenciales(email: string) {
+    const result = await this.pool.query(`${seleccion} WHERE u.email_normalizado = $1`, [email]);
+    if (!result.rows[0]) return null;
+    const hash = await this.pool.query('SELECT password_hash FROM usuarios WHERE id = $1', [result.rows[0].id]);
+    return { usuario: result.rows[0] as Usuario, passwordHash: hash.rows[0].password_hash as string };
+  }
+&nbsp;
+  async porId(id: string) {
+    const result = await this.pool.query(`${seleccion} WHERE u.id = $1`, [id]);
+    return (result.rows[0] as Usuario | undefined) ?? null;
+  }
+&nbsp;
+  async cuentasActivas(ids: string[]): Promise&lt;string[]&gt; {
+    return (await this.pool.query("SELECT id FROM usuarios WHERE id=ANY($1::uuid[]) AND estado='activo'",[ids])).rows.map(fila=&gt;fila.id);
+  }
+&nbsp;
+  async contacto(id: string) {
+    const r = await this.pool.query("SELECT nombre, whatsapp, whatsapp_visible AS \"whatsappVisible\", estado='activo' AS activo FROM usuarios WHERE id=$1", [id]);
+    return r.rows[0]<span class="branch-0 cbranch-no" title="branch not covered" > ?? null;</span>
+  }
+&nbsp;
+  async cambiarContacto(id: string, c: { whatsapp: string | null; whatsappVisible: boolean }) {
+    await this.pool.query('UPDATE usuarios SET whatsapp=$2, whatsapp_visible=$3, version=version+1 WHERE id=$1', [id, c.whatsapp, c.whatsappVisible]);
+  }
+&nbsp;
+  async cambiarNombre(id: string, nombre: string) {
+    const result = await this.pool.query("UPDATE usuarios SET nombre = $2, version = version + 1 WHERE id = $1 AND estado = 'activo' RETURNING id", [id, nombre]);
+    return result.rowCount ? this.porId(<span class="branch-0 cbranch-no" title="branch not covered" >id) : null;</span>
+  }
+&nbsp;
+  async crearSesion(id: string, usuarioId: string, expira: Date) {
+    const client = await this.pool.connect();
+    try {
+      await client.query('BEGIN');
+      const cuenta = await client.query('SELECT estado FROM usuarios WHERE id=$1 FOR UPDATE', [usuarioId]);
+      if (cuenta.rows[0]?.estado !== 'activo') throw new ErrorUsuario('CREDENCIALES_INVALIDAS', 401, 'Correo o contraseña incorrectos.');
+      await client.query('INSERT INTO sesiones_usuario(id,usuario_id,expira_en) VALUES ($1,$2,$3)', [id, usuarioId, expira]);
+      await client.query('COMMIT');
+    } catch (error) {
+      await client.query('ROLLBACK');
+      throw error;
+    } finally { client.release(); }
+  }
+&nbsp;
+  async sesionActiva(id: string, usuarioId: string) {
+    const result = await this.pool.query('SELECT id FROM sesiones_usuario WHERE id = $1 AND usuario_id = $2 AND NOT revocada AND expira_en &gt; now()', [id, usuarioId]);
+    return !!result.rowCount;
+  }
+&nbsp;
+  async revocarSesion(id: string) {
+    await this.pool.query('UPDATE sesiones_usuario SET revocada = true WHERE id = $1', [id]);
+  }
+&nbsp;
+  async limitar(clave: string, maximo: number) {
+    const result = await this.pool.query(`INSERT INTO limites_acceso(clave,intentos,hasta) VALUES ($1,1,now() + interval '15 minutes')
+      ON CONFLICT (clave) DO UPDATE SET intentos = CASE WHEN limites_acceso.hasta &lt;= now() THEN 1 ELSE limites_acceso.intentos + 1 END,
+      hasta = CASE WHEN limites_acceso.hasta &lt;= now() THEN now() + interval '15 minutes' ELSE limites_acceso.hasta END RETURNING intentos`, [clave]);
+    if (result.rows[0].intentos &gt; maximo) throw new ErrorUsuario('LIMITE_ACCESO', 429, 'Demasiados intentos. Espera 15 minutos.');
+  }
+&nbsp;
+  async listar(filtros: FiltrosUsuarios) {
+    const busqueda = `%${filtros.q.replace(/[\\%_]/g, '\\$&amp;')}%`;
+    const condicion = ' WHERE (u.nombre ILIKE $1 OR u.email_normalizado ILIKE $1) AND ($2::text IS NULL OR u.estado=$2)';
+    const valores = [busqueda, filtros.estado ?? null];
+    const [cuentas, conteo] = await Promise.all([
+      this.pool.query(`${seleccion}${condicion} ORDER BY u.creado_en DESC, u.id DESC LIMIT 20 OFFSET $3`, [...valores, (filtros.pagina - 1) * 20]),
+      this.pool.query(`SELECT count(*)::int AS total FROM usuarios u${condicion}`, valores),
+    ]);
+    const total = conteo.rows[0].total as number;
+    return { usuarios: cuentas.rows as Usuario[], pagina: filtros.pagina, total, paginas: Math.max(1, Math.ceil(total / 20)) };
+  }
+&nbsp;
+  async auditoria(usuarioId: string, pagina: number): Promise&lt;PaginaAuditoria&gt; {
+    const [eventos, conteo] = await Promise.all([
+      this.pool.query(`SELECT id, actor_id AS "actorId", usuario_id AS "usuarioId", accion, estado_anterior AS "estadoAnterior",
+        estado_nuevo AS "estadoNuevo", motivo, creado_en AS "creadoEn" FROM auditoria_usuarios
+        WHERE usuario_id=$1 ORDER BY creado_en DESC,id DESC LIMIT 20 OFFSET $2`, [usuarioId, (pagina - 1) * 20]),
+      this.pool.query('SELECT count(*)::int AS total FROM auditoria_usuarios WHERE usuario_id=$1', [usuarioId]),
+    ]);
+    const total = conteo.rows[0].total as number;
+    return { eventos: eventos.rows, pagina, total, paginas: Math.max(1, Math.ceil(total / 20)) };
+  }
+&nbsp;
+  async cambiarEstado(actorId: string, usuarioId: string, estadoActual: EstadoUsuario, estado: EstadoUsuario, motivo: string) {
+    const client = await this.pool.connect();
+    try {
+      await client.query('BEGIN');
+      const actor = await client.query('SELECT estado FROM usuarios WHERE id=$1 FOR SHARE', [actorId]);
+      const permiso = await client.query("SELECT 1 FROM roles_usuario WHERE usuario_id=$1 AND rol='admin'", [actorId]);
+      if (actor.rows[0]?.estado !== 'activo' || !permiso.rowCount) throw new ErrorUsuario('SIN_PERMISO', 403, 'Esta acción requiere una cuenta administrativa activa.');
+      if (actorId === usuarioId) throw new ErrorUsuario('ADMIN_PROTEGIDO', 409, 'Las cuentas administrativas no se modifican desde esta pantalla.');
+      const administrador = await client.query("SELECT 1 FROM roles_usuario WHERE usuario_id=$1 AND rol='admin'", [usuarioId]);
+      if (administrador.rowCount) throw new ErrorUsuario('ADMIN_PROTEGIDO', 409, 'Las cuentas administrativas no se modifican desde esta pantalla.');
+      const cuenta = await client.query('SELECT estado FROM usuarios WHERE id=$1 FOR UPDATE', [usuarioId]);
+      if (!cuenta.rowCount) throw new ErrorUsuario('USUARIO_NO_EXISTE', 404, 'La cuenta no existe.');
+      if (cuenta.rows[0].estado !== estadoActual) throw new ErrorUsuario('ESTADO_DESACTUALIZADO', 409, 'La cuenta cambió. Actualiza el listado antes de continuar.');
+      await client.query('UPDATE usuarios SET estado=$2,version=version+1 WHERE id=$1', [usuarioId, estado]);
+      if (estado === 'inactivo') await client.query('UPDATE sesiones_usuario SET revocada=true WHERE usuario_id=$1 AND NOT revocada', [usuarioId]);
+      await client.query(`INSERT INTO auditoria_usuarios(id,actor_id,usuario_id,accion,estado_anterior,estado_nuevo,motivo)
+        VALUES ($1,$2,$3,'cambiar_estado',$4,$5,$6)`, [randomUUID(), actorId, usuarioId, estadoActual, estado, motivo]);
+      const resultado = await client.query(`${seleccion} WHERE u.id=$1`, [usuarioId]);
+      await client.query('COMMIT');
+      return resultado.rows[0] as Usuario;
+    } catch (error) {
+      await client.query('ROLLBACK');
+      throw error;
+<span class="branch-0 cbranch-no" title="branch not covered" >    } finally {</span> client.release(); }
+  }
+}
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-11-25T20:29:20.043Z
+            </div>
+        <script src="../../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../../sorter.js"></script>
+        <script src="../../../../block-navigation.js"></script>
+    </body>
+</html>
+    

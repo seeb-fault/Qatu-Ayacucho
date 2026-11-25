@@ -1,0 +1,304 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/modules/resenas/dominio/incidencias.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../../index.html">All files</a> / <a href="index.html">src/modules/resenas/dominio</a> incidencias.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>73/73</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">87.8% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>36/41</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>10/10</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>73/73</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { ErrorResena, type ReservaParaResena } from './resenas';
+&nbsp;
+export type TipoIncidencia = 'dano' | 'faltante' | 'servicio' | 'otro';
+export type ResultadoIncidencia = 'a_favor_cliente' | 'a_favor_proveedor' | 'sin_acuerdo';
+/** D09: se puede reclamar desde la entrega y hasta 48 h después del cierre. */
+export const HORAS_PARA_RECLAMAR = 48;
+&nbsp;
+/** Estados con la herramienta o el trabajo en marcha: ya hubo entrega o inicio. */
+const EN_MARCHA = ['ENTREGA_POR_CONFIRMAR', 'EN_CURSO', 'DEVOLUCION_PENDIENTE', 'SERVICIO_EN_CURSO', 'SERVICIO_POR_CONFIRMAR', 'SERVICIO_POR_PAGAR'];
+const CERRADOS = ['DEVUELTA', 'SERVICIO_CERRADO'];
+/** Estados en los que la herramienta está por entregarse: el proveedor documenta su estado. */
+const ANTES_DE_ENTREGAR = ['ACEPTADA', 'APARTADO_PAGADO', 'ENTREGA_POR_CONFIRMAR'];
+const AL_RECIBIR = ['ENTREGA_POR_CONFIRMAR', 'EN_CURSO'];
+&nbsp;
+export interface Incidencia {
+  id: string; reservaId: string; autorId: string; clienteId: string; propietarioId: string;
+  tipo: TipoIncidencia; descripcion: string; estado: 'abierta' | 'resuelta';
+  resultado: ResultadoIncidencia | null; motivo: string | null; revisorId: string | null; creadaEn: string; resueltaEn: string | null;
+}
+export interface Garantia { reservaId: string; condiciones: string; registradaPor: string; registradaEn: string; conformidadClienteEn: string | null; version: number }
+&nbsp;
+const invalida = (mensaje: string): never =&gt; { throw new ErrorResena('ENTRADA_INVALIDA', 400, mensaje); };
+function objeto(value: unknown, campos: string[]): Record&lt;string, unknown&gt; {
+  if (!value || typeof value !== 'object' || Array.isArray(value) || Object.keys(value).some(k =&gt; !campos.includes(k))) invalida('Revisa los datos enviados.');
+  return value as Record&lt;string, unknown&gt;;
+}
+function texto(value: unknown, min: number, max: number, mensaje: string): string {
+  const t = typeof value === 'string' ? value.trim<span class="branch-0 cbranch-no" title="branch not covered" >() : '';</span>
+  if (Array.from(t).length &lt; min || Array.from(t).length &gt; max || /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(t)) invalida(mensaje);
+  return t;
+}
+&nbsp;
+export function entradaIncidencia(value: unknown): { tipo: TipoIncidencia; descripcion: string } {
+  const d = objeto(value, ['tipo', 'descripcion']);
+  if (!['dano', 'faltante', 'servicio', 'otro'].includes(d.tipo as string)) invalida('Elige el tipo de problema.');
+  return { tipo: d.tipo as TipoIncidencia, descripcion: texto(d.descripcion, 20, 1000, 'Describe el problema en 20 a 1000 caracteres.') };
+}
+&nbsp;
+export function entradaResolucion(value: unknown): { resultado: ResultadoIncidencia; motivo: string } {
+  const d = objeto(value, ['resultado', 'motivo']);
+  if (!['a_favor_cliente', 'a_favor_proveedor', 'sin_acuerdo'].includes(d.resultado as string)) invalida('Elige el resultado de la revisión.');
+  return { resultado: d.resultado as ResultadoIncidencia, motivo: texto(d.motivo, 10, 500, 'El motivo debe tener entre 10 y 500 caracteres.') };
+}
+&nbsp;
+export function entradaGarantia(value: unknown): { condiciones: string } {
+  const d = objeto(value, ['condiciones']);
+  return { condiciones: texto(d.condiciones, 20, 1000, 'Describe el estado y los accesorios en 20 a 1000 caracteres.') };
+}
+&nbsp;
+/** Si un participante puede abrir una incidencia ahora. */
+export function puedeReclamar(r: ReservaParaResena, ahora: number) {
+  if (EN_MARCHA.includes(r.estado)) return true;
+  return CERRADOS.includes(r.estado) &amp;&amp; r.cerradaEn !== null &amp;&amp; Date.parse(r.cerradaEn) + HORAS_PARA_RECLAMAR * 3_600_000 &gt; ahora;
+}
+&nbsp;
+export function exigirPuedeReclamar(r: ReservaParaResena, ahora: number) {
+  if (!puedeReclamar(r, ahora)) throw new ErrorResena('RECLAMO_FUERA_DE_PLAZO', 409, `Puedes reportar un problema desde la entrega y hasta ${HORAS_PARA_RECLAMAR} h después del cierre.`);
+}
+&nbsp;
+/** El proveedor documenta el estado antes de entregar; una vez que el cliente da conformidad, el acuerdo queda fijo. */
+export function exigirPuedeDocumentar(r: ReservaParaResena, actorId: string, actual: Garantia | null) {
+  if (r.tipo !== 'herramienta') <span class="branch-0 cbranch-no" title="branch not covered" >throw new ErrorResena('SIN_GARANTIA', 409, 'La garantía documental aplica al alquiler de herramientas.');</span>
+  if (r.propietarioId !== actorId) throw new ErrorResena('SIN_PERMISO', 403, 'Solo el proveedor registra el estado de la herramienta.');
+  if (!ANTES_DE_ENTREGAR.includes(r.estado)) throw new ErrorResena('GARANTIA_FUERA_DE_PLAZO', 409, 'El estado de la herramienta se registra antes de entregarla.');
+  if (actual?.conformidadClienteEn) <span class="branch-0 cbranch-no" title="branch not covered" >throw new ErrorResena('GARANTIA_CONFIRMADA', 409, 'El cliente ya dio su conformidad; el acuerdo no se puede cambiar.');</span>
+}
+&nbsp;
+export function exigirPuedeConfirmar(r: ReservaParaResena, actorId: string, actual: Garantia | null) {
+  if (r.clienteId !== actorId) throw new ErrorResena('SIN_PERMISO', 403, 'Solo el cliente confirma el estado recibido.');
+  if (!actual) <span class="branch-0 cbranch-no" title="branch not covered" >throw new ErrorResena('GARANTIA_INEXISTENTE', 409, 'El proveedor todavía no registró el estado de la herramienta.');</span>
+  if (actual.conformidadClienteEn) <span class="branch-0 cbranch-no" title="branch not covered" >throw new ErrorResena('GARANTIA_CONFIRMADA', 409, 'Ya diste tu conformidad.');</span>
+  if (!AL_RECIBIR.includes(r.estado)) throw new ErrorResena('GARANTIA_FUERA_DE_PLAZO', 409, 'La conformidad se da al recibir la herramienta.');
+}
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-11-25T20:29:20.043Z
+            </div>
+        <script src="../../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../../sorter.js"></script>
+        <script src="../../../../block-navigation.js"></script>
+    </body>
+</html>
+    

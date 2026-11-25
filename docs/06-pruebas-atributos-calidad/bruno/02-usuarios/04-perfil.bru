@@ -1,0 +1,24 @@
+meta {
+  name: Ver mi perfil con la sesión
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{api}}/usuarios/me
+  body: none
+  auth: none
+}
+
+headers {
+  Cookie: {{cookieNuevo}}
+}
+
+tests {
+  test("200 con mi correo y sin datos internos", function () {
+    expect(res.getStatus()).to.equal(200);
+    const b = res.getBody();
+    expect(b.email).to.equal(bru.getVar("emailNuevo"));
+    expect(b.estado).to.equal("activo");
+  });
+}

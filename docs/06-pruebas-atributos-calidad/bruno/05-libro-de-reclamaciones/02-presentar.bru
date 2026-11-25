@@ -1,0 +1,56 @@
+meta {
+  name: Presentar un reclamo sin cuenta
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{api}}/reclamaciones
+  body: json
+  auth: none
+}
+
+headers {
+  Origin: {{origen}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "tipo": "reclamo",
+    "nombre": "Consumidor Bruno",
+    "tipoDocumento": "DNI",
+    "numeroDocumento": "{{dniSintetico}}",
+    "domicilio": "Jr. Prueba 123, Ayacucho",
+    "email": "reclamo-bruno@example.com",
+    "medioRespuesta": "correo",
+    "bienTipo": "servicio",
+    "bienDescripcion": "Servicio de electricidad",
+    "detalle": "El técnico no llegó a la hora acordada y no avisó del retraso.",
+    "pedido": "Que se reprograme la visita sin costo."
+  }
+}
+
+script:pre-request {
+  // DNI sintético distinto en cada corrida: el límite es de 3 hojas por documento cada 15 minutos.
+  bru.setVar("dniSintetico", String(10000000 + Math.floor(Math.random() * 89999999)));
+}
+
+script:post-response {
+  if (res.getStatus() === 201) { bru.setVar("hojaNumero", res.getBody().numero); bru.setVar("hojaCodigo", res.getBody().codigoConsulta); }
+}
+
+tests {
+  test("201 con número correlativo y plazo de respuesta", function () {
+    expect(res.getStatus()).to.equal(201);
+    const b = res.getBody();
+    expect(b.numero).to.match(/^LR-\d{4}-\d{6}$/);
+    expect(b.codigoConsulta).to.match(/^[A-Za-z0-9_-]{12}$/);
+    expect(b.venceEn).to.be.a("string");
+    expect(b.respuesta).to.equal(null);
+  });
+  test("la constancia no incluye ids internos", function () {
+    expect(res.getBody()).to.not.have.property("id");
+    expect(res.getBody()).to.not.have.property("usuarioId");
+  });
+}

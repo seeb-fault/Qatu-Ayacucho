@@ -1,15 +1,16 @@
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { test } from 'node:test';
 import { Pool } from 'pg';
 import { crearApp } from '../../src/app';
 import { PostgresUsuarios } from '../../src/modules/usuarios/infraestructura/postgres';
 import { ScryptPasswords } from '../../src/modules/usuarios/infraestructura/passwords';
+import { test } from '@jest/globals';
+import { caso } from '../caso';
 
 const HORA=3600000,IMPORTE=18050,MOTIVO='El trabajo no se realizó como estaba acordado.';
 
-test('ejecución de oficios: inicio, término, efectivo bilateral, cancelación sin iniciar y rollback',{skip:!process.env.TEST_DATABASE_URL},async context=>{
+(!process.env.TEST_DATABASE_URL ? test.skip : test)('ejecución de oficios: inicio, término, efectivo bilateral, cancelación sin iniciar y rollback', async () =>{
   process.env.DATABASE_URL=process.env.TEST_DATABASE_URL;
   process.env.JWT_SECRET='secreto-exclusivo-ejecucion-pruebas-2026-488';process.env.NODE_ENV='test';process.env.APP_ORIGIN='http://127.0.0.1:3100';
   const f=JSON.parse(execFileSync(process.execPath,['--env-file-if-exists=.env','--import','tsx','test/reservas/fixture-e2e.ts','--servicio'],{encoding:'utf8',env:{...process.env,QATU_E2E_RESERVAS:'1'}}));
@@ -38,7 +39,7 @@ test('ejecución de oficios: inicio, término, efectivo bilateral, cancelación 
     const eventos=async(id:string)=>(await pool.query('SELECT tipo FROM reservas_outbox WHERE agregado_id=$1',[id])).rows.map(r=>r.tipo);
     const bloqueoActivo=async(id:string)=>(await pool.query('SELECT activo FROM reservas_bloqueos WHERE reserva_id=$1',[id])).rows[0].activo;
 
-    await context.test('permisos y hora: nadie inicia antes de tiempo y cada acción pertenece a su participante',async()=>{
+    await caso('permisos y hora: nadie inicia antes de tiempo y cada acción pertenece a su participante',async()=>{
       const s=await confirmado();
       assert.equal((await accion(s,'servicio/inicio',proveedor)).status,409);
       await llegarHora(s);
@@ -54,7 +55,7 @@ test('ejecución de oficios: inicio, término, efectivo bilateral, cancelación 
       assert.equal((await accion(iniciado,'servicio/termino',cliente)).status,403);
     });
 
-    await context.test('ciclo completo: el efectivo es el total aceptado, el rechazo lo anula y el cierre libera la agenda',async()=>{
+    await caso('ciclo completo: el efectivo es el total aceptado, el rechazo lo anula y el cierre libera la agenda',async()=>{
       const s=await confirmado();await llegarHora(s);
       const iniciado=await paso(s,'servicio/inicio',proveedor);
       assert.equal((await accion(iniciado,'servicio/termino',proveedor,{importeCentimos:1})).status,400);
@@ -77,7 +78,7 @@ test('ejecución de oficios: inicio, término, efectivo bilateral, cancelación 
       assert.equal((await accion(cerrado,'cancelacion',cliente,{motivo:MOTIVO})).status,409);
     });
 
-    await context.test('sin iniciar se cancela con motivo aunque pasó la hora; iniciado ya no se cancela',async()=>{
+    await caso('sin iniciar se cancela con motivo aunque pasó la hora; iniciado ya no se cancela',async()=>{
       const s=await confirmado();await llegarHora(s);
       assert.equal((await accion(s,'cancelacion',cliente,{motivo:'corto'})).status,400);
       const cancelada=await paso(s,'cancelacion',cliente,{motivo:'El proveedor no se presentó a la hora acordada.'});
@@ -90,7 +91,7 @@ test('ejecución de oficios: inicio, término, efectivo bilateral, cancelación 
       assert.equal(await bloqueoActivo(t.id),true);
     });
 
-    await context.test('confirmar y rechazar a la vez tiene un solo efecto',async()=>{
+    await caso('confirmar y rechazar a la vez tiene un solo efecto',async()=>{
       const s=await confirmado();await llegarHora(s);
       const terminado=await paso(await paso(s,'servicio/inicio',proveedor),'servicio/termino',proveedor);
       const resultados=await Promise.all([accion(terminado,'servicio/confirmacion',cliente),accion(terminado,'servicio/rechazo',cliente,{motivo:MOTIVO})]);
@@ -99,7 +100,7 @@ test('ejecución de oficios: inicio, término, efectivo bilateral, cancelación 
       assert.equal(final,terminado.version+1);
     });
 
-    await context.test('si falla el evento de cierre se conservan estado, efectivo y agenda',async()=>{
+    await caso('si falla el evento de cierre se conservan estado, efectivo y agenda',async()=>{
       const s=await confirmado();await llegarHora(s);
       const terminado=await paso(await paso(s,'servicio/inicio',proveedor),'servicio/termino',proveedor);
       await pool.query("CREATE FUNCTION fallar_cierre_prueba() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN IF NEW.tipo='SERVICIO_CERRADO' THEN RAISE EXCEPTION 'fallo sintético de cierre'; END IF; RETURN NEW; END $$");
@@ -112,7 +113,7 @@ test('ejecución de oficios: inicio, término, efectivo bilateral, cancelación 
       } finally {await pool.query('DROP TRIGGER fallar_cierre_prueba ON reservas_outbox');await pool.query('DROP FUNCTION fallar_cierre_prueba()');}
     });
 
-    await context.test('PostgreSQL rechaza importes ajenos a la cotización y estados incoherentes',async()=>{
+    await caso('PostgreSQL rechaza importes ajenos a la cotización y estados incoherentes',async()=>{
       const s=await confirmado();await llegarHora(s);
       const iniciado=await paso(s,'servicio/inicio',proveedor);
       await assert.rejects(()=>pool.query("UPDATE reservas SET estado='SERVICIO_POR_CONFIRMAR',pago_estado='REGISTRADO_PROVEEDOR',efectivo_centimos=1,servicio_terminado_en=clock_timestamp() WHERE id=$1",[s.id]),(e:any)=>e.code==='23514');
@@ -122,7 +123,7 @@ test('ejecución de oficios: inicio, término, efectivo bilateral, cancelación 
       assert.equal(iniciado.estado,'SERVICIO_EN_CURSO');
     });
 
-    await context.test('las acciones de oficio no se aplican a estados de herramienta ni a solicitudes pendientes',async()=>{
+    await caso('las acciones de oficio no se aplican a estados de herramienta ni a solicitudes pendientes',async()=>{
       const desde=Date.now()+200*HORA;
       const r=await pedir('/reservas','POST',{publicacionId:f.publicacionId,recursoId:f.recursoId,inicio:new Date(desde).toISOString(),fin:new Date(desde+HORA).toISOString(),descripcionTrabajo:'Revisar tomacorrientes e instalar luminarias en la vivienda.'},cliente);
       const s=await r.json();

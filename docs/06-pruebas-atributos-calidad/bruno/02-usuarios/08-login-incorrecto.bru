@@ -1,0 +1,31 @@
+meta {
+  name: Contraseña incorrecta
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{api}}/auth/login
+  body: json
+  auth: none
+}
+
+headers {
+  Origin: {{origen}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "email": "{{emailNuevo}}",
+    "password": "otra frase que no es la correcta"
+  }
+}
+
+tests {
+  test("401 genérico: no dice si el correo existe", function () {
+    expect(res.getStatus()).to.equal(401);
+    expect(res.getBody().code).to.equal("CREDENCIALES_INVALIDAS");
+    expect(res.getHeader("set-cookie")).to.be.undefined;
+  });
+}

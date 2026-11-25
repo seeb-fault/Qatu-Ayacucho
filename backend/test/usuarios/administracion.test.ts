@@ -1,13 +1,14 @@
 import assert from 'node:assert/strict';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
-import { test } from 'node:test';
 import { Pool } from 'pg';
 import { crearApp } from '../../src/app';
 import { PostgresUsuarios } from '../../src/modules/usuarios/infraestructura/postgres';
 import { ScryptPasswords } from '../../src/modules/usuarios/infraestructura/passwords';
+import { test } from '@jest/globals';
+import { caso } from '../caso';
 
-test('administración HTTP y PostgreSQL con auditoría transaccional', { skip: !process.env.TEST_DATABASE_URL }, async context => {
+(!process.env.TEST_DATABASE_URL ? test.skip : test)('administración HTTP y PostgreSQL con auditoría transaccional', async () => {
   process.env.DATABASE_URL = process.env.TEST_DATABASE_URL;
   process.env.JWT_SECRET = 'secreto-exclusivo-de-pruebas-administracion-488';
   process.env.APP_ORIGIN = 'http://127.0.0.1:3000';
@@ -48,7 +49,7 @@ test('administración HTTP y PostgreSQL con auditoría transaccional', { skip: !
     cookieAdmin = await login(emailAdmin);
     cookieCliente = await login(cliente.email);
     cookieProveedor = await login(proveedor.email);
-    await context.test('CLI crea y audita administrador nuevo; nunca promueve email existente', async () => {
+    await caso('CLI crea y audita administrador nuevo; nunca promueve email existente', async () => {
       assert.deepEqual(admin.roles, ['admin', 'cliente']);
       const eventos = await repo.auditoria(admin.id, 1);
       assert.equal(eventos.total, 1);
@@ -59,7 +60,7 @@ test('administración HTTP y PostgreSQL con auditoría transaccional', { skip: !
       assert.deepEqual((await repo.porId(cliente.id))!.roles, ['cliente']);
       assert.equal((await repo.auditoria(cliente.id, 1)).total, 0);
     });
-    await context.test('matriz anónimo/cliente/proveedor rechaza acceso sin filtrar datos', async () => {
+    await caso('matriz anónimo/cliente/proveedor rechaza acceso sin filtrar datos', async () => {
       for (const [cookie, status] of [['', 401], [cookieCliente, 403], [cookieProveedor, 403]] as const) {
         assert.equal((await pedir('/admin/usuarios', 'GET', undefined, cookie)).status, status);
         assert.equal((await pedir(`/admin/usuarios/${cliente.id}/auditoria`, 'GET', undefined, cookie)).status, status);
@@ -68,7 +69,7 @@ test('administración HTTP y PostgreSQL con auditoría transaccional', { skip: !
       assert.equal((await repo.porId(cliente.id))!.estado, 'activo');
       assert.equal((await repo.auditoria(cliente.id, 1)).total, 0);
     });
-    await context.test('listado paginado, filtros literales y DTO sin credenciales', async () => {
+    await caso('listado paginado, filtros literales y DTO sin credenciales', async () => {
       const prefijo = `pagina-${sufijo}-`;
       await pool.query(`INSERT INTO usuarios(id,email_normalizado,password_hash,nombre)
         SELECT gen_random_uuid(),$1 || serie || '@example.com',$2,$1 || serie FROM generate_series(1,23) serie`, [prefijo, hash]);
@@ -85,7 +86,7 @@ test('administración HTTP y PostgreSQL con auditoría transaccional', { skip: !
       assert.equal((await vacio.json()).total, 0);
       for (const query of ['pagina=0', 'pagina=1.5', 'estado=borrado', 'roles=admin', 'q=uno&q=dos', `q=${'x'.repeat(101)}`]) assert.equal((await pedir(`/admin/usuarios?${query}`)).status, 400);
     });
-    await context.test('validación, cuentas admin protegidas y origen ajeno no mutan', async () => {
+    await caso('validación, cuentas admin protegidas y origen ajeno no mutan', async () => {
       assert.equal((await pedir(`/admin/usuarios/${admin.id}/estado`, 'PATCH', cambio)).status, 409);
       const otroAdmin = await repo.crearAdministrador(`otro-admin-${sufijo}@example.com`, 'Otro administrador', hash, 'Administrador adicional de prueba');
       assert.equal((await pedir(`/admin/usuarios/${otroAdmin.id}/estado`, 'PATCH', cambio)).status, 409);
@@ -104,7 +105,7 @@ test('administración HTTP y PostgreSQL con auditoría transaccional', { skip: !
       assert.equal((await pedir(`/admin/usuarios/${cliente.id}/estado`, 'PATCH', cambio, cookieAdmin, 'https://otro.example')).status, 403);
       assert.equal((await repo.auditoria(cliente.id, 1)).total, 0);
     });
-    await context.test('cambios concurrentes generan una sola auditoría y revocan sesiones', async () => {
+    await caso('cambios concurrentes generan una sola auditoría y revocan sesiones', async () => {
       const otraCookie = await login(cliente.email);
       const respuestas = await Promise.all([pedir(`/admin/usuarios/${cliente.id}/estado`, 'PATCH', cambio), pedir(`/admin/usuarios/${cliente.id}/estado`, 'PATCH', cambio)]);
       assert.deepEqual(respuestas.map(response => response.status).sort(), [200, 409]);
@@ -134,7 +135,7 @@ test('administración HTTP y PostgreSQL con auditoría transaccional', { skip: !
       const residuales = await pool.query('SELECT count(*)::int AS total FROM sesiones_usuario WHERE usuario_id=$1 AND NOT revocada', [cuentaConcurrente.id]);
       assert.equal(residuales.rows[0].total, 0);
     });
-    await context.test('reactivar exige nuevo login y no revive las cookies previas', async () => {
+    await caso('reactivar exige nuevo login y no revive las cookies previas', async () => {
       const response = await pedir(`/admin/usuarios/${cliente.id}/estado`, 'PATCH', { estadoActual: 'inactivo', estado: 'activo', motivo: 'Revisión completada y acceso restablecido' });
       assert.equal(response.status, 200);
       assert.equal((await pedir('/usuarios/me', 'GET', undefined, cookieCliente)).status, 401);
@@ -142,7 +143,7 @@ test('administración HTTP y PostgreSQL con auditoría transaccional', { skip: !
       assert.equal((await pedir('/usuarios/me', 'GET', undefined, cookieCliente)).status, 200);
       assert.equal((await repo.auditoria(cliente.id, 1)).total, 2);
     });
-    await context.test('fallo de auditoría revierte estado, versión y revocación', async () => {
+    await caso('fallo de auditoría revierte estado, versión y revocación', async () => {
       const version = await pool.query('SELECT version FROM usuarios WHERE id=$1', [cliente.id]);
       await pool.query(`CREATE FUNCTION rechazar_auditoria_us3() RETURNS trigger LANGUAGE plpgsql AS $$
         BEGIN IF NEW.motivo = 'simular fallo de auditoria' THEN RAISE EXCEPTION 'fallo de prueba'; END IF; RETURN NEW; END $$`);
@@ -160,7 +161,7 @@ test('administración HTTP y PostgreSQL con auditoría transaccional', { skip: !
         await pool.query('DROP FUNCTION rechazar_auditoria_us3()');
       }
     });
-    await context.test('proveedor admite bloqueo de acceso; admin inactivo pierde autorización', async () => {
+    await caso('proveedor admite bloqueo de acceso; admin inactivo pierde autorización', async () => {
       assert.equal((await pedir(`/admin/usuarios/${proveedor.id}/estado`, 'PATCH', cambio)).status, 200);
       assert.equal((await pedir('/usuarios/me', 'GET', undefined, cookieProveedor)).status, 401);
       await assert.rejects(repo.crearSesion(randomUUID(), proveedor.id, new Date(Date.now() + 60000)), error => (error as { status: number }).status === 401);

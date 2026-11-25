@@ -28,6 +28,8 @@ class Errores implements ExceptionFilter {
     const code = error instanceof ErrorAplicacion ? error.code : status === 503 ? 'SERVICIO_NO_DISPONIBLE' : 'SOLICITUD_INVALIDA';
     const mensaje = error instanceof ErrorAplicacion ? error.message : status === 503 ? 'El servicio no está disponible. Intenta nuevamente.' : 'No se pudo procesar la solicitud.';
     if (status === 503) console.error('Error inesperado en la petición ' + String(response.getHeader('X-Correlation-Id')) + ':', describirError(error));
+    // Un error nunca se guarda en caché, aunque la ruta sea pública y cacheable (@Header se aplica antes del controlador).
+    response.setHeader('Cache-Control', 'no-store');
     response.status(status).json({ code, mensaje, correlationId: response.getHeader('X-Correlation-Id') });
   }
 }

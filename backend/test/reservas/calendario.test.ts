@@ -1,13 +1,14 @@
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
-import { test } from 'node:test';
 import { Pool } from 'pg';
 import { crearApp } from '../../src/app';
 import { PostgresUsuarios } from '../../src/modules/usuarios/infraestructura/postgres';
 import { PostgresProveedores } from '../../src/modules/proveedores/infraestructura/postgres';
 import { ScryptPasswords } from '../../src/modules/usuarios/infraestructura/passwords';
+import { test } from '@jest/globals';
+import { caso } from '../caso';
 
-test('alquiler real: 100 carreras, vencimiento, efectivo bilateral y devolución', { skip: !process.env.TEST_DATABASE_URL }, async context => {
+(!process.env.TEST_DATABASE_URL ? test.skip : test)('alquiler real: 100 carreras, vencimiento, efectivo bilateral y devolución', async () => {
   process.env.DATABASE_URL=process.env.TEST_DATABASE_URL;process.env.JWT_SECRET='secreto-exclusivo-calendario-pruebas-2026-488';process.env.APP_ORIGIN='http://127.0.0.1:3100';process.env.NODE_ENV='test';
   const pool=new Pool({connectionString:process.env.TEST_DATABASE_URL}),usuarios=new PostgresUsuarios(pool),proveedores=new PostgresProveedores(pool);
   const sufijo=randomUUID(),password='frase exclusiva para alquiler de pruebas',hash=await new ScryptPasswords().crear(password);
@@ -36,7 +37,7 @@ test('alquiler real: 100 carreras, vencimiento, efectivo bilateral y devolución
     const leer=async(id:string,cookie=ca)=>{const r=await pedir('/reservas/'+id,'GET',undefined,cookie);assert.equal(r.status,200);return r.json();};
     const inicio=new Date(Date.now()+600000).toISOString(),fin=new Date(Date.parse(inicio)+86400000).toISOString();
 
-    await context.test('condiciones explícitas, tarifa esperada y permisos; visita no bloquea',async()=>{
+    await caso('condiciones explícitas, tarifa esperada y permisos; visita no bloquea',async()=>{
       const body={publicacionId:oferta.id,recursoId:oferta.recursos[0].id,inicio,fin};
       assert.equal((await pedir('/reservas','POST',body,ca)).status,400);
       assert.equal((await pedir('/reservas','POST',{...body,aceptaCondiciones:true,tarifaEsperadaCentimos:1},ca)).status,409);
@@ -52,7 +53,7 @@ test('alquiler real: 100 carreras, vencimiento, efectivo bilateral y devolución
       const aceptada=await (await operar(alquiler,'aceptacion')).json();assert.equal(aceptada.estado,'ACEPTADA');
       assert.equal((await operar(aceptada,'cancelacion',ca,{motivo:'Cancelación de prueba antes de entregar efectivo'})).status,201);
     });
-    await context.test('fallo de outbox revierte aceptación y bloqueo',async()=>{
+    await caso('fallo de outbox revierte aceptación y bloqueo',async()=>{
       const s=await solicitar(inicio,fin);
       await pool.query("CREATE FUNCTION fallo_aceptacion_0052() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN IF NEW.tipo='SOLICITUD_ACEPTADA' THEN RAISE EXCEPTION 'fallo de prueba'; END IF; RETURN NEW; END $$");
       await pool.query('CREATE TRIGGER prueba_aceptacion_0052 BEFORE INSERT ON reservas_outbox FOR EACH ROW EXECUTE FUNCTION fallo_aceptacion_0052()');
@@ -63,7 +64,7 @@ test('alquiler real: 100 carreras, vencimiento, efectivo bilateral y devolución
       } finally {await pool.query('DROP TRIGGER prueba_aceptacion_0052 ON reservas_outbox');await pool.query('DROP FUNCTION fallo_aceptacion_0052()');}
       assert.equal((await operar(s,'cancelacion',ca,{motivo:'Cerrar fixture de fallo de escritura'})).status,201);
     });
-    await context.test('EQ-07 local: 100 pares concurrentes, una aceptación por par y cero rangos superpuestos',async()=>{
+    await caso('EQ-07 local: 100 pares concurrentes, una aceptación por par y cero rangos superpuestos',async()=>{
       for(let i=0;i<100;i++){
         const ini=new Date(Date.parse(inicio)+(i+2)*2*86400000).toISOString(),f=new Date(Date.parse(ini)+86400000).toISOString();
         const x=await solicitar(ini,f,ca),y=await solicitar(ini,f,cb);
@@ -76,7 +77,7 @@ test('alquiler real: 100 carreras, vencimiento, efectivo bilateral y devolución
       assert.equal(solapamientos.rows[0].n,0);
       assert.equal((await pool.query('SELECT count(*)::integer AS n FROM reservas_bloqueos WHERE recurso_id=$1 AND activo',[oferta.recursos[0].id])).rows[0].n,100);
     });
-    await context.test('ampliación con motivo, vencimiento contra efectivo y liberación para otra solicitud',async()=>{
+    await caso('ampliación con motivo, vencimiento contra efectivo y liberación para otra solicitud',async()=>{
       const s=await solicitar(inicio,fin),aceptada=await (await operar(s,'aceptacion')).json();
       await pool.query("UPDATE reservas SET vence_en=clock_timestamp()+interval '10 minutes' WHERE id=$1",[s.id]);
       const ampliada=await (await operar(aceptada,'ampliacion',p,{motivo:'Cliente solicita más tiempo para acercarse'})).json();assert.equal(ampliada.estado,'ACEPTADA');
@@ -89,7 +90,7 @@ test('alquiler real: 100 carreras, vencimiento, efectivo bilateral y devolución
       const nueva=await solicitar(inicio,fin,cb);assert.equal((await operar(nueva,'aceptacion')).status,201);
       const ocupada=await leer(nueva.id,cb);assert.equal((await operar(ocupada,'cancelacion',cb,{motivo:'Cerrar escenario de vencimiento sin efectivo'})).status,201);
     });
-    await context.test('rangos adyacentes, disponibilidad privada y posesión física única',async()=>{
+    await caso('rangos adyacentes, disponibilidad privada y posesión física única',async()=>{
       const otra=await crearOferta(),primer=await solicitar(inicio,fin,ca,{},otra),segundo=await solicitar(fin,new Date(Date.parse(fin)+86400000).toISOString(),cb,{},otra);
       let uno=await (await operar(primer,'aceptacion')).json(),dos=await (await operar(segundo,'aceptacion')).json();
       assert.equal(uno.estado,'ACEPTADA');assert.equal(dos.estado,'ACEPTADA');
@@ -110,7 +111,7 @@ test('alquiler real: 100 carreras, vencimiento, efectivo bilateral y devolución
       assert.equal((await pool.query('SELECT activo FROM reservas_bloqueos WHERE reserva_id=$1',[uno.id])).rows[0].activo,false);
       assert.equal((await operar(dos,'efectivo')).status,201);
     });
-    await context.test('devolución tardía calcula saldo sin declarar recibido efectivo adicional',async()=>{
+    await caso('devolución tardía calcula saldo sin declarar recibido efectivo adicional',async()=>{
       const otra=await crearOferta();let s=await solicitar(inicio,fin,ca,{},otra);
       s=await (await operar(s,'aceptacion')).json();s=await (await operar(s,'efectivo')).json();s=await (await operar(s,'recepcion',ca)).json();
       // Fixture temporal: adelanta el fin pactado sin esperar un día real; mantiene coherente el bloqueo.
@@ -125,7 +126,7 @@ test('alquiler real: 100 carreras, vencimiento, efectivo bilateral y devolución
       assert.equal(s.estado,'DEVUELTA');assert.equal(s.diasExtra,1);assert.equal(s.importeFinalCentimos,8500);
       assert.equal(s.efectivoCentimos,4250);assert.equal(s.saldoCentimos,4250);assert.equal(s.pagoEstado,'CONFIRMADO_PARTICIPANTES');
     });
-    await context.test('PostgreSQL impide estado aceptado sin bloqueo coherente',async()=>{
+    await caso('PostgreSQL impide estado aceptado sin bloqueo coherente',async()=>{
       const s=await solicitar(inicio,fin);
       await assert.rejects(()=>pool.query("UPDATE reservas SET estado='ACEPTADA',vence_en=clock_timestamp()+interval '1 hour' WHERE id=$1",[s.id]),(e:any)=>e.code==='23514');
       assert.equal((await leer(s.id)).estado,'PENDIENTE');

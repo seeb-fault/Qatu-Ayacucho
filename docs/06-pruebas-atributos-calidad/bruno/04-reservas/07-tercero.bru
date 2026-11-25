@@ -1,0 +1,21 @@
+meta {
+  name: Un tercero no ve la reserva
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{api}}/reservas/{{reservaId}}
+  body: none
+  auth: none
+}
+
+headers {
+  Cookie: {{cookieNuevo}}
+}
+
+tests {
+  test("404: ni siquiera confirma que existe", function () {
+    expect(res.getStatus()).to.equal(404);
+  });
+}

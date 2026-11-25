@@ -77,7 +77,32 @@ export function crearDocumento(app: INestApplication): OpenAPIObject {
       ...esquemasRegistrados(),
     },
   };
+  declararParametrosDeRuta(documento);
   return documento;
+}
+
+/**
+ * Parámetros iguales con cualquier compilador. Cada {nombre} de una ruta es un parámetro obligatorio. Swagger solo lo infiere si el compilador emite los tipos
+ * (SWC sí, tsx no); así el contrato es el mismo con cualquiera. En Qatu todos los identificadores son UUID.
+ */
+function declararParametrosDeRuta(documento: OpenAPIObject) {
+  for (const [ruta, item] of Object.entries(documento.paths)) {
+    const nombres = [...ruta.matchAll(/\{([^}]+)\}/g)].map(([, nombre]) => nombre);
+    for (const metodo of ['get', 'post', 'put', 'patch', 'delete'] as const) {
+      const operacion = item[metodo];
+      if (!operacion) continue;
+      const otros = (operacion.parameters ?? []).filter(p => !('in' in p) || p.in !== 'path');
+      const deRuta = nombres.map(name => ({ name, in: 'path' as const, required: true, schema: { type: 'string' as const, format: 'uuid' }, description: 'Identificador (UUID)' }));
+      // Con tipos emitidos, Swagger también deduce las cabeceras de @Headers(): se deja una por nombre, la documentada.
+      const unicos = new Map<string, (typeof otros)[number]>();
+      for (const p of otros) {
+        const clave = 'in' in p ? `${p.in}:${p.name.toLowerCase()}` : JSON.stringify(p);
+        const previo = unicos.get(clave);
+        if (!previo || (!('description' in previo && previo.description) && 'description' in p && p.description)) unicos.set(clave, p);
+      }
+      operacion.parameters = [...deRuta, ...unicos.values()];
+    }
+  }
 }
 
 /** Publica la página de Swagger en /api/v1/docs y el JSON en /api/v1/docs/openapi.json. */

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Injectable, Param, Patch, Post, Query, Req, Res, UploadedFiles, UseGuards, UseInterceptors, type CanActivate, type ExecutionContext } from '@nestjs/common';
+import { Body, Controller, Get, Header, Inject, Injectable, Param, Patch, Post, Query, Req, Res, UploadedFiles, UseGuards, UseInterceptors, type CanActivate, type ExecutionContext } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
 import type { Request, Response } from 'express';
@@ -26,6 +26,7 @@ export class ProveedoresController {
   constructor(@Inject(Proveedores) private readonly proveedores: Proveedores) {}
 
   @Doc({ acceso: 'publico', resumen: 'Listar distritos de servicio', devuelve: lista(ref('Zona')) })
+  @Header('Cache-Control', 'public, max-age=3600')
   @Get('zonas')
   zonas() { return this.proveedores.zonas(); }
 

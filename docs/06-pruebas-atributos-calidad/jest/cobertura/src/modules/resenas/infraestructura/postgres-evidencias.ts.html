@@ -1,0 +1,313 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/modules/resenas/infraestructura/postgres-evidencias.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../../index.html">All files</a> / <a href="index.html">src/modules/resenas/infraestructura</a> postgres-evidencias.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>76/76</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">90.69% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>39/43</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>8/8</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>76/76</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">31x</span>
+<span class="cline-any cline-yes">31x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { Pool } from 'pg';
+import type { ArchivoCifrado } from '../../../shared/infraestructura/archivos-cifrados';
+import { claveObjeto } from '../../../shared/infraestructura/almacen';
+import type { ArchivosExternos } from '../../../shared/infraestructura/archivos-externos';
+import { ErrorResena } from '../dominio/resenas';
+import { MAXIMO_POR_ETAPA, type Etapa, type EvidenciaGuardada } from '../dominio/evidencias';
+&nbsp;
+const columnas = `id, reserva_id AS "reservaId", autor_id AS "autorId", etapa, tipo, bytes, sha256, creada_en AS "creadaEn", eliminada_en AS "eliminadaEn"`;
+const aEvidencia = (f: any): EvidenciaGuardada =&gt; ({ ...f, bytes: Number(f.bytes), creadaEn: new Date(f.creadaEn).toISOString(), eliminadaEn: f.eliminadaEn ? new Date(f.eliminadaEn).toISOString() : null });
+&nbsp;
+export class PostgresEvidencias {
+  /** Sin `archivos` (o sin almacén configurado) el contenido cifrado se guarda en la propia tabla, como antes de 013. */
+  constructor(private readonly pool: Pool, private readonly archivos?: ArchivosExternos) {}
+&nbsp;
+  /** Guarda varias fotos de una etapa; el cupo se comprueba bajo un bloqueo por reserva y etapa. */
+  async guardar(reservaId: string, autorId: string, etapa: Etapa, archivos: ArchivoCifrado[]) {
+    // Con almacén externo, el contenido cifrado se sube antes y la fila guarda solo su clave.
+    const externo = this.archivos?.almacen ? archivos.map(a =&gt; ({ clave: claveObjeto('resenas', 'evidencias', a.id), datos: a.contenido })) : [];
+    if (externo.length) await this.archivos!.subir(externo);
+    const client = await this.pool.connect();
+    try {
+      await client.query('BEGIN');
+      await client.query('SELECT pg_advisory_xact_lock(hashtextextended($1, 488006))', [reservaId + ':' + etapa]);
+      const usadas = Number((await client.query('SELECT count(*) AS n FROM evidencias WHERE reserva_id=$1 AND etapa=$2', [reservaId, etapa])).rows[0].n);
+      if (usadas + archivos.length &gt; MAXIMO_POR_ETAPA) throw new ErrorResena('CUPO_EVIDENCIAS', 409, `Cada etapa admite como máximo ${MAXIMO_POR_ETAPA} fotos; quedan ${Math.max(0, MAXIMO_POR_ETAPA - usadas)}.`);
+      const guardadas: EvidenciaGuardada[] = [];
+      for (const a of archivos) {
+        const objeto = externo.length ? claveObjeto('resenas', 'evidencias', a.id) : null;
+        const r = await client.query(`INSERT INTO evidencias(id,reserva_id,autor_id,etapa,tipo,bytes,sha256,contenido,iv,tag,objeto) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING ${columnas}`,
+          [a.id, reservaId, autorId, etapa, a.tipo, a.bytes, a.sha256, objeto ? null : Buffer.from(a.contenido), Buffer.from(a.iv), Buffer.from(a.tag), objeto]);
+        guardadas.push(aEvidencia(r.rows[0]));
+      }
+      await client.query('COMMIT');
+      return guardadas;
+    } catch (error) {
+      await client.query('ROLLBACK');
+      // La transacción no se confirmó: los objetos ya subidos no deben quedar en el almacén.
+      await this.archivos?.descartar(externo.map(o =&gt; o.clave));
+      throw error;
+<span class="branch-0 cbranch-no" title="branch not covered" >    } finally {</span> client.release(); }
+  }
+&nbsp;
+  async deReserva(reservaId: string) {
+    return (await this.pool.query(`SELECT ${columnas} FROM evidencias WHERE reserva_id=$1 ORDER BY creada_en, id`, [reservaId])).rows.map(aEvidencia);
+  }
+&nbsp;
+  async archivo(id: string) {
+    const r = await this.pool.query(`SELECT ${columnas}, contenido, objeto, iv, tag FROM evidencias WHERE id=$1`, [id]);
+    if (!r.rows[0]) <span class="branch-0 cbranch-no" title="branch not covered" >return null;</span>
+    const { contenido, objeto, iv, tag, ...f } = r.rows[0];
+    const datos = contenido ? contenido as Buffer : objeto ? await this.leerObjeto(objeto) : null;
+    return { ...aEvidencia(f), contenido: datos, iv: iv as Buffer | null, tag: tag as Buffer | null };
+  }
+&nbsp;
+  private async leerObjeto(objeto: string) {
+    if (!this.archivos) <span class="branch-0 cbranch-no" title="branch not covered" >throw new Error('La evidencia está en el almacén externo y no hay almacén configurado.');</span>
+    return this.archivos.contenido({ contenido: null, objeto });
+  }
+&nbsp;
+  async reservasConContenido(limite: number) {
+    return (await this.pool.query('SELECT DISTINCT reserva_id FROM evidencias WHERE eliminada_en IS NULL LIMIT $1', [limite])).rows.map(f =&gt; f.reserva_id as string);
+  }
+&nbsp;
+  /**
+   * Borra el contenido cifrado y conserva metadata y hash. Los objetos del almacén externo se encolan en la misma
+   * sentencia: si borrarlos falla, la cola los reintenta y ninguno queda olvidado.
+   */
+  async borrarContenido(reservaIds: string[]) {
+    if (!reservaIds.length) return 0;
+    const r = await this.pool.query(`WITH v AS (SELECT id, objeto FROM evidencias WHERE reserva_id=ANY($1::uuid[]) AND eliminada_en IS NULL FOR UPDATE),
+        cola AS (INSERT INTO objetos_por_borrar(objeto) SELECT objeto FROM v WHERE objeto IS NOT NULL ON CONFLICT (objeto) DO NOTHING)
+      UPDATE evidencias e SET contenido=NULL, objeto=NULL, iv=NULL, tag=NULL, eliminada_en=now() FROM v WHERE e.id=v.id`, [reservaIds]);
+    if (r.rowCount) void this.archivos?.procesarCola().catch(() =&gt; undefined);
+    return r.rowCount<span class="branch-0 cbranch-no" title="branch not covered" > ?? 0;</span>
+  }
+}
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-11-25T20:29:20.043Z
+            </div>
+        <script src="../../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../../sorter.js"></script>
+        <script src="../../../../block-navigation.js"></script>
+    </body>
+</html>
+    

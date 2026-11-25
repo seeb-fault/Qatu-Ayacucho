@@ -1,0 +1,32 @@
+meta {
+  name: Rechazar un rol enviado por el navegador
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{api}}/auth/registro
+  body: json
+  auth: none
+}
+
+headers {
+  Origin: {{origen}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "email": "intento-admin@example.com",
+    "password": "{{password}}",
+    "nombre": "Intento admin",
+    "roles": ["admin"]
+  }
+}
+
+tests {
+  test("400: no se aceptan campos fuera del contrato", function () {
+    expect(res.getStatus()).to.equal(400);
+    expect(res.getBody().code).to.be.a("string");
+  });
+}

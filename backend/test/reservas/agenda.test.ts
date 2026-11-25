@@ -1,13 +1,14 @@
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { test } from 'node:test';
 import { Pool } from 'pg';
 import { crearApp } from '../../src/app';
 import { PostgresUsuarios } from '../../src/modules/usuarios/infraestructura/postgres';
 import { ScryptPasswords } from '../../src/modules/usuarios/infraestructura/passwords';
+import { test } from '@jest/globals';
+import { caso } from '../caso';
 
-test('agenda de oficios: exclusión concurrente, cancelación, rollback y acuerdos históricos', {skip:!process.env.TEST_DATABASE_URL}, async context=>{
+(!process.env.TEST_DATABASE_URL ? test.skip : test)('agenda de oficios: exclusión concurrente, cancelación, rollback y acuerdos históricos', async () =>{
   process.env.DATABASE_URL=process.env.TEST_DATABASE_URL;
   process.env.JWT_SECRET='secreto-exclusivo-agenda-pruebas-2026-488';process.env.NODE_ENV='test';process.env.APP_ORIGIN='http://127.0.0.1:3100';
   const f=JSON.parse(execFileSync(process.execPath,['--env-file-if-exists=.env','--import','tsx','test/reservas/fixture-e2e.ts','--servicio'],{encoding:'utf8',env:{...process.env,QATU_E2E_RESERVAS:'1'}}));
@@ -30,7 +31,7 @@ test('agenda de oficios: exclusión concurrente, cancelación, rollback y acuerd
     const aceptar=(s:any,cookie=cliente)=>pedir('/reservas/'+s.id+'/cotizacion/aceptacion','POST',{versionActual:s.version,versionCotizacion:1},cookie);
     const consultar=async(id:string,cookie=cliente)=>(await pedir('/reservas/'+id,'GET',undefined,cookie)).json();
     let ganadora:any,perdedora:any,cookieGanadora='',cookiePerdedora='';
-    await context.test('dos clientes para la misma agenda: una aceptación, un conflicto y cero efectos parciales',async()=>{
+    await caso('dos clientes para la misma agenda: una aceptación, un conflicto y cero efectos parciales',async()=>{
       const a=await cotizar(await solicitar()),b=await cotizar(await solicitar(clienteB));
       const resultados=await Promise.all([aceptar(a),aceptar(b,clienteB)]);
       assert.deepEqual(resultados.map(r=>r.status).sort(),[201,409]);
@@ -43,21 +44,21 @@ test('agenda de oficios: exclusión concurrente, cancelación, rollback y acuerd
       assert.equal(Object.hasOwn(disponibilidad.franjas[0],'clienteId'),false);
       await assert.rejects(()=>pool.query('UPDATE reservas_bloqueos SET activo=false WHERE reserva_id=$1',[ganadora.id]),(e:any)=>e.code==='23514');
     });
-    await context.test('cancelar antes del inicio libera agenda sin reescribir precio y permite aceptar la otra propuesta',async()=>{
+    await caso('cancelar antes del inicio libera agenda sin reescribir precio y permite aceptar la otra propuesta',async()=>{
       const r=await pedir('/reservas/'+ganadora.id+'/cancelacion','POST',{versionActual:ganadora.version,motivo:'El cliente y el proveedor coordinan cancelar antes del inicio.'},proveedor);assert.equal(r.status,201);
       const cancelada=await r.json();assert.equal(cancelada.estado,'CANCELADA');assert.equal(cancelada.cotizaciones[0].respuesta.decision,'ACEPTADA');assert.equal(cancelada.cotizaciones[0].importeCentimos,18050);
       assert.equal((await pool.query('SELECT activo FROM reservas_bloqueos WHERE reserva_id=$1',[ganadora.id])).rows[0].activo,false);
       const siguiente=await aceptar(perdedora,cookiePerdedora);assert.equal(siguiente.status,201);ganadora=await siguiente.json();cookieGanadora=cookiePerdedora;
       const repetida=await aceptar({...perdedora,version:ganadora.version},cookieGanadora);assert.equal(repetida.status,409);
     });
-    await context.test('rangos adyacentes se permiten y los servicios no vencen por el temporizador de herramientas',async()=>{
+    await caso('rangos adyacentes se permiten y los servicios no vencen por el temporizador de herramientas',async()=>{
       const adyacente=await cotizar(await solicitar(cliente,base+3600000,base+7200000));
       const r=await aceptar(adyacente);assert.equal(r.status,201);const s=await r.json();
       assert.equal(s.estado,'SERVICIO_CONFIRMADO');assert.equal(s.venceEn,null);
       const recargada=await consultar(s.id);assert.equal(recargada.estado,'SERVICIO_CONFIRMADO');
       await assert.rejects(()=>pool.query("UPDATE reservas SET vence_en=clock_timestamp()-interval '1 minute' WHERE id=$1",[s.id]),(e:any)=>e.code==='23514');
     });
-    await context.test('si falla el evento de agenda se revierten cotización, estado y bloqueo',async()=>{
+    await caso('si falla el evento de agenda se revierten cotización, estado y bloqueo',async()=>{
       const s=await cotizar(await solicitar(cliente,base+3*3600000));
       await pool.query("CREATE FUNCTION fallar_agenda_prueba() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN IF NEW.tipo='AGENDA_CONFIRMADA' THEN RAISE EXCEPTION 'fallo sintético de agenda'; END IF; RETURN NEW; END $$");
       await pool.query('CREATE TRIGGER fallar_agenda_prueba BEFORE INSERT ON reservas_outbox FOR EACH ROW EXECUTE FUNCTION fallar_agenda_prueba()');
@@ -68,7 +69,7 @@ test('agenda de oficios: exclusión concurrente, cancelación, rollback y acuerd
         assert.equal((await pool.query("SELECT count(*)::integer AS n FROM reservas_outbox WHERE agregado_id=$1 AND tipo='COTIZACION_ACEPTADA'",[s.id])).rows[0].n,0);
       } finally {await pool.query('DROP TRIGGER fallar_agenda_prueba ON reservas_outbox');await pool.query('DROP FUNCTION fallar_agenda_prueba()');}
     });
-    await context.test('acuerdos de 005.3 requieren confirmación expresa del cliente y conservan su aceptación histórica',async()=>{
+    await caso('acuerdos de 005.3 requieren confirmación expresa del cliente y conservan su aceptación histórica',async()=>{
       const s=await solicitar(cliente,base+5*3600000),ruta='/reservas/'+s.id;
       await pool.query(`INSERT INTO reservas_cotizaciones(reserva_id,version,alcance,materiales,importe_centimos,vigente_hasta,creada_en,decision,respondida_en)
         VALUES($1,1,'Instalación acordada con el proveedor antes de habilitar la agenda.','Solo mano de obra, materiales a cargo del cliente.',22000,clock_timestamp()-interval '1 day',clock_timestamp()-interval '3 days','ACEPTADA',clock_timestamp()-interval '2 days')`,[s.id]);

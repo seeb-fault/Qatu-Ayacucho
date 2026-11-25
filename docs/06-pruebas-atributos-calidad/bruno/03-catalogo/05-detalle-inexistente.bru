@@ -1,0 +1,18 @@
+meta {
+  name: Publicación inexistente
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{api}}/publicaciones/00000000-0000-4000-8000-000000000000
+  body: none
+  auth: none
+}
+
+tests {
+  test("404 OFERTA_NO_DISPONIBLE", function () {
+    expect(res.getStatus()).to.equal(404);
+    expect(res.getBody().code).to.equal("OFERTA_NO_DISPONIBLE");
+  });
+}

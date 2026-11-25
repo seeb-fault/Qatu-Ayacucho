@@ -1,11 +1,11 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { test } from 'node:test';
 import { METHOD_METADATA } from '@nestjs/common/constants';
 import { ModulesContainer } from '@nestjs/core';
 import { crearApp } from '../../src/app';
 import { ETIQUETAS, crearDocumento, documentacionHabilitada } from '../../src/shared/infraestructura/documentacion-api';
 import { RUTA_CONTRATO, generarContrato } from '../../scripts/openapi';
+import { test } from '@jest/globals';
 
 // Swagger (014). Sin base de datos: crear la app no se conecta; solo recorre los controladores.
 process.env.DATABASE_URL ??= 'postgresql://openapi@127.0.0.1:1/sin-conexion';
@@ -41,6 +41,10 @@ test('openapi: documenta todas las rutas con resumen, una etiqueta conocida y re
     assert.equal(op.tags?.length, 1, `${nombre} debe tener una etiqueta`);
     assert.ok(etiquetas.has(op.tags![0]), `${nombre}: etiqueta desconocida ${op.tags![0]}`);
     assert.ok(Object.keys(op.responses).some(c => /^2\d\d$/.test(c)), `${nombre} sin respuesta exitosa`);
+    for (const [, parametro] of ruta.matchAll(/\{([^}]+)\}/g)) {
+      const parametros = (op as { parameters?: Array<{ name: string; in: string; required?: boolean }> }).parameters ?? [];
+      assert.ok(parametros.some(p => p.name === parametro && p.in === 'path' && p.required), `${nombre}: falta el parámetro de ruta ${parametro}`);
+    }
     for (const [codigo, r] of Object.entries(op.responses)) {
       if (Number(codigo) >= 400) assert.deepEqual(r.content?.['application/json']?.schema, { $ref: '#/components/schemas/Error' }, `${nombre} ${codigo} debe usar Error`);
     }
@@ -81,7 +85,7 @@ test('openapi: la página se sirve en desarrollo y se apaga en producción salvo
   assert.equal(documentacionHabilitada({ QATU_DOCS: '0' }), false);
 });
 
-test('openapi: /api/v1/docs sirve Swagger UI y el JSON; con QATU_DOCS=0 no existe', { skip: !process.env.TEST_DATABASE_URL }, async () => {
+(!process.env.TEST_DATABASE_URL ? test.skip : test)('openapi: /api/v1/docs sirve Swagger UI y el JSON; con QATU_DOCS=0 no existe', async () => {
   process.env.DATABASE_URL = process.env.TEST_DATABASE_URL;
   process.env.APP_ORIGIN = 'http://127.0.0.1:3000';
   const previo = process.env.QATU_DOCS;

@@ -1,0 +1,889 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/modules/reservas/infraestructura/postgres.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../../index.html">All files</a> / <a href="index.html">src/modules/reservas/infraestructura</a> postgres.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>268/268</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">93.43% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>128/137</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>24/24</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>268/268</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a>
+<a name='L155'></a><a href='#L155'>155</a>
+<a name='L156'></a><a href='#L156'>156</a>
+<a name='L157'></a><a href='#L157'>157</a>
+<a name='L158'></a><a href='#L158'>158</a>
+<a name='L159'></a><a href='#L159'>159</a>
+<a name='L160'></a><a href='#L160'>160</a>
+<a name='L161'></a><a href='#L161'>161</a>
+<a name='L162'></a><a href='#L162'>162</a>
+<a name='L163'></a><a href='#L163'>163</a>
+<a name='L164'></a><a href='#L164'>164</a>
+<a name='L165'></a><a href='#L165'>165</a>
+<a name='L166'></a><a href='#L166'>166</a>
+<a name='L167'></a><a href='#L167'>167</a>
+<a name='L168'></a><a href='#L168'>168</a>
+<a name='L169'></a><a href='#L169'>169</a>
+<a name='L170'></a><a href='#L170'>170</a>
+<a name='L171'></a><a href='#L171'>171</a>
+<a name='L172'></a><a href='#L172'>172</a>
+<a name='L173'></a><a href='#L173'>173</a>
+<a name='L174'></a><a href='#L174'>174</a>
+<a name='L175'></a><a href='#L175'>175</a>
+<a name='L176'></a><a href='#L176'>176</a>
+<a name='L177'></a><a href='#L177'>177</a>
+<a name='L178'></a><a href='#L178'>178</a>
+<a name='L179'></a><a href='#L179'>179</a>
+<a name='L180'></a><a href='#L180'>180</a>
+<a name='L181'></a><a href='#L181'>181</a>
+<a name='L182'></a><a href='#L182'>182</a>
+<a name='L183'></a><a href='#L183'>183</a>
+<a name='L184'></a><a href='#L184'>184</a>
+<a name='L185'></a><a href='#L185'>185</a>
+<a name='L186'></a><a href='#L186'>186</a>
+<a name='L187'></a><a href='#L187'>187</a>
+<a name='L188'></a><a href='#L188'>188</a>
+<a name='L189'></a><a href='#L189'>189</a>
+<a name='L190'></a><a href='#L190'>190</a>
+<a name='L191'></a><a href='#L191'>191</a>
+<a name='L192'></a><a href='#L192'>192</a>
+<a name='L193'></a><a href='#L193'>193</a>
+<a name='L194'></a><a href='#L194'>194</a>
+<a name='L195'></a><a href='#L195'>195</a>
+<a name='L196'></a><a href='#L196'>196</a>
+<a name='L197'></a><a href='#L197'>197</a>
+<a name='L198'></a><a href='#L198'>198</a>
+<a name='L199'></a><a href='#L199'>199</a>
+<a name='L200'></a><a href='#L200'>200</a>
+<a name='L201'></a><a href='#L201'>201</a>
+<a name='L202'></a><a href='#L202'>202</a>
+<a name='L203'></a><a href='#L203'>203</a>
+<a name='L204'></a><a href='#L204'>204</a>
+<a name='L205'></a><a href='#L205'>205</a>
+<a name='L206'></a><a href='#L206'>206</a>
+<a name='L207'></a><a href='#L207'>207</a>
+<a name='L208'></a><a href='#L208'>208</a>
+<a name='L209'></a><a href='#L209'>209</a>
+<a name='L210'></a><a href='#L210'>210</a>
+<a name='L211'></a><a href='#L211'>211</a>
+<a name='L212'></a><a href='#L212'>212</a>
+<a name='L213'></a><a href='#L213'>213</a>
+<a name='L214'></a><a href='#L214'>214</a>
+<a name='L215'></a><a href='#L215'>215</a>
+<a name='L216'></a><a href='#L216'>216</a>
+<a name='L217'></a><a href='#L217'>217</a>
+<a name='L218'></a><a href='#L218'>218</a>
+<a name='L219'></a><a href='#L219'>219</a>
+<a name='L220'></a><a href='#L220'>220</a>
+<a name='L221'></a><a href='#L221'>221</a>
+<a name='L222'></a><a href='#L222'>222</a>
+<a name='L223'></a><a href='#L223'>223</a>
+<a name='L224'></a><a href='#L224'>224</a>
+<a name='L225'></a><a href='#L225'>225</a>
+<a name='L226'></a><a href='#L226'>226</a>
+<a name='L227'></a><a href='#L227'>227</a>
+<a name='L228'></a><a href='#L228'>228</a>
+<a name='L229'></a><a href='#L229'>229</a>
+<a name='L230'></a><a href='#L230'>230</a>
+<a name='L231'></a><a href='#L231'>231</a>
+<a name='L232'></a><a href='#L232'>232</a>
+<a name='L233'></a><a href='#L233'>233</a>
+<a name='L234'></a><a href='#L234'>234</a>
+<a name='L235'></a><a href='#L235'>235</a>
+<a name='L236'></a><a href='#L236'>236</a>
+<a name='L237'></a><a href='#L237'>237</a>
+<a name='L238'></a><a href='#L238'>238</a>
+<a name='L239'></a><a href='#L239'>239</a>
+<a name='L240'></a><a href='#L240'>240</a>
+<a name='L241'></a><a href='#L241'>241</a>
+<a name='L242'></a><a href='#L242'>242</a>
+<a name='L243'></a><a href='#L243'>243</a>
+<a name='L244'></a><a href='#L244'>244</a>
+<a name='L245'></a><a href='#L245'>245</a>
+<a name='L246'></a><a href='#L246'>246</a>
+<a name='L247'></a><a href='#L247'>247</a>
+<a name='L248'></a><a href='#L248'>248</a>
+<a name='L249'></a><a href='#L249'>249</a>
+<a name='L250'></a><a href='#L250'>250</a>
+<a name='L251'></a><a href='#L251'>251</a>
+<a name='L252'></a><a href='#L252'>252</a>
+<a name='L253'></a><a href='#L253'>253</a>
+<a name='L254'></a><a href='#L254'>254</a>
+<a name='L255'></a><a href='#L255'>255</a>
+<a name='L256'></a><a href='#L256'>256</a>
+<a name='L257'></a><a href='#L257'>257</a>
+<a name='L258'></a><a href='#L258'>258</a>
+<a name='L259'></a><a href='#L259'>259</a>
+<a name='L260'></a><a href='#L260'>260</a>
+<a name='L261'></a><a href='#L261'>261</a>
+<a name='L262'></a><a href='#L262'>262</a>
+<a name='L263'></a><a href='#L263'>263</a>
+<a name='L264'></a><a href='#L264'>264</a>
+<a name='L265'></a><a href='#L265'>265</a>
+<a name='L266'></a><a href='#L266'>266</a>
+<a name='L267'></a><a href='#L267'>267</a>
+<a name='L268'></a><a href='#L268'>268</a>
+<a name='L269'></a><a href='#L269'>269</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1389x</span>
+<span class="cline-any cline-yes">1389x</span>
+<span class="cline-any cline-yes">1389x</span>
+<span class="cline-any cline-yes">1389x</span>
+<span class="cline-any cline-yes">1389x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1153x</span>
+<span class="cline-any cline-yes">1153x</span>
+<span class="cline-any cline-yes">1153x</span>
+<span class="cline-any cline-yes">1153x</span>
+<span class="cline-any cline-yes">993x</span>
+<span class="cline-any cline-yes">993x</span>
+<span class="cline-any cline-yes">1153x</span>
+<span class="cline-any cline-yes">160x</span>
+<span class="cline-any cline-yes">160x</span>
+<span class="cline-any cline-yes">160x</span>
+<span class="cline-any cline-yes">58x</span>
+<span class="cline-any cline-yes">160x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">57x</span>
+<span class="cline-any cline-yes">1153x</span>
+<span class="cline-any cline-yes">1153x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">297x</span>
+<span class="cline-any cline-yes">297x</span>
+<span class="cline-any cline-yes">297x</span>
+<span class="cline-any cline-yes">297x</span>
+<span class="cline-any cline-yes">297x</span>
+<span class="cline-any cline-yes">296x</span>
+<span class="cline-any cline-yes">296x</span>
+<span class="cline-any cline-yes">296x</span>
+<span class="cline-any cline-yes">296x</span>
+<span class="cline-any cline-yes">297x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">410x</span>
+<span class="cline-any cline-yes">410x</span>
+<span class="cline-any cline-yes">410x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">838x</span>
+<span class="cline-any cline-yes">838x</span>
+<span class="cline-any cline-yes">838x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">613x</span>
+<span class="cline-any cline-yes">838x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">325x</span>
+<span class="cline-any cline-yes">325x</span>
+<span class="cline-any cline-yes">325x</span>
+<span class="cline-any cline-yes">325x</span>
+<span class="cline-any cline-yes">325x</span>
+<span class="cline-any cline-yes">325x</span>
+<span class="cline-any cline-yes">325x</span>
+<span class="cline-any cline-yes">325x</span>
+<span class="cline-any cline-yes">325x</span>
+<span class="cline-any cline-yes">321x</span>
+<span class="cline-any cline-yes">321x</span>
+<span class="cline-any cline-yes">325x</span>
+<span class="cline-any cline-yes">325x</span>
+<span class="cline-any cline-yes">325x</span>
+<span class="cline-any cline-yes">325x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">200x</span>
+<span class="cline-any cline-yes">200x</span>
+<span class="cline-any cline-yes">200x</span>
+<span class="cline-any cline-yes">200x</span>
+<span class="cline-any cline-yes">325x</span>
+<span class="cline-any cline-yes">198x</span>
+<span class="cline-any cline-yes">198x</span>
+<span class="cline-any cline-yes">325x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">53x</span>
+<span class="cline-any cline-yes">53x</span>
+<span class="cline-any cline-yes">42x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">53x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">53x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">57x</span>
+<span class="cline-any cline-yes">57x</span>
+<span class="cline-any cline-yes">57x</span>
+<span class="cline-any cline-yes">57x</span>
+<span class="cline-any cline-yes">57x</span>
+<span class="cline-any cline-yes">57x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">50x</span>
+<span class="cline-any cline-yes">50x</span>
+<span class="cline-any cline-yes">50x</span>
+<span class="cline-any cline-yes">50x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">50x</span>
+<span class="cline-any cline-yes">50x</span>
+<span class="cline-any cline-yes">50x</span>
+<span class="cline-any cline-yes">50x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">49x</span>
+<span class="cline-any cline-yes">46x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">46x</span>
+<span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">37x</span>
+<span class="cline-any cline-yes">37x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { randomUUID } from 'node:crypto';
+import type { Pool, PoolClient } from 'pg';
+import { ErrorReserva, type NuevaSolicitud, type Solicitud } from '../dominio/solicitud';
+import type { EventoExterno, PagosDeReserva, RepositorioReservas, ReservaParaPago } from '../dominio/puertos';
+import type { Transaccion } from '../../../shared/dominio/transaccion';
+import { eventos, transicion, type AccionReserva } from '../dominio/alquiler';
+import { puedeCotizar, puedeConfirmarAgenda, type PropuestaCotizacion } from '../dominio/cotizacion';
+import { importeAPagar } from '../dominio/cobro';
+&nbsp;
+const columnas = `id, cliente_id AS "clienteId", propietario_id AS "propietarioId", proveedor_id AS "proveedorId",
+  publicacion_id AS "publicacionId", recurso_id AS "recursoId", inicio, fin,
+  descripcion_trabajo AS "descripcionTrabajo", snapshot, estado, motivo_rechazo AS "motivoRechazo", version, creado_en AS "creadoEn",
+  tipo_solicitud AS "tipoSolicitud", condiciones, vence_en AS "venceEn", pago_estado AS "pagoEstado", efectivo_centimos AS "efectivoCentimos",
+  entregado_en AS "entregadoEn", recibido_en AS "recibidoEn", devolucion_informada_en AS "devolucionInformadaEn", devuelto_en AS "devueltoEn",
+  importe_final_centimos AS "importeFinalCentimos", saldo_centimos AS "saldoCentimos", dias_extra AS "diasExtra", motivo_operacion AS "motivoOperacion",
+  pagado_en_linea_centimos AS "pagadoEnLineaCentimos",
+  servicio_iniciado_en AS "servicioIniciadoEn", servicio_terminado_en AS "servicioTerminadoEn", servicio_cerrado_en AS "servicioCerradoEn",
+  COALESCE((SELECT jsonb_agg(jsonb_build_object('version',c.version,'alcance',c.alcance,'materiales',c.materiales,
+    'importeCentimos',c.importe_centimos,'moneda',c.moneda,'vigenteHasta',c.vigente_hasta,'creadaEn',c.creada_en,
+    'respuesta',CASE WHEN c.decision IS NULL THEN NULL ELSE jsonb_build_object('decision',c.decision,'motivo',c.motivo,'respondidaEn',c.respondida_en) END)
+    ORDER BY c.version) FROM reservas_cotizaciones c WHERE c.reserva_id=reservas.id),'[]'::jsonb) AS cotizaciones`;
+const convertir = (r: any): Solicitud =&gt; {
+  const resultado = { ...r };
+  for (const campo of ['inicio','fin','creadoEn','venceEn','entregadoEn','recibidoEn','devolucionInformadaEn','devueltoEn','servicioIniciadoEn','servicioTerminadoEn','servicioCerradoEn']) resultado[campo] = r[campo] == null ? null : new Date(r[campo]).toISOString();
+  for (const campo of ['efectivoCentimos','saldoCentimos','importeFinalCentimos','pagadoEnLineaCentimos']) resultado[campo] = r[campo] == null ? null : Number(r[campo]);
+  return resultado;
+};
+&nbsp;
+export class PostgresReservas implements RepositorioReservas {
+  constructor(private readonly pool: Pool, private readonly pagos: Pick&lt;PagosDeReserva,'marcarReembolso'&gt;) {}
+&nbsp;
+  private async transaccion&lt;T&gt;(operacion: (client: PoolClient) =&gt; Promise&lt;T&gt;): Promise&lt;T&gt; {
+    const client = await this.pool.connect();
+    try {
+      await client.query('BEGIN');
+      const resultado = await operacion(client);
+      await client.query('COMMIT');
+      return resultado;
+    } catch (error) {
+      await client.query('ROLLBACK');
+      if ((error as { code?: string }).code === '23P01') throw new ErrorReserva('RECURSO_OCUPADO',409,'La unidad o agenda ya está reservada para esas fechas. Coordina otro horario y envía una nueva solicitud.');
+      if ((error as { constraint?: string }).constraint === 'reservas_posesion_unica') <span class="branch-0 cbranch-no" title="branch not covered" >throw new ErrorReserva('HERRAMIENTA_SIN_DEVOLVER',409,'La unidad sigue en poder de otro cliente. Confirma su devolución antes de entregarla.');</span>
+      if ((error as { code?: string; constraint?: string }).code === '23505'
+        &amp;&amp; (error as { constraint?: string }).constraint === 'reservas_pendiente_duplicada') {
+        throw new ErrorReserva('SOLICITUD_DUPLICADA', 409, 'Ya tienes una solicitud pendiente para esta unidad y estas fechas. Revisa tu bandeja.');
+      }
+      throw error;
+<span class="branch-0 cbranch-no" title="branch not covered" >    } finally {</span> client.release(); }
+  }
+&nbsp;
+  async crear(d: NuevaSolicitud): Promise&lt;Solicitud&gt; {
+    return this.transaccion(async client =&gt; {
+      const id = randomUUID();
+      const r = await client.query(`INSERT INTO reservas(id,cliente_id,propietario_id,proveedor_id,publicacion_id,recurso_id,inicio,fin,descripcion_trabajo,snapshot,tipo_solicitud,condiciones)
+        VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING ${columnas}`,
+      [id,d.clienteId,d.propietarioId,d.proveedorId,d.publicacionId,d.recursoId,d.inicio,d.fin,d.descripcionTrabajo,JSON.stringify(d.snapshot),d.tipoSolicitud,d.condiciones ? JSON.stringify(d.condiciones) : null]);
+      await client.query('INSERT INTO reservas_outbox(id,agregado_id,tipo,payload) VALUES($1,$2,$3,$4)',
+        [randomUUID(),id,'SOLICITUD_CREADA',JSON.stringify({reservaId:id,version:1})]);
+      return convertir(r.rows[0]);
+    });
+  }
+&nbsp;
+  async porId(id: string, actorId: string) {
+    const r = await this.pool.query(`SELECT ${columnas} FROM reservas WHERE id=$1 AND (cliente_id=$2 OR propietario_id=$2)`, [id,actorId]);
+    return r.rows[0] ? convertir(r.rows[0]) : null;
+  }
+&nbsp;
+  async listar(actorId: string, vista: 'cliente' | 'proveedor', page: number) {
+    const columna = vista === 'cliente' ? 'cliente_id' : 'propietario_id';
+    // Análisis de la base (Sprint 2): el total sale solo del índice (cliente_id|propietario_id, creado_en DESC, id DESC) y
+    // las columnas completas —con la subconsulta de cotizaciones— se arman únicamente para las 20 filas de la página,
+    // que el mismo índice entrega ya ordenadas. Antes se materializaban todas las reservas de la cuenta.
+    const r = await this.pool.query(`SELECT (SELECT count(*)::integer FROM reservas WHERE ${columna}=$1) AS total,
+        COALESCE((SELECT jsonb_agg(p ORDER BY p."creadoEn" DESC,p.id DESC) FROM (SELECT ${columnas} FROM reservas WHERE ${columna}=$1
+          ORDER BY creado_en DESC,id DESC LIMIT 20 OFFSET $2) p),'[]'::jsonb) AS items`, [actorId,(page-1)*20]);
+    return { total: r.rows[0].total as number, items: r.rows[0].items.map(convertir) as Solicitud[] };
+  }
+&nbsp;
+  async rechazar(id: string, propietarioId: string, versionActual: number, motivo: string): Promise&lt;Solicitud&gt; {
+    return this.transaccion(async client =&gt; {
+      await client.query('SELECT id FROM reservas WHERE id=$1 AND propietario_id=$2 FOR UPDATE', [id,propietarioId]);
+      const r = await client.query(`UPDATE reservas SET estado='RECHAZADA',motivo_rechazo=$4,version=version+1
+        WHERE id=$1 AND propietario_id=$2 AND version=$3 AND estado='PENDIENTE'
+        AND NOT EXISTS(SELECT 1 FROM reservas_cotizaciones WHERE reserva_id=reservas.id AND decision='ACEPTADA') RETURNING ${columnas}`, [id,propietarioId,versionActual,motivo]);
+      if (!r.rowCount) throw new ErrorReserva('RESERVA_MODIFICADA',409,'La solicitud cambió o ya fue respondida. Recarga la bandeja.');
+      await client.query('INSERT INTO reservas_outbox(id,agregado_id,tipo,payload) VALUES($1,$2,$3,$4)',
+        [randomUUID(),id,'SOLICITUD_RECHAZADA',JSON.stringify({reservaId:id,version:r.rows[0].version})]);
+      return convertir(r.rows[0]);
+    });
+  }
+&nbsp;
+  private async vencerEn(client: PoolClient, recursoId?: string) {
+    const vencidas = await client.query(`SELECT id FROM reservas WHERE estado='ACEPTADA' AND vence_en&lt;=clock_timestamp()
+      ${recursoId ? 'AND recurso_id=$1' : ''} ORDER BY id FOR UPDATE SKIP LOCKED`, recursoId ? [recursoId] : []);
+    if (!vencidas.rowCount) return 0;
+    const ids = vencidas.rows.map(r =&gt; r.id);
+    await client.query('UPDATE reservas_bloqueos SET activo=false WHERE reserva_id=ANY($1::uuid[])', [ids]);
+    const cambios = await client.query("UPDATE reservas SET estado='VENCIDA',vence_en=NULL,version=version+1 WHERE id=ANY($1::uuid[]) RETURNING id,version", [ids]);
+    for (const r of cambios.rows) await client.query('INSERT INTO reservas_outbox(id,agregado_id,tipo,payload) VALUES($1,$2,$3,$4)', [randomUUID(),r.id,'RESERVA_VENCIDA',JSON.stringify({reservaId:r.id,version:r.version})]);
+    return cambios.rowCount<span class="branch-0 cbranch-no" title="branch not covered" > ?? 0;</span>
+  }
+&nbsp;
+  vencer() { return this.transaccion(client =&gt; this.vencerEn(client)); }
+&nbsp;
+  async ejecutar(id: string, actorId: string, versionActual: number, accion: AccionReserva, motivo: string | null) {
+    return this.transaccion(async client =&gt; {
+      const visible = await client.query('SELECT recurso_id FROM reservas WHERE id=$1 AND (cliente_id=$2 OR propietario_id=$2)', [id,actorId]);
+      if (!visible.rowCount) <span class="branch-0 cbranch-no" title="branch not covered" >throw new ErrorReserva('RESERVA_NO_DISPONIBLE',404,'La solicitud no está disponible.');</span>
+      const recursoId = visible.rows[0].recurso_id;
+      // Orden común por recurso: aceptación, entrega y liberación comparten la misma autoridad.
+      await client.query('SELECT pg_advisory_xact_lock(hashtextextended($1,488005))', [recursoId]);
+      await this.vencerEn(client, recursoId);
+      const actual = convertir((await client.query(`SELECT ${columnas} FROM reservas WHERE id=$1 FOR UPDATE`, [id])).rows[0]);
+      if (actual.version !== versionActual) throw new ErrorReserva('RESERVA_MODIFICADA',409,'La reserva cambió. Actualiza antes de continuar.');
+      const ahora = (await client.query('SELECT clock_timestamp() AS ahora')).rows[0].ahora.getTime();
+      const s = transicion(actual,actorId,accion,motivo,ahora);
+      if (accion === 'aceptacion') await client.query('INSERT INTO reservas_bloqueos(reserva_id,recurso_id,inicio,fin) VALUES($1,$2,$3,$4)', [s.id,s.recursoId,s.inicio,s.fin]);
+      if (accion === 'efectivo' || accion === 'entrega') await client.query('UPDATE reservas_bloqueos SET inicio=LEAST(inicio,$2::timestamptz) WHERE reserva_id=$1', [s.id,s.entregadoEn]);
+      if (['cancelacion','devolucion/confirmacion','servicio/confirmacion'].includes(accion)) await client.query('UPDATE reservas_bloqueos SET activo=false WHERE reserva_id=$1', [s.id]);
+      if (accion === 'cancelacion' &amp;&amp; actual.pagoEstado === 'PAGADO_EN_LINEA') {
+        await this.pagos.marcarReembolso(client,s.id);
+        await client.query('INSERT INTO reservas_outbox(id,agregado_id,tipo,payload) VALUES($1,$2,$3,$4)', [randomUUID(),s.id,'REEMBOLSO_PENDIENTE',JSON.stringify({reservaId:s.id,version:s.version,actorId})]);
+      }
+      const r = await client.query(`UPDATE reservas SET estado=$2,version=$3,vence_en=$4,pago_estado=$5,efectivo_centimos=$6,
+        entregado_en=$7,recibido_en=$8,devolucion_informada_en=$9,devuelto_en=$10,importe_final_centimos=$11,saldo_centimos=$12,dias_extra=$13,motivo_operacion=$14,
+        servicio_iniciado_en=$15,servicio_terminado_en=$16,servicio_cerrado_en=$17
+        WHERE id=$1 RETURNING ${columnas}`, [s.id,s.estado,s.version,s.venceEn,s.pagoEstado,s.efectivoCentimos,s.entregadoEn,s.recibidoEn,s.devolucionInformadaEn,s.devueltoEn,s.importeFinalCentimos,s.saldoCentimos,s.diasExtra,s.motivoOperacion,s.servicioIniciadoEn,s.servicioTerminadoEn,s.servicioCerradoEn]);
+      await client.query('INSERT INTO reservas_outbox(id,agregado_id,tipo,payload) VALUES($1,$2,$3,$4)', [randomUUID(),s.id,eventos[accion],JSON.stringify({reservaId:s.id,version:s.version,actorId,estado:s.estado,pagoEstado:s.pagoEstado,motivo,entregadoEn:s.entregadoEn,devolucionInformadaEn:actual.devolucionInformadaEn ?? s.devolucionInformadaEn,devueltoEn:s.devueltoEn})]);
+      return convertir(r.rows[0]);
+    });
+  }
+&nbsp;
+  /**
+   * Abre la transacción con el orden común de bloqueos (recurso, vencimientos, reserva) y entrega la
+   * reserva a quien cobra. El estado de la reserva, su bloqueo y sus eventos solo se cambian desde aquí.
+   */
+  conReserva&lt;T&gt;(id: string, actorId: string | null, operar: (reserva: ReservaParaPago) =&gt; Promise&lt;T&gt;) {
+    return this.transaccion(async client =&gt; {
+      const visible = actorId
+        ? await client.query('SELECT recurso_id FROM reservas WHERE id=$1 AND (cliente_id=$2 OR propietario_id=$2)', [id,actorId])
+        : await client.query('SELECT recurso_id FROM reservas WHERE id=$1', [id]);
+      if (!visible.rowCount) throw new ErrorReserva('RESERVA_NO_DISPONIBLE',404,'La solicitud no está disponible.');
+      await client.query('SELECT pg_advisory_xact_lock(hashtextextended($1,488005))', [visible.rows[0].recurso_id]);
+      await this.vencerEn(client,visible.rows[0].recurso_id);
+      await client.query('SELECT id FROM reservas WHERE id=$1 FOR UPDATE', [id]);
+      const s = convertir((await client.query(`SELECT ${columnas} FROM reservas WHERE id=$1`, [id])).rows[0]);
+      const ahora = (await client.query('SELECT clock_timestamp() AS ahora')).rows[0].ahora.getTime();
+      const evento = (tipo: string, intentoId: string, version: number) =&gt; client.query('INSERT INTO reservas_outbox(id,agregado_id,tipo,payload) VALUES($1,$2,$3,$4)', [randomUUID(),id,tipo,JSON.stringify({reservaId:id,intentoId,version})]);
+      return operar({
+        tx: client, id, clienteId: s.clienteId, titulo: s.snapshot.titulo, importePagable: importeAPagar(s,ahora),
+        registrarPago: async (intentoId, importe) =&gt; {
+          if (s.estado === 'ACEPTADA') {
+            await client.query(`UPDATE reservas SET estado='APARTADO_PAGADO',vence_en=NULL,pago_estado='PAGADO_EN_LINEA',pagado_en_linea_centimos=$2,version=version+1 WHERE id=$1`, [id,importe]);
+          } else {
+            await client.query('UPDATE reservas_bloqueos SET activo=false WHERE reserva_id=$1', [id]);
+            await client.query(`UPDATE reservas SET estado='SERVICIO_CERRADO',pago_estado='PAGADO_EN_LINEA',pagado_en_linea_centimos=$2,importe_final_centimos=$2,servicio_cerrado_en=clock_timestamp(),version=version+1 WHERE id=$1`, [id,importe]);
+          }
+          await evento('PAGO_APROBADO',intentoId,s.version+1);
+        },
+        registrarPagoTardio: async intentoId =&gt; { await evento('REEMBOLSO_PENDIENTE',intentoId,s.version); },
+      });
+    });
+  }
+&nbsp;
+  /** Cierre: devolución de la herramienta o cierre del servicio. */
+  async participacion(id: string, actorId: string) {
+    const r = await this.pool.query(`SELECT id, cliente_id AS "clienteId", propietario_id AS "propietarioId", proveedor_id AS "proveedorId",
+      publicacion_id AS "publicacionId", snapshot-&gt;&gt;'titulo' AS titulo, snapshot-&gt;&gt;'tipo' AS tipo, estado, COALESCE(devuelto_en, servicio_cerrado_en) AS "cerradaEn"
+      FROM reservas WHERE id=$1 AND (cliente_id=$2 OR propietario_id=$2)`, [id,actorId]);
+    const f = r.rows[0];
+    return f ? { ...f, cerradaEn: f.cerradaEn ? new Date(f.cerradaEn).toISOString() : null } : null;
+  }
+&nbsp;
+  /** Ejecuta el cambio de otro módulo y guarda el evento en el outbox en la misma transacción: ambos o ninguno. */
+  conEvento&lt;T&gt;(reservaId: string, tipo: EventoExterno, actorId: string, operar: (tx: Transaccion) =&gt; Promise&lt;T&gt;) {
+    return this.transaccion(async client =&gt; {
+      const r = await client.query('SELECT version FROM reservas WHERE id=$1', [reservaId]);
+      if (!r.rowCount) <span class="branch-0 cbranch-no" title="branch not covered" >throw new ErrorReserva('RESERVA_NO_DISPONIBLE',404,'La solicitud no está disponible.');</span>
+      const resultado = await operar(client);
+      await client.query('INSERT INTO reservas_outbox(id,agregado_id,tipo,payload) VALUES($1,$2,$3,$4)',
+        [randomUUID(),reservaId,tipo,JSON.stringify({reservaId,version:r.rows[0].version,actorId})]);
+      return resultado;
+    });
+  }
+&nbsp;
+  async cierres(ids: string[]) {
+    const r = await this.pool.query('SELECT id, COALESCE(devuelto_en, servicio_cerrado_en) AS cierre FROM reservas WHERE id=ANY($1::uuid[])', [ids]);
+    return new Map&lt;string, string | null&gt;(r.rows.map(f =&gt; [f.id as string, f.cierre ? new Date(f.cierre).toISOString() : null]));
+  }
+&nbsp;
+  async visible(id: string, actorId: string) {
+    return Boolean((await this.pool.query('SELECT 1 FROM reservas WHERE id=$1 AND (cliente_id=$2 OR propietario_id=$2)', [id,actorId])).rowCount);
+  }
+&nbsp;
+  private async cambiarCotizacion(id: string, actorId: string, versionActual: number, modo: 'publicar' | 'responder' | 'agenda',
+    cambiar: (client: PoolClient, s: Solicitud, ahora: number) =&gt; Promise&lt;{tipo: string; versionCotizacion: number}&gt;) {
+    return this.transaccion(async client =&gt; {
+      const visible = await client.query('SELECT recurso_id FROM reservas WHERE id=$1 AND (cliente_id=$2 OR propietario_id=$2)', [id,actorId]);
+      if (!visible.rowCount) throw new ErrorReserva('RESERVA_NO_DISPONIBLE',404,'La solicitud no está disponible.');
+      // Mismo orden que aceptación/cancelación de herramientas: recurso y luego solicitud.
+      await client.query('SELECT pg_advisory_xact_lock(hashtextextended($1,488005))', [visible.rows[0].recurso_id]);
+      await this.vencerEn(client,visible.rows[0].recurso_id);
+      const bloqueada = await client.query('SELECT id FROM reservas WHERE id=$1 AND (cliente_id=$2 OR propietario_id=$2) FOR UPDATE', [id,actorId]);
+      if (!bloqueada.rowCount) <span class="branch-0 cbranch-no" title="branch not covered" >throw new ErrorReserva('RESERVA_NO_DISPONIBLE',404,'La solicitud no está disponible.');</span>
+      // Leer el historial después de obtener el bloqueo: un escritor que terminó
+      // mientras esperábamos puede haber creado otra versión de la propuesta.
+      const r = await client.query(`SELECT ${columnas} FROM reservas WHERE id=$1`, [id]);
+      const s = convertir(r.rows[0]);
+      if (s.version !== versionActual) throw new ErrorReserva('RESERVA_MODIFICADA',409,'La solicitud cambió. Actualiza antes de continuar.');
+      if (modo !== 'agenda') puedeCotizar(s,actorId,modo === 'publicar');
+      const ahora = (await client.query('SELECT clock_timestamp() AS ahora')).rows[0].ahora.getTime();
+      if (Date.parse(s.inicio) &lt;= ahora) <span class="branch-0 cbranch-no" title="branch not covered" >throw new ErrorReserva('HORARIO_VENCIDO',409,'El horario solicitado ya comenzó. Solicita nuevas fechas.');</span>
+      const cambio = await cambiar(client,s,ahora);
+      const guardada = await client.query(`UPDATE reservas SET version=version+1 WHERE id=$1 RETURNING ${columnas}`, [id]);
+      await client.query('INSERT INTO reservas_outbox(id,agregado_id,tipo,payload) VALUES($1,$2,$3,$4)',
+        [randomUUID(),id,cambio.tipo,JSON.stringify({reservaId:id,version:s.version+1,versionCotizacion:cambio.versionCotizacion,actorId})]);
+      if (cambio.tipo === 'COTIZACION_ACEPTADA') await client.query('INSERT INTO reservas_outbox(id,agregado_id,tipo,payload) VALUES($1,$2,$3,$4)',
+        [randomUUID(),id,'AGENDA_CONFIRMADA',JSON.stringify({reservaId:id,version:s.version+1,versionCotizacion:cambio.versionCotizacion,actorId})]);
+      return convertir(guardada.rows[0]);
+    });
+  }
+&nbsp;
+  cotizar(id: string, actorId: string, versionActual: number, p: PropuestaCotizacion) {
+    return this.cambiarCotizacion(id,actorId,versionActual,'publicar',async(client,s,ahora) =&gt; {
+      if (Date.parse(p.vigenteHasta) &lt;= ahora || Date.parse(p.vigenteHasta) &gt; Date.parse(s.inicio)) {
+        throw new ErrorReserva('VIGENCIA_INVALIDA',400,'La vigencia debe ser futura y no superar el inicio solicitado.');
+      }
+      const version = (s.cotizaciones?.<span class="branch-0 cbranch-no" title="branch not covered" >length ?? 0)+1</span>;
+      if (version &gt; 50) <span class="branch-0 cbranch-no" title="branch not covered" >throw new ErrorReserva('LIMITE_COTIZACIONES',409,'Se alcanzó el límite de versiones. Crea una nueva solicitud.');</span>
+      await client.query(`INSERT INTO reservas_cotizaciones(reserva_id,version,alcance,materiales,importe_centimos,vigente_hasta)
+        VALUES($1,$2,$3,$4,$5,$6)`, [id,version,p.alcance,p.materiales,p.importeCentimos,p.vigenteHasta]);
+      return {tipo:'COTIZACION_PROPUESTA',versionCotizacion:version};
+    });
+  }
+&nbsp;
+  responderCotizacion(id: string, actorId: string, versionActual: number, versionCotizacion: number, decision: 'ACEPTADA' | 'RECHAZADA', motivo: string | null) {
+    return this.cambiarCotizacion(id,actorId,versionActual,'responder',async(client,s,ahora) =&gt; {
+      const c = s.cotizaciones?.at(-1);
+      if (!c || c.version !== versionCotizacion || c.respuesta || Date.parse(c.vigenteHasta) &lt;= ahora) {
+        throw new ErrorReserva('COTIZACION_MODIFICADA',409,'La propuesta cambió, venció o ya fue respondida. Actualiza y revisa la versión vigente.');
+      }
+      await client.query(`UPDATE reservas_cotizaciones SET decision=$3,motivo=$4,respondida_en=$5 WHERE reserva_id=$1 AND version=$2`,
+        [id,versionCotizacion,decision,motivo,new Date(ahora).toISOString()]);
+      if (decision === 'ACEPTADA') await this.reservarAgendaEn(client,s);
+      return {tipo:decision === 'ACEPTADA' ? 'COTIZACION_ACEPTADA' : 'COTIZACION_RECHAZADA',versionCotizacion};
+    });
+  }
+&nbsp;
+  private async reservarAgendaEn(client: PoolClient, s: Solicitud) {
+    await client.query('INSERT INTO reservas_bloqueos(reserva_id,recurso_id,inicio,fin) VALUES($1,$2,$3,$4)', [s.id,s.recursoId,s.inicio,s.fin]);
+    await client.query("UPDATE reservas SET estado='SERVICIO_CONFIRMADO' WHERE id=$1", [s.id]);
+  }
+&nbsp;
+  confirmarAgenda(id: string, actorId: string, versionActual: number, versionCotizacion: number) {
+    return this.cambiarCotizacion(id,actorId,versionActual,'agenda',async(client,s) =&gt; {
+      puedeConfirmarAgenda(s,actorId,versionCotizacion);
+      await this.reservarAgendaEn(client,s);
+      return {tipo:'AGENDA_CONFIRMADA',versionCotizacion};
+    });
+  }
+&nbsp;
+  async disponibilidad(recursoId: string, inicio: string, fin: string) {
+    const r = await this.pool.query(`SELECT inicio,fin FROM reservas_bloqueos WHERE recurso_id=$1 AND activo
+      AND tstzrange(inicio,fin,'[)') &amp;&amp; tstzrange($2::timestamptz,$3::timestamptz,'[)') ORDER BY inicio`, [recursoId,inicio,fin]);
+    const posesion = await this.pool.query("SELECT EXISTS(SELECT 1 FROM reservas WHERE recurso_id=$1 AND estado IN ('ENTREGA_POR_CONFIRMAR','EN_CURSO','DEVOLUCION_PENDIENTE')) AS ocupada", [recursoId]);
+    return { franjas: r.rows.map(f =&gt; ({inicio:f.inicio.toISOString(),fin:f.fin.toISOString()})), enUso: posesion.rows[0].ocupada as boolean };
+  }
+}
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-11-25T20:29:20.043Z
+            </div>
+        <script src="../../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../../sorter.js"></script>
+        <script src="../../../../block-navigation.js"></script>
+    </body>
+</html>
+    

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, Inject, Param, Patch, Post, Put, Query, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Header, HttpCode, Inject, Param, Patch, Post, Put, Query, Req } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import type { Request } from 'express';
 import { Doc, lista, ref } from '../../../shared/presentacion/openapi';
@@ -6,12 +6,14 @@ import { Catalogo } from '../aplicacion/catalogo';
 import { AltaPublicacion, EdicionPublicacion, Moderacion, Ubicacion, filtrosCatalogo } from './openapi';
 const token=(r:Request)=>r.headers.cookie?.split(';').map(v=>v.trim()).find(v=>v.startsWith('qatu_sesion='))?.slice('qatu_sesion='.length)??'';
 const PROPIA = { 404: 'La oferta no existe o no es tuya' };
+/** Lecturas públicas cacheables por el navegador o una CDN (estrategia de caché, Sprint 2). Lo privado sigue con no-store. */
+const REFERENCIA = 'public, max-age=3600', PUBLICA = 'public, max-age=30';
 @ApiTags('Catálogo')
 @Controller('publicaciones')
 export class CatalogoController {
  constructor(@Inject(Catalogo) private readonly catalogo:Catalogo) {}
  @Doc({ acceso: 'publico', resumen: 'Ver categorías y distritos', devuelve: ref('OpcionesCatalogo') })
- @Get('opciones') opciones() {return this.catalogo.opciones();}
+ @Header('Cache-Control', REFERENCIA) @Get('opciones') opciones() {return this.catalogo.opciones();}
  @Doc({ resumen: 'Listar mis publicaciones', detalle: 'Incluye las inactivas y las retiradas por moderación. Mismos filtros que la búsqueda.', consultas: filtrosCatalogo, devuelve: ref('PaginaPublicacionesPropias'), errores: { 404: 'Aún no tienes perfil de proveedor' } })
  @Get('mias') propias(@Req() r:Request,@Query() q:unknown) {return this.catalogo.propias(token(r),q);}
  @Doc({
@@ -19,7 +21,7 @@ export class CatalogoController {
   detalle: 'Solo ofertas activas, permitidas y de proveedores habilitados. Los filtros se combinan (AND); la búsqueda ignora tildes. Una página mayor al total devuelve items vacíos. Parámetros repetidos o desconocidos: 400.',
   consultas: filtrosCatalogo, devuelve: ref('PaginaPublicaciones'),
  })
- @Get() listar(@Query() q:unknown) {return this.catalogo.listar(q);}
+ @Header('Cache-Control', PUBLICA) @Get() listar(@Query() q:unknown) {return this.catalogo.listar(q);}
  @Doc({ resumen: 'Ver la ubicación exacta de mi oferta', detalle: 'Solo el dueño: el punto guardado y el que ve el público.', devuelve: ref('UbicacionPropia'), errores: PROPIA })
  @Get(':id/ubicacion') ubicacion(@Req() r:Request,@Param('id') id:string) {return this.catalogo.ubicacionPropia(token(r),id);}
  @Doc({ resumen: 'Marcar la ubicación de mi oferta', detalle: 'El punto debe estar en la zona de servicio de Qatu (Huamanga y alrededores).', cuerpo: Ubicacion, devuelve: ref('UbicacionGuardada'), errores: { 400: 'Fuera de la zona de servicio o datos inválidos', ...PROPIA } })
@@ -27,7 +29,7 @@ export class CatalogoController {
  @Doc({ resumen: 'Quitar la ubicación de mi oferta', errores: PROPIA })
  @Delete(':id/ubicacion') @HttpCode(204) quitarUbicacion(@Req() r:Request,@Param('id') id:string) {return this.catalogo.quitarUbicacion(token(r),id);}
  @Doc({ acceso: 'publico', resumen: 'Ver el detalle de una publicación', devuelve: ref('Publicacion'), errores: { 404: 'No existe o no está visible' } })
- @Get(':id') consultar(@Param('id') id:string) {return this.catalogo.consultar(id);}
+ @Header('Cache-Control', PUBLICA) @Get(':id') consultar(@Param('id') id:string) {return this.catalogo.consultar(id);}
  @Doc({
   resumen: 'Publicar una oferta',
   detalle: 'Requiere perfil de proveedor aprobado y público, y WhatsApp visible en Mi cuenta. Herramienta: precio fijo por día. Servicio: precio fijo por servicio o cotización.',

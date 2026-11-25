@@ -11,6 +11,8 @@
 - **Pruebas:** `test/compartido/openapi.test.ts` (cobertura de rutas, reglas del contrato, archivo al día, página servida y apagada).
 - **Despliegue:** `QATU_DOCS` en `infra/compose.production.yml` (0 por defecto) y en el runbook.
 
-## Etapa 2 — Bruno
+## Etapa 2 (014.2) — Bruno
 
-Colección en `docs/06-pruebas-atributos-calidad/bruno/`, importada desde `openapi.json` y completada con flujos (registro → publicación → reserva), entornos `local` y `produccion` sin secretos, y un paso del CI que la ejecuta contra la API y guarda el reporte HTML.
+- Colección en `docs/06-pruebas-atributos-calidad/bruno/` (archivos `.bru` versionados), con entornos `local` y `ci` sin secretos: las cuentas y los ids llegan como variables.
+- `docs/06-pruebas-atributos-calidad/scripts/bruno.mjs` prepara un proveedor aprobado con una oferta y un cliente en una base `_test` (fixture de reservas), arranca la API compilada en el puerto 3403 y corre `bru run` con el CLI 4.3.0, sin manejo automático de cookies (cada cuenta envía la suya).
+- Reportes en `bruno/reportes/` (HTML, JSON, JUnit) sin cabeceras de cookies ni cuerpos de petición. En el CI corre después de Jest y el HTML queda como artefacto.

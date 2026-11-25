@@ -272,6 +272,19 @@ test('014.1 exige el contrato OpenAPI, la página de Swagger y sus pruebas',cont
   writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2','005.3']}));
   assert.throws(()=>validarEntrega(root),/presentacion\/openapi/);
 });
+test('014.2, 015.1 y 016.1 exigen Bruno, la caché con su análisis y Jest con la carga',context=>{
+  const root=prepararCotizaciones(context);
+  const declarar=incrementos=>writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2','005.3',...incrementos]}));
+  declarar(['014.2']);assert.throws(()=>validarEntrega(root),/014.2 requiere/);
+  for(const nombre of ['backend/src/shared/presentacion/openapi.ts','backend/src/shared/infraestructura/documentacion-api.ts','backend/scripts/openapi.ts','backend/test/compartido/openapi.test.ts','docs/03-diseño-de-software/diseño-externo/openapi.json',...['spec.md','plan.md','tasks.md','research.md','data-model.md','quickstart.md','contracts/api.md','checklists/requirements.md'].map(a=>'specs/014-documentacion-api/'+a),'docs/06-pruebas-atributos-calidad/bruno/bruno.json','docs/06-pruebas-atributos-calidad/bruno/README.md','docs/06-pruebas-atributos-calidad/scripts/bruno.mjs',
+    'backend/src/shared/infraestructura/cache.ts','backend/src/modules/catalogo/infraestructura/cache.ts','backend/scripts/analizar-base.ts','backend/test/catalogo/cache.test.ts','docs/06-pruebas-atributos-calidad/base-de-datos/README.md',...['spec.md','plan.md','tasks.md','research.md','data-model.md','quickstart.md','contracts/api.md','checklists/requirements.md'].map(a=>'specs/015-cache-y-base-de-datos/'+a),
+    'backend/jest.config.cjs','backend/test/caso.ts','backend/test/assert-jest.ts','.github/workflows/carga.yml',...['spec.md','plan.md','tasks.md','research.md','data-model.md','quickstart.md','contracts/api.md','checklists/requirements.md'].map(a=>'specs/016-pruebas-jest-y-carga/'+a)]) {
+    const target=join(root,nombre);mkdirSync(dirname(target),{recursive:true});writeFileSync(target,'');
+  }
+  declarar(['014.1','014.2','015.1','016.1']);assert.doesNotThrow(()=>validarEntrega(root));
+  rmSync(join(root,'backend/test/caso.ts'));assert.throws(()=>validarEntrega(root),/caso\.ts/);
+  declarar(['014.1','014.2','015.1']);assert.throws(()=>validarEntrega(root),/jest\.config/);
+});
 test('005.8 no puede declararse sin avisos',context=>{
   const root=prepararCotizaciones(context);writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2','005.3','005.4','005.5','005.6','005.8']}));assert.throws(()=>validarEntrega(root),/005.8 requiere/);
 });

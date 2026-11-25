@@ -1,5 +1,4 @@
 import assert from 'node:assert/strict';
-import { test } from 'node:test';
 import { execFileSync } from 'node:child_process';
 import { Pool } from 'pg';
 import { randomUUID } from 'node:crypto';
@@ -7,6 +6,8 @@ import { crearApp } from '../../src/app';
 import { PostgresUsuarios } from '../../src/modules/usuarios/infraestructura/postgres';
 import { ScryptPasswords } from '../../src/modules/usuarios/infraestructura/passwords';
 import { entradaCotizacion, entradaRespuestaCotizacion } from '../../src/modules/reservas/dominio/cotizacion';
+import { test } from '@jest/globals';
+import { caso } from '../caso';
 
 test('cotización: dinero entero, vigencia UTC y respuesta sin importes manipulados', () => {
   const ahora=Date.now(), propuesta={versionActual:1,alcance:'Instalación de cuatro luminarias en el domicilio.',materiales:'Solo mano de obra, materiales del cliente.',importeCentimos:18000,vigenteHasta:new Date(ahora+60000).toISOString()};
@@ -17,7 +18,7 @@ test('cotización: dinero entero, vigencia UTC y respuesta sin importes manipula
   assert.throws(()=>entradaRespuestaCotizacion({versionActual:2,versionCotizacion:1,motivo:''},'RECHAZADA'));
 });
 
-test('cotizaciones reales: versiones, privacidad, carrera de aceptación, inmutabilidad y outbox', {skip:!process.env.TEST_DATABASE_URL}, async context => {
+(!process.env.TEST_DATABASE_URL ? test.skip : test)('cotizaciones reales: versiones, privacidad, carrera de aceptación, inmutabilidad y outbox', async () => {
   process.env.DATABASE_URL=process.env.TEST_DATABASE_URL;
   process.env.JWT_SECRET='secreto-exclusivo-cotizaciones-pruebas-2026-488';
   process.env.APP_ORIGIN='http://127.0.0.1:3100';process.env.NODE_ENV='test';
@@ -34,7 +35,7 @@ test('cotizaciones reales: versiones, privacidad, carrera de aceptación, inmuta
     let s=await crear();
     const propuesta={alcance:'Instalación de cuatro luminarias y revisión de tomacorrientes.',materiales:'Incluye mano de obra; luminarias y cableado a cargo del cliente.',importeCentimos:18000,vigenteHasta:new Date(Date.now()+3600000).toISOString()};
     const ruta='/reservas/'+s.id;
-    await context.test('roles, origen y campos estrictos; no se publica una propuesta inválida',async()=>{
+    await caso('roles, origen y campos estrictos; no se publica una propuesta inválida',async()=>{
       assert.equal((await pedir(ruta+'/cotizacion','POST',{...propuesta,versionActual:s.version})).status,401);
       assert.equal((await pedir(ruta+'/cotizacion','POST',{...propuesta,versionActual:s.version},cliente)).status,403);
       assert.equal((await pedir(ruta+'/cotizacion','POST',{...propuesta,versionActual:s.version,estado:'ACEPTADA'},proveedor)).status,400);
@@ -43,7 +44,7 @@ test('cotizaciones reales: versiones, privacidad, carrera de aceptación, inmuta
       assert.equal((await pedir(ruta,'GET',undefined,ajeno)).status,404);
       assert.equal((await pedir(ruta+'/cotizacion','POST',{...propuesta,versionActual:1},ajeno)).status,404);
     });
-    await context.test('nueva versión conserva la anterior y rechaza respuesta a versión sustituida',async()=>{
+    await caso('nueva versión conserva la anterior y rechaza respuesta a versión sustituida',async()=>{
       const r=await pedir(ruta+'/cotizacion','POST',{...propuesta,versionActual:s.version},proveedor);assert.equal(r.status,201);s=await r.json();
       assert.equal(s.cotizaciones[0].importeCentimos,18000);
       const r2=await pedir(ruta+'/cotizacion','POST',{...propuesta,importeCentimos:20000,versionActual:s.version},proveedor);assert.equal(r2.status,201);s=await r2.json();
@@ -55,7 +56,7 @@ test('cotizaciones reales: versiones, privacidad, carrera de aceptación, inmuta
       assert.equal(s.cotizaciones[1].respuesta.decision,'RECHAZADA');
       assert.equal((await pedir(ruta+'/cotizacion/aceptacion','POST',{versionActual:s.version,versionCotizacion:3},ajeno)).status,404);
     });
-    await context.test('fallo del outbox revierte la respuesta y la versión de solicitud',async()=>{
+    await caso('fallo del outbox revierte la respuesta y la versión de solicitud',async()=>{
       await pool.query("CREATE FUNCTION fallar_cotizacion_prueba() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN IF NEW.tipo='COTIZACION_ACEPTADA' THEN RAISE EXCEPTION 'fallo sintético'; END IF; RETURN NEW; END $$");
       await pool.query('CREATE TRIGGER fallar_cotizacion_prueba BEFORE INSERT ON reservas_outbox FOR EACH ROW EXECUTE FUNCTION fallar_cotizacion_prueba()');
       try {
@@ -63,7 +64,7 @@ test('cotizaciones reales: versiones, privacidad, carrera de aceptación, inmuta
         const actual=await (await pedir(ruta,'GET',undefined,cliente)).json();assert.equal(actual.version,s.version);assert.equal(actual.cotizaciones[2].respuesta,null);
       } finally {await pool.query('DROP TRIGGER fallar_cotizacion_prueba ON reservas_outbox');await pool.query('DROP FUNCTION fallar_cotizacion_prueba()');}
     });
-    await context.test('aceptación concurrente tiene un efecto y conserva el precio servidor con agenda sin pago',async()=>{
+    await caso('aceptación concurrente tiene un efecto y conserva el precio servidor con agenda sin pago',async()=>{
       const respuestas=await Promise.all([1,2].map(()=>pedir(ruta+'/cotizacion/aceptacion','POST',{versionActual:s.version,versionCotizacion:3},cliente)));
       assert.deepEqual(respuestas.map(r=>r.status).sort(),[201,409]);s=await respuestas.find(r=>r.status===201)!.json();
       assert.equal(s.cotizaciones[2].importeCentimos,25000);assert.equal(s.cotizaciones[2].respuesta.decision,'ACEPTADA');
@@ -76,7 +77,7 @@ test('cotizaciones reales: versiones, privacidad, carrera de aceptación, inmuta
       await assert.rejects(()=>pool.query('UPDATE reservas_cotizaciones SET importe_centimos=1 WHERE reserva_id=$1 AND version=3',[s.id]),(e:any)=>e.code==='23514');
       await assert.rejects(()=>pool.query('DELETE FROM reservas_cotizaciones WHERE reserva_id=$1',[s.id]),(e:any)=>e.code==='23514');
     });
-    await context.test('una propuesta vencida no se acepta ni altera el acuerdo',async()=>{
+    await caso('una propuesta vencida no se acepta ni altera el acuerdo',async()=>{
       assert.equal((await pedir(ruta+'/cancelacion','POST',{versionActual:s.version,motivo:'Cancelación de prueba sin pagos ni anticipo registrado.'},cliente)).status,201);
       const nueva=await crear(),vence=new Date(Date.now()+5000).toISOString();
       const propuestaCorta=await pedir('/reservas/'+nueva.id+'/cotizacion','POST',{...propuesta,versionActual:nueva.version,vigenteHasta:vence},proveedor);
@@ -86,7 +87,7 @@ test('cotizaciones reales: versiones, privacidad, carrera de aceptación, inmuta
       const intacta=await (await pedir('/reservas/'+nueva.id,'GET',undefined,cliente)).json();assert.equal(intacta.version,cotizada.version);assert.equal(intacta.cotizaciones[0].respuesta,null);
       assert.equal((await pedir('/reservas/'+nueva.id+'/cancelacion','POST',{versionActual:intacta.version,motivo:'Finalizar el escenario de vigencia para la siguiente prueba.'},cliente)).status,201);
     });
-    await context.test('publicar y aceptar una versión anterior en paralelo nunca acuerda un precio sustituido',async()=>{
+    await caso('publicar y aceptar una versión anterior en paralelo nunca acuerda un precio sustituido',async()=>{
       const nueva=await crear(),rutaNueva='/reservas/'+nueva.id;
       const publicada=await pedir(rutaNueva+'/cotizacion','POST',{...propuesta,versionActual:nueva.version},proveedor);assert.equal(publicada.status,201);const primera=await publicada.json();
       const [cambio,aceptacion]=await Promise.all([

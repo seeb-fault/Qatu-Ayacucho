@@ -67,10 +67,12 @@ export class PostgresReservas implements RepositorioReservas {
 
   async listar(actorId: string, vista: 'cliente' | 'proveedor', page: number) {
     const columna = vista === 'cliente' ? 'cliente_id' : 'propietario_id';
-    const r = await this.pool.query(`WITH propias AS MATERIALIZED (SELECT ${columnas} FROM reservas WHERE ${columna}=$1),
-      pagina AS (SELECT * FROM propias ORDER BY "creadoEn" DESC,id DESC LIMIT 20 OFFSET $2)
-      SELECT (SELECT count(*)::integer FROM propias) AS total,
-        COALESCE((SELECT jsonb_agg(p ORDER BY p."creadoEn" DESC,p.id DESC) FROM pagina p),'[]'::jsonb) AS items`, [actorId,(page-1)*20]);
+    // Análisis de la base (Sprint 2): el total sale solo del índice (cliente_id|propietario_id, creado_en DESC, id DESC) y
+    // las columnas completas —con la subconsulta de cotizaciones— se arman únicamente para las 20 filas de la página,
+    // que el mismo índice entrega ya ordenadas. Antes se materializaban todas las reservas de la cuenta.
+    const r = await this.pool.query(`SELECT (SELECT count(*)::integer FROM reservas WHERE ${columna}=$1) AS total,
+        COALESCE((SELECT jsonb_agg(p ORDER BY p."creadoEn" DESC,p.id DESC) FROM (SELECT ${columnas} FROM reservas WHERE ${columna}=$1
+          ORDER BY creado_en DESC,id DESC LIMIT 20 OFFSET $2) p),'[]'::jsonb) AS items`, [actorId,(page-1)*20]);
     return { total: r.rows[0].total as number, items: r.rows[0].items.map(convertir) as Solicitud[] };
   }
 

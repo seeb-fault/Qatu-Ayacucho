@@ -8,6 +8,10 @@
 4. Probar **Usuarios → GET /api/v1/usuarios/me → Execute**: 200 con tu perfil.
 5. El contrato se descarga en `http://localhost:3000/api/v1/docs/openapi.json`.
 
+## Colección Bruno (etapa 2)
+
+Ver [docs/06-pruebas-atributos-calidad/bruno/README.md](../../docs/06-pruebas-atributos-calidad/bruno/README.md). Validación local (2026-11-25, base `_test` nueva): **34 peticiones y 42 de 42 pruebas**. La colección detectó que un 400 de la búsqueda salía con `Cache-Control: public` (corregido en 015: todo error lleva `no-store`).
+
 ## Regenerar el contrato
 
 Después de cambiar un endpoint o su `@Doc`: `npm run openapi` en `backend/` y subir `docs/03-diseño-de-software/diseño-externo/openapi.json` en el mismo commit. `npm test` falla si se olvida.
@@ -15,6 +19,7 @@ Después de cambiar un endpoint o su `@Doc`: `npm run openapi` en `backend/` y s
 ## Validación local de la etapa 1 (2026-11-19)
 
 - **Entorno:** Windows, Node.js 24, PostgreSQL 17.5 en Docker, base nueva `_test` borrada al terminar.
+- **El contrato es el mismo con tsx y con SWC (Jest):** cada `{id}` de ruta se declara siempre y las cabeceras deducidas no se duplican (2026-11-25).
 - **`test/compartido/openapi.test.ts`: 4 de 4.** 94 operaciones, todas con resumen, una etiqueta conocida, respuesta 2xx y errores con el esquema `Error`; sin referencias rotas; archivo al día; página y recursos servidos; 404 con `QATU_DOCS=0`.
 - **`npx tsc --noEmit`:** sin errores.
 - **`npm audit --omit=dev`:** 0 vulnerabilidades (se corrigieron 3 altas previas de `multer` y `body-parser`).

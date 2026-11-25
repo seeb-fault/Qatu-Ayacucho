@@ -1,0 +1,21 @@
+meta {
+  name: La sesión cerrada queda revocada en el servidor
+  type: http
+  seq: 10
+}
+
+get {
+  url: {{api}}/usuarios/me
+  body: none
+  auth: none
+}
+
+headers {
+  Cookie: {{cookieNuevo}}
+}
+
+tests {
+  test("401 aunque el token no haya vencido", function () {
+    expect(res.getStatus()).to.equal(401);
+  });
+}

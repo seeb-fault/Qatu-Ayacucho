@@ -1,11 +1,12 @@
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import type { AddressInfo } from 'node:net';
-import { test } from 'node:test';
 import express from 'express';
 import { Pool } from 'pg';
 import { crearApp } from '../../src/app';
 import { direccionEscucha, proxiesConfiables } from '../../src/shared/infraestructura/proxies';
+import { test } from '@jest/globals';
+import { caso } from '../caso';
 
 test('QATU_PROXIES_CONFIABLES: solo valores que no confían en cualquier cabecera', () => {
   assert.equal(proxiesConfiables(undefined), null);
@@ -53,7 +54,7 @@ test('con loopback, la IP es la que escribió el proxy inverso, aun si el visita
   assert.equal(await ipVista(['loopback']), '127.0.0.1');
 });
 
-test('límite de inicio de sesión por visitante detrás del proxy, con PostgreSQL real', { skip: !process.env.TEST_DATABASE_URL }, async context => {
+(!process.env.TEST_DATABASE_URL ? test.skip : test)('límite de inicio de sesión por visitante detrás del proxy, con PostgreSQL real', async () => {
   process.env.DATABASE_URL = process.env.TEST_DATABASE_URL;
   process.env.JWT_SECRET = 'secreto-exclusivo-proxies-pruebas-2026-qatu'; process.env.APP_ORIGIN = 'http://127.0.0.1:3000';
   const pool = new Pool({ connectionString: process.env.TEST_DATABASE_URL });
@@ -64,7 +65,7 @@ test('límite de inicio de sesión por visitante detrás del proxy, con PostgreS
     headers: { Origin: process.env.APP_ORIGIN!, 'Content-Type': 'application/json', 'X-Forwarded-For': ip },
     body: JSON.stringify({ email: `nadie-${randomUUID()}@example.com`, password: 'una contraseña que no existe' }) });
   try {
-    await context.test('con loopback: 30 intentos de un visitante no bloquean a otro', async () => {
+    await caso('con loopback: 30 intentos de un visitante no bloquean a otro', async () => {
       process.env.QATU_PROXIES_CONFIABLES = 'loopback';
       const app = await crearApp(); await app.listen(0, '127.0.0.1'); const base = await app.getUrl();
       try {
@@ -75,7 +76,7 @@ test('límite de inicio de sesión por visitante detrás del proxy, con PostgreS
         assert.deepEqual(claves, [`ip:${ipB}:login`, `ip:${ipA}:login`].sort());
       } finally { await app.close(); }
     });
-    await context.test('sin configurar: la cabecera se ignora y cuenta la conexión local', async () => {
+    await caso('sin configurar: la cabecera se ignora y cuenta la conexión local', async () => {
       delete process.env.QATU_PROXIES_CONFIABLES;
       await pool.query("DELETE FROM limites_acceso WHERE clave='ip:127.0.0.1:login'");
       const app = await crearApp(); await app.listen(0, '127.0.0.1'); const base = await app.getUrl();
@@ -84,7 +85,7 @@ test('límite de inicio de sesión por visitante detrás del proxy, con PostgreS
         assert.equal((await pool.query("SELECT intentos FROM limites_acceso WHERE clave='ip:127.0.0.1:login'")).rows[0]?.intentos, 1);
       } finally { await app.close(); }
     });
-    await context.test('un valor inseguro impide arrancar', async () => {
+    await caso('un valor inseguro impide arrancar', async () => {
       process.env.QATU_PROXIES_CONFIABLES = 'true';
       await assert.rejects(crearApp(), /QATU_PROXIES_CONFIABLES/);
     });

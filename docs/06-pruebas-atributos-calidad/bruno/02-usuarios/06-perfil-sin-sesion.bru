@@ -1,0 +1,18 @@
+meta {
+  name: Sin sesión no hay perfil
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{api}}/usuarios/me
+  body: none
+  auth: none
+}
+
+tests {
+  test("401 sin revelar detalles", function () {
+    expect(res.getStatus()).to.equal(401);
+    expect(res.getBody()).to.have.all.keys("code", "mensaje", "correlationId");
+  });
+}
