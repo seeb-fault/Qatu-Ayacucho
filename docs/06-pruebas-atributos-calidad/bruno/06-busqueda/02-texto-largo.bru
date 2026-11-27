@@ -1,0 +1,32 @@
+meta {
+  name: Texto de más de 500 caracteres
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{api}}/busqueda/intencion
+  body: json
+  auth: none
+}
+
+headers {
+  Origin: {{origen}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "texto": "{{textoLargo}}"
+  }
+}
+
+script:pre-request {
+  bru.setVar("textoLargo", "x".repeat(501));
+}
+
+tests {
+  test("400 sin llamar a la IA", function () {
+    expect(res.getStatus()).to.equal(400);
+  });
+}

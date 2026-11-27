@@ -22,7 +22,7 @@ El incremento **013.1** lleva los [archivos privados a Cloudflare R2](013-almace
 
 El incremento **014.1** documenta la API con [Swagger/OpenAPI](014-documentacion-api/quickstart.md): la página `/api/v1/docs` muestra los 94 endpoints agrupados por módulo y permite probarlos con sesión; el contrato `openapi.json` se genera desde los controladores y `npm test` falla si una ruta queda sin documentar o el archivo se desactualiza.
 
-El incremento **014.2** agrega una [colección Bruno](../docs/06-pruebas-atributos-calidad/bruno/README.md) con 42 pruebas de contrato y reglas de negocio (sesión, CSRF, permisos, reservas, Libro de Reclamaciones) que corre en el CI y deja un reporte HTML.
+El incremento **014.2** agrega una [colección Bruno](../docs/06-pruebas-atributos-calidad/bruno/README.md) con 45 pruebas de contrato y reglas de negocio (sesión, CSRF, permisos, reservas, Libro de Reclamaciones) que corre en el CI y deja un reporte HTML.
 
 El incremento **015.1** [analiza la base de datos y agrega caché](015-cache-y-base-de-datos/quickstart.md): los planes de las consultas reales con datos de carga, «Mis reservas» 5 veces más rápida, y la búsqueda pública en una caché en memoria de 30 s (patrón Decorator) con `Cache-Control` en las lecturas públicas.
 

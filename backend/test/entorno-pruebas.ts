@@ -11,3 +11,5 @@ if (existsSync(archivo)) {
 // 2. Aunque el .env de desarrollo pida R2, las pruebas nunca salen a internet: usan PostgreSQL salvo que una prueba
 //    elija otro almacén de forma explícita (por ejemplo, memoria).
 process.env.QATU_ALMACEN = process.env.QATU_ALMACEN_PRUEBAS ?? 'postgres';
+// 3. Tampoco llaman a la IA (OpenRouter), salvo la prueba en vivo con QATU_IA_PRUEBAS=1.
+if (process.env.QATU_IA_PRUEBAS !== '1') process.env.OPENROUTER_API_KEY = '';

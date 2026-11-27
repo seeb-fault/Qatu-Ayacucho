@@ -4,6 +4,7 @@ import Icono from '@/components/descubrimiento/Icono';
 import Testimonios from '@/components/home/Testimonios';
 import SeccionOfertas from '@/components/home/SeccionOfertas';
 import HeroImagen from '@/components/home/HeroImagen';
+import BuscadorIA from '@/components/busqueda/BuscadorIA';
 import ComoFunciona from '@/components/home/ComoFunciona';
 import { categorias, ofertas, leerFiltros, urlBusqueda, type Oferta } from '@/lib/catalogo';
 import { consultarPublicaciones, fuenteCatalogo } from '@/lib/api/publicaciones';
@@ -25,6 +26,7 @@ export default async function Home() {
         <span className="q-hero-badge"><Icono nombre="pin" size={16}/>Tu marketplace local en Ayacucho</span>
         <h1 id="home-title">Encuentra, alquila<br/> y contrata <span className="q-accent">en un solo lugar</span></h1>
         <p>Descubre herramientas en alquiler y oficios cerca de ti. Conecta con personas y negocios de Ayacucho.</p>
+        <BuscadorIA/>
         <div className="q-hero-actions"><Link href="/buscar" className="button primary hero-cta">Explorar publicaciones <Icono nombre="arrow" size={18}/></Link><Link href="/#como-funciona" className="button outline">Cómo funciona</Link></div>
       </div>
       <HeroImagen taladrosDesde={taladrosDesde}/>

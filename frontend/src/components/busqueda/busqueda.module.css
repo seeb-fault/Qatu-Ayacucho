@@ -1,0 +1,15 @@
+.form{display:flex;flex-direction:column;gap:8px;background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;box-shadow:0 6px 18px rgba(23,76,60,.06)}
+.etiqueta{display:flex;align-items:center;gap:8px;font-weight:600;color:var(--forest);font-size:14px}
+.chispa{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#fbe9df;color:var(--orange);font-size:13px}
+.fila{display:flex;gap:10px;align-items:stretch}
+.fila textarea{flex:1;min-height:46px;resize:vertical;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:inherit;color:var(--ink);background:var(--paper)}
+.fila textarea:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+.boton{align-self:flex-end;display:inline-flex;align-items:center;gap:8px;border-radius:12px;padding:11px 18px;background:var(--forest);color:var(--white);font-weight:600;white-space:nowrap}
+.boton:disabled{opacity:.7}
+.ayuda{font-size:12px;color:var(--muted)}
+.nota{display:flex;flex-direction:column;gap:6px;border-radius:12px;padding:12px 14px;margin:6px 0 14px;font-size:14px;line-height:1.5}
+.natural{background:#eef5ef;border:1px solid #cfe2d4;color:var(--forest)}
+.convencional{background:#fbf4ec;border:1px solid #f0dcc8;color:#7a4a2a}
+.nota strong{font-weight:600}
+.nota ul{margin:0;padding-left:18px}
+@media (max-width:640px){.fila{flex-direction:column}.boton{align-self:stretch;justify-content:center}}

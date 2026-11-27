@@ -285,6 +285,18 @@ test('014.2, 015.1 y 016.1 exigen Bruno, la caché con su análisis y Jest con l
   rmSync(join(root,'backend/test/caso.ts'));assert.throws(()=>validarEntrega(root),/caso\.ts/);
   declarar(['014.1','014.2','015.1']);assert.throws(()=>validarEntrega(root),/jest\.config/);
 });
+test('007.1 exige el módulo de búsqueda con IA, su adapter, sus pruebas y el buscador web',context=>{
+  const root=prepararCotizaciones(context);
+  writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2','005.3','007.1']}));
+  assert.throws(()=>validarEntrega(root),/007-busqueda-inteligente/);
+  for(const nombre of ['backend/src/modules/busqueda/dominio/intencion.ts','backend/src/modules/busqueda/aplicacion/busqueda.ts','backend/src/modules/busqueda/infraestructura/openrouter.ts','backend/src/modules/busqueda/presentacion/busqueda.controller.ts','backend/src/modules/busqueda/busqueda.module.ts','backend/test/busqueda/busqueda.test.ts','frontend/src/components/busqueda/BuscadorIA.tsx','frontend/tests/descubrimiento/busqueda-ia.spec.ts',...['spec.md','plan.md','tasks.md','research.md','data-model.md','quickstart.md','contracts/api.md','checklists/requirements.md'].map(a=>'specs/007-busqueda-inteligente/'+a)]) {
+    const target=join(root,nombre);mkdirSync(dirname(target),{recursive:true});writeFileSync(target,'');
+  }
+  assert.doesNotThrow(()=>validarEntrega(root));
+  rmSync(join(root,'backend/src/modules/busqueda/infraestructura/openrouter.ts'));assert.throws(()=>validarEntrega(root),/openrouter/);
+  writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2','005.3']}));
+  assert.throws(()=>validarEntrega(root),/busqueda\.module/);
+});
 test('005.8 no puede declararse sin avisos',context=>{
   const root=prepararCotizaciones(context);writeFileSync(join(root,'.github/entrega.json'),JSON.stringify({ultimaEntrega:'004',incrementos:['005.1','005.2','005.3','005.4','005.5','005.6','005.8']}));assert.throws(()=>validarEntrega(root),/005.8 requiere/);
 });

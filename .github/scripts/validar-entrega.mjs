@@ -13,7 +13,7 @@ export function validarEntrega(root) {
   const indice = entregas.indexOf(manifest.ultimaEntrega);
   assert.ok(indice >= 0, 'Entrega desconocida');
   const incrementos = manifest.incrementos ?? [];
-  assert.ok(Array.isArray(incrementos) && incrementos.every(i => ['005.1','005.2','005.3','005.4','005.5','005.6','005.7','005.8','006.1','006.2','006.3','009.1','010.1','011.1','012.1','013.1','014.1','014.2','015.1','016.1'].includes(i)) && new Set(incrementos).size === incrementos.length, 'Incremento desconocido o repetido');
+  assert.ok(Array.isArray(incrementos) && incrementos.every(i => ['005.1','005.2','005.3','005.4','005.5','005.6','005.7','005.8','006.1','006.2','006.3','009.1','010.1','011.1','012.1','013.1','014.1','014.2','015.1','016.1','007.1'].includes(i)) && new Set(incrementos).size === incrementos.length, 'Incremento desconocido o repetido');
   const reservas = incrementos.includes('005.1');
   const efectivo = incrementos.includes('005.2');
   const cotizaciones = incrementos.includes('005.3');
@@ -41,6 +41,7 @@ export function validarEntrega(root) {
   assert.ok(!bruno || documentacion, '014.2 requiere el contrato OpenAPI de 014.1');
   const cache = incrementos.includes('015.1');
   const jest = incrementos.includes('016.1');
+  const busquedaIA = incrementos.includes('007.1');
   assert.ok(!legal || incidencias, '012.1 requiere incidencias 006.3 (el libro vive en Reputación y confianza)');
   assert.ok(!resenas || ejecucion, '006.1 requiere operaciones cerradas: herramientas devueltas (005.2) y servicios cerrados (005.5)');
   assert.ok(!pagos || avisos, '005.8 requiere avisos 005.7');
@@ -153,6 +154,10 @@ export function validarEntrega(root) {
     for (const artefacto of artefactos) requerir(`specs/016-pruebas-jest-y-carga/${artefacto}`);
     for (const relative of ['backend/jest.config.cjs','backend/test/caso.ts','backend/test/assert-jest.ts','.github/workflows/carga.yml']) requerir(relative);
   } else ausente('backend/jest.config.cjs');
+  if (busquedaIA) {
+    for (const artefacto of artefactos) requerir(`specs/007-busqueda-inteligente/${artefacto}`);
+    for (const relative of ['backend/src/modules/busqueda/dominio/intencion.ts','backend/src/modules/busqueda/aplicacion/busqueda.ts','backend/src/modules/busqueda/infraestructura/openrouter.ts','backend/src/modules/busqueda/presentacion/busqueda.controller.ts','backend/src/modules/busqueda/busqueda.module.ts','backend/test/busqueda/busqueda.test.ts','frontend/src/components/busqueda/BuscadorIA.tsx','frontend/tests/descubrimiento/busqueda-ia.spec.ts']) requerir(relative);
+  } else ausente('backend/src/modules/busqueda/busqueda.module.ts');
   return {
     entrega: manifest.ultimaEntrega,
     frontend: indice >= 1,

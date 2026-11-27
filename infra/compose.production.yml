@@ -56,6 +56,9 @@ services:
       QATU_DOCS: ${QATU_DOCS:-0}
       # Caché de la búsqueda pública (015): segundos, 0–300. Con varias réplicas, cada una ve los cambios de otra a más tardar en ese tiempo.
       QATU_CACHE_SEGUNDOS: ${QATU_CACHE_SEGUNDOS:-30}
+      # Búsqueda inteligente (007): sin llave, la búsqueda funciona en modo convencional.
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      QATU_IA_MODELO: ${QATU_IA_MODELO:-}
     expose: ["3001"]
     networks: [interna]
 

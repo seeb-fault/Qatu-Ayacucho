@@ -1,33 +1,17 @@
-# Contratos — Búsqueda inteligente
+# Contrato HTTP — Búsqueda inteligente (007.1, implementado)
 
-**Base:** /api/v1, JSON, ISO 8601; actor del contexto autenticado. Diseño, no API publicada.
-
-## Rutas tomadas del diseño vigente
-
-| Método | Ruta relativa | Acceso | Condición |
+| Método | Ruta | Acceso | Cuerpo / respuesta |
 |---|---|---|---|
-| POST | /busqueda/intencion | Público con cuota | texto y filtros; respuesta validada con modo y resultados reales |
+| POST | /busqueda/intencion | Público; Origin y JSON como toda escritura; cuota de IA por IP | `{ texto (1–500), filtros?: { tipo?, categoriaId?, zonaId?, precioMaximoCentimos? }, page? }` → 200 `{ modo, motivo, criterios, fechas, camposQueRequierenPrecision, aviso, resultados }` |
 
-## Extensiones propuestas para cubrir requisitos existentes
-
-- Endpoint administrativo de configuración de cuota solo si se requiere; secretos fuera de API pública.
-
-Estas extensiones aún no están congeladas: completar DTO/estados en OpenAPI y actualizar docs antes de implementar. No se ejecutan operaciones ni llamadas externas desde estas especificaciones.
-
-## Datos de entrada/salida propuestos
-
-Entrada: texto (máximo propuesto 500 caracteres) y filtrosManuales opcionales: tipo, categoriaId, zonaId, inicio, fin, precioMaximoCentimos. El servidor fija fechaReferencia y America/Lima; cuotas antes del adapter.
-
-Salida: modo natural/convencional, criteriosInterpretados, camposQueRequierenPrecision y resultados públicos de catálogo con IDs reales. Respuesta convencional por fallo de IA conserva filtros manuales y aviso; cuota de IA no convierte un fallo controlado en indisponibilidad de búsqueda básica. No retornar cadena SQL, texto de herramientas ejecutables ni secretos del modelo.
+- `modo`: `natural` si la IA interpretó la consulta; `convencional` si se buscaron las palabras tal cual. `motivo` (solo en convencional): `sin_configurar`, `cuota`, `tiempo` (más de 3 s), `error` o `respuesta_invalida`. La IA nunca provoca un error HTTP.
+- `criterios`: `{ q, tipo, categoriaId, zonaId, precioMaximoCentimos }` validados contra el catálogo; los `filtros` manuales prevalecen.
+- `fechas`: `{ inicio, fin }` mencionadas (America/Lima), siempre en `camposQueRequierenPrecision`: la disponibilidad se confirma al reservar.
+- `resultados`: la misma página que `GET /publicaciones` con esos criterios (ofertas, precios e ids reales del catálogo).
+- Errores: 400 entrada inválida o campos desconocidos; 403 Origin distinto de APP_ORIGIN.
 
 ## Puerto interno
 
-BuscarEnLenguajeNatural; puerto InterpreteIntencion; consumo de ConsultaCatalogo y ConsultaDisponibilidad en modo lectura.
+`InterpreteIntencion.interpretar(texto, { fechaReferencia, opciones }, señal)` → JSON no confiable. Adapter: `InterpreteOpenRouter` (`POST {QATU_IA_URL}/chat/completions`, esquema estricto). Búsqueda consume `ConsultaCatalogo.opciones()` y `ConsultaCatalogo.buscar()` (búsqueda pública con caché) e `IdentidadUsuarios.limitar()`.
 
-## Errores y seguridad
-
-400 entrada inválida; 401 no autenticado; 403 no autorizado; 404 inexistente/no visible; 409 conflicto; 429 cuota; 202 pendiente cuando corresponda. Error con code, mensaje y correlationId, sin stack ni secretos. Respuestas públicas excluyen documentos y campos privados.
-
-Paginación base 20 y máximo general 50; para aceptación de EQ-01 utilizar máximo 20. Mutaciones verifican rol/propiedad/estado en aplicación además de la guarda HTTP. Idempotencia es obligatoria en pagos y eventos según RF21/RF22; no se extiende a ciegas a todas las operaciones.
-
-[Contrato fuente](../../../docs/03-diseño-de-software/diseño-externo/contratos-api.md) · [Spec](../spec.md).
+Esquema completo en [openapi.json](../../../docs/03-diseño-de-software/diseño-externo/openapi.json) (`ResultadoBusquedaInteligente`).

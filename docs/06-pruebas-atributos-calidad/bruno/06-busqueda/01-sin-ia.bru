@@ -1,0 +1,40 @@
+meta {
+  name: Sin llave de IA, busca las palabras tal cual
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{api}}/busqueda/intencion
+  body: json
+  auth: none
+}
+
+headers {
+  Origin: {{origen}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "texto": "servicio",
+    "filtros": { "tipo": "servicio" }
+  }
+}
+
+tests {
+  test("200 en modo convencional con el motivo y el filtro manual", function () {
+    expect(res.getStatus()).to.equal(200);
+    const b = res.getBody();
+    expect(b.modo).to.equal("convencional");
+    expect(b.motivo).to.equal("sin_configurar");
+    expect(b.criterios.q).to.equal("servicio");
+    expect(b.criterios.tipo).to.equal("servicio");
+    expect(b.aviso).to.be.a("string");
+  });
+  test("los resultados salen del catálogo real", function () {
+    const r = res.getBody().resultados;
+    expect(r.items.length).to.be.at.most(20);
+    for (const p of r.items) expect(p.tipo).to.equal("servicio");
+  });
+}

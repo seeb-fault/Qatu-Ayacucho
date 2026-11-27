@@ -22,6 +22,7 @@ export default async function PrivacidadPage() {
       <li><strong>Ubicación de las ofertas:</strong> el público ve una ubicación aproximada, salvo que elijas mostrar la exacta; el punto exacto solo lo ve la otra parte de una reserva con compromiso.</li>
       <li><strong>Reservas, reseñas, incidencias y fotos de evidencia:</strong> para operar el servicio y resolver problemas. Las fotos se borran 90 días después del cierre de la reserva.</li>
       <li><strong>Pagos:</strong> Qatu guarda el importe, el estado y la referencia del cargo. Los datos de tarjeta o Yape los trata Culqi; Qatu no los ve ni los guarda.</li>
+      <li><strong>Búsqueda inteligente:</strong> el texto que escribes en «Describe lo que necesitas», solo para convertirlo en filtros de búsqueda. Qatu no lo guarda ni lo asocia a tu cuenta.</li>
       <li><strong>Libro de Reclamaciones:</strong> los datos de la hoja (nombre, documento, domicilio, correo y detalle) para atender tu reclamo o queja, como exige el Código de Protección y Defensa del Consumidor.</li>
     </ul>
 
@@ -30,6 +31,7 @@ export default async function PrivacidadPage() {
       <li>Con la otra parte de tu reserva, solo lo necesario para coordinarla (nombre, WhatsApp y ubicación exacta desde el compromiso).</li>
       <li>Con Culqi, para procesar los pagos en línea.</li>
       <li>Con Cloudflare, que almacena los documentos de proveedores y las fotos de evidencia en servidores fuera del Perú. Qatu los cifra antes de enviarlos y conserva la clave, por lo que Cloudflare no puede leerlos. Esto constituye una transferencia internacional de datos personales, que realizamos solo para prestar el servicio.</li>
+      <li>Con OpenRouter y el proveedor del modelo de inteligencia artificial que usamos, fuera del Perú, cuando usas la búsqueda inteligente: reciben solo el texto de tu búsqueda, sin tu nombre ni tu cuenta, y pedimos que no lo conserven para entrenar modelos. Por eso te pedimos no escribir datos personales en ese campo.</li>
       <li>Con autoridades, cuando una norma o un mandato lo exija.</li>
     </ul>
     <p>No vendemos tus datos ni los usamos para publicidad de terceros.</p>

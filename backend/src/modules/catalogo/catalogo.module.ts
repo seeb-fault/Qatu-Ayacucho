@@ -8,10 +8,15 @@ import { Catalogo } from './aplicacion/catalogo';
 import { ProveedoresCatalogoEnCache, RepositorioCatalogoEnCache } from './infraestructura/cache';
 import { PostgresCatalogo } from './infraestructura/postgres';
 import { CatalogoController, ModeracionController } from './presentacion/catalogo.controller';
+/** Fachada de Catálogo para otros módulos. `consultar` lee la base (Reservas valida al solicitar); `buscar` es la búsqueda pública, con caché. */
 export class ConsultaCatalogo {
- constructor(private readonly catalogo:Catalogo) {}
+ constructor(private readonly catalogo:Catalogo,private readonly publico:Catalogo=catalogo) {}
  consultar(id:string) { return this.catalogo.consultar(id); }
  ubicacionExacta(id:string) { return this.catalogo.ubicacionExacta(id); }
+ /** Categorías y distritos válidos (Búsqueda los usa para validar lo que interpreta la IA). */
+ opciones() { const o=this.catalogo.opciones(); return {categorias:o.categorias.map(c=>({id:c.id,nombre:c.nombre,tipo:c.tipo})),zonas:o.zonas.map(z=>({id:z.id,nombre:z.nombre}))}; }
+ /** Misma búsqueda que GET /publicaciones: los mismos filtros y validaciones. */
+ buscar(consulta:Record<string,string>) { return this.publico.listar(consulta); }
 }
 /** Catálogo que usan las rutas HTTP: búsqueda pública y proveedores habilitados en caché (QATU_CACHE_SEGUNDOS). */
 function catalogoConCache(pool:Pool,identidad:IdentidadUsuarios,proveedores:ConsultaProveedores) {
@@ -23,7 +28,7 @@ function catalogoConCache(pool:Pool,identidad:IdentidadUsuarios,proveedores:Cons
  {provide:Pool,useFactory:()=>crearPool(5)},
  {provide:Catalogo,inject:[Pool,IdentidadUsuarios,ConsultaProveedores],useFactory:catalogoConCache},
  // Reservas valida ofertas y unidades al solicitar: siempre lee la base, sin caché.
- {provide:ConsultaCatalogo,inject:[Pool,IdentidadUsuarios,ConsultaProveedores],useFactory:(pool:Pool,identidad:IdentidadUsuarios,proveedores:ConsultaProveedores)=>new ConsultaCatalogo(new Catalogo(new PostgresCatalogo(pool),identidad,proveedores))},
+ {provide:ConsultaCatalogo,inject:[Pool,IdentidadUsuarios,ConsultaProveedores,Catalogo],useFactory:(pool:Pool,identidad:IdentidadUsuarios,proveedores:ConsultaProveedores,publico:Catalogo)=>new ConsultaCatalogo(new Catalogo(new PostgresCatalogo(pool),identidad,proveedores),publico)},
 ],exports:[ConsultaCatalogo]})
 export class CatalogoModule implements OnApplicationShutdown {
  constructor(@Inject(Pool) private readonly pool:Pool) {}

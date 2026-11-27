@@ -1,6 +1,6 @@
 # 007 — Búsqueda inteligente
 
-**Estado:** especificado; implementación y aceptación pendientes. **Fecha:** 2026-10-15.
+**Estado:** incremento 007.1 implementado (2026-11-25): búsqueda en lenguaje natural con OpenRouter, validación, cuotas y respaldo convencional. Pendiente: evaluación EQ-10 con 50 consultas etiquetadas y métricas agregadas. **Fecha:** 2026-10-15.
 **Módulo técnico:** busqueda. **Historias:** HU01, HU15, HU16.
 
 ## Objetivo y alcance
@@ -72,7 +72,7 @@ Datos propios: configuración de cuota y métricas agregadas; sin copia autorita
 
 ## Clarifications
 
-- D10: proveedor/modelo, presupuesto mensual, cuota por actor y anonimato de métricas; pendiente antes de activar llamadas facturables.
+- D10 (resuelta 2026-11-25, Santiago Noe): proveedor **OpenRouter**, modelo por defecto `anthropic/claude-haiku-5.5` (configurable con `QATU_IA_MODELO`); cuota de 30 búsquedas con IA por IP y 600 en total cada 15 min; presupuesto acotado con el límite de crédito de la llave; sin métricas con texto de las personas (solo el motivo del respaldo en los registros).
 
 Estas decisiones bloquean únicamente las tareas afectadas. El resto del diseño y los contratos ya documentados pueden avanzar.
 
