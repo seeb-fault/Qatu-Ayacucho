@@ -924,3 +924,16 @@ input::placeholder, textarea::placeholder, .search-main input::placeholder { col
 @media (min-width: 1101px) { .footer-main { grid-template-columns: 1.3fr 1fr 1fr 1fr 1fr; gap: 32px; } }
 .footer-main > div > a.footer-libro { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; padding: 8px 12px; border: 1px solid rgb(255 255 255 / .35); border-radius: 10px; color: #fff; font-weight: 600; }
 .footer-main > div > a.footer-libro:hover { border-color: #fff; }
+
+/* Buscador de la cabecera en celular: solo una lupa junto a la cuenta; al tocarla, el campo cubre la fila. */
+.header-search-toggle, .header-search-close { display: none; }
+@media (max-width: 767px) {
+  .header-inner { position: relative; flex-wrap: nowrap; height: 64px; padding-block: 0; }
+  .header-inner > .brand { margin-right: auto; }
+  .header-search-toggle { display: grid; place-items: center; flex-shrink: 0; width: 40px; height: 40px; border: 1px solid var(--q-border); border-radius: 50%; background: #fff; color: var(--q-text); }
+  .header-search-toggle:active { background: var(--q-muted-bg); }
+  .header-search { display: none; }
+  .header-search.is-abierto { display: flex; position: absolute; z-index: 5; inset: 10px 0; height: auto; padding: 0 4px 0 16px; background: var(--q-surface); border-color: var(--q-primary); box-shadow: var(--q-ring); }
+  .header-search.is-abierto .header-search-close { display: grid; place-items: center; width: 36px; height: 36px; flex-shrink: 0; border-radius: 50%; background: transparent; color: var(--q-text-2); }
+  .mobile-actions .mobile-explore { border-radius: 50%; }
+}
