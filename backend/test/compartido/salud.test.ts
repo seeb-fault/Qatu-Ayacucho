@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
-import { test } from 'node:test';
 import { crearApp } from '../../src/app';
+import { test } from '@jest/globals';
 
-test('salud: vida sin base y lista con PostgreSQL real, sin datos sensibles', { skip: !process.env.TEST_DATABASE_URL }, async () => {
+(!process.env.TEST_DATABASE_URL ? test.skip : test)('salud: vida sin base y lista con PostgreSQL real, sin datos sensibles', async () => {
   process.env.DATABASE_URL = process.env.TEST_DATABASE_URL;
   process.env.JWT_SECRET = 'secreto-exclusivo-salud-pruebas-2026-qatu-abc'; process.env.APP_ORIGIN = 'http://127.0.0.1:3000';
   const app = await crearApp(); await app.listen(0, '127.0.0.1'); const base = await app.getUrl() + '/api/v1';

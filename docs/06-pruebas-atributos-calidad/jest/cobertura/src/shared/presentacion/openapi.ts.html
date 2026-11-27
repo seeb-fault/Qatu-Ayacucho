@@ -1,0 +1,532 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/shared/presentacion/openapi.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/shared/presentacion</a> openapi.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>149/149</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">92.2% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>71/77</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>13/13</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>149/149</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">156x</span>
+<span class="cline-any cline-yes">1014x</span>
+<span class="cline-any cline-yes">1014x</span>
+<span class="cline-any cline-yes">1014x</span>
+<span class="cline-any cline-yes">156x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">936x</span>
+<span class="cline-any cline-yes">936x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2106x</span>
+<span class="cline-any cline-yes">2106x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">104x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">1274x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">1300x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2392x</span>
+<span class="cline-any cline-yes">2314x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">3952x</span>
+<span class="cline-any cline-yes">3952x</span>
+<span class="cline-any cline-yes">3952x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-yes">2444x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { RequestMethod } from '@nestjs/common';
+import { HTTP_CODE_METADATA, METHOD_METADATA } from '@nestjs/common/constants';
+import { ApiBody, ApiConsumes, ApiCookieAuth, ApiHeader, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import type { SchemaObject, ReferenceObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
+&nbsp;
+/**
+ * Documentación OpenAPI de la API (014). Cada endpoint lleva un solo @Doc({...}) encima de @Get/@Post/...:
+ * el decorador lee el método y el código de éxito que ya declara Nest, y agrega por su cuenta la sesión,
+ * los errores comunes y la regla de Origin de las escrituras. Así el contrato no se desalinea del código.
+ */
+export type Esquema = SchemaObject | ReferenceObject;
+export type Acceso = 'publico' | 'opcional' | 'sesion' | 'admin' | 'pasarela';
+&nbsp;
+/** Nombre del esquema de seguridad (cookie qatu_sesion) en el documento. */
+export const SEGURIDAD_SESION = 'sesion';
+&nbsp;
+const esquemas: Record&lt;string, SchemaObject&gt; = {};
+/** Registra esquemas reutilizables (components.schemas). Cada módulo registra los suyos al cargar su archivo openapi. */
+export function registrarEsquemas(nuevos: Record&lt;string, SchemaObject&gt;) {
+  for (const [nombre, esquema] of Object.entries(nuevos)) {
+    if (esquemas[nombre]) <span class="branch-0 cbranch-no" title="branch not covered" >throw new Error(`Esquema OpenAPI duplicado: ${nombre}`);</span>
+    esquemas[nombre] = esquema;
+  }
+}
+export const esquemasRegistrados = () =&gt; ({ ...esquemas });
+export const ref = (nombre: string): ReferenceObject =&gt; ({ $ref: `#/components/schemas/${nombre}` });
+&nbsp;
+// Atajos para escribir esquemas cortos y legibles.
+export const texto = (min?: number, max?: number, extra: SchemaObject = {}): SchemaObject =&gt; ({ type: 'string', ...(min !== undefined &amp;&amp; { minLength: min }), ...(max !== undefined &amp;&amp; { maxLength: max }), ...extra });
+export const entero = (min?: number, max?: number, extra: SchemaObject = {}): SchemaObject =&gt; ({ type: 'integer', ...(min !== undefined &amp;&amp; { minimum: min }), ...(max !== undefined &amp;&amp; { maximum: max }), ...extra });
+export const uuid: SchemaObject = { type: 'string', format: 'uuid' };
+export const instante: SchemaObject = { type: 'string', format: 'date-time', description: 'Instante UTC en ISO 8601' };
+export const booleano: SchemaObject = { type: 'boolean' };
+export const opciones = (...valores: string[]): SchemaObject =&gt; ({ type: 'string', enum: valores });
+export const lista = (items: Esquema, extra: SchemaObject = {}): SchemaObject =&gt; ({ type: 'array', items, ...extra });
+export const nulable = (esquema: SchemaObject): SchemaObject =&gt; ({ ...esquema, nullable: true });
+/** Referencia que puede ser null (OpenAPI 3.0 no admite nullable junto a $ref). */
+export const nulableRef = (nombre: string): SchemaObject =&gt; ({ allOf: [ref(nombre)], nullable: true });
+/** Objeto estricto: la API rechaza con 400 cualquier campo que no esté aquí. */
+export function objeto(propiedades: Record&lt;string, Esquema&gt;, requeridos: string[] = Object.keys(propiedades), extra: SchemaObject = {}): SchemaObject {
+  return { type: 'object', properties: propiedades, ...(requeridos.length &amp;&amp; { required: requeridos }), additionalProperties: false, ...extra };
+}
+/** Objeto de respuesta: describe los campos principales sin prometer que no se agreguen otros. */
+export function respuesta(propiedades: Record&lt;string, Esquema&gt;, extra: SchemaObject = {}): SchemaObject {
+  return { type: 'object', properties: propiedades, ...extra };
+}
+/** Página de resultados: { items, total, page, limit }. */
+export const pagina = (item: Esquema, extra: Record&lt;string, Esquema&gt; = {}): SchemaObject =&gt;
+  respuesta({ items: lista(item), total: entero(0), page: entero(1), limit: entero(1, 50), ...extra });
+export const motivo: SchemaObject = texto(10, 500, { description: 'Motivo, de 10 a 500 caracteres' });
+/** Cabecera Idempotency-Key de pagos y del envío de Mi lista. */
+export const cabeceraIdempotencia = { 'Idempotency-Key': { descripcion: 'Clave única de 16 a 64 caracteres. Repetirla con el mismo cuerpo devuelve el mismo resultado; con otro cuerpo, 409.', requerido: true, esquema: texto(16, 64, { example: 'b1c9f0e2-5d4a-4c3e-9a77-0f6c2d1e8a90' }) } };
+export const versionActual: SchemaObject = entero(1, undefined, { description: 'Versión que el cliente vio por última vez; si cambió, 409' });
+&nbsp;
+const ERRORES: Record&lt;number, string&gt; = {
+  400: 'Entrada inválida o campos desconocidos (ENTRADA_INVALIDA)',
+  401: 'Sin sesión activa (cookie qatu_sesion ausente, vencida o revocada)',
+  403: 'Sin permiso para esta acción',
+  404: 'No existe o no es visible para quien consulta',
+  409: 'Conflicto: versión desactualizada, estado incompatible o duplicado',
+  410: 'El archivo se eliminó por la política de conservación',
+  413: 'El archivo supera el tamaño máximo',
+  429: 'Se superó el límite de intentos; espera antes de reintentar',
+  503: 'Servicio no disponible (base de datos, almacén o pasarela)',
+};
+&nbsp;
+export interface DocOperacion {
+  /** Grupo de Swagger, si el controlador no declara @ApiTags (o mezcla grupos). */
+  etiqueta?: string;
+  /** Resumen corto que aparece en la lista de Swagger. */
+  resumen: string;
+  /** Explicación: quién puede, qué cambia, reglas de negocio. */
+  detalle?: string;
+  /** publico (sin sesión), opcional (con o sin sesión), sesion (cualquier cuenta activa), admin, pasarela (webhook). Por defecto, sesion. */
+  acceso?: Acceso;
+  /** Cuerpo JSON. */
+  cuerpo?: Esquema;
+  /** Cuerpo multipart/form-data (subida de archivos). */
+  multipart?: SchemaObject;
+  /** Esquema de la respuesta exitosa; null si no tiene cuerpo (204). */
+  devuelve?: Esquema | null;
+  /** Descripción de la respuesta exitosa. */
+  exito?: string;
+  /** Respuesta binaria (descarga de un archivo). */
+  archivo?: string[];
+  /** Otros códigos de éxito posibles, por ejemplo 202 en pagos. */
+  otrosExitos?: Record&lt;number, string&gt;;
+  /** Errores propios de la operación, además de los que se agregan solos. */
+  errores?: number[] | Record&lt;number, string&gt;;
+  consultas?: Record&lt;string, { esquema: SchemaObject; descripcion?: string; requerido?: boolean }&gt;;
+  cabeceras?: Record&lt;string, { descripcion: string; requerido?: boolean; esquema?: SchemaObject }&gt;;
+}
+&nbsp;
+const errorRef = ref('Error');
+const ESCRITURAS = new Set([RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH, RequestMethod.DELETE]);
+&nbsp;
+/** Documenta un endpoint. Debe ir encima de @Get/@Post/@Patch/@Put/@Delete (y de @HttpCode, si lo hay). */
+export function Doc(doc: DocOperacion): MethodDecorator {
+  return (destino, clave, descriptor) =&gt; {
+    const metodo: RequestMethod | undefined = Reflect.getMetadata(METHOD_METADATA, descriptor.value as object);
+    if (metodo === undefined) <span class="branch-0 cbranch-no" title="branch not covered" >throw new Error(`@Doc de ${String(clave)} debe ir encima de @Get/@Post/@Patch/@Put/@Delete.`);</span>
+    const codigo: number = Reflect.getMetadata(HTTP_CODE_METADATA, descriptor.value as object) ?? (metodo === RequestMethod.POST ? 201 : 200);
+    const acceso = doc.acceso ?? 'sesion';
+    const escritura = ESCRITURAS.has(metodo) &amp;&amp; acceso !== 'pasarela';
+    const decoradores: MethodDecorator[] = [];
+&nbsp;
+    const notas: string[] = [];
+    if (doc.detalle) notas.push(doc.detalle);
+    notas.push({
+      publico: '**Acceso:** público.',
+      opcional: '**Acceso:** público; si hay sesión, se asocia a la cuenta.',
+      sesion: '**Acceso:** cuenta activa (cookie `qatu_sesion`).',
+      admin: '**Acceso:** administrador activo (cookie `qatu_sesion`).',
+      pasarela: '**Acceso:** pasarela de pago; no usa sesión ni Origin.',
+    }[acceso]);
+    if (escritura) notas.push(doc.multipart
+      ? '**Escritura:** exige `Origin` igual a `APP_ORIGIN` y `multipart/form-data`.'
+      : '**Escritura:** exige `Origin` igual a `APP_ORIGIN` y `Content-Type: application/json`' + (doc.cuerpo ? '.' : ', con el cuerpo vacío `{}`.'));
+    if (doc.etiqueta) decoradores.push(ApiTags(doc.etiqueta));
+    decoradores.push(ApiOperation({ summary: doc.resumen, description: notas.join('\n\n') }));
+&nbsp;
+    if (acceso === 'sesion' || acceso === 'admin' || acceso === 'opcional') decoradores.push(ApiCookieAuth(SEGURIDAD_SESION));
+    if (doc.cuerpo) decoradores.push(ApiBody({ schema: doc.cuerpo, required: true }));
+    else if (escritura &amp;&amp; !doc.multipart) decoradores.push(ApiBody({ schema: objeto({}, [], { description: 'Cuerpo vacío: envía {}' }), required: false }));
+    if (doc.multipart) decoradores.push(ApiConsumes('multipart/form-data'), ApiBody({ schema: doc.multipart, required: true }));
+    for (const [nombre, q] of Object.entries(doc.consultas ?? {})) decoradores.push(ApiQuery({ name: nombre, schema: q.esquema, description: q.descripcion, required: q.requerido ?? false }));
+    for (const [nombre, h] of Object.entries(doc.cabeceras ?? {})) decoradores.push(ApiHeader({ name: nombre, description: h.descripcion, required: h.requerido<span class="branch-0 cbranch-no" title="branch not covered" > ?? false, s</span>chema: h.esquema<span class="branch-0 cbranch-no" title="branch not covered" > ?? { type: 'string' } }</span>));
+&nbsp;
+    if (doc.archivo) decoradores.push(ApiResponse({ status: codigo, description: doc.exito ?? 'Archivo descargable', content: Object.fromEntries(doc.archivo.map(tipo =&gt; [tipo, { schema: { type: 'string', format: 'binary' } }])) }));
+    else if (doc.devuelve === null || codigo === 204) decoradores.push(ApiResponse({ status: codigo, description: doc.exito ?? 'Hecho, sin contenido' }));
+    else decoradores.push(ApiResponse({ status: codigo, description: doc.exito ?? 'Operación exitosa', ...(doc.devuelve &amp;&amp; { schema: doc.devuelve }) }));
+    for (const [estado, descripcion] of Object.entries(doc.otrosExitos ?? {})) decoradores.push(ApiResponse({ status: Number(estado), description: descripcion, ...(doc.devuelve &amp;&amp; { schema: doc.devuelve }) }));
+&nbsp;
+    // Errores: los que implica el acceso y la escritura, más los propios de la operación.
+    const errores = new Map&lt;number, string&gt;();
+    if (doc.cuerpo || doc.multipart || doc.consultas || escritura) errores.set(400, ERRORES[400]);
+    if (acceso === 'sesion' || acceso === 'admin') errores.set(401, ERRORES[401]);
+    if (acceso === 'admin') errores.set(403, 'La cuenta no es administradora');
+    if (escritura) errores.set(403, (errores.has(403) ? errores.get(403) + '; o ' : '') + 'Origin distinto de APP_ORIGIN o Content-Type no permitido (ORIGEN_INVALIDO)');
+    const propios = Array.isArray(doc.errores<span class="branch-0 cbranch-no" title="branch not covered" >) ? Object.fromEntries(doc.errores.map(c =&gt; [c, ERRORES[c]])) : d</span>oc.errores ?? {};
+    for (const [estado, descripcion] of Object.entries(propios)) {
+      const previo = errores.get(Number(estado));
+      errores.set(Number(estado), previo &amp;&amp; previo !== descripcion ? `${descripcion}; o ${previo}` : <span class="branch-0 cbranch-no" title="branch not covered" >descripcion ?? ERRORES[Number(estado)])</span>;
+    }
+    for (const [estado, descripcion] of [...errores].sort(([a], [b]) =&gt; a - b)) decoradores.push(ApiResponse({ status: estado, description: descripcion, schema: errorRef }));
+&nbsp;
+    for (const decorador of decoradores) decorador(destino, clave, descriptor);
+  };
+}
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-11-25T20:29:20.043Z
+            </div>
+        <script src="../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
+    </body>
+</html>
+    

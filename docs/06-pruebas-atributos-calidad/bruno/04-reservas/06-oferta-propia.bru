@@ -1,0 +1,33 @@
+meta {
+  name: El proveedor no solicita su propia oferta
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{api}}/reservas
+  body: json
+  auth: none
+}
+
+headers {
+  Origin: {{origen}}
+  Content-Type: application/json
+  Cookie: {{cookieProveedor}}
+}
+
+body:json {
+  {
+    "publicacionId": "{{publicacionId}}",
+    "recursoId": "{{recursoId}}",
+    "inicio": "{{inicio}}",
+    "fin": "{{fin}}",
+    "descripcionTrabajo": "Intento de solicitar mi propia oferta de servicio."
+  }
+}
+
+tests {
+  test("403", function () {
+    expect(res.getStatus()).to.equal(403);
+  });
+}

@@ -1,0 +1,28 @@
+meta {
+  name: El proveedor la recibe en su bandeja
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{api}}/reservas?vista=proveedor
+  body: none
+  auth: none
+}
+
+params:query {
+  vista: proveedor
+}
+
+headers {
+  Cookie: {{cookieProveedor}}
+}
+
+tests {
+  test("200 y la solicitud aparece como recibida", function () {
+    expect(res.getStatus()).to.equal(200);
+    const r = res.getBody().items.find(i => i.id === bru.getVar("reservaId"));
+    expect(r).to.not.be.undefined;
+    expect(r.participacion).to.equal("proveedor");
+  });
+}

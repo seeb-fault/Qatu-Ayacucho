@@ -9,7 +9,7 @@ function sanear(carpeta) {
   for (const e of fs.readdirSync(carpeta, { withFileTypes: true })) {
     const p = path.join(carpeta, e.name);
     if (e.isDirectory()) { if (e.name !== 'scripts' && e.name !== '.tmp') sanear(p); continue; }
-    if (!/\.(json|txt|md|html|csv|info|yaml)$/i.test(e.name)) continue;
+    if (!/\.(json|txt|md|html|csv|info|yaml|xml)$/i.test(e.name)) continue;
     let t = fs.readFileSync(p, 'utf8'); const original = t;
     for (const v of variantes) t = t.split(v).join('.');
     // Cualquier otra ruta de usuario (temporales, caché de navegadores), en formato Windows o Git Bash.

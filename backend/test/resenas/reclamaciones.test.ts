@@ -1,11 +1,12 @@
 import assert from 'node:assert/strict';
 import { randomBytes, randomUUID } from 'node:crypto';
-import { test } from 'node:test';
 import { Pool } from 'pg';
 import { crearApp } from '../../src/app';
 import { anioLima, entradaHoja, entradaRespuesta, numeroHoja, titularConfigurado, venceEn } from '../../src/modules/resenas/dominio/reclamaciones';
 import { PostgresUsuarios } from '../../src/modules/usuarios/infraestructura/postgres';
 import { ScryptPasswords } from '../../src/modules/usuarios/infraestructura/passwords';
+import { test } from '@jest/globals';
+import { caso } from '../caso';
 
 const base = {
   tipo: 'reclamo', nombre: 'Rosa Quispe Huamán', tipoDocumento: 'DNI', numeroDocumento: '45678912', domicilio: 'Jr. Lima 123, Ayacucho',
@@ -48,7 +49,7 @@ test('Libro de Reclamaciones: plazo de 15 días hábiles en hora de Lima', () =>
     { razonSocial: 'Qatu', ruc: null, direccion: null, correo: null, telefono: null });
 });
 
-test('Libro de Reclamaciones con PostgreSQL real', { skip: !process.env.TEST_DATABASE_URL }, async context => {
+(!process.env.TEST_DATABASE_URL ? test.skip : test)('Libro de Reclamaciones con PostgreSQL real', async () => {
   process.env.DATABASE_URL = process.env.TEST_DATABASE_URL;
   process.env.JWT_SECRET = 'secreto-exclusivo-reclamaciones-pruebas-2026'; process.env.NODE_ENV = 'test'; process.env.APP_ORIGIN = 'http://127.0.0.1:3100';
   process.env.QATU_DESPACHO_EVENTOS = 'inactivo'; process.env.DOCUMENTOS_KEY ||= randomBytes(32).toString('hex');
@@ -67,7 +68,7 @@ test('Libro de Reclamaciones con PostgreSQL real', { skip: !process.env.TEST_DAT
     const [sesionCliente, sesionAdmin] = [await login(cliente.email), await login(admin.email)];
     let anonima: any;
 
-    await context.test('sin cuenta: constancia con número, plazo y titular; el libro no exige registrarse', async () => {
+    await caso('sin cuenta: constancia con número, plazo y titular; el libro no exige registrarse', async () => {
       assert.deepEqual(await (await pedir('/reclamaciones/titular')).json(), { razonSocial: 'Qatu (prueba)', ruc: '10456789123', direccion: null, correo: null, telefono: null });
       const r = await pedir('/reclamaciones', 'POST', { ...base, numeroDocumento: dni() });
       assert.equal(r.status, 201); anonima = await r.json();
@@ -81,20 +82,20 @@ test('Libro de Reclamaciones con PostgreSQL real', { skip: !process.env.TEST_DAT
       assert.equal((await fetch(root + '/reclamaciones', { method: 'POST', headers: { Origin: 'https://otro.example', 'Content-Type': 'application/json' }, body: JSON.stringify(base) })).status, 403);
     });
 
-    await context.test('con sesión la hoja queda vinculada a la cuenta', async () => {
+    await caso('con sesión la hoja queda vinculada a la cuenta', async () => {
       const r = await pedir('/reclamaciones', 'POST', { ...base, tipo: 'queja', numeroDocumento: dni() }, sesionCliente);
       assert.equal(r.status, 201); const h = await r.json();
       assert.equal((await pool.query('SELECT usuario_id FROM reclamaciones_hojas WHERE numero=$1', [h.numero])).rows[0].usuario_id, cliente.id);
     });
 
-    await context.test('presentaciones simultáneas reciben números correlativos sin saltos ni repetidos', async () => {
+    await caso('presentaciones simultáneas reciben números correlativos sin saltos ni repetidos', async () => {
       const respuestas = await Promise.all(Array.from({ length: 6 }, () => pedir('/reclamaciones', 'POST', { ...base, numeroDocumento: dni() })));
       assert.deepEqual(respuestas.map(r => r.status), Array(6).fill(201));
       const numeros = (await Promise.all(respuestas.map(r => r.json()))).map(h => Number(h.numero.slice(-6))).sort((a, b) => a - b);
       for (let i = 1; i < numeros.length; i++) assert.equal(numeros[i], numeros[i - 1] + 1);
     });
 
-    await context.test('consulta pública solo con número y código correctos', async () => {
+    await caso('consulta pública solo con número y código correctos', async () => {
       const consulta = (numero: string, codigo: string) => pedir(`/reclamaciones/consulta?numero=${encodeURIComponent(numero)}&codigo=${encodeURIComponent(codigo)}`);
       assert.equal((await consulta(anonima.numero, 'x')).status, 400);
       assert.equal((await consulta(anonima.numero, 'A'.repeat(12))).status, 404);
@@ -103,7 +104,7 @@ test('Libro de Reclamaciones con PostgreSQL real', { skip: !process.env.TEST_DAT
       assert.equal(h.numero, anonima.numero); assert.equal(h.codigoConsulta, undefined); assert.equal(h.respuesta, null);
     });
 
-    await context.test('atención: solo administración; respuesta una sola vez y visible en la consulta', async () => {
+    await caso('atención: solo administración; respuesta una sola vez y visible en la consulta', async () => {
       assert.equal((await pedir('/admin/reclamaciones')).status, 401);
       assert.equal((await pedir('/admin/reclamaciones', 'GET', undefined, sesionCliente)).status, 403);
       assert.equal((await pedir('/admin/reclamaciones?estado=otra', 'GET', undefined, sesionAdmin)).status, 400);
@@ -125,14 +126,14 @@ test('Libro de Reclamaciones con PostgreSQL real', { skip: !process.env.TEST_DAT
       assert.ok(respondidas.items.some((h: any) => h.numero === anonima.numero));
     });
 
-    await context.test('cuota por documento: 3 hojas cada 15 minutos', async () => {
+    await caso('cuota por documento: 3 hojas cada 15 minutos', async () => {
       const doc = dni();
       for (let i = 0; i < 3; i++) assert.equal((await pedir('/reclamaciones', 'POST', { ...base, numeroDocumento: doc })).status, 201);
       assert.equal((await pedir('/reclamaciones', 'POST', { ...base, numeroDocumento: doc })).status, 429);
       assert.equal((await pedir('/reclamaciones', 'POST', { ...base, numeroDocumento: dni() })).status, 201);
     });
 
-    await context.test('la base rechaza hojas incoherentes aunque se salte la aplicación', async () => {
+    await caso('la base rechaza hojas incoherentes aunque se salte la aplicación', async () => {
       await assert.rejects(pool.query("UPDATE reclamaciones_hojas SET respuesta='Texto de respuesta sin fecha ni autor' WHERE numero=$1 AND respuesta IS NULL", [anonima.numero.replace(/\d{6}$/, m => String(Number(m) + 1).padStart(6, '0'))]).then(r => { if (!r.rowCount) throw new Error('sin fila'); }));
       await assert.rejects(pool.query("UPDATE reclamaciones_hojas SET menor_de_edad=true WHERE numero=$1", [anonima.numero]));
     });

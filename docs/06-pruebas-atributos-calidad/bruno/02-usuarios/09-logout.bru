@@ -1,0 +1,28 @@
+meta {
+  name: Cerrar sesión
+  type: http
+  seq: 9
+}
+
+post {
+  url: {{api}}/auth/logout
+  body: json
+  auth: none
+}
+
+headers {
+  Origin: {{origen}}
+  Content-Type: application/json
+  Cookie: {{cookieNuevo}}
+}
+
+body:json {
+  {}
+}
+
+tests {
+  test("204 y borra la cookie", function () {
+    expect(res.getStatus()).to.equal(204);
+    expect([].concat(res.getHeader("set-cookie"))[0]).to.match(/qatu_sesion=;/);
+  });
+}

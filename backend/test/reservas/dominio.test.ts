@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
-import { test } from 'node:test';
 import { entradaSolicitud, entradaRechazo, filtros } from '../../src/modules/reservas/dominio/solicitud';
+import { test } from '@jest/globals';
 
 const ahora = Date.parse('2030-01-01T00:00:00Z');
 const base = { publicacionId: randomUUID(), recursoId: randomUUID(), inicio: '2030-02-01T10:00:00Z', fin: '2030-02-02T10:00:00Z' };

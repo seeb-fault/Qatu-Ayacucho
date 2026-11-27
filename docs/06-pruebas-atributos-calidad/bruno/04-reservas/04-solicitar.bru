@@ -1,0 +1,45 @@
+meta {
+  name: El cliente solicita el servicio
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{api}}/reservas
+  body: json
+  auth: none
+}
+
+headers {
+  Origin: {{origen}}
+  Content-Type: application/json
+  Cookie: {{cookieCliente}}
+}
+
+body:json {
+  {
+    "publicacionId": "{{publicacionId}}",
+    "recursoId": "{{recursoId}}",
+    "inicio": "{{inicio}}",
+    "fin": "{{fin}}",
+    "descripcionTrabajo": "Revisar dos tomacorrientes y cambiar un interruptor de la sala."
+  }
+}
+
+script:post-response {
+  if (res.getStatus() === 201) { bru.setVar("reservaId", res.getBody().id); bru.setVar("reservaVersion", res.getBody().version); }
+}
+
+tests {
+  test("201 PENDIENTE: no bloquea la agenda hasta que el proveedor responda", function () {
+    expect(res.getStatus()).to.equal(201);
+    const b = res.getBody();
+    expect(b.estado).to.equal("PENDIENTE");
+    expect(b.participacion).to.equal("cliente");
+    expect(b.snapshot.titulo).to.be.a("string");
+  });
+  test("no expone los identificadores de las cuentas", function () {
+    expect(res.getBody()).to.not.have.property("clienteId");
+    expect(res.getBody()).to.not.have.property("propietarioId");
+  });
+}

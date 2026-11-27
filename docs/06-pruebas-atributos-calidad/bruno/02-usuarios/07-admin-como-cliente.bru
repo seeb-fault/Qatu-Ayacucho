@@ -1,0 +1,21 @@
+meta {
+  name: Un cliente no entra a la administración
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{api}}/admin/usuarios
+  body: none
+  auth: none
+}
+
+headers {
+  Cookie: {{cookieNuevo}}
+}
+
+tests {
+  test("403 por rol", function () {
+    expect(res.getStatus()).to.equal(403);
+  });
+}

@@ -1,0 +1,39 @@
+Unable to find image 'grafana/k6:2.4.0' locally
+2.4.0: Pulling from grafana/k6
+e2de96513ba9: Already exists
+b46f6d67c0bc: Pulling fs layer
+2fdc73d4d0db: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+b46f6d67c0bc: Verifying Checksum
+b46f6d67c0bc: Download complete
+4f4fb700ef54: Download complete
+b46f6d67c0bc: Pull complete
+2fdc73d4d0db: Verifying Checksum
+2fdc73d4d0db: Download complete
+2fdc73d4d0db: Pull complete
+4f4fb700ef54: Pull complete
+Digest: sha256:d41bb79cd8de5a7ad619b53570e3712633e8bff0937010a5c6c57a4747e7a276
+Status: Downloaded newer image for grafana/k6:2.4.0
+Resumen de la prueba de carga (k6)
+
+ 100 usuarios: p50 1 ms, p95 4 ms, p99 6 ms, máx 17 ms, errores 0.00 %
+ 250 usuarios: p50 1 ms, p95 5 ms, p99 7 ms, máx 128 ms, errores 0.00 %
+ 500 usuarios: p50 1 ms, p95 6 ms, p99 11 ms, máx 210 ms, errores 0.00 %
+1000 usuarios: p50 2 ms, p95 11 ms, p99 34 ms, máx 365 ms, errores 0.00 %
+1500 usuarios: p50 7 ms, p95 199 ms, p99 298 ms, máx 553 ms, errores 0.00 %
+2000 usuarios: p50 389 ms, p95 731 ms, p99 820 ms, máx 953 ms, errores 0.00 %
+
+Peticiones: 551598 (762.9/s); checks correctos: 100.00 %
+CUMPLE  http_req_duration{nivel:250} p(95)<1000
+CUMPLE  http_req_duration{nivel:2000} p(95)<2000
+CUMPLE  http_req_failed{nivel:1000} rate<0.01
+CUMPLE  http_req_failed{nivel:1500} rate<0.01
+CUMPLE  http_req_duration{nivel:1000} p(95)<2000
+CUMPLE  http_req_duration{nivel:100} p(95)<1000
+CUMPLE  http_req_failed{nivel:500} rate<0.01
+CUMPLE  http_req_failed{nivel:250} rate<0.01
+CUMPLE  http_req_duration{nivel:1500} p(95)<2000
+CUMPLE  http_req_failed{nivel:2000} rate<0.01
+CUMPLE  http_req_duration{nivel:500} p(95)<1000
+CUMPLE  http_req_failed{nivel:100} rate<0.01
+Código de k6: 0 (0 = todas las metas se cumplieron; 99 = alguna no)

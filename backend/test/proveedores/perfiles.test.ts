@@ -1,13 +1,14 @@
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
-import { test } from 'node:test';
 import { Pool } from 'pg';
 import { crearApp } from '../../src/app';
 import { PostgresUsuarios } from '../../src/modules/usuarios/infraestructura/postgres';
 import { ScryptPasswords } from '../../src/modules/usuarios/infraestructura/passwords';
 import { ConsultaProveedores } from '../../src/modules/proveedores';
+import { test } from '@jest/globals';
+import { caso } from '../caso';
 
-test('perfiles de proveedores: propiedad, concurrencia y privacidad con PostgreSQL real', { skip: !process.env.TEST_DATABASE_URL }, async context => {
+(!process.env.TEST_DATABASE_URL ? test.skip : test)('perfiles de proveedores: propiedad, concurrencia y privacidad con PostgreSQL real', async () => {
   process.env.DATABASE_URL = process.env.TEST_DATABASE_URL;
   process.env.JWT_SECRET = 'secreto-exclusivo-para-pruebas-proveedores-488';
   process.env.APP_ORIGIN = 'http://127.0.0.1:3000';
@@ -38,7 +39,7 @@ test('perfiles de proveedores: propiedad, concurrencia y privacidad con PostgreS
   }
 
   try {
-    await context.test('zonas públicas y rutas privadas rechazan anónimos', async () => {
+    await caso('zonas públicas y rutas privadas rechazan anónimos', async () => {
       const zonas = await pedir('/proveedores/zonas', 'GET', undefined, '');
       assert.equal(zonas.status, 200);
       assert.equal((await zonas.json()).length, 4);
@@ -48,7 +49,7 @@ test('perfiles de proveedores: propiedad, concurrencia y privacidad con PostgreS
     });
     cookie = await login(propietario.email);
     otraCookie = await login(otro.email);
-    await context.test('sin perfil devuelve 404; dos altas simultáneas crean un solo perfil', async () => {
+    await caso('sin perfil devuelve 404; dos altas simultáneas crean un solo perfil', async () => {
       assert.equal((await pedir('/proveedores/me')).status, 404);
       const respuestas = await Promise.all([pedir('/proveedores/me', 'POST', datos), pedir('/proveedores/me', 'POST', datos)]);
       assert.deepEqual(respuestas.map(response => response.status).sort(), [201, 409]);
@@ -63,7 +64,7 @@ test('perfiles de proveedores: propiedad, concurrencia y privacidad con PostgreS
       assert.equal(conteo.rows[0].total, 1);
       assert.deepEqual((await usuarios.porId(propietario.id))!.roles, ['cliente']);
     });
-    await context.test('validación impide suplantación, autoaprobación y zonas ajenas al catálogo', async () => {
+    await caso('validación impide suplantación, autoaprobación y zonas ajenas al catálogo', async () => {
       for (const body of [
         { ...datos, usuarioId: propietario.id }, { ...datos, estadoVerificacion: 'aprobada' }, { ...datos, roles: ['proveedor'] },
         { ...datos, nombrePublico: ' ' }, { ...datos, nombrePublico: '😀' }, { ...datos, descripcion: '😀'.repeat(10) }, { ...datos, descripcion: 'muy corto' }, { ...datos, descripcion: 'x'.repeat(1501) },
@@ -75,7 +76,7 @@ test('perfiles de proveedores: propiedad, concurrencia y privacidad con PostgreS
       assert.equal((await pedir('/proveedores/me', 'PATCH', { ...datos, versionActual: '1' })).status, 400);
       assert.equal((await pedir('/proveedores/me', 'PATCH', { ...datos, versionActual: 1 }, cookie, 'https://otro.example')).status, 403);
     });
-    await context.test('visibilidad explícita y proyección pública sin identidad privada', async () => {
+    await caso('visibilidad explícita y proyección pública sin identidad privada', async () => {
       assert.equal((await pedir(`/proveedores/${perfilId}`, 'GET', undefined, '')).status, 404);
       const update = await pedir('/proveedores/me', 'PATCH', { ...datos, visiblePublicamente: true, versionActual: 1 });
       assert.equal(update.status, 200);
@@ -90,7 +91,7 @@ test('perfiles de proveedores: propiedad, concurrencia y privacidad con PostgreS
       assert.equal((await pedir(`/proveedores/${randomUUID()}`, 'GET', undefined, '')).status, 404);
       assert.equal((await pedir('/proveedores/incorrecto', 'GET', undefined, '')).status, 400);
     });
-    await context.test('ediciones concurrentes usan versión y no sobrescriben cambios ajenos', async () => {
+    await caso('ediciones concurrentes usan versión y no sobrescriben cambios ajenos', async () => {
       const primero = { ...datos, visiblePublicamente: true, versionActual: 2, nombrePublico: 'Primer taller' };
       const segundo = { ...primero, nombrePublico: 'Segundo taller' };
       const respuestas = await Promise.all([pedir('/proveedores/me', 'PATCH', primero), pedir('/proveedores/me', 'PATCH', segundo)]);
@@ -107,7 +108,7 @@ test('perfiles de proveedores: propiedad, concurrencia y privacidad con PostgreS
       assert.equal(perfilAjeno.usuarioId, otro.id);
       assert.equal((await (await pedir('/proveedores/me')).json()).nombrePublico, ganador.nombrePublico);
     });
-    await context.test('ocultar y desactivar cuenta impide acceso público y no permite autoaprobación', async () => {
+    await caso('ocultar y desactivar cuenta impide acceso público y no permite autoaprobación', async () => {
       assert.equal((await pedir('/proveedores/me', 'PATCH', { ...datos, visiblePublicamente: false, versionActual: 3 })).status, 200);
       assert.equal((await pedir(`/proveedores/${perfilId}`, 'GET', undefined, '')).status, 404);
       assert.equal((await pedir('/proveedores/me', 'PATCH', { ...datos, visiblePublicamente: true, versionActual: 4 })).status, 200);

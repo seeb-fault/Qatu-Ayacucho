@@ -1,0 +1,40 @@
+meta {
+  name: Un cliente sin perfil de proveedor no publica
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{api}}/publicaciones
+  body: json
+  auth: none
+}
+
+headers {
+  Origin: {{origen}}
+  Content-Type: application/json
+  Cookie: {{cookieNuevo}}
+}
+
+body:json {
+  {
+    "tipo": "herramienta",
+    "categoriaId": "perforacion",
+    "zonaId": "ayacucho",
+    "titulo": "Taladro de prueba",
+    "descripcion": "Taladro percutor para probar que un cliente no puede publicar.",
+    "incluye": ["Brocas"],
+    "condiciones": ["Devolver limpio"],
+    "modalidadPrecio": "fija",
+    "tarifaCentimos": 3000,
+    "unidad": "día",
+    "activa": true,
+    "recursos": [{ "identificador": "Unidad 1", "activo": true }]
+  }
+}
+
+tests {
+  test("rechazado: primero hace falta un perfil de proveedor aprobado", function () {
+    expect([403, 404]).to.include(res.getStatus());
+  });
+}

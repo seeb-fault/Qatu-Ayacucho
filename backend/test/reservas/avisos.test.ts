@@ -1,7 +1,6 @@
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { test } from 'node:test';
 import { Pool } from 'pg';
 import { crearApp } from '../../src/app';
 import { DespachadorEventos } from '../../src/modules/reservas/aplicacion/despacho';
@@ -11,6 +10,8 @@ import { AvisosNotificador } from '../../src/modules/reservas/infraestructura/po
 import { PostgresDespacho } from '../../src/modules/reservas/infraestructura/postgres-despacho';
 import { PostgresUsuarios } from '../../src/modules/usuarios/infraestructura/postgres';
 import { ScryptPasswords } from '../../src/modules/usuarios/infraestructura/passwords';
+import { test } from '@jest/globals';
+import { caso } from '../caso';
 
 const HORA=3600000,evento=(tipo:string,actorId?:string):EventoReserva=>({id:'e',tipo,reservaId:'r',clienteId:'c',propietarioId:'p',payload:actorId?{actorId}:{},creadoEn:new Date(0).toISOString(),intento:1});
 
@@ -28,7 +29,7 @@ test('destinatarios: la acción avisa a la otra persona y nunca a quien la hizo'
   }
 });
 
-test('avisos reales: bandeja propia, sin duplicados y lectura aislada',{skip:!process.env.TEST_DATABASE_URL},async context=>{
+(!process.env.TEST_DATABASE_URL ? test.skip : test)('avisos reales: bandeja propia, sin duplicados y lectura aislada', async () =>{
   process.env.DATABASE_URL=process.env.TEST_DATABASE_URL;
   process.env.JWT_SECRET='secreto-exclusivo-avisos-pruebas-2026-488';process.env.NODE_ENV='test';process.env.APP_ORIGIN='http://127.0.0.1:3100';process.env.QATU_DESPACHO_EVENTOS='inactivo';
   const f=JSON.parse(execFileSync(process.execPath,['--env-file-if-exists=.env','--import','tsx','test/reservas/fixture-e2e.ts','--servicio'],{encoding:'utf8',env:{...process.env,QATU_E2E_RESERVAS:'1'}}));
@@ -52,7 +53,7 @@ test('avisos reales: bandeja propia, sin duplicados y lectura aislada',{skip:!pr
     const bandeja=async(cookie:string,q='')=>{const r=await pedir('/avisos'+q,'GET',undefined,cookie);assert.equal(r.status,200);return r.json();};
     const resumen=async(cookie:string)=>(await (await pedir('/avisos/resumen','GET',undefined,cookie)).json()).noLeidos;
 
-    await context.test('cada participante ve solo lo que le corresponde',async()=>{
+    await caso('cada participante ve solo lo que le corresponde',async()=>{
       assert.equal((await pedir('/avisos')).status,401);assert.equal((await pedir('/avisos/resumen')).status,401);
       const s=await solicitar();await entregar();
       const p=await bandeja(proveedor);
@@ -65,7 +66,7 @@ test('avisos reales: bandeja propia, sin duplicados y lectura aislada',{skip:!pr
       assert.equal(await resumen(proveedor),1,'el rechazo no vuelve a avisar a quien rechazó');
     });
 
-    await context.test('un evento reentregado no duplica el aviso',async()=>{
+    await caso('un evento reentregado no duplica el aviso',async()=>{
       const s=await solicitar(),antes=(await bandeja(proveedor)).total;
       const repo=new PostgresDespacho(pool),[reclamado]=await repo.reclamar(5,60000);assert.equal(reclamado.reservaId,s.id);
       const canal=new AvisosNotificador(pool);await canal.enviar(reclamado);await canal.enviar(reclamado);await canal.enviar({...reclamado,intento:2});
@@ -73,7 +74,7 @@ test('avisos reales: bandeja propia, sin duplicados y lectura aislada',{skip:!pr
       assert.equal((await bandeja(proveedor)).total,antes+1);
     });
 
-    await context.test('el vencimiento avisa a ambos y una cancelación solo a la otra persona',async()=>{
+    await caso('el vencimiento avisa a ambos y una cancelación solo a la otra persona',async()=>{
       const c0=(await bandeja(cliente)).total,p0=(await bandeja(proveedor)).total;
       const s=await solicitar();
       const r=await pedir('/reservas/'+s.id+'/cancelacion','POST',{versionActual:s.version,motivo:'Ya resolví el trabajo por otro medio.'},cliente);assert.equal(r.status,201);await entregar();
@@ -83,7 +84,7 @@ test('avisos reales: bandeja propia, sin duplicados y lectura aislada',{skip:!pr
       assert.equal((await bandeja(cliente)).total,c0+1);assert.equal((await bandeja(proveedor)).total,p0+3);
     });
 
-    await context.test('la lectura es propia: otra persona recibe 404 y no cambia nada',async()=>{
+    await caso('la lectura es propia: otra persona recibe 404 y no cambia nada',async()=>{
       const p=await bandeja(proveedor),aviso=p.items[0],ruta='/avisos/'+aviso.id+'/lectura';
       assert.equal((await pedir(ruta,'POST',{})).status,401);
       assert.equal((await pedir(ruta,'POST',{},tercero)).status,404);assert.equal((await pedir(ruta,'POST',{},cliente)).status,404);
@@ -97,21 +98,21 @@ test('avisos reales: bandeja propia, sin duplicados y lectura aislada',{skip:!pr
       assert.equal((await bandeja(proveedor)).items.find((a:any)=>a.id===aviso.id).leidoEn,leido.leidoEn,'repetir conserva la primera lectura');
     });
 
-    await context.test('marcar todo afecta solo a quien lo pide',async()=>{
+    await caso('marcar todo afecta solo a quien lo pide',async()=>{
       const c=await resumen(cliente);assert.ok(c>0);assert.ok(await resumen(proveedor)>0);
       assert.equal((await pedir('/avisos/lectura','POST',{})).status,401);assert.equal((await pedir('/avisos/lectura','POST',{todo:true},proveedor)).status,400);
       const r=await pedir('/avisos/lectura','POST',{},proveedor);assert.equal(r.status,201);assert.equal((await r.json()).noLeidos,0);
       assert.equal(await resumen(proveedor),0);assert.equal(await resumen(cliente),c);
     });
 
-    await context.test('la bandeja pagina de 20 en 20 y rechaza consultas manipuladas',async()=>{
+    await caso('la bandeja pagina de 20 en 20 y rechaza consultas manipuladas',async()=>{
       for(let i=0;i<21;i++)await solicitar();await entregar();
       const uno=await bandeja(proveedor,'?page=1'),dos=await bandeja(proveedor,'?page=2');
       assert.equal(uno.items.length,20);assert.ok(dos.items.length>=1);assert.equal(new Set([...uno.items,...dos.items].map((a:any)=>a.id)).size,uno.items.length+dos.items.length);
       assert.equal((await pedir('/avisos?usuarioId='+randomUUID(),'GET',undefined,proveedor)).status,400);assert.equal((await pedir('/avisos?page=0','GET',undefined,proveedor)).status,400);
     });
 
-    await context.test('todo tipo de evento permitido por PostgreSQL tiene un aviso definido',async()=>{
+    await caso('todo tipo de evento permitido por PostgreSQL tiene un aviso definido',async()=>{
       const r=await pool.query("SELECT pg_get_constraintdef(oid) AS d FROM pg_constraint WHERE conname='reservas_outbox_tipo_check'");
       const tipos=[...r.rows[0].d.matchAll(/'([A-Z_]+)'/g)].map((m:RegExpMatchArray)=>m[1]);
       assert.ok(tipos.length>=20);for(const tipo of tipos)assert.ok(AVISOS[tipo],'falta aviso para '+tipo);

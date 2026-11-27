@@ -1,10 +1,11 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { test } from 'node:test';
 import { Pool } from 'pg';
 import { crearApp } from '../../src/app';
 import { contactoPermitido } from '../../src/modules/reservas/dominio/coordinacion';
 import { whatsappValido } from '../../src/modules/usuarios/dominio/usuario';
+import { test } from '@jest/globals';
+import { caso } from '../caso';
 
 const DIA = 86_400_000;
 
@@ -20,7 +21,7 @@ test('dominio: formato de WhatsApp de Perú y estados que comparten el contacto'
   for (const estado of ['RECHAZADA', 'CANCELADA', 'VENCIDA', 'DEVUELTA', 'SERVICIO_CERRADO'] as const) assert.equal(contactoPermitido({ estado }), false, estado);
 });
 
-test('WhatsApp con PostgreSQL real: consentimiento, participantes y momento de la operación', { skip: !process.env.TEST_DATABASE_URL }, async context => {
+(!process.env.TEST_DATABASE_URL ? test.skip : test)('WhatsApp con PostgreSQL real: consentimiento, participantes y momento de la operación', async () => {
   process.env.DATABASE_URL = process.env.TEST_DATABASE_URL;
   process.env.JWT_SECRET = 'secreto-exclusivo-whatsapp-pruebas-2026-010'; process.env.NODE_ENV = 'test'; process.env.APP_ORIGIN = 'http://127.0.0.1:3100'; process.env.QATU_DESPACHO_EVENTOS = 'inactivo';
   const h = JSON.parse(execFileSync(process.execPath, ['--env-file-if-exists=.env', '--import', 'tsx', 'test/reservas/fixture-e2e.ts', '--servicio'], { encoding: 'utf8', env: { ...process.env, QATU_E2E_RESERVAS: '1' } }));
@@ -34,7 +35,7 @@ test('WhatsApp con PostgreSQL real: consentimiento, participantes y momento de l
     const s = await (await pedir('/reservas', 'POST', { publicacionId: h.publicacionId, recursoId: h.recursoId, inicio: new Date(desde).toISOString(), fin: new Date(desde + 3_600_000).toISOString(),
       descripcionTrabajo: 'Revisar el tablero eléctrico y cambiar dos tomacorrientes de la cocina.' }, cliente)).json();
 
-    await context.test('el perfil propio guarda el número y el consentimiento; un número inválido se rechaza', async () => {
+    await caso('el perfil propio guarda el número y el consentimiento; un número inválido se rechaza', async () => {
       assert.equal((await pedir('/usuarios/me', 'PATCH', { nombre: 'Cliente E2E', whatsapp: '12345' }, cliente)).status, 400);
       assert.equal((await pedir('/usuarios/me', 'PATCH', { nombre: 'Cliente E2E', whatsapp: '912 345 678', whatsappVisible: 'si' }, cliente)).status, 400);
       const r = await (await pedir('/usuarios/me', 'PATCH', { nombre: 'Cliente E2E', whatsapp: '912 345 678', whatsappVisible: true }, cliente)).json();
@@ -46,12 +47,12 @@ test('WhatsApp con PostgreSQL real: consentimiento, participantes y momento de l
       assert.equal(sin.whatsapp, null); assert.equal(sin.whatsappVisible, false);
     });
 
-    await context.test('una solicitud pendiente sin respuesta no comparte números', async () => {
+    await caso('una solicitud pendiente sin respuesta no comparte números', async () => {
       assert.equal((await pedir('/reservas/' + s.id + '/contacto', 'GET', undefined, cliente)).status, 409);
       assert.equal((await pedir('/reservas/' + s.id + '/contacto', 'GET', undefined, proveedor)).status, 409);
     });
 
-    await context.test('con la cotización enviada, cada parte ve el WhatsApp de la otra; un tercero no', async () => {
+    await caso('con la cotización enviada, cada parte ve el WhatsApp de la otra; un tercero no', async () => {
       const cot = await pedir('/reservas/' + s.id + '/cotizacion', 'POST', { versionActual: s.version, alcance: 'Revisar tablero y cambiar dos tomacorrientes.', materiales: 'Tomacorrientes incluidos.',
         importeCentimos: 12000, vigenteHasta: new Date(Date.now() + DIA).toISOString() }, proveedor);
       assert.equal(cot.status, 201);
@@ -63,13 +64,13 @@ test('WhatsApp con PostgreSQL real: consentimiento, participantes y momento de l
       assert.equal((await pedir('/reservas/' + s.id + '/contacto')).status, 401);
     });
 
-    await context.test('sin consentimiento el número no se entrega, aunque esté guardado', async () => {
+    await caso('sin consentimiento el número no se entrega, aunque esté guardado', async () => {
       await pedir('/usuarios/me', 'PATCH', { nombre: 'Cliente E2E', whatsappVisible: false }, cliente);
       const r = await (await pedir('/reservas/' + s.id + '/contacto', 'GET', undefined, proveedor)).json();
       assert.equal(r.whatsapp, null);
     });
 
-    await context.test('al cancelar, el contacto deja de compartirse', async () => {
+    await caso('al cancelar, el contacto deja de compartirse', async () => {
       await pool.query("UPDATE reservas SET estado='CANCELADA' WHERE id=$1", [s.id]);
       assert.equal((await pedir('/reservas/' + s.id + '/contacto', 'GET', undefined, cliente)).status, 409);
     });

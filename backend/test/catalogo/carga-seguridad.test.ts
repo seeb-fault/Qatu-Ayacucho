@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {spawnSync} from 'node:child_process';
 import {readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
-import {test} from 'node:test';
+import { test } from '@jest/globals';
 const script=resolve('scripts/carga-catalogo.mjs');
 test('la carga rechaza una base de desarrollo o un servidor externo antes de conectar',()=>{
  for(const url of ['postgresql://prueba@127.0.0.1:5433/qatu','postgresql://prueba@example.invalid/qatu_catalogo_load_test']){

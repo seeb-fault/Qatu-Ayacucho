@@ -3,12 +3,13 @@ import { randomUUID } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { test } from 'node:test';
 import { Pool } from 'pg';
 import { crearApp } from '../../src/app';
 import { entradaModeracion, entradaResena, exigirElegible, plazoParaResenar, type ReservaParaResena } from '../../src/modules/resenas/dominio/resenas';
 import { PostgresUsuarios } from '../../src/modules/usuarios/infraestructura/postgres';
 import { ScryptPasswords } from '../../src/modules/usuarios/infraestructura/passwords';
+import { test } from '@jest/globals';
+import { caso } from '../caso';
 
 const DIA = 86_400_000, HORA = 3_600_000;
 const reserva = (cambios: Partial<ReservaParaResena> = {}): ReservaParaResena => ({ id: 'r', clienteId: 'c', propietarioId: 'p', proveedorId: 'v', publicacionId: 'o',
@@ -40,7 +41,7 @@ test('límites: Reseñas usa la fachada pública de Reservas y Reservas no conoc
   assert.deepEqual(archivos('src/modules/reservas').filter(f => /resenas/i.test(readFileSync(f, 'utf8'))), []);
 });
 
-test('reseñas reales en PostgreSQL: elegibilidad, unicidad, reputación pública y moderación auditada', { skip: !process.env.TEST_DATABASE_URL }, async context => {
+(!process.env.TEST_DATABASE_URL ? test.skip : test)('reseñas reales en PostgreSQL: elegibilidad, unicidad, reputación pública y moderación auditada', async () => {
   process.env.DATABASE_URL = process.env.TEST_DATABASE_URL;
   process.env.JWT_SECRET = 'secreto-exclusivo-resenas-pruebas-2026-489'; process.env.NODE_ENV = 'test'; process.env.APP_ORIGIN = 'http://127.0.0.1:3100'; process.env.QATU_DESPACHO_EVENTOS = 'inactivo';
   const h = JSON.parse(execFileSync(process.execPath, ['--env-file-if-exists=.env', '--import', 'tsx', 'test/reservas/fixture-e2e.ts'], { encoding: 'utf8', env: { ...process.env, QATU_E2E_RESERVAS: '1' } }));
@@ -69,7 +70,7 @@ test('reseñas reales en PostgreSQL: elegibilidad, unicidad, reputación públic
     };
     const resenar = (s: any, body: unknown, cookie = cliente) => pedir('/reservas/' + s.id + '/resena', 'POST', body, cookie);
 
-    await context.test('no se reseña una operación sin cerrar', async () => {
+    await caso('no se reseña una operación sin cerrar', async () => {
       const s = await aceptada();
       assert.equal((await resenar(s, { puntuacion: 5 })).status, 409);
       assert.equal((await (await pedir('/reservas/' + s.id + '/resena', 'GET', undefined, cliente)).json()).puedeResenar, false);
@@ -80,7 +81,7 @@ test('reseñas reales en PostgreSQL: elegibilidad, unicidad, reputación públic
     const s = await cerrada();
     const proveedorId = (await pool.query('SELECT proveedor_id FROM reservas WHERE id=$1', [s.id])).rows[0].proveedor_id;
 
-    await context.test('permisos y validación: proveedor 403, tercero 404, anónimo 401, entrada inválida 400', async () => {
+    await caso('permisos y validación: proveedor 403, tercero 404, anónimo 401, entrada inválida 400', async () => {
       const estado = await (await pedir('/reservas/' + s.id + '/resena', 'GET', undefined, cliente)).json();
       assert.equal(estado.puedeResenar, true); assert.equal(estado.resena, null); assert.ok(estado.plazo);
       assert.equal((await resenar(s, { puntuacion: 5 }, proveedor)).status, 403);
@@ -90,14 +91,14 @@ test('reseñas reales en PostgreSQL: elegibilidad, unicidad, reputación públic
       assert.equal((await resenar(s, { puntuacion: 5, proveedorId })).status, 400);
     });
 
-    await context.test('dos envíos simultáneos dejan una sola reseña', async () => {
+    await caso('dos envíos simultáneos dejan una sola reseña', async () => {
       const estados = (await Promise.all([resenar(s, { puntuacion: 4, texto: 'Buen estado y puntual.' }), resenar(s, { puntuacion: 4, texto: 'Buen estado y puntual.' })])).map(r => r.status).sort();
       assert.deepEqual(estados, [201, 409]);
       assert.equal((await pool.query('SELECT count(*)::integer AS n FROM resenas WHERE reserva_id=$1', [s.id])).rows[0].n, 1);
       assert.equal((await (await pedir('/reservas/' + s.id + '/resena', 'GET', undefined, cliente)).json()).puedeResenar, false);
     });
 
-    await context.test('la reputación pública no expone al cliente ni a la reserva', async () => {
+    await caso('la reputación pública no expone al cliente ni a la reserva', async () => {
       const publico = await (await pedir('/proveedores/' + proveedorId + '/resenas')).json();
       assert.equal(publico.total, 1); assert.equal(publico.promedio, 4); assert.equal(publico.items[0].texto, 'Buen estado y puntual.');
       assert.deepEqual(Object.keys(publico.items[0]).sort(), ['creadaEn', 'id', 'puntuacion', 'texto', 'titulo']);
@@ -105,7 +106,7 @@ test('reseñas reales en PostgreSQL: elegibilidad, unicidad, reputación públic
       assert.equal((await pedir('/resenas/resumen?proveedores=no-es-uuid')).status, 400);
     });
 
-    await context.test('fuera del plazo de 14 días ya no se puede reseñar', async () => {
+    await caso('fuera del plazo de 14 días ya no se puede reseñar', async () => {
       const vieja = await cerrada();
       // Solo se mueve la fecha de cierre en la base de prueba; la regla de dominio no cambia.
       await pool.query("UPDATE reservas SET devuelto_en=now()-interval '15 days', devolucion_informada_en=now()-interval '15 days' WHERE id=$1", [vieja.id]);
@@ -113,7 +114,7 @@ test('reseñas reales en PostgreSQL: elegibilidad, unicidad, reputación públic
       assert.equal(r.status, 409); assert.equal((await r.json()).code, 'PLAZO_VENCIDO');
     });
 
-    await context.test('moderación: solo un admin ajeno, con motivo; el promedio público excluye la reseña oculta', async () => {
+    await caso('moderación: solo un admin ajeno, con motivo; el promedio público excluye la reseña oculta', async () => {
       const id = (await pool.query('SELECT id FROM resenas WHERE reserva_id=$1', [s.id])).rows[0].id;
       const moderar = (cookie: string, body: unknown) => pedir('/admin/resenas/' + id + '/moderacion', 'PATCH', body, cookie);
       assert.equal((await moderar(cliente, { oculta: true, motivo: 'Intento sin permisos.' })).status, 403);

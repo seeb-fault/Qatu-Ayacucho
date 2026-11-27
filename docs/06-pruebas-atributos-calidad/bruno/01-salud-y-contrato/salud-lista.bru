@@ -1,0 +1,24 @@
+meta {
+  name: La API puede atender (PostgreSQL)
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{api}}/salud
+  body: none
+  auth: none
+}
+
+tests {
+  test("200 con la base disponible y sin datos sensibles", function () {
+    expect(res.getStatus()).to.equal(200);
+    const b = res.getBody();
+    expect(b.estado).to.equal("ok");
+    expect(b.base).to.equal("ok");
+    expect(Object.keys(b).sort()).to.eql(["almacen", "base", "baseMs", "estado", "version"]);
+  });
+  test("no se guarda en caché", function () {
+    expect(res.getHeader("cache-control")).to.equal("no-store");
+  });
+}

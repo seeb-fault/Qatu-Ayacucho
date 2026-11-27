@@ -1,0 +1,18 @@
+meta {
+  name: Datos del proveedor del servicio
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{api}}/reclamaciones/titular
+  body: none
+  auth: none
+}
+
+tests {
+  test("200 con los cinco campos (null si no se configuraron)", function () {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody()).to.have.all.keys("razonSocial", "ruc", "direccion", "correo", "telefono");
+  });
+}

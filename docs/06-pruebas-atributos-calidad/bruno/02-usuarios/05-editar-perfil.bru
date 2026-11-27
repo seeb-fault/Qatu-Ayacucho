@@ -1,0 +1,33 @@
+meta {
+  name: Registrar mi WhatsApp
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{api}}/usuarios/me
+  body: json
+  auth: none
+}
+
+headers {
+  Origin: {{origen}}
+  Content-Type: application/json
+  Cookie: {{cookieNuevo}}
+}
+
+body:json {
+  {
+    "nombre": "Cliente Bruno",
+    "whatsapp": "987 654 321",
+    "whatsappVisible": true
+  }
+}
+
+tests {
+  test("200 y el número queda normalizado con +51", function () {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody().whatsapp).to.equal("+51987654321");
+    expect(res.getBody().whatsappVisible).to.equal(true);
+  });
+}

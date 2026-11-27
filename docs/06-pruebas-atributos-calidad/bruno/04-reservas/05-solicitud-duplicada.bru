@@ -1,0 +1,33 @@
+meta {
+  name: La misma solicitud dos veces
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{api}}/reservas
+  body: json
+  auth: none
+}
+
+headers {
+  Origin: {{origen}}
+  Content-Type: application/json
+  Cookie: {{cookieCliente}}
+}
+
+body:json {
+  {
+    "publicacionId": "{{publicacionId}}",
+    "recursoId": "{{recursoId}}",
+    "inicio": "{{inicio}}",
+    "fin": "{{fin}}",
+    "descripcionTrabajo": "Revisar dos tomacorrientes y cambiar un interruptor de la sala."
+  }
+}
+
+tests {
+  test("409: una cuenta no repite una solicitud pendiente igual", function () {
+    expect(res.getStatus()).to.equal(409);
+  });
+}

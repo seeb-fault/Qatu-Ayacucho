@@ -1,9 +1,10 @@
 import assert from 'node:assert/strict';
 import { execFileSync, execFile } from 'node:child_process';
 import { promisify } from 'node:util';
+import { test } from '@jest/globals';
+import { caso } from '../caso';
 const ejecutar = promisify(execFile);
 import { randomBytes, randomUUID } from 'node:crypto';
-import { test } from 'node:test';
 import { Pool } from 'pg';
 import { crearApp } from '../../src/app';
 import { PostgresUsuarios } from '../../src/modules/usuarios/infraestructura/postgres';
@@ -25,7 +26,7 @@ test('documentos cifrados con autenticación, tipo y tamaño verificados', () =>
   assert.throws(() => cifrado.cifrar({ buffer: png,mimetype: 'application/pdf',size: png.length }));
 });
 
-test('carga, revisión y conservación documental privadas con PostgreSQL real', { skip: !process.env.TEST_DATABASE_URL }, async context => {
+(!process.env.TEST_DATABASE_URL ? test.skip : test)('carga, revisión y conservación documental privadas con PostgreSQL real', async () => {
   process.env.DATABASE_URL = process.env.TEST_DATABASE_URL;
   process.env.JWT_SECRET = 'secreto-exclusivo-de-pruebas-documentales-488';
   process.env.APP_ORIGIN = 'http://127.0.0.1:3000';
@@ -73,7 +74,7 @@ test('carga, revisión y conservación documental privadas con PostgreSQL real',
     const creado = await pedir('/proveedores/me','POST',perfil);
     assert.equal(creado.status,201);
     perfilId = (await creado.json()).id;
-    await context.test('exige sesión, configuración de cifrado, consentimiento y archivos válidos', async () => {
+    await caso('exige sesión, configuración de cifrado, consentimiento y archivos válidos', async () => {
       assert.equal((await subir(1,'')).status,401);
       delete process.env.DOCUMENTOS_KEY;
       assert.equal((await subir(1)).status,503);
@@ -85,7 +86,7 @@ test('carga, revisión y conservación documental privadas con PostgreSQL real',
       assert.equal((await subir(1,cookie,[{ contenido: Buffer.alloc(5242881),tipo: 'image/png' }])).status,413);
       assert.equal((await pool.query('SELECT count(*)::int AS total FROM verificaciones_proveedor WHERE proveedor_id=$1',[perfilId])).rows[0].total,0);
     });
-    await context.test('solicitud y documentos se guardan juntos; solo hay una pendiente', async () => {
+    await caso('solicitud y documentos se guardan juntos; solo hay una pendiente', async () => {
       const respuestas = await Promise.all([subir(1),subir(1)]);
       assert.deepEqual(respuestas.map(response => response.status).sort(),[201,409]);
       const solicitud = await respuestas.find(response => response.status === 201)!.json();
@@ -101,7 +102,7 @@ test('carga, revisión y conservación documental privadas con PostgreSQL real',
       const response = await pedir('/proveedores/me','PATCH',{ ...perfil,nombrePublico: 'Otro nombre',versionActual: 2 });
       assert.equal(response.status,409);
     });
-    await context.test('descargas privadas y pública sin metadatos documentales', async () => {
+    await caso('descargas privadas y pública sin metadatos documentales', async () => {
       const ruta = `/proveedores/documentos/${documentoId}`;
       assert.equal((await pedir(ruta,'GET',undefined,'')).status,401);
       assert.equal((await pedir(ruta,'GET',undefined,cookieAjena)).status,404);
@@ -119,7 +120,7 @@ test('carga, revisión y conservación documental privadas con PostgreSQL real',
       assert.equal((await pedir('/admin/proveedores/verificaciones','GET',undefined,cookieAjena)).status,403);
       assert.equal((await pedir(`/admin/proveedores/${perfilId}/verificacion`,'POST',{ solicitudId,decision: 'aprobada',motivo: 'Intento de autoaprobación' },cookie)).status,403);
     });
-    await context.test('administrador no puede revisar su propio perfil', async () => {
+    await caso('administrador no puede revisar su propio perfil', async () => {
       const propio = await pedir('/proveedores/me','POST',{ ...perfil,nombrePublico: 'Perfil del revisor' },cookieAdmin);
       const id = (await propio.json()).id;
       const enviada = await subir(1,cookieAdmin,[{ contenido: png,tipo: 'image/png' },{ contenido: png,tipo: 'image/png' }]);
@@ -127,7 +128,7 @@ test('carga, revisión y conservación documental privadas con PostgreSQL real',
       const solicitud = await enviada.json();
       assert.equal((await pedir(`/admin/proveedores/${id}/verificacion`,'POST',{ solicitudId: solicitud.id,decision: 'aprobada',motivo: 'Intento de resolver perfil propio' },cookieAdmin)).status,403);
     });
-    await context.test('fallo de escritura revierte decisión y versión sin borrar documentos', async () => {
+    await caso('fallo de escritura revierte decisión y versión sin borrar documentos', async () => {
       await pool.query("CREATE FUNCTION rechazar_revision_003() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN IF NEW.motivo='simular fallo transaccional' THEN RAISE EXCEPTION 'fallo de prueba'; END IF; RETURN NEW; END $$");
       await pool.query('CREATE TRIGGER prueba_revision_003 BEFORE UPDATE ON verificaciones_proveedor FOR EACH ROW EXECUTE FUNCTION rechazar_revision_003()');
       try {
@@ -141,7 +142,7 @@ test('carga, revisión y conservación documental privadas con PostgreSQL real',
         await pool.query('DROP FUNCTION rechazar_revision_003()');
       }
     });
-    await context.test('decisiones concurrentes guardan una sola resolución auditada', async () => {
+    await caso('decisiones concurrentes guardan una sola resolución auditada', async () => {
       const respuestas = await Promise.all([resolver('aprobada'),resolver('rechazada')]);
       assert.deepEqual(respuestas.map(response => response.status).sort(),[201,409]);
       const resuelta = await respuestas.find(response => response.status === 201)!.json();
@@ -155,7 +156,7 @@ test('carga, revisión y conservación documental privadas con PostgreSQL real',
       const historial = await (await pedir('/proveedores/me/verificaciones')).json();
       assert.equal(historial[0].perfilEnviado.nombrePublico,perfil.nombrePublico);
     });
-    await context.test('conservación mantiene activos, elimina adjuntos de inactivos y conserva decisiones', async () => {
+    await caso('conservación mantiene activos, elimina adjuntos de inactivos y conserva decisiones', async () => {
       const nueva = await subir(4);
       assert.equal(nueva.status,201);
       const limpiar = async () => (await ejecutar(process.execPath,['--import','tsx','scripts/limpiar-documentos.ts'],{ env: process.env,encoding: 'utf8' })).stdout;

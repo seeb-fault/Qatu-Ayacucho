@@ -54,7 +54,7 @@ jobs:
     needs: especificaciones
     if: needs.especificaciones.outputs.backend == 'true'
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 25
     defaults:
       run:
         working-directory: backend
@@ -91,7 +91,25 @@ jobs:
         run: |
           npm run migrate
           npm run migrate
-      - run: npm test
+      - name: Pruebas con Jest y cobertura
+        run: npm run test:cobertura
+      - name: Guardar el reporte de cobertura
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: cobertura-backend
+          path: backend/coverage
+          retention-days: 14
+      - name: Pruebas de API con Bruno (contrato y reglas de negocio)
+        run: node ../docs/06-pruebas-atributos-calidad/scripts/bruno.mjs
+      - name: Guardar el reporte HTML de Bruno
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: bruno-reporte
+          path: docs/06-pruebas-atributos-calidad/bruno/reportes
+          if-no-files-found: ignore
+          retention-days: 14
 
   frontend:
     name: Frontend y recorridos de navegador

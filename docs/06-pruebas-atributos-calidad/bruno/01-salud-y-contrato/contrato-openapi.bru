@@ -1,0 +1,23 @@
+meta {
+  name: Contrato OpenAPI publicado
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{api}}/docs/openapi.json
+  body: none
+  auth: none
+}
+
+tests {
+  test("OpenAPI 3 con las rutas principales", function () {
+    expect(res.getStatus()).to.equal(200);
+    const d = res.getBody();
+    expect(d.openapi).to.match(/^3\./);
+    expect(d.info.title).to.equal("API Qatu");
+    expect(d.paths).to.have.property("/api/v1/auth/login");
+    expect(d.paths).to.have.property("/api/v1/reservas");
+    expect(d.components.schemas).to.have.property("Error");
+  });
+}

@@ -1,0 +1,358 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/modules/reservas/presentacion/reservas.controller.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../../index.html">All files</a> / <a href="index.html">src/modules/reservas/presentacion</a> reservas.controller.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>91/91</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>35/35</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>29/29</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>91/91</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">520x</span>
+<span class="cline-any cline-yes">520x</span>
+<span class="cline-any cline-yes">520x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Body, Controller, Get, Inject, Param, Post, Query, Req } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import type { Request } from 'express';
+import { Doc, entero, instante, opciones, ref, uuid, type DocOperacion } from '../../../shared/presentacion/openapi';
+import { Reservas } from '../aplicacion/reservas';
+import { Propuesta, RechazoCotizacion, RespuestaCotizacion, Solicitud, SoloVersion, VersionYMotivo } from './openapi';
+&nbsp;
+const token = (r: Request) =&gt; r.headers.cookie?.split(';').map(v =&gt; v.trim()).find(v =&gt; v.startsWith('qatu_sesion='))?.slice('qatu_sesion='.length) ?? '';
+&nbsp;
+/** Las transiciones comparten forma: participante, versión, la reserva actualizada y los mismos errores. */
+const paso = (resumen: string, detalle: string, conMotivo = false): DocOperacion =&gt; ({
+  resumen, detalle, cuerpo: conMotivo ? VersionYMotivo : SoloVersion, devuelve: ref('Reserva'),
+  errores: { 403: 'Te corresponde a la otra parte de la reserva', 404: 'La reserva no existe o no participas en ella', 409: 'La versión cambió o el estado no lo permite' },
+});
+&nbsp;
+@ApiTags('Reservas')
+@Controller('reservas')
+export class ReservasController {
+  constructor(@Inject(Reservas) private readonly reservas: Reservas) {}
+  @Doc({
+    resumen: 'Solicitar una herramienta o un oficio',
+    detalle: 'La solicitud queda PENDIENTE y no bloquea fechas hasta que el proveedor la acepta. No se puede solicitar una oferta propia. El precio lo calcula el servidor.',
+    cuerpo: Solicitud, devuelve: ref('Reserva'),
+    errores: { 403: 'Es tu propia oferta', 404: 'La oferta o la unidad no están disponibles', 409: 'Ya tienes una solicitud pendiente igual, o la tarifa cambió' },
+  })
+  @Post() solicitar(@Req() r: Request, @Body() d: unknown) { return this.reservas.solicitar(token(r), d); }
+  @Doc({
+    resumen: 'Listar mis reservas',
+    detalle: '20 por página, de la más reciente a la más antigua. vista=proveedor muestra las recibidas.',
+    consultas: { vista: { esquema: { ...opciones('cliente', 'proveedor'), default: 'cliente' } }, page: { esquema: entero(1, 9999, { default: 1 }) } },
+    devuelve: ref('PaginaReservas'),
+  })
+  @Get() listar(@Req() r: Request, @Query() q: unknown) { return this.reservas.listar(token(r), q); }
+  @Doc({ resumen: 'Ver el contacto de la otra parte', detalle: 'Nombre, WhatsApp (si lo permitió) y punto exacto, solo mientras la reserva está activa.', devuelve: ref('Contacto'), errores: { 404: 'La reserva no existe o no participas en ella', 409: 'El contacto no está disponible en este estado (CONTACTO_NO_DISPONIBLE)' } })
+  @Get(':id/contacto') contacto(@Req() r: Request, @Param('id') id: string) { return this.reservas.contacto(token(r), id); }
+  @Doc({ resumen: 'Ver una reserva', devuelve: ref('Reserva'), errores: { 404: 'La reserva no existe o no participas en ella (también para administradores)' } })
+  @Get(':id') consultar(@Req() r: Request, @Param('id') id: string) { return this.reservas.consultar(token(r), id); }
+  @Doc({ ...paso('Proponer una cotización (oficios)', 'Proveedor. Crea una nueva versión; la anterior sin respuesta queda sustituida. Hasta 50 versiones.'), cuerpo: Propuesta })
+  @Post(':id/cotizacion') cotizar(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.cotizar(token(r),id,d); }
+  @Doc({ ...paso('Aceptar la cotización', 'Cliente. Acepta la última versión vigente y reserva el horario en la misma transacción: pasa a SERVICIO_CONFIRMADO.'), cuerpo: RespuestaCotizacion, errores: { 403: 'Solo el cliente responde', 404: 'La reserva no existe o no participas en ella', 409: 'Versión vieja, cotización vencida o sustituida, u horario ocupado (RECURSO_OCUPADO)' } })
+  @Post(':id/cotizacion/aceptacion') aceptarCotizacion(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.responderCotizacion(token(r),id,d,'ACEPTADA'); }
+  @Doc({ ...paso('Rechazar la cotización', 'Cliente, con motivo. El proveedor puede proponer otra versión.'), cuerpo: RechazoCotizacion })
+  @Post(':id/cotizacion/rechazo') rechazarCotizacion(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.responderCotizacion(token(r),id,d,'RECHAZADA'); }
+  @Doc({ ...paso('Confirmar la agenda de un acuerdo anterior', 'Cliente. Solo para cotizaciones aceptadas antes de 005.4, que aún no reservaban horario.'), cuerpo: RespuestaCotizacion })
+  @Post(':id/agenda/confirmacion') confirmarAgenda(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.confirmarAgenda(token(r),id,d); }
+  @Doc(paso('Rechazar la solicitud', 'Proveedor, con motivo. Solo desde PENDIENTE.', true))
+  @Post(':id/rechazo') rechazar(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.rechazar(token(r), id, d); }
+  @Doc({ ...paso('Aceptar y apartar la herramienta', 'Proveedor. PENDIENTE → ACEPTADA: bloquea la unidad 60 minutos para el pago o la entrega.'), errores: { 403: 'Solo el proveedor acepta', 404: 'La reserva no existe o no participas en ella', 409: 'La versión cambió, el estado no lo permite o la unidad está ocupada' } })
+  @Post(':id/aceptacion') aceptar(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'aceptacion',d); }
+  @Doc(paso('Acordar una visita', 'Proveedor, con motivo. Solicitud de visita → VISITA_ACORDADA; no bloquea ni cobra.', true))
+  @Post(':id/visita') visita(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'visita',d); }
+  @Doc(paso('Ampliar el apartado', 'Proveedor, con motivo. Renueva el apartado vigente a 60 minutos desde ahora, sin pasar del fin.', true))
+  @Post(':id/ampliacion') ampliar(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'ampliacion',d); }
+  @Doc(paso('Cancelar la reserva', 'Cliente o proveedor, con motivo. Libera el bloqueo. En oficios, hasta que el trabajo empiece; si estaba pagada en línea, queda reembolso pendiente.', true))
+  @Post(':id/cancelacion') cancelar(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'cancelacion',d); }
+  @Doc(paso('Registrar efectivo y entrega', 'Proveedor. ACEPTADA → ENTREGA_POR_CONFIRMAR. Es una declaración, no una verificación bancaria.'))
+  @Post(':id/efectivo') efectivo(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'efectivo',d); }
+  @Doc(paso('Confirmar la recepción', 'Cliente. ENTREGA_POR_CONFIRMAR → EN_CURSO.'))
+  @Post(':id/recepcion') recepcion(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'recepcion',d); }
+  @Doc(paso('Avisar la devolución', 'Cliente. EN_CURSO → DEVOLUCION_PENDIENTE; la hora la pone el servidor.'))
+  @Post(':id/devolucion/aviso') aviso(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'devolucion/aviso',d); }
+  @Doc(paso('Confirmar la devolución', 'Proveedor. DEVOLUCION_PENDIENTE → DEVUELTA: calcula días extra, importe final y saldo, y libera la unidad.'))
+  @Post(':id/devolucion/confirmacion') devolucion(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'devolucion/confirmacion',d); }
+  @Doc(paso('Rechazar el aviso de devolución', 'Proveedor, con motivo. Vuelve a EN_CURSO conservando el historial.', true))
+  @Post(':id/devolucion/rechazo') rechazarDevolucion(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'devolucion/rechazo',d); }
+  @Doc(paso('Entregar una herramienta pagada en línea', 'Proveedor. APARTADO_PAGADO → ENTREGA_POR_CONFIRMAR.'))
+  @Post(':id/entrega') entregar(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'entrega',d); }
+  @Doc(paso('Pedir el pago en línea del servicio', 'Proveedor. SERVICIO_EN_CURSO → SERVICIO_POR_PAGAR.'))
+  @Post(':id/servicio/cobro') solicitarCobro(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'servicio/cobro',d); }
+  @Doc(paso('Iniciar el servicio', 'Proveedor, desde la hora acordada. SERVICIO_CONFIRMADO → SERVICIO_EN_CURSO.'))
+  @Post(':id/servicio/inicio') iniciarServicio(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'servicio/inicio',d); }
+  @Doc(paso('Terminar el servicio', 'Proveedor. Declara el trabajo terminado y el efectivo por el total acordado: SERVICIO_POR_CONFIRMAR.'))
+  @Post(':id/servicio/termino') terminarServicio(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'servicio/termino',d); }
+  @Doc(paso('Confirmar el servicio terminado', 'Cliente. SERVICIO_POR_CONFIRMAR → SERVICIO_CERRADO y libera la agenda.'))
+  @Post(':id/servicio/confirmacion') confirmarServicio(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'servicio/confirmacion',d); }
+  @Doc(paso('Rechazar el término del servicio', 'Cliente, con motivo. Vuelve a SERVICIO_EN_CURSO y anula el efectivo declarado.', true))
+  @Post(':id/servicio/rechazo') rechazarTermino(@Req() r: Request, @Param('id') id: string, @Body() d: unknown) { return this.reservas.operar(token(r),id,'servicio/rechazo',d); }
+}
+&nbsp;
+@ApiTags('Reservas')
+@Controller('recursos')
+export class DisponibilidadController {
+  constructor(@Inject(Reservas) private readonly reservas: Reservas) {}
+  @Doc({
+    acceso: 'publico', resumen: 'Consultar la disponibilidad de una unidad',
+    detalle: 'Rangos ocupados entre inicio y fin, sin identidades. No promete disponibilidad futura si hay retrasos.',
+    consultas: { publicacionId: { esquema: uuid, requerido: true }, inicio: { esquema: instante, requerido: true }, fin: { esquema: instante, requerido: true } },
+    devuelve: ref('Disponibilidad'), errores: { 404: 'La oferta o la unidad no son públicas' },
+  })
+  @Get(':id/disponibilidad') consultar(@Param('id') id: string, @Query() q: unknown) { return this.reservas.disponibilidad(id,q); }
+}
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-11-25T20:29:20.043Z
+            </div>
+        <script src="../../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../../sorter.js"></script>
+        <script src="../../../../block-navigation.js"></script>
+    </body>
+</html>
+    

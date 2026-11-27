@@ -5,11 +5,26 @@ Esta carpeta guarda la evidencia de las pruebas automatizadas de Qatu y la relac
 **Fecha:** 2026-11-15. **Rama:** `feat/011-mapas`, sobre `main` en `3d61995`, con los incrementos hasta 011.1 y las correcciones de rendimiento y accesibilidad de esta evaluación.
 **Entorno:** Windows 11, Node.js 24, Chrome, PostgreSQL/PostGIS 17.5 en Docker. Se usó la build de producción del frontend (`next start`) y el backend local. Cada corrida usó una base `_test` nueva y no tocó la base de desarrollo.
 
+## Sprint 2 (2026-11-25)
+
+Evidencia agregada en el Sprint 2. El mapa completo de actividades y entregables está en [docs/07-entrega-sprint-2](../07-entrega-sprint-2/README.md).
+
+| Herramienta | Qué se ejecutó | Resultado |
+|---|---|---|
+| **Jest 30** (backend) | Las 32 suites del backend (unitarias de dominio e integración con PostgreSQL real), con cobertura | **32 de 32**; cobertura de **98,8 %** de líneas y **89,8 %** de ramas → [jest/](jest/) |
+| **Bruno 4.3** (API) | 34 peticiones con 42 pruebas de contrato y reglas de negocio | **42 de 42** → [bruno/](bruno/README.md) |
+| **k6 2.4** hasta **2 000 usuarios** | Escalones de 100, 250, 500, 1 000, 1 500 y 2 000 usuarios en GitHub Actions, sin caché y con caché | **12 de 12 metas** en 4 ejecuciones; 0 % de errores. Con 2 000 usuarios, p95 de 1,6–1,8 s sin caché y de **168 ms** con caché → [carga-2000/](carga-2000/README.md) |
+| **PostgreSQL** (`EXPLAIN ANALYZE`) | Consultas reales con 1 000 publicaciones y 5 000 reservas | Todas por debajo de 5 ms; «Mis reservas» de 7,6 a 1,5 ms → [base-de-datos/](base-de-datos/README.md) |
+
 ## Contenido de la carpeta
 
 | Carpeta | Contenido |
 |---|---|
-| [backend/](backend/) | Salida completa de `npm test` del backend: pruebas unitarias y de integración con PostgreSQL |
+| [jest/](jest/) | Sprint 2: salida de Jest y [reporte HTML de cobertura](jest/cobertura/index.html) del backend |
+| [bruno/](bruno/README.md) | Sprint 2: colección Bruno de la API y sus reportes (HTML, JSON, JUnit) |
+| [carga-2000/](carga-2000/README.md) | Sprint 2: k6 hasta 2 000 usuarios en GitHub Actions, sin caché y con caché |
+| [base-de-datos/](base-de-datos/README.md) | Sprint 2: planes de ejecución de PostgreSQL y estrategia de caché |
+| [backend/](backend/) | Sprint 1: salida completa de `npm test` del backend (node:test) |
 | [playwright/](playwright/) | Resultado de cada suite de navegador (`<suite>.json` y `<suite>.txt`) y [resumen.json](playwright/resumen.json) |
 | [lighthouse/01-inicial/](lighthouse/01-inicial/) | Primera medición: 12 reportes HTML y [resumen.json](lighthouse/01-inicial/resumen.json) |
 | [lighthouse/02-tras-correcciones/](lighthouse/02-tras-correcciones/) | Medición después de corregir los hallazgos: 12 reportes HTML y [resumen.json](lighthouse/02-tras-correcciones/resumen.json) |

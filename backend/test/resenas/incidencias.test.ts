@@ -1,7 +1,6 @@
 import assert from 'node:assert/strict';
 import { randomBytes, randomUUID } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { test } from 'node:test';
 import { Pool } from 'pg';
 import { crearApp } from '../../src/app';
 import { entradaIncidencia, entradaResolucion, puedeReclamar } from '../../src/modules/resenas/dominio/incidencias';
@@ -9,6 +8,8 @@ import { destinatarios } from '../../src/modules/reservas/dominio/avisos';
 import type { ReservaParaResena } from '../../src/modules/resenas/dominio/resenas';
 import { PostgresUsuarios } from '../../src/modules/usuarios/infraestructura/postgres';
 import { ScryptPasswords } from '../../src/modules/usuarios/infraestructura/passwords';
+import { test } from '@jest/globals';
+import { caso } from '../caso';
 
 const HORA = 3_600_000;
 const reserva = (estado: string, cerradaEn: string | null = null): ReservaParaResena => ({ id: 'r', clienteId: 'c', propietarioId: 'p', proveedorId: 'v', publicacionId: 'o', titulo: 'Taladro', tipo: 'herramienta', estado, cerradaEn });
@@ -34,7 +35,7 @@ test('avisos: el reporte llega al otro participante y la resolución a ambos', (
   assert.deepEqual(destinatarios(evento('INCIDENCIA_RESUELTA', 'admin')), ['c', 'p']);
 });
 
-test('incidencias y garantía reales en PostgreSQL', { skip: !process.env.TEST_DATABASE_URL }, async context => {
+(!process.env.TEST_DATABASE_URL ? test.skip : test)('incidencias y garantía reales en PostgreSQL', async () => {
   process.env.DATABASE_URL = process.env.TEST_DATABASE_URL;
   process.env.JWT_SECRET = 'secreto-exclusivo-incidencias-pruebas-2026-491'; process.env.NODE_ENV = 'test'; process.env.APP_ORIGIN = 'http://127.0.0.1:3100'; process.env.QATU_DESPACHO_EVENTOS = 'inactivo';
   process.env.DOCUMENTOS_KEY ||= randomBytes(32).toString('hex');
@@ -56,7 +57,7 @@ test('incidencias y garantía reales en PostgreSQL', { skip: !process.env.TEST_D
     let s = await paso(await creada.json(), 'aceptacion', proveedor);
     const CONDICIONES = 'Taladro operativo, sin golpes; incluye maletín, dos brocas y cargador.';
 
-    await context.test('garantía: solo el proveedor la registra antes de entregar; el cliente no confirma antes de recibir', async () => {
+    await caso('garantía: solo el proveedor la registra antes de entregar; el cliente no confirma antes de recibir', async () => {
       assert.equal((await pedir(`/reservas/${s.id}/garantia`, 'PUT', { condiciones: CONDICIONES }, cliente)).status, 403);
       assert.equal((await pedir(`/reservas/${s.id}/garantia`, 'PUT', { condiciones: 'corto' }, proveedor)).status, 400);
       assert.equal((await pedir(`/reservas/${s.id}/garantia`, 'PUT', { condiciones: CONDICIONES, montoCentimos: 5000 }, proveedor)).status, 400, 'no admite montos');
@@ -69,7 +70,7 @@ test('incidencias y garantía reales en PostgreSQL', { skip: !process.env.TEST_D
 
     s = await paso(await paso(s, 'efectivo', proveedor), 'recepcion', cliente);
 
-    await context.test('garantía: el cliente confirma la versión vigente y luego el acuerdo queda fijo', async () => {
+    await caso('garantía: el cliente confirma la versión vigente y luego el acuerdo queda fijo', async () => {
       assert.equal((await pedir(`/reservas/${s.id}/garantia/conformidad`, 'POST', { version: 1 }, cliente)).status, 409, 'versión desactualizada');
       assert.equal((await pedir(`/reservas/${s.id}/garantia/conformidad`, 'POST', { version: 2 }, proveedor)).status, 403);
       const r = await pedir(`/reservas/${s.id}/garantia/conformidad`, 'POST', { version: 2 }, cliente);
@@ -80,7 +81,7 @@ test('incidencias y garantía reales en PostgreSQL', { skip: !process.env.TEST_D
     });
 
     let incidenciaId = '';
-    await context.test('incidencia: participantes la abren; terceros no; una sola abierta por reserva', async () => {
+    await caso('incidencia: participantes la abren; terceros no; una sola abierta por reserva', async () => {
       assert.equal((await pedir(`/reservas/${s.id}/incidencias`, 'POST', { tipo: 'dano', descripcion: DESCRIPCION }, ajeno)).status, 404);
       assert.equal((await pedir(`/reservas/${s.id}/incidencias`, 'POST', { tipo: 'dano', descripcion: 'corto' }, cliente)).status, 400);
       const [a, b] = await Promise.all([pedir(`/reservas/${s.id}/incidencias`, 'POST', { tipo: 'dano', descripcion: DESCRIPCION }, cliente), pedir(`/reservas/${s.id}/incidencias`, 'POST', { tipo: 'faltante', descripcion: DESCRIPCION }, proveedor)]);
@@ -92,7 +93,7 @@ test('incidencias y garantía reales en PostgreSQL', { skip: !process.env.TEST_D
       assert.equal(ev.length, 1, 'un solo evento: el intento rechazado no deja evento'); assert.equal(ev[0].payload.reservaId, s.id);
     });
 
-    await context.test('resolución: solo un admin ajeno, una vez, con motivo; no mueve dinero', async () => {
+    await caso('resolución: solo un admin ajeno, una vez, con motivo; no mueve dinero', async () => {
       const resolver = (cookie: string, body: unknown) => pedir(`/admin/incidencias/${incidenciaId}/resolucion`, 'PATCH', body, cookie);
       assert.equal((await resolver(cliente, { resultado: 'a_favor_cliente', motivo: 'Intento sin permisos.' })).status, 403);
       assert.equal((await resolver(administrador, { resultado: 'a_favor_cliente', motivo: 'corto' })).status, 400);
@@ -109,7 +110,7 @@ test('incidencias y garantía reales en PostgreSQL', { skip: !process.env.TEST_D
       assert.equal((await pedir(`/reservas/${s.id}/incidencias`, 'GET', undefined, cliente).then(r => r.json())).puedeReclamar, true, 'puede abrir otra tras resolverse');
     });
 
-    await context.test('retención: una incidencia abierta conserva las fotos aunque pasen 90 días', async () => {
+    await caso('retención: una incidencia abierta conserva las fotos aunque pasen 90 días', async () => {
       const form = new FormData(); form.set('etapa', 'entrega'); form.append('fotos', new Blob([Buffer.concat([Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]), randomBytes(32)])], { type: 'image/png' }), 'f.png');
       assert.equal((await fetch(`${root}/reservas/${s.id}/evidencias`, { method: 'POST', headers: { Origin: process.env.APP_ORIGIN!, Cookie: cliente }, body: form })).status, 201);
       s = await paso(await paso(s, 'devolucion/aviso', cliente), 'devolucion/confirmacion', proveedor);

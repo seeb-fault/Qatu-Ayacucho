@@ -1,7 +1,6 @@
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { test } from 'node:test';
 import { Pool } from 'pg';
 import { crearApp } from '../../src/app';
 import { Pagos } from '../../src/modules/pagos/aplicacion/pagos';
@@ -12,6 +11,8 @@ import { EnlacePagos } from '../../src/modules/reservas/aplicacion/enlace-pagos'
 import { PostgresReservas } from '../../src/modules/reservas/infraestructura/postgres';
 import { PostgresUsuarios } from '../../src/modules/usuarios/infraestructura/postgres';
 import { ScryptPasswords } from '../../src/modules/usuarios/infraestructura/passwords';
+import { test } from '@jest/globals';
+import { caso } from '../caso';
 
 const HORA=3600000,COBRO:SolicitudCobro={intentoId:'11111111-1111-4111-8111-111111111111',reservaId:'r',importeCentimos:4250,moneda:'PEN',tokenId:'tkn_test_x',email:'a@example.com',descripcion:'d'};
 const CARGO={object:'charge',id:'chr_test_abc',amount:4250,currency:'PEN',state:'Exitosa',response_code:'venta_exitosa',metadata:{intento_id:COBRO.intentoId}};
@@ -66,7 +67,7 @@ test('solo sandbox: se rechazan llaves y tokens reales, y el doble no entra en p
   } finally {fijar('QATU_PAGOS',antes.m);fijar('NODE_ENV',antes.n);fijar('CULQI_PUBLIC_KEY',antes.p);fijar('CULQI_SECRET_KEY',antes.s);}
 });
 
-test('pagos reales en PostgreSQL: herramienta, oficio, idempotencia, incertidumbre y pago tardío',{skip:!process.env.TEST_DATABASE_URL},async context=>{
+(!process.env.TEST_DATABASE_URL ? test.skip : test)('pagos reales en PostgreSQL: herramienta, oficio, idempotencia, incertidumbre y pago tardío', async () =>{
   process.env.DATABASE_URL=process.env.TEST_DATABASE_URL;
   process.env.JWT_SECRET='secreto-exclusivo-pagos-pruebas-2026-488';process.env.NODE_ENV='test';process.env.APP_ORIGIN='http://127.0.0.1:3100';process.env.QATU_DESPACHO_EVENTOS='inactivo';process.env.QATU_PAGOS='doble';
   const fixture=(...a:string[])=>JSON.parse(execFileSync(process.execPath,['--env-file-if-exists=.env','--import','tsx','test/reservas/fixture-e2e.ts',...a],{encoding:'utf8',env:{...process.env,QATU_E2E_RESERVAS:'1'}}));
@@ -103,11 +104,11 @@ test('pagos reales en PostgreSQL: herramienta, oficio, idempotencia, incertidumb
     // Procesador propio para simular a la pasarela sin depender del de la app.
     const directo=(procesador:ProcesadorPagos,ahora?:()=>number)=>new Pagos(pagosDirectos,{resolver:async()=>{throw new Error('sin uso');}},procesador,'pk_test_x',ahora);
 
-    await context.test('la configuración es pública y solo expone la llave de prueba',async()=>{
+    await caso('la configuración es pública y solo expone la llave de prueba',async()=>{
       assert.deepEqual(await (await pedir('/pagos/configuracion')).json(),{disponible:true,llavePublica:'pk_test_doble',modo:'prueba'});
     });
 
-    await context.test('herramienta: paga el importe del servidor, se entrega y se devuelve sin saldo',async()=>{
+    await caso('herramienta: paga el importe del servidor, se entrega y se devuelve sin saldo',async()=>{
       const s=await apartada(),ruta='/reservas/'+s.id+'/pagos',clave=randomUUID(),cuerpo={tokenId:'tkn_test_bueno'},cabecera={'Idempotency-Key':clave};
       assert.equal((await pedir(ruta,'POST',cuerpo,'',cabecera)).status,401);
       assert.equal((await pedir(ruta,'POST',cuerpo,ajeno,cabecera)).status,404);
@@ -134,7 +135,7 @@ test('pagos reales en PostgreSQL: herramienta, oficio, idempotencia, incertidumb
       assert.equal((await pedir(ruta,'GET',undefined,ajeno)).status,404);
     });
 
-    await context.test('veinte repeticiones de la misma clave tienen un solo efecto; otra carga con esa clave es conflicto',async()=>{
+    await caso('veinte repeticiones de la misma clave tienen un solo efecto; otra carga con esa clave es conflicto',async()=>{
       const s=await apartada(),clave=randomUUID();
       const respuestas=await Promise.all(Array.from({length:20},()=>pagar(s,'tkn_test_repetido',clienteH,clave)));
       assert.ok(respuestas.every(r=>[201,202].includes(r.status)),respuestas.map(r=>r.status).join());
@@ -144,14 +145,14 @@ test('pagos reales en PostgreSQL: herramienta, oficio, idempotencia, incertidumb
       const c=await paso(await leer(s.id,clienteH),'cancelacion',clienteH,{motivo:'Ya no necesito la herramienta para el trabajo.'});assert.equal(c.estado,'CANCELADA');
     });
 
-    await context.test('claves distintas a la vez no abren dos cobros',async()=>{
+    await caso('claves distintas a la vez no abren dos cobros',async()=>{
       const s=await apartada(),r=await Promise.all(Array.from({length:6},(_,i)=>pagar(s,'tkn_test_carrera'+i)));
       const codigos=r.map(x=>x.status).sort();assert.equal(codigos.filter(c=>c===201).length,1,codigos.join());assert.equal(codigos.filter(c=>c===409).length,5);
       assert.equal((await fila(s.id)).filter(f=>f.estado==='APROBADO').length,1);
       await paso(await leer(s.id,clienteH),'cancelacion',proveedorH,{motivo:'No puedo entregar la unidad por una avería.'});
     });
 
-    await context.test('un rechazo no cambia la reserva y permite intentar de nuevo',async()=>{
+    await caso('un rechazo no cambia la reserva y permite intentar de nuevo',async()=>{
       const s=await apartada(),r=await pagar(s,'tkn_test_rechaza');assert.equal(r.status,201);const i=await r.json();
       assert.equal(i.estado,'RECHAZADO');assert.equal(i.codigo,'INSUFFICIENT_FUNDS');
       const a=await leer(s.id,clienteH);assert.equal(a.estado,'ACEPTADA');assert.equal(a.version,s.version);assert.equal(a.pagoEstado,'PENDIENTE');assert.equal(a.ultimoPago.codigo,'INSUFFICIENT_FUNDS');
@@ -159,7 +160,7 @@ test('pagos reales en PostgreSQL: herramienta, oficio, idempotencia, incertidumb
       const c=await paso(await leer(s.id,clienteH),'cancelacion',clienteH,{motivo:'Cambié de planes para este trabajo.'});assert.equal(c.pagoEstado,'PAGADO_EN_LINEA');
     });
 
-    await context.test('sin poder marcar el reembolso, la cancelación de una reserva pagada se revierte entera',async()=>{
+    await caso('sin poder marcar el reembolso, la cancelación de una reserva pagada se revierte entera',async()=>{
       const s=await apartada();assert.equal((await pagar(s,'tkn_test_bueno')).status,201);
       const a=await leer(s.id,clienteH),clienteId=(await pool.query('SELECT cliente_id FROM reservas WHERE id=$1',[s.id])).rows[0].cliente_id;
       await assert.rejects(reservasDirectas.ejecutar(s.id,clienteId,a.version,'cancelacion','Ya no necesito la herramienta.'),/no está conectado/);
@@ -167,14 +168,14 @@ test('pagos reales en PostgreSQL: herramienta, oficio, idempotencia, incertidumb
       assert.equal(await bloqueo(s.id),true);assert.equal(await eventos(s.id,'RESERVA_CANCELADA'),0);assert.equal(await eventos(s.id,'REEMBOLSO_PENDIENTE'),0);
     });
 
-    await context.test('cancelar tras pagar libera la unidad y deja el reembolso pendiente, sin devolver solo',async()=>{
+    await caso('cancelar tras pagar libera la unidad y deja el reembolso pendiente, sin devolver solo',async()=>{
       const s=await apartada();assert.equal((await pagar(s,'tkn_test_cancela')).status,201);
       const c=await paso(await leer(s.id,clienteH),'cancelacion',clienteH,{motivo:'Encontré otra solución para el trabajo.'});
       assert.equal(c.estado,'CANCELADA');assert.equal(c.ultimoPago.reembolsoPendiente,true);assert.equal(await bloqueo(s.id),false);
       const [p]=await fila(s.id);assert.equal(p.reembolso_motivo,'RESERVA_CANCELADA');assert.equal(p.estado,'APROBADO');assert.equal(await eventos(s.id,'REEMBOLSO_PENDIENTE'),1);
     });
 
-    await context.test('un timeout queda desconocido, bloquea otro cobro y se concilia sin volver a cobrar',async()=>{
+    await caso('un timeout queda desconocido, bloquea otro cobro y se concilia sin volver a cobrar',async()=>{
       const s=await apartada(),r=await pagar(s,'tkn_test_timeout');assert.equal(r.status,202);const i=await r.json();assert.equal(i.estado,'DESCONOCIDO');
       const conflicto=await pagar(s,'tkn_test_otro_intento');assert.equal(conflicto.status,409);assert.equal((await conflicto.json()).code,'PAGO_EN_CURSO');
       let cobros=0;const cargo:CargoExterno={referencia:'chr_test_'+randomUUID().replace(/-/g,''),intentoId:i.id,importeCentimos:i.importeCentimos,moneda:'PEN',exitoso:true};
@@ -185,7 +186,7 @@ test('pagos reales en PostgreSQL: herramienta, oficio, idempotencia, incertidumb
       await paso(a,'cancelacion',clienteH,{motivo:'Cancelo después de la conciliación del pago.'});
     });
 
-    await context.test('sin cargo localizado sigue desconocido, y pasada una hora permite reintentar',async()=>{
+    await caso('sin cargo localizado sigue desconocido, y pasada una hora permite reintentar',async()=>{
       const s=await apartada(),r=await pagar(s,'tkn_test_timeout_sin_cargo');assert.equal(r.status,202);const i=await r.json();
       const vacia:ProcesadorPagos={cobrar:async()=>({estado:'desconocido'}),consultar:async()=>null,buscarPorIntento:async()=>null};
       await directo(vacia).conciliar(50);assert.equal((await fila(s.id))[0].estado,'DESCONOCIDO');
@@ -197,7 +198,7 @@ test('pagos reales en PostgreSQL: herramienta, oficio, idempotencia, incertidumb
       await paso(a,'cancelacion',clienteH,{motivo:'Cancelo tras localizar el cargo tardío.'});
     });
 
-    await context.test('pago tardío: no reactiva la reserva vencida ni quita la unidad a otra persona',async()=>{
+    await caso('pago tardío: no reactiva la reserva vencida ni quita la unidad a otra persona',async()=>{
       const s=await apartada(),r=await pagar(s,'tkn_test_timeout_tardio');assert.equal(r.status,202);const i=await r.json();
       await pool.query("UPDATE reservas SET vence_en=clock_timestamp()-interval '1 second' WHERE id=$1",[s.id]);
       await reservasDirectas.vencer();assert.equal((await leer(s.id,clienteH)).estado,'VENCIDA');assert.equal(await bloqueo(s.id),false);
@@ -207,7 +208,7 @@ test('pagos reales en PostgreSQL: herramienta, oficio, idempotencia, incertidumb
       assert.equal((await fila(s.id))[0].reembolso_motivo,'PAGO_TARDIO');assert.equal(await eventos(s.id,'REEMBOLSO_PENDIENTE'),1);assert.equal(await eventos(s.id,'PAGO_APROBADO'),0);
     });
 
-    await context.test('webhook: sin origen, un aviso falso no aprueba y veinte reenvíos tienen un efecto',async()=>{
+    await caso('webhook: sin origen, un aviso falso no aprueba y veinte reenvíos tienen un efecto',async()=>{
       const s=await apartada(),r=await pagar(s,'tkn_test_timeout_webhook');const i=await r.json(),webhook=(b:unknown)=>pedir('/pagos/webhooks/culqi','POST',b,'',{},false);
       const falso=await webhook({object:'event',type:'charge.creation.succeeded',data:{id:'chr_test_falso',amount:1}});assert.equal(falso.status,200);
       assert.equal((await fila(s.id))[0].estado,'DESCONOCIDO','la app consulta a la pasarela y no encuentra ese cargo');
@@ -226,7 +227,7 @@ test('pagos reales en PostgreSQL: herramienta, oficio, idempotencia, incertidumb
       await paso(a,'cancelacion',clienteH,{motivo:'Cancelo tras confirmar el aviso de la pasarela.'});
     });
 
-    await context.test('oficio: se paga el total aceptado al terminar y el cierre libera la agenda',async()=>{
+    await caso('oficio: se paga el total aceptado al terminar y el cierre libera la agenda',async()=>{
       const s=await oficioPorPagar();assert.equal(s.estado,'SERVICIO_POR_PAGAR');assert.ok(s.servicioTerminadoEn);assert.equal(s.pagoEstado,'PENDIENTE');
       assert.equal((await pedir('/reservas/'+s.id+'/servicio/cobro','POST',{versionActual:s.version},clienteO)).status,403);
       const r=await pagar(s,'tkn_test_oficio',clienteO);assert.equal(r.status,201);assert.equal((await r.json()).importeCentimos,18050);
@@ -234,7 +235,7 @@ test('pagos reales en PostgreSQL: herramienta, oficio, idempotencia, incertidumb
       assert.equal(a.efectivoCentimos,0);
     });
 
-    await context.test('oficio: el cliente puede rechazar el cobro y el proveedor pasar a efectivo',async()=>{
+    await caso('oficio: el cliente puede rechazar el cobro y el proveedor pasar a efectivo',async()=>{
       const s=await oficioPorPagar();
       const rechazado=await paso(s,'servicio/rechazo',clienteO,{motivo:'Faltó terminar parte del trabajo acordado.'});assert.equal(rechazado.estado,'SERVICIO_EN_CURSO');assert.equal(rechazado.servicioTerminadoEn,null);
       assert.equal((await pagar(rechazado,'tkn_test_antes',clienteO)).status,409,'sin cobro solicitado no se paga');
@@ -243,7 +244,7 @@ test('pagos reales en PostgreSQL: herramienta, oficio, idempotencia, incertidumb
       const cerrado=await paso(efectivo,'servicio/confirmacion',clienteO);assert.equal(cerrado.pagoEstado,'CONFIRMADO_PARTICIPANTES');assert.equal(cerrado.pagadoEnLineaCentimos,0);
     });
 
-    await context.test('PostgreSQL rechaza importes incoherentes y dos intentos activos',async()=>{
+    await caso('PostgreSQL rechaza importes incoherentes y dos intentos activos',async()=>{
       const s=await oficioPorPagar();
       await assert.rejects(()=>pool.query("UPDATE reservas SET estado='SERVICIO_CERRADO',pago_estado='PAGADO_EN_LINEA',pagado_en_linea_centimos=1,importe_final_centimos=1,servicio_cerrado_en=clock_timestamp() WHERE id=$1",[s.id]),(e:any)=>e.code==='23514');
       await assert.rejects(()=>pool.query("UPDATE reservas SET pagado_en_linea_centimos=5 WHERE id=$1",[s.id]),(e:any)=>e.code==='23514');

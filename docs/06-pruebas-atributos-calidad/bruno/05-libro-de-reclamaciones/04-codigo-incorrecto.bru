@@ -1,0 +1,22 @@
+meta {
+  name: Código de consulta incorrecto
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{api}}/reclamaciones/consulta?numero={{hojaNumero}}&codigo=AAAAAAAAAAAA
+  body: none
+  auth: none
+}
+
+params:query {
+  numero: {{hojaNumero}}
+  codigo: AAAAAAAAAAAA
+}
+
+tests {
+  test("404: sin el código no se lee la hoja", function () {
+    expect(res.getStatus()).to.equal(404);
+  });
+}

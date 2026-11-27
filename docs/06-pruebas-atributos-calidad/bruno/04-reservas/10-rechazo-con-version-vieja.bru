@@ -1,0 +1,30 @@
+meta {
+  name: Repetir el rechazo con la versión vieja
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{api}}/reservas/{{reservaId}}/rechazo
+  body: json
+  auth: none
+}
+
+headers {
+  Origin: {{origen}}
+  Content-Type: application/json
+  Cookie: {{cookieProveedor}}
+}
+
+body:json {
+  {
+    "versionActual": {{reservaVersion}},
+    "motivo": "No tengo agenda libre en ese horario."
+  }
+}
+
+tests {
+  test("409: control de concurrencia por versión", function () {
+    expect(res.getStatus()).to.equal(409);
+  });
+}

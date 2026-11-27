@@ -1,13 +1,14 @@
 import assert from 'node:assert/strict';
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { test } from 'node:test';
 import { Pool } from 'pg';
 import { crearApp } from '../../src/app';
 import { etapasAbiertas } from '../../src/modules/resenas/dominio/evidencias';
 import type { ReservaParaResena } from '../../src/modules/resenas/dominio/resenas';
 import { PostgresUsuarios } from '../../src/modules/usuarios/infraestructura/postgres';
 import { ScryptPasswords } from '../../src/modules/usuarios/infraestructura/passwords';
+import { test } from '@jest/globals';
+import { caso } from '../caso';
 
 const HORA = 3_600_000;
 const reserva = (estado: string, cerradaEn: string | null = null): ReservaParaResena => ({ id: 'r', clienteId: 'c', propietarioId: 'p', proveedorId: 'v', publicacionId: 'o', titulo: 'Taladro', tipo: 'herramienta', estado, cerradaEn });
@@ -25,7 +26,7 @@ test('etapas: entrega mientras la herramienta está con el cliente; devolución 
   assert.deepEqual(etapasAbiertas(reserva('SERVICIO_CERRADO', new Date(ahora - HORA).toISOString()), ahora), ['trabajo']);
 });
 
-test('evidencias reales en PostgreSQL: etapa, cupo, formato, privacidad de descarga y retención', { skip: !process.env.TEST_DATABASE_URL }, async context => {
+(!process.env.TEST_DATABASE_URL ? test.skip : test)('evidencias reales en PostgreSQL: etapa, cupo, formato, privacidad de descarga y retención', async () => {
   process.env.DATABASE_URL = process.env.TEST_DATABASE_URL;
   process.env.JWT_SECRET = 'secreto-exclusivo-evidencias-pruebas-2026-490'; process.env.NODE_ENV = 'test'; process.env.APP_ORIGIN = 'http://127.0.0.1:3100'; process.env.QATU_DESPACHO_EVENTOS = 'inactivo';
   process.env.DOCUMENTOS_KEY ||= randomBytes(32).toString('hex');
@@ -51,7 +52,7 @@ test('evidencias reales en PostgreSQL: etapa, cupo, formato, privacidad de desca
     assert.equal(creada.status, 201);
     let s = await paso(await creada.json(), 'aceptacion', proveedor);
 
-    await context.test('antes de la entrega no hay etapa abierta', async () => {
+    await caso('antes de la entrega no hay etapa abierta', async () => {
       assert.equal((await subir(s.id, 'entrega', [{ datos: png(), tipo: 'image/png' }], cliente)).status, 409);
       assert.deepEqual((await (await pedir(`/reservas/${s.id}/evidencias`, 'GET', undefined, cliente)).json()).etapasAbiertas, []);
     });
@@ -59,7 +60,7 @@ test('evidencias reales en PostgreSQL: etapa, cupo, formato, privacidad de desca
     s = await paso(await paso(s, 'efectivo', proveedor), 'recepcion', cliente);
     let primera = '', contenido = Buffer.alloc(0);
 
-    await context.test('participantes suben fotos de entrega; terceros y anónimos no', async () => {
+    await caso('participantes suben fotos de entrega; terceros y anónimos no', async () => {
       contenido = png();
       const r = await subir(s.id, 'entrega', [{ datos: contenido, tipo: 'image/png' }, { datos: png(), tipo: 'image/png' }], proveedor);
       assert.equal(r.status, 201);
@@ -70,7 +71,7 @@ test('evidencias reales en PostgreSQL: etapa, cupo, formato, privacidad de desca
       assert.equal((await subir(s.id, 'devolucion', [{ datos: png(), tipo: 'image/png' }], cliente)).status, 409);
     });
 
-    await context.test('formato y cupo: solo JPG/PNG reales y como máximo 4 por etapa', async () => {
+    await caso('formato y cupo: solo JPG/PNG reales y como máximo 4 por etapa', async () => {
       assert.equal((await subir(s.id, 'entrega', [{ datos: Buffer.from('%PDF-1.4 falso %%EOF'), tipo: 'image/png' }], cliente)).status, 400);
       assert.equal((await subir(s.id, 'entrega', [{ datos: Buffer.from('%PDF-1.4\n%%EOF'), tipo: 'application/pdf' }], cliente)).status, 400);
       assert.equal((await subir(s.id, 'otra', [{ datos: png(), tipo: 'image/png' }], cliente)).status, 400);
@@ -82,7 +83,7 @@ test('evidencias reales en PostgreSQL: etapa, cupo, formato, privacidad de desca
       assert.equal(lista.items.length, 4); assert.deepEqual(lista.items.map((e: any) => e.autor).sort(), ['cliente', 'cliente', 'proveedor', 'proveedor']);
     });
 
-    await context.test('descarga: participantes y admin reciben el archivo original; un tercero, 404', async () => {
+    await caso('descarga: participantes y admin reciben el archivo original; un tercero, 404', async () => {
       for (const cookie of [cliente, proveedor, administrador]) {
         const r = await pedir(`/evidencias/${primera}/archivo`, 'GET', undefined, cookie);
         assert.equal(r.status, 200); assert.match(r.headers.get('content-disposition') ?? '', /^attachment/); assert.match(r.headers.get('content-security-policy') ?? '', /sandbox/);
@@ -93,7 +94,7 @@ test('evidencias reales en PostgreSQL: etapa, cupo, formato, privacidad de desca
       assert.ok(!cifrado.includes(contenido.subarray(8)), 'la base guarda el contenido cifrado');
     });
 
-    await context.test('retención: a los 90 días del cierre se borra el contenido y queda la huella', async () => {
+    await caso('retención: a los 90 días del cierre se borra el contenido y queda la huella', async () => {
       s = await paso(await paso(s, 'devolucion/aviso', cliente), 'devolucion/confirmacion', proveedor);
       assert.equal((await subir(s.id, 'devolucion', [{ datos: png(), tipo: 'image/png' }], cliente)).status, 201, 'devolución abierta tras el cierre');
       await pool.query("UPDATE reservas SET devuelto_en=now()-interval '91 days', devolucion_informada_en=now()-interval '91 days' WHERE id=$1", [s.id]);

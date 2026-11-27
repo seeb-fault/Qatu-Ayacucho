@@ -1,15 +1,16 @@
 import assert from 'node:assert/strict';
 import { randomBytes, randomUUID } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { test } from 'node:test';
 import { Pool } from 'pg';
 import { crearApp } from '../../src/app';
 import { verificarRestauracion } from '../../scripts/restauracion';
+import { test } from '@jest/globals';
+import { caso } from '../caso';
 
 const HORA = 3_600_000;
 const png = () => Buffer.concat([Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]), randomBytes(64)]);
 
-test('EQ-09: el verificador acepta una base íntegra y detecta clave distinta, archivo dañado y migración faltante', { skip: !process.env.TEST_DATABASE_URL }, async context => {
+(!process.env.TEST_DATABASE_URL ? test.skip : test)('EQ-09: el verificador acepta una base íntegra y detecta clave distinta, archivo dañado y migración faltante', async () => {
   process.env.DATABASE_URL = process.env.TEST_DATABASE_URL;
   process.env.JWT_SECRET = 'secreto-exclusivo-restauracion-pruebas-2026-09'; process.env.NODE_ENV = 'test'; process.env.APP_ORIGIN = 'http://127.0.0.1:3100'; process.env.QATU_DESPACHO_EVENTOS = 'inactivo';
   process.env.DOCUMENTOS_KEY ||= randomBytes(32).toString('hex');
@@ -36,7 +37,7 @@ test('EQ-09: el verificador acepta una base íntegra y detecta clave distinta, a
       SELECT $1,$2,cliente_id,$3,$4,4250,'APROBADO',$5,now() FROM reservas WHERE id=$2`, [randomUUID(), s.id, 'restauracion-' + randomUUID().slice(0, 8), randomBytes(32).toString('hex'), 'chr_test_' + randomUUID().slice(0, 8)]);
 
     const base = await verificarRestauracion(pool);
-    await context.test('base íntegra: todo descifra, coincide con su hash y el pago está en el historial', () => {
+    await caso('base íntegra: todo descifra, coincide con su hash y el pago está en el historial', () => {
       assert.deepEqual(nuevos(base), []);
       assert.equal(base.ok, previos.size === 0);
       assert.ok(base.archivos.evidencias.verificados >= 1);
@@ -45,11 +46,11 @@ test('EQ-09: el verificador acepta una base íntegra y detecta clave distinta, a
       assert.match(base.huella, /^[a-f0-9]{64}$/);
     });
 
-    await context.test('la verificación solo lee: repetirla da la misma huella', async () => {
+    await caso('la verificación solo lee: repetirla da la misma huella', async () => {
       assert.equal((await verificarRestauracion(pool)).huella, base.huella);
     });
 
-    await context.test('sin la clave original los archivos no se leen', async () => {
+    await caso('sin la clave original los archivos no se leen', async () => {
       const original = process.env.DOCUMENTOS_KEY;
       process.env.DOCUMENTOS_KEY = randomBytes(32).toString('hex');
       try {
@@ -62,7 +63,7 @@ test('EQ-09: el verificador acepta una base íntegra y detecta clave distinta, a
       finally { process.env.DOCUMENTOS_KEY = original; }
     });
 
-    await context.test('un archivo dañado, una migración faltante o un pago perdido cambian el resultado', async () => {
+    await caso('un archivo dañado, una migración faltante o un pago perdido cambian el resultado', async () => {
       const client = await pool.connect();
       try {
         await client.query('BEGIN');

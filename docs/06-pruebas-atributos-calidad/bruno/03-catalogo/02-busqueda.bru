@@ -1,0 +1,42 @@
+meta {
+  name: Buscar publicaciones
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{api}}/publicaciones?limit=20&orden=precio
+  body: none
+  auth: none
+}
+
+params:query {
+  limit: 20
+  orden: precio
+}
+
+tests {
+  test("200 paginado con máximo 20 resultados", function () {
+    expect(res.getStatus()).to.equal(200);
+    const b = res.getBody();
+    expect(b.items.length).to.be.at.most(20);
+    expect(b.page).to.equal(1);
+    expect(b.limit).to.equal(20);
+    expect(b.total).to.be.at.least(b.items.length);
+  });
+  test("la vista pública no expone cuentas ni moderación", function () {
+    for (const p of res.getBody().items) {
+      expect(p).to.not.have.property("usuarioId");
+      expect(p).to.not.have.property("estadoModeracion");
+      expect(p.proveedor).to.have.all.keys("id", "nombrePublico", "estadoVerificacion");
+      expect(p.moneda).to.equal("PEN");
+    }
+  });
+  test("orden por precio ascendente", function () {
+    const precios = res.getBody().items.map(p => p.tarifaCentimos).filter(v => v !== null);
+    expect(precios).to.eql([...precios].sort((a, b) => a - b));
+  });
+  test("búsqueda pública cacheable 30 s", function () {
+    expect(res.getHeader("cache-control")).to.equal("public, max-age=30");
+  });
+}

@@ -2,6 +2,8 @@
 
 ## Estado y convenciones
 
+**Contrato OpenAPI (014):** [openapi.json](openapi.json), generado desde los controladores con `npm run openapi`. En desarrollo se explora y se prueba en `http://localhost:3000/api/v1/docs` (Swagger UI). Este documento conserva el diseño y las decisiones; ante una diferencia de campos, manda el contrato OpenAPI.
+
 Diseño REST /api/v1, JSON, fechas ISO 8601, instantes UTC y presentación America/Lima; dinero en céntimos enteros, PEN. No es una API ya disponible. Los identificadores de actor se derivan de identidad autenticada, no de clienteId enviado libremente. Validar rol y propietario en cada operación.
 
 | Método y ruta prevista | Caso de uso | Acceso y condición |
@@ -52,7 +54,7 @@ Errores contienen code, mensaje y correlationId sin stack ni secretos. 400 entra
 
 Autenticación web concretada en D01 (2026-10-19): JWT HS256 de 15 minutos en cookie qatu_sesion HttpOnly/SameSite=Strict/Path=/api/v1 y Secure en producción. Sesión revocable en PostgreSQL y comprobación de cuenta activa por acción privada. Escrituras exigen Origin igual a APP_ORIGIN y Content-Type application/json; se rechazan solicitudes cross-site. Sin renovación automática ni token en JSON/localStorage. Next.js sirve como proxy al mismo origen. Ver [decisión y límites de intentos](../../../specs/002-usuarios-acceso/research.md).
 
-Usuarios US1/US2: POST /auth/registro recibe {email,password,nombre} y responde 201 con {usuario,expiraEn}; POST /auth/login recibe {email,password} y responde 200 con el mismo formato. GET /usuarios/me devuelve {id,email,nombre,estado,roles}; PATCH /usuarios/me acepta solo {nombre}. POST /auth/logout con JSON {} revoca sesión y responde 204 limpiando cookie. Campos adicionales rechazados; registro solo concede cliente. Nombre 2–100 caracteres, email normalizado hasta 254, contraseña 12–128. OpenAPI estructurado pendiente. [Contrato concreto](../../../specs/002-usuarios-acceso/contracts/api.md).
+Usuarios US1/US2: POST /auth/registro recibe {email,password,nombre} y responde 201 con {usuario,expiraEn}; POST /auth/login recibe {email,password} y responde 200 con el mismo formato. GET /usuarios/me devuelve {id,email,nombre,estado,roles}; PATCH /usuarios/me acepta solo {nombre}. POST /auth/logout con JSON {} revoca sesión y responde 204 limpiando cookie. Campos adicionales rechazados; registro solo concede cliente. Nombre 2–100 caracteres, email normalizado hasta 254, contraseña 12–128. OpenAPI en [openapi.json](openapi.json). [Contrato concreto](../../../specs/002-usuarios-acceso/contracts/api.md).
 
 Usuarios US3: GET /admin/usuarios lista 20 cuentas por página con pagina/q/estado; GET /admin/usuarios/:id/auditoria devuelve eventos paginados. Solo admin activo. PATCH /admin/usuarios/:id/estado recibe {estadoActual,estado,motivo}; UUID válido, cambio activo/inactivo y motivo de 10–500 caracteres. Estado/revocación de sesiones/auditoría se confirman en transacción con bloqueo de fila. 409 para estado desactualizado o cuenta admin protegida; 404 para cuenta inexistente. Reactivar exige login nuevo. El admin se aprovisiona por CLI sobre cuenta nueva; no hay asignación pública de roles ni eliminación HTTP de auditoría. La política operativa sobre publicaciones/reservas de proveedor sigue pendiente (D02).
 

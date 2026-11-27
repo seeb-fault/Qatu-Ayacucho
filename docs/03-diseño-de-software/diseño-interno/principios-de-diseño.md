@@ -48,6 +48,16 @@ Las flechas son imports, no el recorrido de una petición. En ejecución el caso
 | Añadir categoría | Catálogo, sin modificar autenticación o pago |
 | Verificar solapamientos | PostgreSQL real; dobles solo para pruebas unitarias |
 
+## Evidencia en el código (Sprint 2)
+
+| Principio | Dónde se cumple en la implementación | Cómo se comprueba |
+|---|---|---|
+| S | Cada módulo separa `presentacion/` (controladores HTTP y su documentación OpenAPI), `aplicacion/` (casos de uso como `Reservas`, `Pagos`), `dominio/` (reglas puras: `entradaOferta`, `entradaHoja`, transiciones de `alquiler.ts`) e `infraestructura/` (`PostgresReservas`, `ProcesadorCulqi`, `AlmacenR2`) | Los controladores solo extraen la cookie y delegan; las pruebas de dominio corren sin base de datos |
+| O | La caché del catálogo se agregó con decoradores (`RepositorioCatalogoEnCache`, `ProveedoresCatalogoEnCache`) sin modificar `Catalogo` ni `PostgresCatalogo`; el almacén R2 se agregó como otra implementación de `AlmacenObjetos` | `test/catalogo/cache.test.ts`, `test/almacen/almacen.test.ts` |
+| L | `ProcesadorDoble` sustituye a `ProcesadorCulqi`, y `AlmacenMemoria` a `AlmacenR2`, respetando estados y errores (un timeout es `desconocido`, no rechazo) | Las suites de pagos y del almacén usan el doble y el real con las mismas aserciones |
+| I | Fachadas mínimas entre módulos: `IdentidadUsuarios`, `ConsultaProveedores`, `ConsultaCatalogo`, `ConsultaReservas`; puertos pequeños como `ProveedoresCatalogo` (2 métodos) | Ningún módulo lee tablas de otro; la prueba de límites de Reseñas lo verifica |
+| D | Los casos de uso reciben interfaces (`RepositorioCatalogo`, `ProcesadorPagos`, `AlmacenObjetos`) y los módulos de Nest componen las implementaciones con `useFactory` | El dominio no importa NestJS, `pg` ni `fetch` |
+
 ## Trazabilidad
 
 DA07 → ADR-002 → SOLID → EQ-05. DA04/DA12 → ADR-004/ADR-011 → contratos de pagos → EQ-08. DA10 → ADR-009 → puertos de lectura → EQ-02/EQ-10.

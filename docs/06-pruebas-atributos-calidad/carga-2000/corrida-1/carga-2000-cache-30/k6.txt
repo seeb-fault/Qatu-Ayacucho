@@ -1,0 +1,41 @@
+Unable to find image 'grafana/k6:2.4.0' locally
+2.4.0: Pulling from grafana/k6
+e2de96513ba9: Already exists
+b46f6d67c0bc: Pulling fs layer
+2fdc73d4d0db: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+4f4fb700ef54: Download complete
+b46f6d67c0bc: Download complete
+b46f6d67c0bc: Pull complete
+2fdc73d4d0db: Verifying Checksum
+2fdc73d4d0db: Download complete
+2fdc73d4d0db: Pull complete
+4f4fb700ef54: Pull complete
+Digest: sha256:d41bb79cd8de5a7ad619b53570e3712633e8bff0937010a5c6c57a4747e7a276
+Status: Downloaded newer image for grafana/k6:2.4.0
+time="2026-11-25T20:39:06Z" level=warning msg="The test has generated metrics with 100057 unique time series, which is higher than the suggested limit of 100000 and could cause high memory usage. Consider not using high-cardinality values like unique IDs as metric tags or, if you need them in the URL, use the name metric tag or URL grouping. See https://grafana.com/docs/k6/latest/using-k6/tags-and-groups/ for details." component=metrics-engine-ingester
+time="2026-11-25T20:43:01Z" level=warning msg="The test has generated metrics with 200214 unique time series, which is higher than the suggested limit of 100000 and could cause high memory usage. Consider not using high-cardinality values like unique IDs as metric tags or, if you need them in the URL, use the name metric tag or URL grouping. See https://grafana.com/docs/k6/latest/using-k6/tags-and-groups/ for details." component=metrics-engine-ingester
+Resumen de la prueba de carga (k6)
+
+ 100 usuarios: p50 1 ms, p95 3 ms, p99 4 ms, máx 29 ms, errores 0.00 %
+ 250 usuarios: p50 1 ms, p95 3 ms, p99 5 ms, máx 76 ms, errores 0.00 %
+ 500 usuarios: p50 1 ms, p95 3 ms, p99 8 ms, máx 133 ms, errores 0.00 %
+1000 usuarios: p50 1 ms, p95 5 ms, p99 12 ms, máx 220 ms, errores 0.00 %
+1500 usuarios: p50 2 ms, p95 11 ms, p99 51 ms, máx 437 ms, errores 0.00 %
+2000 usuarios: p50 3 ms, p95 168 ms, p99 290 ms, máx 438 ms, errores 0.00 %
+
+Peticiones: 606736 (840.0/s); checks correctos: 100.00 %
+CUMPLE  http_req_failed{nivel:250} rate<0.01
+CUMPLE  http_req_duration{nivel:1000} p(95)<2000
+CUMPLE  http_req_failed{nivel:1500} rate<0.01
+CUMPLE  http_req_failed{nivel:100} rate<0.01
+CUMPLE  http_req_duration{nivel:100} p(95)<1000
+CUMPLE  http_req_failed{nivel:1000} rate<0.01
+CUMPLE  http_req_failed{nivel:500} rate<0.01
+CUMPLE  http_req_duration{nivel:500} p(95)<1000
+CUMPLE  http_req_failed{nivel:2000} rate<0.01
+CUMPLE  http_req_duration{nivel:1500} p(95)<2000
+CUMPLE  http_req_duration{nivel:250} p(95)<1000
+CUMPLE  http_req_duration{nivel:2000} p(95)<2000
+time="2026-11-25T20:45:02Z" level=error msg="failed to handle the end-of-test summary" error="Could not save some summary information:\n\t- could not open '/salida/resumen-k6.json': open /salida/resumen-k6.json: permission denied"
+Código de k6: 0 (0 = todas las metas se cumplieron; 99 = alguna no)

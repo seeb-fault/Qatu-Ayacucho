@@ -1,10 +1,11 @@
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { test } from 'node:test';
 import { Pool } from 'pg';
 import { crearApp } from '../../src/app';
 import { entradaItem, entradaEnvio, huellaEnvio, revisar, type ItemLista } from '../../src/modules/reservas/dominio/lista';
+import { test } from '@jest/globals';
+import { caso } from '../caso';
 
 const HORA = 3_600_000, DIA = 24 * HORA;
 const base: ItemLista = { id: 'i', clienteId: 'c', publicacionId: 'p', recursoId: 'r', tipo: 'herramienta', inicio: '2026-12-01T14:00:00.000Z', fin: '2026-12-02T14:00:00.000Z', descripcion: '', tarifaVistaCentimos: 4250, creadoEn: '2026-11-15T00:00:00.000Z' };
@@ -29,7 +30,7 @@ test('dominio: fechas futuras, estados de revisión y huella de envío', () => {
   assert.throws(() => entradaEnvio({ ids: [] }));
 });
 
-test('Mi lista con PostgreSQL real: privacidad, límites, revisión y envío idempotente', { skip: !process.env.TEST_DATABASE_URL }, async context => {
+(!process.env.TEST_DATABASE_URL ? test.skip : test)('Mi lista con PostgreSQL real: privacidad, límites, revisión y envío idempotente', async () => {
   process.env.DATABASE_URL = process.env.TEST_DATABASE_URL;
   process.env.JWT_SECRET = 'secreto-exclusivo-lista-pruebas-2026-009'; process.env.NODE_ENV = 'test'; process.env.APP_ORIGIN = 'http://127.0.0.1:3100'; process.env.QATU_DESPACHO_EVENTOS = 'inactivo';
   const h = JSON.parse(execFileSync(process.execPath, ['--env-file-if-exists=.env', '--import', 'tsx', 'test/reservas/fixture-e2e.ts'], { encoding: 'utf8', env: { ...process.env, QATU_E2E_RESERVAS: '1' } }));
@@ -44,14 +45,14 @@ test('Mi lista con PostgreSQL real: privacidad, límites, revisión y envío ide
     const clienteId = (await pool.query('SELECT id FROM usuarios WHERE email_normalizado=lower($1)', [h.clienteEmail])).rows[0].id as string;
     const solicitudes = async () => (await pool.query('SELECT count(*)::integer AS n FROM reservas WHERE cliente_id=$1', [clienteId])).rows[0].n as number;
 
-    await context.test('sin sesión no hay lista; el proveedor no guarda su propia oferta', async () => {
+    await caso('sin sesión no hay lista; el proveedor no guarda su propia oferta', async () => {
       assert.equal((await pedir('/lista')).status, 401);
       assert.equal((await pedir('/lista/items', 'POST', item(5))).status, 401);
       assert.equal((await pedir('/lista/items', 'POST', item(5), proveedor)).status, 403);
     });
 
     let primero = '';
-    await context.test('guardar no crea solicitudes; un duplicado exacto se rechaza', async () => {
+    await caso('guardar no crea solicitudes; un duplicado exacto se rechaza', async () => {
       const antes = await solicitudes(), datos = item(5);
       const r = await pedir('/lista/items', 'POST', datos, cliente);
       assert.equal(r.status, 201);
@@ -62,13 +63,13 @@ test('Mi lista con PostgreSQL real: privacidad, límites, revisión y envío ide
       assert.deepEqual(await (await pedir('/lista/resumen', 'GET', undefined, cliente)).json(), { total: 1 });
     });
 
-    await context.test('la lista es privada: otra cuenta no la ve ni la modifica', async () => {
+    await caso('la lista es privada: otra cuenta no la ve ni la modifica', async () => {
       assert.deepEqual((await (await pedir('/lista', 'GET', undefined, proveedor)).json()).items, []);
       assert.equal((await pedir('/lista/items/' + primero, 'DELETE', {}, proveedor)).status, 404);
       assert.equal((await pedir('/lista/items/' + primero + '/tarifa', 'POST', {}, proveedor)).status, 404);
     });
 
-    await context.test('la revisión marca tarifa cambiada, fechas vencidas y unidad ocupada', async () => {
+    await caso('la revisión marca tarifa cambiada, fechas vencidas y unidad ocupada', async () => {
       await pool.query('UPDATE reservas_lista_items SET tarifa_vista_centimos=1000 WHERE id=$1', [primero]);
       const vencido = randomUUID(), pasado = Date.now() - 2 * DIA;
       await pool.query(`INSERT INTO reservas_lista_items(id,cliente_id,publicacion_id,recurso_id,tipo,inicio,fin,tarifa_vista_centimos) VALUES($1,$2,$3,$4,'herramienta',$5,$6,4250)`,
@@ -86,7 +87,7 @@ test('Mi lista con PostgreSQL real: privacidad, límites, revisión y envío ide
       assert.equal((await pedir('/lista/items/' + tercero.id, 'DELETE', {}, cliente)).status, 204);
     });
 
-    await context.test('enviar crea una solicitud por ítem, deja los rechazados con su motivo y no se repite', async () => {
+    await caso('enviar crea una solicitud por ítem, deja los rechazados con su motivo y no se repite', async () => {
       const antes = await solicitudes(), clave = 'envio-' + randomUUID().slice(0, 12);
       assert.equal((await pedir('/lista/envio', 'POST', { aceptaCondiciones: true }, cliente)).status, 400);
       const r = await pedir('/lista/envio', 'POST', { aceptaCondiciones: true }, cliente, { 'Idempotency-Key': clave });
@@ -108,7 +109,7 @@ test('Mi lista con PostgreSQL real: privacidad, límites, revisión y envío ide
       assert.equal((await pedir('/lista/items/' + rechazado.itemId, 'DELETE', {}, cliente)).status, 204);
     });
 
-    await context.test('dos envíos a la vez no duplican la solicitud de un ítem', async () => {
+    await caso('dos envíos a la vez no duplican la solicitud de un ítem', async () => {
       const nuevo = await (await pedir('/lista/items', 'POST', item(14), cliente)).json(), antes = await solicitudes();
       const enviar = () => pedir('/lista/envio', 'POST', { aceptaCondiciones: true }, cliente, { 'Idempotency-Key': 'par-' + randomUUID().slice(0, 14) }).then(x => x.json());
       const [a, b] = await Promise.all([enviar(), enviar()]);
@@ -117,7 +118,7 @@ test('Mi lista con PostgreSQL real: privacidad, límites, revisión y envío ide
       assert.equal(await solicitudes(), antes + 1);
     });
 
-    await context.test('la lista admite hasta 20 ítems', async () => {
+    await caso('la lista admite hasta 20 ítems', async () => {
       for (let i = 0; i < 20; i++) assert.equal((await pedir('/lista/items', 'POST', { ...item(20 + i), fin: new Date(Date.now() + (20 + i) * DIA + HORA).toISOString() }, cliente)).status, 201);
       const lleno = await pedir('/lista/items', 'POST', item(45), cliente);
       assert.equal(lleno.status, 409); assert.equal((await lleno.json()).code, 'LISTA_LLENA');

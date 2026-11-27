@@ -1,0 +1,247 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/modules/resenas/presentacion/openapi.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../../index.html">All files</a> / <a href="index.html">src/modules/resenas/presentacion</a> openapi.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>54/54</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/0</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/0</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>54/54</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { booleano, entero, instante, motivo, nulable, objeto, opciones, ref, registrarEsquemas, respuesta, texto, uuid } from '../../../shared/presentacion/openapi';
+&nbsp;
+/** Esquemas OpenAPI de Reseñas, Evidencias, Incidencias (006) y Libro de Reclamaciones (012). */
+const etapa = opciones('entrega', 'devolucion', 'trabajo');
+const autor = opciones('cliente', 'proveedor');
+const tipoDocumento = opciones('DNI', 'CE', 'PASAPORTE', 'RUC');
+const medio = opciones('correo', 'carta');
+&nbsp;
+registrarEsquemas({
+  Resena: respuesta({ id: uuid, titulo: { type: 'string', description: 'Título de la oferta reseñada' }, puntuacion: entero(1, 5), texto: nulable({ type: 'string' }), creadaEn: instante }, { description: 'Vista pública: sin cliente ni reserva' }),
+  ResenaModerable: respuesta({ id: uuid, titulo: { type: 'string' }, puntuacion: entero(1, 5), texto: nulable({ type: 'string' }), creadaEn: instante, oculta: booleano }),
+  Reputacion: respuesta({ promedio: nulable({ type: 'number', description: 'Redondeado a un decimal; null sin reseñas visibles', example: 4.5 }), total: entero(0) }),
+  Evidencia: respuesta({ id: uuid, etapa, autor, tipo: opciones('image/jpeg', 'image/png'), bytes: entero(1), sha256: { type: 'string' }, creadaEn: instante, disponible: { ...booleano, description: 'false si se borró por retención (90 días tras el cierre)' } }),
+  Incidencia: respuesta({
+    id: uuid, tipo: opciones('dano', 'faltante', 'servicio', 'otro'), descripcion: { type: 'string' }, estado: opciones('abierta', 'resuelta'),
+    resultado: nulable(opciones('a_favor_cliente', 'a_favor_proveedor', 'sin_acuerdo')), motivo: nulable({ type: 'string' }),
+    creadaEn: instante, resueltaEn: nulable(instante), autor, propia: { ...booleano, description: 'Solo en la vista de los participantes' },
+  }),
+  Garantia: nulable(respuesta({ condiciones: { type: 'string' }, registradaEn: instante, conformidadClienteEn: nulable(instante), version: entero(1) }, { description: 'Acuerdo documental: no es un depósito ni un monto' })),
+  Titular: respuesta({ razonSocial: nulable({ type: 'string' }), ruc: nulable({ type: 'string' }), direccion: nulable({ type: 'string' }), correo: nulable({ type: 'string' }), telefono: nulable({ type: 'string' }) }, { description: 'Proveedor del servicio que figura en cada hoja; null si aún no se configuró' }),
+  HojaReclamacion: respuesta({
+    numero: { type: 'string', pattern: '^LR-\\d{4}-\\d{6}$', example: 'LR-2026-000001' }, tipo: opciones('reclamo', 'queja'), titular: ref('Titular'),
+    presentadaEn: instante, venceEn: { type: 'string', format: 'date', description: 'Último día para responder: 15 días hábiles' },
+    consumidor: respuesta({ nombre: { type: 'string' }, tipoDocumento, numeroDocumento: { type: 'string' }, domicilio: { type: 'string' }, telefono: nulable({ type: 'string' }), email: { type: 'string' }, menorDeEdad: booleano, apoderadoNombre: nulable({ type: 'string' }), apoderadoDocumento: nulable({ type: 'string' }) }),
+    medioRespuesta: medio, bien: respuesta({ tipo: opciones('producto', 'servicio'), descripcion: { type: 'string' }, montoCentimos: nulable(entero(0)) }),
+    detalle: { type: 'string' }, pedido: { type: 'string' },
+    respuesta: nulable(respuesta({ texto: { type: 'string' }, medio, respondidaEn: instante })),
+  }, { description: 'Constancia de la hoja; no incluye identificadores internos' }),
+});
+&nbsp;
+export const NuevaResena = objeto({ puntuacion: entero(1, 5), texto: nulable(texto(0, 600, { description: 'Comentario opcional' })) }, ['puntuacion']);
+export const ModeracionResena = objeto({ oculta: booleano, motivo });
+export const SubidaEvidencia = {
+  type: 'object' as const, required: ['etapa', 'fotos'],
+  properties: {
+    etapa: { ...etapa, description: 'Debe estar abierta según el estado de la reserva' },
+    fotos: { type: 'array' as const, minItems: 1, maxItems: 4, items: { type: 'string' as const, format: 'binary' }, description: 'JPEG o PNG de hasta 5 MiB, reconocidos por su firma; hasta 4 por etapa' },
+  },
+};
+export const NuevaIncidencia = objeto({ tipo: opciones('dano', 'faltante', 'servicio', 'otro'), descripcion: texto(20, 1000) });
+export const Resolucion = objeto({ resultado: opciones('a_favor_cliente', 'a_favor_proveedor', 'sin_acuerdo'), motivo });
+export const DocumentoGarantia = objeto({ condiciones: texto(20, 1000, { description: 'Condiciones de la garantía; sin montos ni instrucciones de transferencia' }) });
+export const Conformidad = objeto({ version: entero(1, undefined, { description: 'Versión vigente de la garantía' }) });
+export const NuevaHoja = objeto({
+  tipo: { ...opciones('reclamo', 'queja'), description: 'reclamo: disconformidad con el producto o servicio; queja: con la atención' },
+  nombre: texto(3, 150), tipoDocumento, numeroDocumento: { type: 'string', description: 'DNI 8 dígitos; CE 9–12; pasaporte 6–12; RUC 11', example: '12345678' },
+  domicilio: texto(5, 200), telefono: nulable({ type: 'string', description: 'Celular de 9 dígitos que empieza con 9', example: '987654321' }),
+  email: texto(6, 254, { format: 'email' }), medioRespuesta: medio,
+  menorDeEdad: { ...booleano, default: false }, apoderadoNombre: texto(3, 150, { description: 'Solo si es menor de edad' }), apoderadoDocumento: { type: 'string', description: 'DNI del apoderado; solo si es menor de edad' },
+  bienTipo: opciones('producto', 'servicio'), bienDescripcion: texto(5, 300), montoCentimos: nulable(entero(0, 100000000)),
+  detalle: texto(20, 2000), pedido: texto(10, 1000),
+}, ['tipo', 'nombre', 'tipoDocumento', 'numeroDocumento', 'domicilio', 'email', 'medioRespuesta', 'bienTipo', 'bienDescripcion', 'detalle', 'pedido']);
+export const RespuestaHoja = objeto({ respuesta: texto(20, 4000), medio });
+export const paginaPublica = { esquema: entero(1, 9999, { default: 1 }), descripcion: 'Página, de 20 en 20' };
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-11-25T20:29:20.043Z
+            </div>
+        <script src="../../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../../sorter.js"></script>
+        <script src="../../../../block-navigation.js"></script>
+    </body>
+</html>
+    

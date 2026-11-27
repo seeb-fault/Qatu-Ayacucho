@@ -20,6 +20,14 @@ El incremento **012.1** añade [información legal y Libro de Reclamaciones](012
 
 El incremento **013.1** lleva los [archivos privados a Cloudflare R2](013-almacenamiento-cloudflare/quickstart.md): los documentos de proveedores y las fotos de evidencia se cifran en Qatu y se guardan en un bucket privado, con una cola de borrado que garantiza la retención aunque R2 falle, un script verificado para mover los archivos existentes y un verificador de restauración que lee el almacén. PostgreSQL sigue siendo el almacén por defecto; R2 se activa con `QATU_ALMACEN=r2`.
 
+El incremento **014.1** documenta la API con [Swagger/OpenAPI](014-documentacion-api/quickstart.md): la página `/api/v1/docs` muestra los 94 endpoints agrupados por módulo y permite probarlos con sesión; el contrato `openapi.json` se genera desde los controladores y `npm test` falla si una ruta queda sin documentar o el archivo se desactualiza.
+
+El incremento **014.2** agrega una [colección Bruno](../docs/06-pruebas-atributos-calidad/bruno/README.md) con 42 pruebas de contrato y reglas de negocio (sesión, CSRF, permisos, reservas, Libro de Reclamaciones) que corre en el CI y deja un reporte HTML.
+
+El incremento **015.1** [analiza la base de datos y agrega caché](015-cache-y-base-de-datos/quickstart.md): los planes de las consultas reales con datos de carga, «Mis reservas» 5 veces más rápida, y la búsqueda pública en una caché en memoria de 30 s (patrón Decorator) con `Cache-Control` en las lecturas públicas.
+
+El incremento **016.1** [pasa las pruebas del backend a Jest con cobertura y mide la carga hasta 2 000 usuarios](016-pruebas-jest-y-carga/quickstart.md): 32 suites en el CI con reporte de cobertura, y un workflow de k6 por escalones de 100 a 2 000 usuarios, sin caché y con caché.
+
 ## Evolución pendiente
 
 - [005 — Reservas, contratación y pagos](005-reservas-contratacion-pagos/spec.md)

@@ -1,12 +1,13 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { test } from 'node:test';
 import { Pool } from 'pg';
 import { crearApp } from '../../src/app';
 import { DespachadorEventos, MAX_INTENTOS, esperaReintento } from '../../src/modules/reservas/aplicacion/despacho';
 import { NotificacionRechazada, type EventoReserva, type RepositorioDespacho } from '../../src/modules/reservas/dominio/puertos';
 import { PostgresDespacho } from '../../src/modules/reservas/infraestructura/postgres-despacho';
 import { crearNotificador } from '../../src/modules/reservas/reservas.module';
+import { test } from '@jest/globals';
+import { caso } from '../caso';
 
 const HORA=3600000;
 const evento=(intento=1):EventoReserva=>({id:'e',tipo:'SOLICITUD_CREADA',reservaId:'r',clienteId:'c',propietarioId:'p',payload:{},creadoEn:new Date(0).toISOString(),intento});
@@ -50,7 +51,7 @@ test('un fallo al registrar el resultado no interrumpe el resto del lote',async(
   assert.deepEqual(registro.confirmados,['b']);
 });
 
-test('despacho real: orden por reserva, reintentos, carrera, corte y canal caído',{skip:!process.env.TEST_DATABASE_URL},async context=>{
+(!process.env.TEST_DATABASE_URL ? test.skip : test)('despacho real: orden por reserva, reintentos, carrera, corte y canal caído', async () =>{
   process.env.DATABASE_URL=process.env.TEST_DATABASE_URL;
   process.env.JWT_SECRET='secreto-exclusivo-despacho-pruebas-2026-488';process.env.NODE_ENV='test';process.env.APP_ORIGIN='http://127.0.0.1:3100';process.env.QATU_DESPACHO_EVENTOS='inactivo';
   const f=JSON.parse(execFileSync(process.execPath,['--env-file-if-exists=.env','--import','tsx','test/reservas/fixture-e2e.ts','--servicio'],{encoding:'utf8',env:{...process.env,QATU_E2E_RESERVAS:'1'}}));
@@ -74,7 +75,7 @@ test('despacho real: orden por reserva, reintentos, carrera, corte y canal caíd
     const vencerEspera=(id:string)=>pool.query("UPDATE reservas_outbox SET proximo_intento=clock_timestamp()-interval '1 second' WHERE agregado_id=$1 AND estado='PENDIENTE'",[id]);
     const receptor=()=>{const recibidos:EventoReserva[]=[];return {recibidos,enviar:async(e:EventoReserva)=>{recibidos.push(e);}};};
 
-    await context.test('entrega el evento con sus participantes y lo marca enviado una sola vez',async()=>{
+    await caso('entrega el evento con sus participantes y lo marca enviado una sola vez',async()=>{
       const s=await solicitar(),c=receptor();
       assert.deepEqual(await new DespachadorEventos(repo,c,opciones).despachar(),{enviados:1,reintentos:0,fallidos:0});
       assert.equal(c.recibidos[0].reservaId,s.id);assert.equal(c.recibidos[0].tipo,'SOLICITUD_CREADA');assert.equal(c.recibidos[0].intento,1);
@@ -83,13 +84,13 @@ test('despacho real: orden por reserva, reintentos, carrera, corte y canal caíd
       assert.deepEqual(await new DespachadorEventos(repo,c,opciones).despachar(),{enviados:0,reintentos:0,fallidos:0});assert.equal(c.recibidos.length,1);
     });
 
-    await context.test('una reserva recibe sus eventos en orden, uno por lote',async()=>{
+    await caso('una reserva recibe sus eventos en orden, uno por lote',async()=>{
       const s=await solicitar();await rechazar(s);const c=receptor(),d=new DespachadorEventos(repo,c,opciones);
       await d.despachar();assert.deepEqual(c.recibidos.map(e=>e.tipo),['SOLICITUD_CREADA']);
       await d.despachar();assert.deepEqual(c.recibidos.map(e=>e.tipo),['SOLICITUD_CREADA','SOLICITUD_RECHAZADA']);
     });
 
-    await context.test('con el canal caído se reintenta con espera, se conserva el orden y la reserva no cambia',async()=>{
+    await caso('con el canal caído se reintenta con espera, se conserva el orden y la reserva no cambia',async()=>{
       const s=await solicitar(),rechazada=await rechazar(s);
       const caido=new DespachadorEventos(repo,{enviar:async()=>{throw new Error('canal caído para ana@example.com');}},opciones);
       assert.deepEqual(await caido.despachar(),{enviados:0,reintentos:1,fallidos:0});
@@ -104,7 +105,7 @@ test('despacho real: orden por reserva, reintentos, carrera, corte y canal caíd
       [primero]=await filas(s.id);assert.equal(primero.estado,'ENVIADO');assert.equal(primero.ultimo_error,null);
     });
 
-    await context.test('al agotar los intentos queda FALLIDO y no bloquea el evento siguiente',async()=>{
+    await caso('al agotar los intentos queda FALLIDO y no bloquea el evento siguiente',async()=>{
       const s=await solicitar();await rechazar(s);
       await pool.query('UPDATE reservas_outbox SET intentos=$2 WHERE agregado_id=$1 AND tipo=$3',[s.id,MAX_INTENTOS-1,'SOLICITUD_CREADA']);
       assert.deepEqual(await new DespachadorEventos(repo,{enviar:async()=>{throw new Error('caído');}},opciones).despachar(),{enviados:0,reintentos:0,fallidos:1});
@@ -112,7 +113,7 @@ test('despacho real: orden por reserva, reintentos, carrera, corte y canal caíd
       const c=receptor();await new DespachadorEventos(repo,c,opciones).despachar();assert.deepEqual(c.recibidos.map(e=>e.tipo),['SOLICITUD_RECHAZADA']);
     });
 
-    await context.test('dos despachadores a la vez no entregan el mismo evento dos veces',async()=>{
+    await caso('dos despachadores a la vez no entregan el mismo evento dos veces',async()=>{
       const ids:string[]=[];for(let i=0;i<12;i++)ids.push((await solicitar()).id);
       const recibidos:string[]=[],enviar=async(e:EventoReserva)=>{recibidos.push(e.id);await new Promise(r=>setTimeout(r,20));};
       const a=new DespachadorEventos(repo,{enviar},{...opciones,limite:5}),b=new DespachadorEventos(repo,{enviar},{...opciones,limite:5});
@@ -121,7 +122,7 @@ test('despacho real: orden por reserva, reintentos, carrera, corte y canal caíd
       assert.equal((await pool.query("SELECT count(*)::integer AS n FROM reservas_outbox WHERE agregado_id=ANY($1::uuid[]) AND estado='ENVIADO'",[ids])).rows[0].n,12);
     });
 
-    await context.test('tras un corte se reentrega el mismo id y un proceso atrasado no altera el resultado',async()=>{
+    await caso('tras un corte se reentrega el mismo id y un proceso atrasado no altera el resultado',async()=>{
       const s=await solicitar();
       const [reclamado]=await repo.reclamar(5,60000);assert.equal(reclamado.reservaId,s.id);assert.equal(reclamado.intento,1);
       const c=receptor(),d=new DespachadorEventos(repo,c,opciones);
@@ -136,7 +137,7 @@ test('despacho real: orden por reserva, reintentos, carrera, corte y canal caíd
       await repo.confirmar(viejo.id,2);assert.equal((await filas(t.id))[0].estado,'ENVIADO');
     });
 
-    await context.test('PostgreSQL rechaza estados incoherentes y códigos que no son códigos',async()=>{
+    await caso('PostgreSQL rechaza estados incoherentes y códigos que no son códigos',async()=>{
       const s=await solicitar();const [fila]=await filas(s.id);
       await assert.rejects(()=>pool.query("UPDATE reservas_outbox SET estado='ENVIADO' WHERE id=$1",[fila.id]),(e:any)=>e.code==='23514');
       await assert.rejects(()=>pool.query("UPDATE reservas_outbox SET ultimo_error='falló para ana@example.com' WHERE id=$1",[fila.id]),(e:any)=>e.code==='23514');

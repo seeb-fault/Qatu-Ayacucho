@@ -1,0 +1,35 @@
+meta {
+  name: Iniciar sesión de nuevo
+  type: http
+  seq: 11
+}
+
+post {
+  url: {{api}}/auth/login
+  body: json
+  auth: none
+}
+
+headers {
+  Origin: {{origen}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "email": "{{emailNuevo}}",
+    "password": "{{password}}"
+  }
+}
+
+script:post-response {
+  const c = [].concat(res.getHeader("set-cookie") || [])[0] || "";
+  bru.setVar("cookieNuevo", c.split(";")[0]);
+}
+
+tests {
+  test("200 con nueva sesión", function () {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody().usuario.email).to.equal(bru.getVar("emailNuevo"));
+  });
+}

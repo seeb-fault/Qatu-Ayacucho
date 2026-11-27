@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { test } from 'node:test';
+import { test } from '@jest/globals';
 
 const archivos = (raiz: string): string[] => readdirSync(raiz, { withFileTypes: true }).flatMap(e => e.isDirectory() ? archivos(join(raiz, e.name)) : [join(raiz, e.name)]);
 const conPatron = (raiz: string, patron: RegExp) => archivos(raiz).filter(f => patron.test(readFileSync(f, 'utf8')));

@@ -1,0 +1,50 @@
+meta {
+  name: Crear una cuenta (rol cliente)
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{api}}/auth/registro
+  body: json
+  auth: none
+}
+
+headers {
+  Origin: {{origen}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "email": "{{emailNuevo}}",
+    "password": "{{password}}",
+    "nombre": "Cliente Bruno"
+  }
+}
+
+script:pre-request {
+  bru.setVar("emailNuevo", "bruno-" + Date.now() + "-" + Math.floor(Math.random() * 1e6) + "@example.com");
+}
+
+script:post-response {
+  const c = [].concat(res.getHeader("set-cookie") || [])[0] || "";
+  bru.setVar("cookieNuevo", c.split(";")[0]);
+}
+
+tests {
+  test("201 con la identidad pública y rol cliente", function () {
+    expect(res.getStatus()).to.equal(201);
+    const b = res.getBody();
+    expect(b.usuario.roles).to.eql(["cliente"]);
+    expect(b.usuario).to.not.have.property("passwordHash");
+    expect(b).to.not.have.property("token");
+  });
+  test("cookie de sesión HttpOnly, SameSite=Strict y Path=/api/v1", function () {
+    const c = [].concat(res.getHeader("set-cookie"))[0];
+    expect(c).to.match(/^qatu_sesion=/);
+    expect(c).to.match(/HttpOnly/i);
+    expect(c).to.match(/SameSite=Strict/i);
+    expect(c).to.match(/Path=\/api\/v1/);
+  });
+}

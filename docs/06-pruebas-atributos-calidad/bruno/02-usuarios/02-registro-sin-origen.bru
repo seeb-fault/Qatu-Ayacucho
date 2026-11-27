@@ -1,0 +1,32 @@
+meta {
+  name: Rechazar escritura sin Origin (CSRF)
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{api}}/auth/registro
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "email": "sin-origen@example.com",
+    "password": "{{password}}",
+    "nombre": "Sin origen"
+  }
+}
+
+tests {
+  test("403 ORIGEN_INVALIDO con el formato de error común", function () {
+    expect(res.getStatus()).to.equal(403);
+    const b = res.getBody();
+    expect(b.code).to.equal("ORIGEN_INVALIDO");
+    expect(Object.keys(b).sort()).to.eql(["code", "correlationId", "mensaje"]);
+  });
+}

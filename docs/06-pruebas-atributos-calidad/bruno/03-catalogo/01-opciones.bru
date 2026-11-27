@@ -1,0 +1,22 @@
+meta {
+  name: Categorías y distritos
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{api}}/publicaciones/opciones
+  body: none
+  auth: none
+}
+
+tests {
+  test("200 con las categorías y los 4 distritos", function () {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody().categorias.length).to.be.greaterThan(0);
+    expect(res.getBody().zonas.map(z => z.id)).to.include("ayacucho");
+  });
+  test("dato de referencia cacheable 1 hora", function () {
+    expect(res.getHeader("cache-control")).to.equal("public, max-age=3600");
+  });
+}

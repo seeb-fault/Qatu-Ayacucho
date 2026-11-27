@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {randomUUID} from 'node:crypto';
-import {test} from 'node:test';
 import {entradaOferta,filtros,editarRecursos,type Publicacion} from '../../src/modules/catalogo/dominio/oferta';
+import { test } from '@jest/globals';
 const base={tipo:'herramienta',categoriaId:'perforacion',zonaId:'ayacucho',titulo:'Taladro para concreto',descripcion:'Equipo para trabajos de mantenimiento y proyectos del hogar.',incluye:['Equipo y accesorios'],condiciones:['Coordinar retiro y devolución'],modalidadPrecio:'fija',tarifaCentimos:3500,unidad:'día',activa:true,recursos:[{identificador:'Unidad 1',activo:true}]};
 test('dinero y unidades: no admite fracciones, valores no finitos, tarifas negativas ni cotización de herramienta',()=>{
  for(const importe of [-1,0,3.5,NaN,Infinity,100000000,'3500',null])assert.throws(()=>entradaOferta({...base,tarifaCentimos:importe}));

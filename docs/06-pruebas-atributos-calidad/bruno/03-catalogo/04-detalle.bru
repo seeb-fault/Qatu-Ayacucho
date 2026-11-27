@@ -1,0 +1,22 @@
+meta {
+  name: Detalle de una publicación activa
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{api}}/publicaciones/{{publicacionId}}
+  body: none
+  auth: none
+}
+
+tests {
+  test("200 con sus recursos activos y el proveedor público", function () {
+    expect(res.getStatus()).to.equal(200);
+    const p = res.getBody();
+    expect(p.id).to.equal(bru.getEnvVar("publicacionId"));
+    expect(p.recursos.map(r => r.id)).to.include(bru.getEnvVar("recursoId"));
+    expect(p.recursos.every(r => r.activo)).to.equal(true);
+    expect(p).to.not.have.property("version");
+  });
+}

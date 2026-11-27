@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
-import { test } from 'node:test';
 import { Pool } from 'pg';
 import { crearApp } from '../../src/app';
 import { describirError } from '../../src/shared/infraestructura/base-datos';
+import { test } from '@jest/globals';
 
 test('los registros de error no copian mensajes de PostgreSQL, que pueden citar datos',()=>{
   const sql=Object.assign(new Error('duplicate key: ana@example.com'),{name:'error',code:'23505',constraint:'usuarios_email'});
@@ -12,7 +12,7 @@ test('los registros de error no copian mensajes de PostgreSQL, que pueden citar 
   assert.equal(describirError(null),'desconocido');
 });
 
-test('la API sobrevive y se recupera si PostgreSQL corta sus conexiones',{skip:!process.env.TEST_DATABASE_URL},async()=>{
+(!process.env.TEST_DATABASE_URL ? test.skip : test)('la API sobrevive y se recupera si PostgreSQL corta sus conexiones', async()=>{
   process.env.DATABASE_URL=process.env.TEST_DATABASE_URL;
   process.env.JWT_SECRET='secreto-exclusivo-conexiones-pruebas-2026-488';process.env.NODE_ENV='test';process.env.APP_ORIGIN='http://127.0.0.1:3100';
   const app=await crearApp();await app.listen(0,'127.0.0.1');const root=await app.getUrl()+'/api/v1';
