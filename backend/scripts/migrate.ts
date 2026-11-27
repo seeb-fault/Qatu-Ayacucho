@@ -29,4 +29,8 @@ async function migrate() {
   }
 }
 
-migrate().catch(() => { console.error('No se pudo aplicar la migración. Revisa PostgreSQL y DATABASE_URL.'); process.exitCode = 1; });
+// Muestra el código y el mensaje del error (ENOTFOUND, 28P01, ...) para diagnosticar el despliegue; nunca la DATABASE_URL.
+migrate().catch((error: { code?: string; message?: string }) => {
+  console.error(`No se pudo aplicar la migración [${error?.code ?? 'sin código'}] ${error?.message ?? ''}. Revisa PostgreSQL y DATABASE_URL.`);
+  process.exitCode = 1;
+});
