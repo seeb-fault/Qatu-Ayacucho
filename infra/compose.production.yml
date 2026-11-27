@@ -1,0 +1,79 @@
+# Qatu en producción con Dokploy (008). En Dokploy: proyecto → Docker Compose → este archivo (infra/compose.production.yml).
+# - Las variables se cargan en la pestaña Environment de Dokploy (ver infra/runbooks/despliegue.md); nunca en Git.
+# - Solo «web» se publica: en Domains se le asigna el dominio con HTTPS hacia el puerto 3000. La API y la base no tienen
+#   puertos publicados y viven en la red interna.
+name: qatu
+services:
+  db:
+    # Las migraciones no usan PostGIS: basta PostgreSQL oficial.
+    image: postgres:17-bookworm
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-qatu}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Configura POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-qatu}
+    volumes:
+      - qatu-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks: [interna]
+
+  api:
+    build:
+      context: ../backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: "3001"
+      QATU_HOST: 0.0.0.0
+      DATABASE_URL: postgresql://${POSTGRES_USER:-qatu}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-qatu}
+      JWT_SECRET: ${JWT_SECRET:?Configura JWT_SECRET}
+      DOCUMENTOS_KEY: ${DOCUMENTOS_KEY:?Configura DOCUMENTOS_KEY}
+      APP_ORIGIN: ${APP_ORIGIN:?Configura APP_ORIGIN, por ejemplo https://qatu.devpe.tech}
+      # Traefik escribe la IP real del visitante; la API la recibe desde la red privada de Docker.
+      QATU_PROXIES_CONFIABLES: ${QATU_PROXIES_CONFIABLES:-uniquelocal}
+      QATU_ALMACEN: ${QATU_ALMACEN:-postgres}
+      QATU_R2_ENDPOINT: ${QATU_R2_ENDPOINT:-}
+      QATU_R2_ACCESS_KEY_ID: ${QATU_R2_ACCESS_KEY_ID:-}
+      QATU_R2_SECRET_ACCESS_KEY: ${QATU_R2_SECRET_ACCESS_KEY:-}
+      QATU_R2_BUCKET_PRIVADO: ${QATU_R2_BUCKET_PRIVADO:-}
+      QATU_R2_BUCKET_PUBLICO: ${QATU_R2_BUCKET_PUBLICO:-}
+      CULQI_PUBLIC_KEY: ${CULQI_PUBLIC_KEY:-}
+      CULQI_SECRET_KEY: ${CULQI_SECRET_KEY:-}
+      QATU_TITULAR_RAZON_SOCIAL: ${QATU_TITULAR_RAZON_SOCIAL:-}
+      QATU_TITULAR_RUC: ${QATU_TITULAR_RUC:-}
+      QATU_TITULAR_DIRECCION: ${QATU_TITULAR_DIRECCION:-}
+      QATU_TITULAR_CORREO: ${QATU_TITULAR_CORREO:-}
+      QATU_TITULAR_TELEFONO: ${QATU_TITULAR_TELEFONO:-}
+      QATU_VERSION: ${QATU_VERSION:-}
+    expose: ["3001"]
+    networks: [interna]
+
+  web:
+    build:
+      context: ../frontend
+      args:
+        QATU_API_URL: http://api:3001
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+    environment:
+      QATU_API_URL: http://api:3001
+    expose: ["3000"]
+    # dokploy-network: la red por la que Traefik llega al servicio con dominio.
+    networks: [interna, dokploy-network]
+
+networks:
+  interna: {}
+  dokploy-network:
+    external: true
+
+volumes:
+  qatu-db: {}
