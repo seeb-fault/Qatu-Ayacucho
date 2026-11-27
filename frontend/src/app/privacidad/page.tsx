@@ -29,12 +29,13 @@ export default async function PrivacidadPage() {
     <ul>
       <li>Con la otra parte de tu reserva, solo lo necesario para coordinarla (nombre, WhatsApp y ubicación exacta desde el compromiso).</li>
       <li>Con Culqi, para procesar los pagos en línea.</li>
+      <li>Con Cloudflare, que almacena los documentos de proveedores y las fotos de evidencia en servidores fuera del Perú. Qatu los cifra antes de enviarlos y conserva la clave, por lo que Cloudflare no puede leerlos. Esto constituye una transferencia internacional de datos personales, que realizamos solo para prestar el servicio.</li>
       <li>Con autoridades, cuando una norma o un mandato lo exija.</li>
     </ul>
     <p>No vendemos tus datos ni los usamos para publicidad de terceros.</p>
 
     <h2>3. Seguridad</h2>
-    <p>Usamos conexiones cifradas, contraseñas guardadas con huella salada, sesiones que vencen, documentos y fotos cifrados, y controles para que cada persona vea solo lo que le corresponde.</p>
+    <p>Usamos conexiones cifradas, contraseñas guardadas con huella salada, sesiones que vencen, documentos y fotos cifrados por Qatu antes de almacenarlos (también los que guarda Cloudflare), y controles para que cada persona vea solo lo que le corresponde.</p>
 
     <h2>4. Tus derechos</h2>
     <p>Puedes pedir acceso, rectificación, cancelación u oposición al tratamiento de tus datos (derechos ARCO) escribiendo al correo del titular indicado arriba. Algunos datos, como las hojas del Libro de Reclamaciones y los registros de pagos, deben conservarse por obligación legal aunque cierres tu cuenta. Si no estás conforme con la respuesta, puedes acudir a la Autoridad Nacional de Protección de Datos Personales.</p>

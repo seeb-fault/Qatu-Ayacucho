@@ -33,14 +33,18 @@ export default function Perfil() {
     finally { setCargando(false); }
   }
 
-  useEffect(() => { void cargar(); }, []);
+  const INGRESO = '/ingresar?siguiente=' + encodeURIComponent('/cuenta');
+  // La pantalla de ingreso se precarga: si no hay sesión, el salto es inmediato aun en desarrollo.
+  useEffect(() => { router.prefetch(INGRESO); void cargar(); }, []);
 
   function fallo(error: unknown) {
     // Sesión vencida o inexistente: directo al ingreso, sin pasar por un aviso intermedio.
     if (error instanceof ErrorAcceso && error.status === 401) {
       setUsuario(null);
       setSinSesion(true);
-      router.replace('/ingresar');
+      router.replace(INGRESO);
+      // Respaldo: si la navegación del cliente no ocurrió, la hace el navegador.
+      setTimeout(() => { if (window.location.pathname === '/cuenta') window.location.replace(INGRESO); }, 1500);
       return;
     }
     setError(error instanceof Error ? error.message : 'Intenta nuevamente.');
@@ -94,10 +98,10 @@ export default function Perfil() {
       <span className={styles.avatar} aria-hidden="true">{iniciales || <Icono nombre="user" size={26}/>}</span>
       <div><h1 id="titulo-cuenta">Mi perfil</h1>{usuario && <p className={styles.correo}>{usuario.email}</p>}</div>
     </div>
-    {cargando && <p role="status">Cargando tu perfil…</p>}
+    {cargando && !sinSesion && <p role="status">Cargando tu perfil…</p>}
     {error && <p role="alert" className={styles.error}>{error}</p>}
     {mensaje && <p role="status" className={styles.exito}>{mensaje}</p>}
-    {sinSesion && <p><Link href="/ingresar" className="button primary">Ingresar a mi cuenta</Link></p>}
+    {sinSesion && <p role="status">Te llevamos a Ingresar…</p>}
     {!cargando && !sinSesion && !usuario && <button className="button outline" onClick={cargar}>Reintentar</button>}
     {usuario && <>
       <ul className={styles.roles} aria-label="Roles de la cuenta">{usuario.roles.map(rol => <li key={rol}>{rol}</li>)}</ul>

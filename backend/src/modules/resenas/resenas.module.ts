@@ -1,6 +1,7 @@
 import { Inject, Module, type BeforeApplicationShutdown, type OnApplicationBootstrap, type OnApplicationShutdown } from '@nestjs/common';
 import { Pool } from 'pg';
 import { crearPool } from '../../shared/infraestructura/base-datos';
+import { ArchivosExternos } from '../../shared/infraestructura/archivos-externos';
 import { UsuariosModule, IdentidadUsuarios } from '../usuarios';
 import { ReservasModule, ConsultaReservas } from '../reservas';
 import { Resenas } from './aplicacion/resenas';
@@ -29,10 +30,11 @@ import { AtencionReclamacionesController, LibroReclamacionesController } from '.
     { provide: Resenas, inject: [Pool, ConsultaReservas, IdentidadUsuarios],
       useFactory: (pool: Pool, reservas: ConsultaReservas, identidad: IdentidadUsuarios) => new Resenas(new PostgresResenas(pool), reservas, identidad) },
     { provide: PostgresIncidencias, inject: [Pool], useFactory: (pool: Pool) => new PostgresIncidencias(pool) },
-    { provide: Evidencias, inject: [Pool, ConsultaReservas, IdentidadUsuarios, PostgresIncidencias],
-      useFactory: (pool: Pool, reservas: ConsultaReservas, identidad: IdentidadUsuarios, incidencias: PostgresIncidencias) => new Evidencias(new PostgresEvidencias(pool), reservas, identidad, incidencias) },
-    { provide: Incidencias, inject: [PostgresIncidencias, ConsultaReservas, IdentidadUsuarios, Pool],
-      useFactory: (repo: PostgresIncidencias, reservas: ConsultaReservas, identidad: IdentidadUsuarios, pool: Pool) => new Incidencias(repo, reservas, identidad, new PostgresEvidencias(pool)) },
+    { provide: PostgresEvidencias, inject: [Pool, ArchivosExternos], useFactory: (pool: Pool, archivos: ArchivosExternos) => new PostgresEvidencias(pool, archivos) },
+    { provide: Evidencias, inject: [PostgresEvidencias, ConsultaReservas, IdentidadUsuarios, PostgresIncidencias],
+      useFactory: (repo: PostgresEvidencias, reservas: ConsultaReservas, identidad: IdentidadUsuarios, incidencias: PostgresIncidencias) => new Evidencias(repo, reservas, identidad, incidencias) },
+    { provide: Incidencias, inject: [PostgresIncidencias, ConsultaReservas, IdentidadUsuarios, PostgresEvidencias],
+      useFactory: (repo: PostgresIncidencias, reservas: ConsultaReservas, identidad: IdentidadUsuarios, evidencias: PostgresEvidencias) => new Incidencias(repo, reservas, identidad, evidencias) },
     { provide: Reclamaciones, inject: [Pool, IdentidadUsuarios],
       useFactory: (pool: Pool, identidad: IdentidadUsuarios) => new Reclamaciones(new PostgresReclamaciones(pool), identidad) },
     ParticipanteEvidenciaGuard,

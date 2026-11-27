@@ -13,7 +13,7 @@ export function validarEntrega(root) {
   const indice = entregas.indexOf(manifest.ultimaEntrega);
   assert.ok(indice >= 0, 'Entrega desconocida');
   const incrementos = manifest.incrementos ?? [];
-  assert.ok(Array.isArray(incrementos) && incrementos.every(i => ['005.1','005.2','005.3','005.4','005.5','005.6','005.7','005.8','006.1','006.2','006.3','009.1','010.1','011.1','012.1'].includes(i)) && new Set(incrementos).size === incrementos.length, 'Incremento desconocido o repetido');
+  assert.ok(Array.isArray(incrementos) && incrementos.every(i => ['005.1','005.2','005.3','005.4','005.5','005.6','005.7','005.8','006.1','006.2','006.3','009.1','010.1','011.1','012.1','013.1'].includes(i)) && new Set(incrementos).size === incrementos.length, 'Incremento desconocido o repetido');
   const reservas = incrementos.includes('005.1');
   const efectivo = incrementos.includes('005.2');
   const cotizaciones = incrementos.includes('005.3');
@@ -34,6 +34,8 @@ export function validarEntrega(root) {
   const mapas = incrementos.includes('011.1');
   assert.ok(!mapas || whatsapp, '011.1 requiere el contacto de reserva de 010.1');
   const legal = incrementos.includes('012.1');
+  const almacen = incrementos.includes('013.1');
+  assert.ok(!almacen || evidencias, '013.1 requiere evidencias 006.2 (archivos cifrados que mover al almacén)');
   assert.ok(!legal || incidencias, '012.1 requiere incidencias 006.3 (el libro vive en Reputación y confianza)');
   assert.ok(!resenas || ejecucion, '006.1 requiere operaciones cerradas: herramientas devueltas (005.2) y servicios cerrados (005.5)');
   assert.ok(!pagos || avisos, '005.8 requiere avisos 005.7');
@@ -127,6 +129,10 @@ export function validarEntrega(root) {
     for (const artefacto of artefactos) requerir(`specs/012-legal-reclamaciones/${artefacto}`);
     for (const relative of ['backend/migrations/resenas/004-libro-reclamaciones.sql','backend/src/modules/resenas/dominio/reclamaciones.ts','backend/src/modules/resenas/aplicacion/reclamaciones.ts','backend/test/resenas/reclamaciones.test.ts','frontend/src/components/legal/LibroReclamaciones.tsx','frontend/src/app/libro-de-reclamaciones/page.tsx','frontend/src/app/terminos/page.tsx','frontend/src/app/devoluciones/page.tsx','frontend/src/app/privacidad/page.tsx','frontend/src/app/contacto/page.tsx','frontend/src/app/admin/reclamaciones/page.tsx','frontend/tests/resenas/reclamaciones.spec.ts']) requerir(relative);
   } else ausente('backend/migrations/resenas/004-libro-reclamaciones.sql');
+  if (almacen) {
+    for (const artefacto of artefactos) requerir(`specs/013-almacenamiento-cloudflare/${artefacto}`);
+    for (const relative of ['backend/migrations/compartido/001-objetos-por-borrar.sql','backend/migrations/proveedores/003-almacen-objetos.sql','backend/migrations/resenas/005-almacen-objetos.sql','backend/src/shared/infraestructura/almacen.ts','backend/src/shared/infraestructura/archivos-externos.ts','backend/src/shared/infraestructura/almacen.module.ts','backend/scripts/migrar-archivos.ts','backend/scripts/mover-archivos.ts','backend/test/almacen/almacen.test.ts','backend/test/entorno-pruebas.ts']) requerir(relative);
+  } else ausente('backend/migrations/compartido/001-objetos-por-borrar.sql');
   return {
     entrega: manifest.ultimaEntrega,
     frontend: indice >= 1,

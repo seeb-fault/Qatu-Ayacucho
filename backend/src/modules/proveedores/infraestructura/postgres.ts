@@ -3,6 +3,8 @@ import { Pool } from 'pg';
 import { ErrorProveedor, type DatosPerfil, type Proveedor, type ZonaProveedor } from '../dominio/proveedor';
 import type { RepositorioProveedores } from '../dominio/puertos';
 import type { DocumentoCifrado, DocumentoPrivado, Verificacion } from '../dominio/verificacion';
+import { claveObjeto } from '../../../shared/infraestructura/almacen';
+import type { ArchivosExternos } from '../../../shared/infraestructura/archivos-externos';
 
 const columnas = `p.id,p.usuario_id AS "usuarioId",p.nombre_publico AS "nombrePublico",p.descripcion,p.zona_id AS "zonaId",
   p.visible_publicamente AS "visiblePublicamente",p.estado_verificacion AS "estadoVerificacion",p.version,
@@ -10,11 +12,12 @@ const columnas = `p.id,p.usuario_id AS "usuarioId",p.nombre_publico AS "nombrePu
   (SELECT json_build_object('id',z.id,'nombre',z.nombre) FROM zonas_proveedor z WHERE z.id=p.zona_id) AS zona`;
 const seleccion = `SELECT ${columnas} FROM proveedores p`;
 const verificacionColumnas = `v.id,v.estado,v.motivo,v.revisor_id AS "revisorId",v.creado_en AS "creadoEn",v.revisado_en AS "revisadoEn",v.perfil_enviado AS "perfilEnviado",
-  COALESCE((SELECT json_agg(json_build_object('id',d.id,'tipo',d.tipo,'bytes',d.bytes,'disponible',d.contenido IS NOT NULL) ORDER BY d.creado_en,d.id)
+  COALESCE((SELECT json_agg(json_build_object('id',d.id,'tipo',d.tipo,'bytes',d.bytes,'disponible',d.eliminado_en IS NULL) ORDER BY d.creado_en,d.id)
     FROM documentos_proveedor d WHERE d.verificacion_id=v.id),'[]'::json) AS documentos`;
 
 export class PostgresProveedores implements RepositorioProveedores {
-  constructor(private readonly pool: Pool) {}
+  /** Sin `archivos` (o sin almacén configurado) el contenido cifrado se guarda en la propia tabla, como antes de 013. */
+  constructor(private readonly pool: Pool, private readonly archivos?: ArchivosExternos) {}
 
   async publicables(): Promise<Proveedor[]> { return (await this.pool.query(`${seleccion} WHERE p.visible_publicamente AND p.estado_verificacion='aprobada'`)).rows; }
 
@@ -61,6 +64,9 @@ export class PostgresProveedores implements RepositorioProveedores {
   }
 
   async solicitar(proveedorId: string, versionActual: number, documentos: DocumentoCifrado[]): Promise<Verificacion> {
+    // Con almacén externo (013), el contenido cifrado se sube antes y la fila guarda solo su clave.
+    const externo = this.archivos?.almacen ? documentos.map(d => ({ clave: claveObjeto('proveedores', 'documentos', d.id), datos: d.contenido })) : [];
+    if (externo.length) await this.archivos!.subir(externo);
     const client = await this.pool.connect();
     try {
       await client.query('BEGIN');
@@ -74,8 +80,9 @@ export class PostgresProveedores implements RepositorioProveedores {
       const perfilEnviado = { nombrePublico: perfil.nombre_publico, descripcion: perfil.descripcion, zonaId: perfil.zona_id };
       const creada = await client.query('INSERT INTO verificaciones_proveedor(id,proveedor_id,perfil_enviado) VALUES ($1,$2,$3) RETURNING creado_en', [id,proveedorId,JSON.stringify(perfilEnviado)]);
       for (const documento of documentos) {
-        await client.query('INSERT INTO documentos_proveedor(id,verificacion_id,tipo,bytes,sha256,contenido,iv,tag) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)',
-          [documento.id,id,documento.tipo,documento.bytes,documento.sha256,Buffer.from(documento.contenido),Buffer.from(documento.iv),Buffer.from(documento.tag)]);
+        const objeto = externo.length ? claveObjeto('proveedores', 'documentos', documento.id) : null;
+        await client.query('INSERT INTO documentos_proveedor(id,verificacion_id,tipo,bytes,sha256,contenido,iv,tag,objeto) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)',
+          [documento.id,id,documento.tipo,documento.bytes,documento.sha256,objeto ? null : Buffer.from(documento.contenido),Buffer.from(documento.iv),Buffer.from(documento.tag),objeto]);
       }
       await client.query("UPDATE proveedores SET estado_verificacion='pendiente',version=version+1,actualizado_en=now() WHERE id=$1", [proveedorId]);
       await client.query('COMMIT');
@@ -83,6 +90,8 @@ export class PostgresProveedores implements RepositorioProveedores {
         documentos: documentos.map(documento => ({ id: documento.id, tipo: documento.tipo, bytes: documento.bytes, disponible: true })) };
     } catch (error) {
       await client.query('ROLLBACK');
+      // La transacción no se confirmó: los objetos ya subidos no deben quedar en el almacén.
+      await this.archivos?.descartar(externo.map(o => o.clave));
       throw error;
     } finally { client.release(); }
   }
@@ -92,9 +101,16 @@ export class PostgresProveedores implements RepositorioProveedores {
   }
 
   async documento(id: string): Promise<DocumentoPrivado | null> {
-    return (await this.pool.query(`SELECT d.id,d.tipo,d.bytes,d.sha256,d.contenido,d.iv,d.tag,p.usuario_id AS "usuarioId"
+    const fila = (await this.pool.query(`SELECT d.id,d.tipo,d.bytes,d.sha256,d.contenido,d.objeto,d.iv,d.tag,p.usuario_id AS "usuarioId"
       FROM documentos_proveedor d JOIN verificaciones_proveedor v ON v.id=d.verificacion_id JOIN proveedores p ON p.id=v.proveedor_id
-      WHERE d.id=$1 AND d.contenido IS NOT NULL`, [id])).rows[0] ?? null;
+      WHERE d.id=$1 AND d.eliminado_en IS NULL`, [id])).rows[0];
+    if (!fila) return null;
+    const { objeto, ...documento } = fila;
+    if (!documento.contenido) {
+      if (!this.archivos) throw new Error('El documento está en el almacén externo y no hay almacén configurado.');
+      documento.contenido = await this.archivos.contenido({ contenido: null, objeto });
+    }
+    return documento;
   }
 
   async pendientes(pagina: number, estado: Verificacion['estado'] = 'pendiente') {
@@ -121,7 +137,7 @@ export class PostgresProveedores implements RepositorioProveedores {
       const solicitud = await client.query('SELECT estado FROM verificaciones_proveedor WHERE id=$1 AND proveedor_id=$2 FOR UPDATE', [solicitudId,proveedorId]);
       if (!solicitud.rowCount) throw new ErrorProveedor('SOLICITUD_NO_EXISTE', 404, 'La solicitud no existe.');
       if (solicitud.rows[0].estado !== 'pendiente' || perfil.rows[0].estado_verificacion !== 'pendiente') throw new ErrorProveedor('SOLICITUD_RESUELTA', 409, 'Esta solicitud ya fue resuelta o dejó de estar vigente.');
-      const archivos = await client.query('SELECT id FROM documentos_proveedor WHERE verificacion_id=$1 AND contenido IS NOT NULL', [solicitudId]);
+      const archivos = await client.query('SELECT id FROM documentos_proveedor WHERE verificacion_id=$1 AND eliminado_en IS NULL', [solicitudId]);
       if (!archivos.rowCount) throw new ErrorProveedor('DOCUMENTOS_NO_DISPONIBLES', 409, 'Los documentos ya no están disponibles para revisión.');
       await client.query('UPDATE verificaciones_proveedor SET estado=$2,motivo=$3,revisor_id=$4,revisado_en=now() WHERE id=$1', [solicitudId,decision,motivo,revisorId]);
       await client.query('UPDATE proveedores SET estado_verificacion=$2,version=version+1,actualizado_en=now() WHERE id=$1', [proveedorId,decision]);
@@ -136,7 +152,7 @@ export class PostgresProveedores implements RepositorioProveedores {
 
   async conDocumentos() {
     return (await this.pool.query(`SELECT DISTINCT p.id,p.usuario_id AS "usuarioId" FROM proveedores p JOIN verificaciones_proveedor v ON v.proveedor_id=p.id
-      JOIN documentos_proveedor d ON d.verificacion_id=v.id WHERE d.contenido IS NOT NULL`)).rows as { id: string; usuarioId: string }[];
+      JOIN documentos_proveedor d ON d.verificacion_id=v.id WHERE d.eliminado_en IS NULL`)).rows as { id: string; usuarioId: string }[];
   }
 
   async purgarDocumentos(proveedorId: string) {
@@ -144,11 +160,16 @@ export class PostgresProveedores implements RepositorioProveedores {
     try {
       await client.query('BEGIN');
       await client.query('SELECT id FROM proveedores WHERE id=$1 FOR UPDATE', [proveedorId]);
-      const result = await client.query(`UPDATE documentos_proveedor SET contenido=NULL,iv=NULL,tag=NULL,eliminado_en=now()
-        WHERE verificacion_id IN (SELECT id FROM verificaciones_proveedor WHERE proveedor_id=$1) AND contenido IS NOT NULL`, [proveedorId]);
+      // Los objetos del almacén externo se encolan en la misma transacción: si borrarlos falla, la cola reintenta.
+      await client.query(`INSERT INTO objetos_por_borrar(objeto) SELECT d.objeto FROM documentos_proveedor d
+        WHERE d.verificacion_id IN (SELECT id FROM verificaciones_proveedor WHERE proveedor_id=$1) AND d.eliminado_en IS NULL AND d.objeto IS NOT NULL
+        ON CONFLICT (objeto) DO NOTHING`, [proveedorId]);
+      const result = await client.query(`UPDATE documentos_proveedor SET contenido=NULL,objeto=NULL,iv=NULL,tag=NULL,eliminado_en=now()
+        WHERE verificacion_id IN (SELECT id FROM verificaciones_proveedor WHERE proveedor_id=$1) AND eliminado_en IS NULL`, [proveedorId]);
       await client.query("UPDATE verificaciones_proveedor SET estado='cancelada',motivo='Documentación eliminada al detectar cuenta inactiva.',revisado_en=now() WHERE proveedor_id=$1 AND estado='pendiente'", [proveedorId]);
       await client.query("UPDATE proveedores SET estado_verificacion='no_solicitada',version=version+1,actualizado_en=now() WHERE id=$1", [proveedorId]);
       await client.query('COMMIT');
+      if (result.rowCount) void this.archivos?.procesarCola().catch(() => undefined);
       return result.rowCount ?? 0;
     } catch (error) {
       await client.query('ROLLBACK');
